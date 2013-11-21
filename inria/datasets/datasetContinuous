@@ -1,0 +1,10 @@
+d = 2 # dimension d
+n = 2 # n etats
+m = 3 # m gaussiennes
+seqs = [[np.array([1, 2]), np.array([2, 1])], [np.array([1, 0]), np.array([0, 1])]]
+PI = [.8, .2]
+A = [[.9, .1], [.6, .4]]
+C = [[.1, .1, .8], [.7, .15, .15]]
+G_mu = [[np.array([4., 8.]), np.array([-4., -8.]), np.array([-6., 6.])], [np.array([2., 3.]), np.array([-4., 2.]), np.array([3., 7.])]]
+G_sigma = [[np.array([[1.*1., 0.], [0., .25*.25]]), np.array([[1.*1., 0.], [0., 4.*4.]]), np.array([[2.*2., 0.], [0., 2.*2.]])], [np.array([[1.2*1.2, 0.], [0., .2*.2]]), np.array([[1.5*1.5, 0.], [0., 2.*2.]]), np.array([[2.2*2.2, 0.], [0., 2.3*2.3]])]]
+M = ContinuousMarkov(n, m, d, PI, A, C, G_mu, G_sigma)

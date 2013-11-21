@@ -2,6 +2,9 @@
 # -*-coding:utf-8 -*
 import os
 import pickle
+import random
+import wave 
+
 """ Instancie la base de données """
 class Db:
     """ Créé un gestionnaire de fichiers pour stocker les HMM 
@@ -13,7 +16,7 @@ class Db:
     
     def __init__(self, prefix = ""):
         """ Constructeur """
-        lack = 0
+        Db.prefix = prefix
         try:
             with open(Db.prefix + Db.filesListName + ".txt","r") as f:
                 self.filesList = pickle.Unpickler(f).load()
@@ -54,6 +57,23 @@ class Db:
         return self.getFile(fileName,"wave")
     
     
+    
+    def addWave(self,fileName,CHANNELS,FORMAT,RATE,frames,p):
+        if os.access(Db.prefix + "waves/" + fileName,os.F_OK):
+            pass
+            #Il faudrait rajouter la gestion de l'existence de deux mêmes fichiers
+        dirName = os.path.dirname(fileName)
+        if not os.access(Db.prefix + "waves/" + dirName,os.F_OK):
+            os.mkdir(Db.prefix + "waves/" + dirName)
+        wf = wave.open(Db.prefix + "waves/" + fileName, 'wb')
+        wf.setnchannels(CHANNELS)
+        wf.setsampwidth(FORMAT)
+        wf.setframerate(RATE)
+        wf.writeframes(b''.join(frames))
+        wf.close()
+        
+        self.addFileToList(fileName)
+        self.syncToFile()
     
     
     def addFileToList(self,fileName,dirFile=""):
@@ -132,9 +152,10 @@ class Db:
     
     def toString(self):
         print self.filesList
-    
-        
-db = Db()
-db.addFileToList("test.txt")
-db.getFile("test.txt")
-db.toString()
+
+
+if __name__ == "__main__":
+    db = Db()
+    db.addFileToList("test.txt")
+    db.getFile("test.txt")
+    db.toString()

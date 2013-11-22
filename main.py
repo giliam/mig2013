@@ -2,8 +2,7 @@
 # -*-coding:utf-8 -*
 """ Main du programme, permet le choix entre enregistrer un élément ou réaliser l'analyse d'un enregistrement déjà effectué """
 import sys
-sys.path.append("db")
-sys.path.append("recorder")
+sys.path.append("src")
 
 from db import Db
 db = Db("db/")
@@ -33,7 +32,28 @@ elif choice == 2:
                 print "Ceci n'est pas un nombre !"
         print "Dossier choisi : ", dirList[dirChoice]
         fileOk = True
+        db.printFilesList(dirList[dirChoice])
 elif choice == 3:
-    db.printDirFiles()
+    choice3 = -1
+    while( not choice3 in range(1,2) ):
+        try:
+            choice3 = int(input("Que voulez-vous faire ?\n1-Supprimer un fichier\n2-Supprimer un wav\n"))
+        except NameError:
+            print "Ceci n'est pas un nombre !"
+    if choice3 == 1:
+        print "Fichiers : "
+        filesList = db.printDirFiles()
+        dirName = "storage/"
+    elif choice3 == 2:
+        print "Dossiers des waves : "
+        filesList = db.printDirFiles("waves/")
+        dirName = "waves/"
+    fileChoice = -1
+    while( not fileChoice in range(len(filesList)) ):
+        try:
+            fileChoice = int( input( "Choisissez un fichier a traiter et entrez son numero : " ) )
+        except NameError:
+            print "Ceci n'est pas un nombre !"
+    db.deleteFileFromList(filesList[fileChoice],dirName)
 else:
     pass

@@ -14,13 +14,13 @@ def recorder(db):
 	RATE = 44100
 	RECORD_SECONDS = 1
 
-	nb_mots = raw_input("Combien d'enregistrement par mots?")
+	nb_mots = raw_input("Combien d'enregistrement par mots ? ")
 	nb_mots = int(nb_mots)
 
 	while True:
-		mot = raw_input("Entrer le mot à enregistrer")
+		mot = raw_input("Entrez le mot à enregistrer : ")
 		for i in range(nb_mots):
-			raw_input("Appuyer sur une touche pour commencer l'enregistrement")
+			raw_input("Appuyez sur une touche pour commencer l'enregistrement : ")
 			p = pyaudio.PyAudio()
 
 			stream = p.open(format=FORMAT,

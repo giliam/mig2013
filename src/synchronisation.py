@@ -5,7 +5,7 @@ from numpy import zeros
 	coeff_coupe est l'intensité de la coupe (à déterminer expérimentalement)
 '''
  
-def synchro (amplitudes,coeff_lissage,t_min,coeff_coupe):
+def synchro(amplitudes,coeff_lissage,t_min,coeff_coupe):
 	N=len(amplitude_max)
 	N_lissage = (int(N/coeff_lissage))
 	amplitude_lisse = zeros(N_lissage)

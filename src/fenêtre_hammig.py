@@ -11,7 +11,7 @@ def hamming_window (signal):
 	j =0
 	while (k <l/(ecart_fenetre*freq) and j<((2*l)-(ecart_fenetre*freq))):
 		for i in range(int(temps_fenetre*freq)):
-			signal[k*int(ecart_fenetre*freq)+i]*=(0.5-0.46*np.cos(2*np.pi*(i/(freq))/temps_fenetre))
+			signal[k*int(ecart_fenetre*freq)+i]*=(0.5-0.5*np.cos(2*np.pi*(i/(freq))/temps_fenetre))
 			j += 1
 			if (j == l):
 				break
@@ -24,7 +24,7 @@ def hamming_window_bis (signal):
 	while (k <l/(ecart_fenetre*freq)):
 		for i in range(int(temps_fenetre*freq)):
 			try:
-				signal[k*int(ecart_fenetre*freq)+i]*=(0.5-0.46*np.cos(2*np.pi*(i/(freq))/temps_fenetre))
+				signal[k*int(ecart_fenetre*freq)+i]*=(0.5-0.5*np.cos(2*np.pi*(i/(freq))/temps_fenetre))
 			except IndexError:
 				break 
 		k+=1

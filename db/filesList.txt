@@ -1,4 +1,6 @@
 (lp0
 S'test.txt'
 p1
+aS'bob/0.wav'
+p2
 a.

@@ -72,7 +72,7 @@ class Db:
         wf.writeframes(b''.join(frames))
         wf.close()
         
-        self.addFileToList(fileName)
+        self.addFileToList(fileName,"waves")
         self.syncToFile()
     
     
@@ -150,10 +150,28 @@ class Db:
             print "Réinitialisation réussie pour les fichiers"
     reset = staticmethod(reset)
     
+    
+    
+    
+    def printFilesList(self,*extRequired):
+        """ Affiche la liste des fichiers gérés par la base de données
+                Paramètres :
+                    @*extRequired = "all" : envoie l'extension des fichiers à afficher sous forme de tuples de noms d'extensions 
+                                                exemple : .wav, .txt """
+        filesListExt = []
+        for k,f in enumerate(self.filesList):
+            #On récupère l'extension du fichier parcouru
+            a,ext = os.path.splitext(f)
+            if ext in extRequired or len(extRequired) == 0:
+                print k, " - ", f
+                filesListExt.append(k)
+        return filesListExt
+        
+    
     def toString(self):
         print self.filesList
 
-
+    
 if __name__ == "__main__":
     db = Db()
     db.addFileToList("test.txt")

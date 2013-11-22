@@ -176,7 +176,7 @@ class Db:
             d = os.path.dirname(f)
             if (dirName == "" or d == dirName ) and (ext in extRequired or len(extRequired) == 0):
                 print k, " - ", f
-                filesListExt.append(k)
+                filesListExt.append(f)
         return filesListExt
     
     

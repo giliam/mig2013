@@ -32,7 +32,11 @@ elif choice == 2:
                 print "Ceci n'est pas un nombre !"
         print "Dossier choisi : ", dirList[dirChoice]
         fileOk = True
-        db.printFilesList(dirList[dirChoice])
+        filesList = db.printFilesList(dirList[dirChoice])
+        for f in filesList:
+            print f
+            #Réalisation de l'analyse
+            pass
 elif choice == 3:
     choice3 = -1
     while( not choice3 in range(1,2) ):

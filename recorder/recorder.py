@@ -12,15 +12,16 @@ def recorder(db):
 	FORMAT = pyaudio.paInt16
 	CHANNELS = 1
 	RATE = 44100
-	RECORD_SECONDS = 1
 
-	nb_mots = raw_input("Combien d'enregistrement par mots?")
+	nb_mots = raw_input("Combien d'enregistrement par mots ? ")
 	nb_mots = int(nb_mots)
 
 	while True:
-		mot = raw_input("Entrer le mot à enregistrer")
+		mot = raw_input("Entrez le mot à enregistrer : ")
+		temps = raw_input("Entrez le nombre de secondes pour l'enregistrement : ")
+		temps = float(temps)
 		for i in range(nb_mots):
-			raw_input("Appuyer sur une touche pour commencer l'enregistrement")
+			raw_input("Appuyez sur une touche pour commencer l'enregistrement : ")
 			p = pyaudio.PyAudio()
 
 			stream = p.open(format=FORMAT,
@@ -33,7 +34,7 @@ def recorder(db):
 
 			frames = []
 
-			for j in range(0, int(RATE / CHUNK * RECORD_SECONDS)): 
+			for j in range(0, int(RATE / CHUNK * temps)): 
 				data = stream.read(CHUNK)
 				frames.append(data)
 			

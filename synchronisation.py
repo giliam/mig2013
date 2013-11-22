@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from numpy import zeros
-'''coeff_lissage est un entier paramétrant l'intensité du lissage indispensable pour éviter de commencer trop tôt à cause du bruit
-   '''
+''' coeff_lissage est un entier paramétrant l'intensité du lissage indispensable pour éviter de commencer trop tôt à cause du bruit
+	t_min est l'intervalle de temps 
+'''
  
 def synchro (amplitudes,coeff_lissage,t_min):
 	N=len(amplitude_max)
@@ -17,25 +18,22 @@ def synchro (amplitudes,coeff_lissage,t_min):
 	i_max = 0
 	i = 0
 	while i < N_lissage:
-		if amplitude_lisse[i] > valeur_seuil and i-t_min*Fe/coeff_lissage >= 0
-			i_min = i-i-t_min*Fe/coeff_lissage
-		else if  amplitude_lisse[i] > valeur_seuil and i-t_min*Fe/coeff_lissage < 0
-			print "L'enregistrement a commencé trop tard"
+		if amplitude_lisse[i] > valeur_seuil and i-t_min*Fe/coeff_lissage >= 0:
+			i_min = i-t_min*Fe/coeff_lissage
+		elif  amplitude_lisse[i] > valeur_seuil and i-t_min*Fe/coeff_lissage < 0:
+			print "L'enregistrement a commence trop tard"
 			return ""
-	
-	while i < N_lissage:
-		if amplitude_lisse[i] > valeur_seuil and i-t_min*Fe/coeff_lissage >= 0
-			i_min = i-i-t_min*Fe/coeff_lissage
-		else if  amplitude_lisse[i] > valeur_seuil and i-t_min*Fe/coeff_lissage < 0
-			print "L'enregistrement a commencé trop tard"
+	i = N_lissage-1
+	while i > -1:
+		if amplitude_lisse[i] > valeur_seuil and i+t_min*Fe/coeff_lissage < N_lissage:
+			i_max = i+t_min*Fe/coeff_lissage
+		elif  amplitude_lisse[i] > valeur_seuil and i+t_min*Fe/coeff_lissage > N_lissage:
+			print "L'enregistrement a fini trop tot"
 			return ""
-		
+			
 	amplitudes_coupe = zeros(i_max-i_min)
-	for i in range(i_max-i_min):
-		amplitudes_coupe[i] = amplitudes[i+i_min]
+	for i in range((i_max*-i_min)*coeff_lissage):
+		amplitudes_coupe[i] = amplitudes[i+i_min*coeff_lissage]
 		
-	if i_min/Fe < t_min or (N-i_max)/Fe < t_min
-		
-	
 	return amplitudes_coupe
 		

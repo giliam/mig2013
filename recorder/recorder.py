@@ -17,7 +17,7 @@ def recorder(db):
 	nb_mots = int(nb_mots)
 
 	while True:
-		mot = raw_input("Entrez le mot à enregistrer : ")
+		mot = raw_input("Entrez le mot a enregistrer : ")
 		temps = raw_input("Entrez le nombre de secondes pour l'enregistrement : ")
 		temps = float(temps)
 		for i in range(nb_mots):

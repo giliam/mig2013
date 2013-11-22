@@ -36,8 +36,8 @@ class Db:
             dirFile = "storage"
         if fileName in self.filesList:
             try:
-                if dirFile == "wave":
-                    content = wavfile.read(Db.prefix + dirFile + "/" + fileName, "r")
+                if dirFile == "waves":
+                    content = wave.open(Db.prefix + dirFile + "/" + fileName, "r")
                     return content
                 elif fileName in self.filesList:
                     with open(Db.prefix + dirFile + "/" + fileName,"r") as f:
@@ -54,7 +54,7 @@ class Db:
     
     def getWaveFile(self,fileName):
         """ Alias de getFile pour les Wave """
-        return self.getFile(fileName,"wave")
+        return self.getFile(fileName,"waves")
     
     
     
@@ -124,6 +124,17 @@ class Db:
             dirFile = "storage"
         if os.access(Db.prefix + dirFile + "/" + fileName,os.F_OK) and fileName in self.filesList:
             self.filesList.remove(fileName)
+            try:
+                dirName = os.path.dirname(fileName)
+                os.remove(Db.prefix + dirFile + "/" + fileName)
+                print "Le fichier a bien été supprimé"
+            except OSError:
+                print "La suppression a échoué"
+            try:
+                os.rmdir(Db.prefix + dirFile + "/" + dirName)
+                print "Le dossier a bien été supprimé"
+            except OSError:
+                pass
             self.syncToFile()
             print "La suppression du fichier a bien été effectuée"
         else:
@@ -153,7 +164,7 @@ class Db:
     
     
     
-    def printFilesList(self,*extRequired):
+    def printFilesList(self,dirName="",*extRequired):
         """ Affiche la liste des fichiers gérés par la base de données
                 Paramètres :
                     @*extRequired = "all" : envoie l'extension des fichiers à afficher sous forme de tuples de noms d'extensions 
@@ -162,11 +173,23 @@ class Db:
         for k,f in enumerate(self.filesList):
             #On récupère l'extension du fichier parcouru
             a,ext = os.path.splitext(f)
-            if ext in extRequired or len(extRequired) == 0:
+            d = os.path.dirname(f)
+            if (dirName == "" or d == dirName ) and (ext in extRequired or len(extRequired) == 0):
                 print k, " - ", f
                 filesListExt.append(k)
         return filesListExt
-        
+    
+    
+    def printDirFiles(self,dirName="storage/"):
+        """ Affiche la liste des dossiers dans un des sous-dossiers de stockage
+                Paramètres :
+                    @dirName = "storage/" : dossier qu'on parcourra """
+        dirListExt = []
+        l = os.listdir(Db.prefix + dirName)
+        for k,f in enumerate(l):
+            #On récupère l'extension du fichier parcouru
+            print k, " - ", f
+        return l
     
     def toString(self):
         print self.filesList

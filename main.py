@@ -8,9 +8,10 @@ sys.path.append("recorder")
 from db import Db
 db = Db("db/")
 choice = -1
-while( not choice in range(1,3) ):
+while( not choice in range(1,4) ):
     try:
-        choice = int(input("Que voulez-vous faire ?\n1-Enregistrer un élément\n2-Réaliser l'analyse d'un enregistrement\n"))
+        choice = int(input("Que voulez-vous faire ?\n1-Enregistrer un element\n\
+2-Realiser l'analyse d'un mot\n3-Gestion des fichiers de la base de donnees\n"))
     except NameError:
         print "Ceci n'est pas un nombre !"
 
@@ -21,20 +22,18 @@ if choice == 1:
 elif choice == 2:
     fileOk = False
     while not fileOk:
-        #Analyser un enregistrement
-        print "Voici la liste des fichiers : "
-        filesList = db.printFilesList(".wav")
-        fileChoice = -1
-        while( not fileChoice in range(len(db.filesList)) ):
+        #On choisit le dossier à afficher
+        print "Voici la liste des mots a etudier : "
+        dirList = db.printDirFiles("waves/")
+        dirChoice = -1
+        while( not dirChoice in range(len(dirList)) ):
             try:
-                fileChoice = int( input( "Choisissez un fichier à traiter et entrez son numéro : " ) )
+                dirChoice = int( input( "Choisissez un fichier a traiter et entrez son numero : " ) )
             except NameError:
                 print "Ceci n'est pas un nombre !"
-        if fileChoice in filesList:
-            print "Fichier choisi : ", db.filesList[fileChoice]
-            fileOk = True
-            contentFile = db.getWaveFile(db.filesList[fileChoice])
-        else:
-            print "Ce fichier n'est pas dans la liste, veuillez recommencer"
+        print "Dossier choisi : ", dirList[dirChoice]
+        fileOk = True
+elif choice == 3:
+    db.printDirFiles()
 else:
     pass

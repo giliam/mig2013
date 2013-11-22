@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 """ Réalise l'enregistrement d'un certain nombre d'échantillons audio déterminé par l'utilisateur.
 		Nécessite PYAUDIO pour fonctionner : http://www.lfd.uci.edu/~gohlke/pythonlibs/ """
 		

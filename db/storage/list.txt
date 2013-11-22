@@ -1,8 +1,0 @@
-(lp0
-S'storage/test.txt'
-p1
-aS'storage/test.txt'
-p2
-aS'storage/test.txt'
-p3
-a.

@@ -5,13 +5,11 @@
 import os
 import pyaudio
 import wave
+from synchronisation import synchro
+import constantes
 
 def recorder(db):
 	""" Procède à l'enregistrement """ 
-	CHUNK = 1024
-	FORMAT = pyaudio.paInt16
-	CHANNELS = 1
-	RATE = 44100
 
 	nb_mots = raw_input("Combien d'enregistrement par mots ? ")
 	nb_mots = int(nb_mots)

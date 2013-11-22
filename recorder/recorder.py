@@ -12,7 +12,6 @@ def recorder(db):
 	FORMAT = pyaudio.paInt16
 	CHANNELS = 1
 	RATE = 44100
-	WAVE_OUTPUT_FILENAME = "output.wav"
 	RECORD_SECONDS = 1
 
 	nb_mots = raw_input("Combien d'enregistrement par mots?")
@@ -21,6 +20,7 @@ def recorder(db):
 	while True:
 		mot = raw_input("Entrer le mot à enregistrer")
 		for i in range(nb_mots):
+			raw_input("Appuyer sur une touche pour commencer l'enregistrement")
 			p = pyaudio.PyAudio()
 
 			stream = p.open(format=FORMAT,
@@ -46,4 +46,3 @@ def recorder(db):
 			db.addWave(name,CHANNELS,p.get_sample_size(FORMAT),RATE,frames,p)
 			
 			print "Fin du mot ", i
-			raw_input("appuyer sur une touche pour le prochain mot")

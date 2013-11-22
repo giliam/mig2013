@@ -42,8 +42,7 @@ def fct_mel(list):
 	return(list2)
 
 
-	
-	
+# fonction intégrant le pas de fréquence
 def fct_mel_pas(list,pas):
 	# on conservre les memes valeurs d'amplitudes. on les affecte a des indices differents selon la formule de mel.
 	N=len(list)
@@ -85,12 +84,14 @@ def fct_mel_pas(list,pas):
 	#toutes les amplitudes sont differentes de -1.
 	return(list2)
 
-pas=0.01
-l=zeros(50000,int)
-for i in range(50000):
+	
+#systeme de test
+pas=100
+l=zeros(100,int)
+for i in range(len(l)):
 	l[i]=i*pas
 list=fct_mel(l)
-list2=fct_mel_pas(l,0.1)
+list2=fct_mel_pas(l,pas)
 print('<frequence transformee, frequence initiale>')
-for i in range (0,len(l),100):
+for i in range (0,len(l),1):
 	print(list2[i],l[i])

@@ -44,6 +44,7 @@ def recorder(db):
 			stream.close()
 			p.terminate()
 			name = mot + "/" + str(i) + ".wav"
+			frames = synchro(frames, COEFF_LISSAGE, T_MIN, COEFF_COUPE) # on enlève les blancs avant et après
 			db.addWave(name,CHANNELS,p.get_sample_size(FORMAT),RATE,frames,p)
 			
 			print "Fin du mot ", i

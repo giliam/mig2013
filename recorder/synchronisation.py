@@ -13,7 +13,7 @@ def synchro (amplitudes,coeff_lissage,t_min,coeff_coupe):
 	while i < N_lissage:
 		amplitude_lisse[i] = reduce(add,[amplitudes[i*coeff_lissage+j] for j in range(coeff_lissage)],0)/coeff_lissage
 		i += 1
-	valeur_seuil = coeff_coupe*(max(amplitude_lisse)-min(amplitude_lisse))/2
+	valeur_seuil = coeff_coupe*(max(amplitude_lisse)-min(amplitude_lisse))
 	
 	i_min = 0
 	i_max = 0

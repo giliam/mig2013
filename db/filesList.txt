@@ -3,4 +3,14 @@ S'test.txt'
 p1
 aS'bob/0.wav'
 p2
+aS'cheval/0.wav'
+p3
+aS'cheval/1.wav'
+p4
+aS'cheval/2.wav'
+p5
+aS'cheval/3.wav'
+p6
+aS'cheval/4.wav'
+p7
 a.

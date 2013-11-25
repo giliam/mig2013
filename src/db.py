@@ -175,7 +175,7 @@ class Db:
     
     
     
-    def printFilesList(self,dirName="",*extRequired):
+    def printFilesList(self,dirName="",printBool=True,*extRequired):
         """ Affiche la liste des fichiers gérés par la base de données
                 Paramètres :
                     @*extRequired = "all" : envoie l'extension des fichiers à afficher sous forme de tuples de noms d'extensions 
@@ -186,7 +186,8 @@ class Db:
             a,ext = os.path.splitext(f)
             d = os.path.dirname(f)
             if (dirName == "" or d == dirName ) and (ext in extRequired or len(extRequired) == 0):
-                print k, " - ", f
+                if printBool:
+                    print k, " - ", f
                 filesListExt.append(f)
         return filesListExt
     

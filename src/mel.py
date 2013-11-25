@@ -4,15 +4,15 @@ from numpy import *
 #Creation de Mel. Axel
 #Description : on est dans le domaine frequentiel. On prend en entrer la liste amplitude-freq. on renvoit une nouvelle liste tq liste(g(f))=amp(f) (on affecte les amplitudes a des nouvelles frequences)
 
-def fct_mel(list):
+def fct_mel(listeFreq):
 	# on conservre les memes valeurs d'amplitudes. on les affecte a des indices differents selon la formule de mel.
-	N=len(list)
+	N=len(listeFreq)
 	N1=int(2595.0*log10(1.0+(N-1.0)/700.0))+1
 	list1=zeros(N1,float) #N1 est la valeur maximale de la frequence apres modification par mel.
 	for i in range(N1):
 		list1[i]=-1.
 	for i in range(N):
-		list1[int(2595.0*log10(1+i/700.0))]=list[i]
+		list1[int(2595.0*log10(1+i/700.0))]=listeFreq[i]
 		# on affecte les amplitudes de f a mel de f
 	if list1[0]==-1.:
 		i=0
@@ -43,15 +43,15 @@ def fct_mel(list):
 
 
 # fonction integrant le pas de frequence
-def fct_mel_pas(list,pas):
+def fct_mel_pas(listeFreq,pas):
 	# on conservre les memes valeurs d'amplitudes. on les affecte a des indices differents selon la formule de mel.
-	N=len(list)
+	N=len(listeFreq)
 	N1=int(((2595.0*log10(1.0+((N-1.0)*pas)/700.0))+1)/pas)+1
 	list1=zeros(N1,float) #N1 est la valeur maximale de la frequence apres modification par mel.
 	for i in range(N1):
 		list1[i]=-1.
 	for i in range(N):
-		amp=list[i]
+		amp=listeFreq[i]
 		f=i*pas
 		mf=int(2595.0*log10(1+f/700.0))
 		mi=int(mf/pas)
@@ -84,42 +84,42 @@ def fct_mel_pas(list,pas):
 	#toutes les amplitudes sont differentes de -1.
 	return(list2)
 
-def tab_capture(list,pas,melbas,melhaut):
+def tab_capture(listeFreq,pas,melbas,melhaut):
 	# somme les valeurs d'une liste entre deux indicies et renvoit le log
-	indbas=min(int(melbas/pas),len(list))
-	indhaut=min(int(melhaut/pas),len(list))
+	indbas=min(int(melbas/pas),len(listeFreq))
+	indhaut=min(int(melhaut/pas),len(listeFreq))
 	amp=0
 	for i in range(indbas,indhaut):
-		amp=list[i]+amp
+		amp=listeFreq[i]+amp
 	return(log10(amp))
 	
-def mel_tab(list,pas):
-	# construction de la liste mel SANs FILTRE
+def mel_tab(listeFreq,pas):
+	# construction de la listeFreqe mel SANs FILTRE
 	list1=zeros(24,float)
-	list1[0]=tab_capture(list,pas,0,325)
-	list1[1]=tab_capture(list,pas,142,483)
-	list1[2]=tab_capture(list,pas,325,622)
-	list1[3]=tab_capture(list,pas,483,820)
-	list1[4]=tab_capture(list,pas,622,958)
-	list1[5]=tab_capture(list,pas,820,1136)
-	list1[6]=tab_capture(list,pas,958,1290)
-	list1[8]=tab_capture(list,pas,1136,1447)
-	list1[9]=tab_capture(list,pas,1290,1603)
-	list1[10]=tab_capture(list,pas,1447,1771)
-	list1[11]=tab_capture(list,pas,1603,1932)
-	list1[12]=tab_capture(list,pas,1771,2084)
-	list1[13]=tab_capture(list,pas,1932,2249)
-	list1[14]=tab_capture(list,pas,2084,2411)
-	list1[15]=tab_capture(list,pas,2249,2569)
-	list1[16]=tab_capture(list,pas,2411,2734)
-	list1[0]=tab_capture(list,pas,2569,2889)
-	list1[0]=tab_capture(list,pas,2734,3051)
-	list1[0]=tab_capture(list,pas,2889,3210)
-	list1[0]=tab_capture(list,pas,3051,3373)
-	list1[0]=tab_capture(list,pas,3210,3535)
-	list1[0]=tab_capture(list,pas,3373,3693)
-	list1[0]=tab_capture(list,pas,3535,3855)
-	list1[0]=tab_capture(list,pas,3693,4016)
+	list1[0]=tab_capture(listeFreq,pas,0,325)
+	list1[1]=tab_capture(listeFreq,pas,142,483)
+	list1[2]=tab_capture(listeFreq,pas,325,622)
+	list1[3]=tab_capture(listeFreq,pas,483,820)
+	list1[4]=tab_capture(listeFreq,pas,622,958)
+	list1[5]=tab_capture(listeFreq,pas,820,1136)
+	list1[6]=tab_capture(listeFreq,pas,958,1290)
+	list1[8]=tab_capture(listeFreq,pas,1136,1447)
+	list1[9]=tab_capture(listeFreq,pas,1290,1603)
+	list1[10]=tab_capture(listeFreq,pas,1447,1771)
+	list1[11]=tab_capture(listeFreq,pas,1603,1932)
+	list1[12]=tab_capture(listeFreq,pas,1771,2084)
+	list1[13]=tab_capture(listeFreq,pas,1932,2249)
+	list1[14]=tab_capture(listeFreq,pas,2084,2411)
+	list1[15]=tab_capture(listeFreq,pas,2249,2569)
+	list1[16]=tab_capture(listeFreq,pas,2411,2734)
+	list1[0]=tab_capture(listeFreq,pas,2569,2889)
+	list1[0]=tab_capture(listeFreq,pas,2734,3051)
+	list1[0]=tab_capture(listeFreq,pas,2889,3210)
+	list1[0]=tab_capture(listeFreq,pas,3051,3373)
+	list1[0]=tab_capture(listeFreq,pas,3210,3535)
+	list1[0]=tab_capture(listeFreq,pas,3373,3693)
+	list1[0]=tab_capture(listeFreq,pas,3535,3855)
+	list1[0]=tab_capture(listeFreq,pas,3693,4016)
 	return(list1)
 
 	

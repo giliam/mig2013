@@ -1,3 +1,4 @@
+#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
 """ Réalise l'enregistrement d'un certain nombre d'échantillons audio déterminé par l'utilisateur.
@@ -42,6 +43,6 @@ def recorder(db):
 			stream.close()
 			p.terminate()
 			name = mot + "/" + str(i) + ".wav"
-			db.addWave(name,CHANNELS,p.get_sample_size(FORMAT),RATE,frames,p)
+			db.addWave(name,CHANNELS,p.get_sample_size(FORMAT), RATE, frames,p)
 			
 			print "Fin du mot ", i

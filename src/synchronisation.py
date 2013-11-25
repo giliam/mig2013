@@ -1,3 +1,4 @@
+#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
 from numpy import zeros
@@ -13,14 +14,14 @@ import math as m
 """
  
 def synchro(amplitudes,coeff_lissage,t_min,coeff_coupe):
-    N=len(amplitudes)
-    N_lissage = (int(N/coeff_lissage))
+    N = len(amplitudes)
+    N_lissage = int(N / coeff_lissage)
     amplitude_lisse = zeros(N_lissage)
     maxi = 0
     mini = 0
-    COEFF = t_min*RATE/coeff_lissage/1000
+    COEFF = t_min * RATE / coeff_lissage / 1000
     for i in range(N_lissage):
-        amplitude_lisse[i] = reduce(add, [m.exp(abs(amplitudes[i * coeff_lissage + j]/100)) for j in range(coeff_lissage)], 0)/coeff_lissage
+        amplitude_lisse[i] = reduce(add, [m.exp(abs(amplitudes[i * coeff_lissage + j]/100)) for j in range(coeff_lissage)], 0) / coeff_lissage
         print amplitude_lisse[i]
         if(i == 0):
             maxi = amplitude_lisse[i]
@@ -33,7 +34,7 @@ def synchro(amplitudes,coeff_lissage,t_min,coeff_coupe):
     print "maxi", maxi
     print "mini", mini
         
-    valeur_seuil = coeff_coupe*(maxi-mini)
+    valeur_seuil = coeff_coupe * (maxi - mini)
     print "valeur_seuil", valeur_seuil
 
     compt = 0
@@ -41,7 +42,7 @@ def synchro(amplitudes,coeff_lissage,t_min,coeff_coupe):
         if(amplitude_lisse[i] > valeur_seuil):
             compt += 1
 
-    print "compt ", compt*coeff_lissage
+    print "compt ", compt * coeff_lissage
     
     i_min = 0
     i_max = N_lissage - 1
@@ -66,18 +67,19 @@ def synchro(amplitudes,coeff_lissage,t_min,coeff_coupe):
     if(i_max > N_lissage - COEFF):
         print "L'enregistrement a fini trop tot"
 
-    print i_min*coeff_lissage
-    print i_max*coeff_lissage
+    print i_min * coeff_lissage
+    print i_max * coeff_lissage
     print N
 
-    taille = (i_max-i_min)*coeff_lissage
+    taille = (i_max - i_min) * coeff_lissage
     print "taille = ", taille
     amplitudes_coupe = zeros(taille)
     for i in range(taille):
-        amplitudes_coupe[i] = amplitudes[i+i_min*coeff_lissage]
+        amplitudes_coupe[i] = amplitudes[i + i_min * coeff_lissage]
         
     return amplitudes_coupe
-    
-#ampli = scipy.io.wavfile.read("0.wav")
-#ampli2 = synchro(ampli[1],COEFF_LISSAGE,T_MIN,COEFF_COUPE)
-#scipy.io.wavfile.write("0e.wav", ampli[0], int16(ampli2))
+
+if __name__ == '__main__':    
+    ampli = scipy.io.wavfile.read("0.wav")
+    ampli2 = synchro(ampli[1], COEFF_LISSAGE, T_MIN, COEFF_COUPE)
+    scipy.io.wavfile.write("0e.wav", ampli[0], int16(ampli2))

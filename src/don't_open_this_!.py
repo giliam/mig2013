@@ -1,2 +1,2 @@
 while True:
-	print The Game
+	print "The Game"

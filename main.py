@@ -10,7 +10,8 @@ from db import Db
 from recorder import recorder
 from discrete_cosine_transform import *
 from fft import fft
-from fenetre_hann import *
+from fenetre_hann import hann_window
+from passe_haut import passe_haut
 
 
 db = Db("db/")

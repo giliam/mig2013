@@ -3,7 +3,7 @@
 import os
 import pickle
 import random
-import wave 
+import scipy.io.wavfile
 
 """ Instancie la base de données """
 class Db:
@@ -37,7 +37,7 @@ class Db:
         if fileName in self.filesList:
             try:
                 if dirFile == "waves":
-                    content = wave.open(Db.prefix + dirFile + "/" + fileName, "r")
+                    content = scipy.io.wavfile.read(Db.prefix + dirFile + "/" + fileName, "r")
                     return content
                 elif fileName in self.filesList:
                     with open(Db.prefix + dirFile + "/" + fileName,"r") as f:

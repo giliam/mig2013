@@ -82,9 +82,9 @@ elif choice == 2:
             fileOk = False
 elif choice == 3:
     choice3 = -1
-    while( not choice3 in range(1,2) ):
+    while( not choice3 in range(1,4) ):
         try:
-            choice3 = int(input("Que voulez-vous faire ?\n1-Supprimer un fichier\n2-Supprimer un wav\n"))
+            choice3 = int(input("Que voulez-vous faire ?\n1-Supprimer un fichier\n2-Supprimer un wav\n3-Synchroniser les wav\n"))
         except NameError:
             print "Ceci n'est pas un nombre !"
     if choice3 == 1:
@@ -95,6 +95,21 @@ elif choice == 3:
         print "Dossiers des waves : "
         filesList = db.printDirFiles("waves/")
         dirName = "waves/"
+    elif choice3 == 3:
+        print "Voici la liste des mots a etudier : "
+        dirList = db.printDirFiles("waves/")
+        dirChoice = -1
+        while( not dirChoice in range(len(dirList)) ):
+            try:
+                dirChoice = int( input( "Quel mot souhaitez vous traiter?: " ) )
+            except NameError:
+                print "Ceci n'est pas un nombre !"
+        print "Dossier choisi : ", dirList[dirChoice]
+        filesList = db.printFilesList(dirList[dirChoice])
+        for f in filesList:
+            ampli = db.getWaveFile(f)
+            ampli2 = synchro(ampli[1], COEFF_LISSAGE, T_MIN, COEFF_COUPE)
+            scipy.io.wavfile.write("db/waves/mod/"+f, ampli[0], int16(ampli2))
     fileChoice = -1
     while( not fileChoice in range(len(filesList)) ):
         try:

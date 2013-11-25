@@ -10,9 +10,9 @@ CHANNELS = 1 # On est en mono
 RATE = 44100 #Fréquence
 
 # Synchro:
-COEFF_LISSAGE = 25 # à déterminer empiriquement
+COEFF_LISSAGE = 5 # à déterminer empiriquement
 T_MIN = 50 # blanc minimum avant le son
-COEFF_COUPE = 1e-83 # en pourcent
+COEFF_COUPE = 0.0000001 # en pourcent
 
 # fenetre hann : 
 

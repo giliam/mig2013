@@ -37,11 +37,11 @@ param lin=True : methode d'interpolation lineaire
 param freqMax=12000 : frequence maximale representee dans le tableau"""
     N = len(sig)
     M = len(sig2)
-    if (M==0 or (M!=0 and M==N)):
+    if (M==0 or M==N):
         if sig2==[]:
             C = fftCT(sig,lin)
             if mid:
-                return C[len(C)/2:]
+                return C[:len(C)/2]
             else:
                 return C
         else:
@@ -71,11 +71,3 @@ def fftCTRec(sig):
         odd = fftCTRec(sig[1::2])
         return [even[k] + np.exp(-2j*np.pi*k/N)*odd[k] for k in range(N/2)] + \
                [even[k] - np.exp(-2j*np.pi*k/N)*odd[k] for k in range(N/2)]
-
-               
-freq1,freq2 = 220,440
-freqEch = 44100
-s1 = [np.sin(2*np.pi*freq1*t/freqEch) for t in range(1024)]
-s2 = [np.sin(2*np.pi*freq2*t/freqEch) for t in range(1024)]
-C1,C2 = fft(s1,s2)
-plt.plot([abs(C1[k]) for k in range(len(C1))])

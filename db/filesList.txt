@@ -13,12 +13,6 @@ aS'cheval/3.wav'
 p6
 aS'cheval/4.wav'
 p7
-<<<<<<< HEAD
-aS'handling/passe_haut.txt'
-p8
-aS'handling/hann.txt'
-p9
-=======
 aS'caca/0.wav'
 p8
 aS'caca/1.wav'
@@ -145,5 +139,10 @@ aS'trois/10.wav'
 p69
 aS'trois/11.wav'
 p70
->>>>>>> 84a062cace071288cd2cfbee558e7e1f7fa5130a
+aS'handling/passe_haut_0.txt'
+p71
+aS'handling/hann_0.txt'
+p72
+aS'handling/fft_0.txt'
+p73
 a.

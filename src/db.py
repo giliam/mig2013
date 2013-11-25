@@ -94,6 +94,8 @@ class Db:
         else:
             print "Le fichier n'existe pas"
             
+            
+    
     def addFile(self,fileName,content,dirFile=""):
         """ Ajoute un fichier à la liste des fichiers gérés par la base de données 
             Paramètres : 
@@ -181,6 +183,7 @@ class Db:
                     @*extRequired = "all" : envoie l'extension des fichiers à afficher sous forme de tuples de noms d'extensions 
                                                 exemple : .wav, .txt """
         filesListExt = []
+        print len(self.filesList)
         for k,f in enumerate(self.filesList):
             #On récupère l'extension du fichier parcouru
             a,ext = os.path.splitext(f)

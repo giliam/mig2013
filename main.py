@@ -38,24 +38,25 @@ elif choice == 2:
                 print "Ceci n'est pas un nombre !"
         print "Dossier choisi : ", dirList[dirChoice]
         fileOk = True
+        k = 0
         filesList = db.printFilesList(dirList[dirChoice])
-        action = int( input( "À partir de quelle action souhaitez-vous agir ?\n\
-0-Tout\n1-Filtre passe-haut\n2-Fenêtre de Hann\n3-Transformée de Fourier Rapide\n " ) )
+        #action = int( input( "À partir de quelle action souhaitez-vous agir ?\n\0-Tout\n1-Filtre passe-haut\n2-Fenêtre de Hann\n3-Transformée de Fourier Rapide\n " ) )
+        action = 0
         for f in filesList:
             if fileOk == False:
                 break
             m = db.getWaveFile(f)
-
+            
             if action == 1:
-                m = db.getFile("handling/passe_haut.txt")
+                m = db.getFile("handling/passe_haut_" + str(k) + ".txt")
             elif action == 2:
-                m = db.getFile("handling/hann.txt")
+                m = db.getFile("handling/hann_" + str(k) + ".txt")                
             elif action == 3:
-                m = db.getFile("handling/fft.txt")
+                m = db.getFile("handling/fft_" + str(k) + ".txt")
             elif action == 4:
-                m = db.getFile("handling/mel.txt")
+                m = db.getFile("handling/mel_" + str(k) + ".txt")
             elif action == 5:
-                m = db.getFile("handling/fftinverse.txt")
+                m = db.getFile("handling/fftinverse_" + str(k) + ".txt")
             
             content = m[1]
             
@@ -64,22 +65,23 @@ elif choice == 2:
                 print "Filtre passe-haut en cours..."
                 content = passe_haut(content)
                 print "Filtre passe-haut terminé..."
-                db.addFile("handling/passe_haut.txt",content)
+                db.addFile("handling/passe_haut_" + str(k) + ".txt",content)
                 print "Sauvegarde effectuée...\n"
             if action <= 2:
                 print "Fenêtre de Hann en cours..."
                 content = hann_window(content)
                 print "Fenêtre de Hann terminée..."
-                db.addFile("handling/hann.txt",content)
+                db.addFile("handling/hann_" + str(k) + ".txt",content)
                 print "Sauvegarde effectuée...\n"
             if action <= 3:
                 print "Transformée de Fourier rapide en cours..."
                 content = fft(content)
                 print "Transformée de Fourier rapide terminée..."
-                db.addFile("handling/fft.txt",content)
+                db.addFile("handling/fft_" + str(k) + ".txt",content)
                 print "Sauvegarde effectuée...\n"
             print "Ok"
             fileOk = False
+            k+=1
 elif choice == 3:
     choice3 = -1
     while( not choice3 in range(1,4) ):

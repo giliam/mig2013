@@ -94,13 +94,14 @@ def fct_mel_pas(list, pas):
 
 	
 #systeme de test
-pas = 100
-l = zeros(100, int)
-for i in range(len(l)):
-	l[i] = i * pas
-list = fct_mel(l)
-list2 = fct_mel_pas(l, pas)
-print('<frequence transformee, frequence initiale>')
+if __name__ == '__main__':
+    pas = 100
+    l = zeros(100, int)
+    for i in range(len(l)):
+        l[i] = i * pas
+    list = fct_mel(l)
+    list2 = fct_mel_pas(l, pas)
+    print('<frequence transformee, frequence initiale>')
 
-for i in range (0, len(l)):
-	print(list2[i], l[i])
+    for i in range (0, len(l)):
+        print(list2[i], l[i])

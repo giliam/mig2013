@@ -13,4 +13,8 @@ aS'cheval/3.wav'
 p6
 aS'cheval/4.wav'
 p7
+aS'handling/passe_haut.txt'
+p8
+aS'handling/hann.txt'
+p9
 a.

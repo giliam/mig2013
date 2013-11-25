@@ -14,7 +14,19 @@ import matplotlib.pyplot as plt
 """ Utiliser "fftListes" et lui envoyer la liste des echantillons. """
 
 def fftListe(echs):
-    return [fft(echs[k]) for k in range(len(echs))]
+    n = len(echs)
+    rep = [[] for k in range(n)]
+    if n%2 == 1:
+        for k in range(n/2):
+            print "Echantillons ",2*k," et ",2*k+1," en cours..."
+            rep[2*k],rep[2*k+1] = fft(echs[2*k],echs[2*k+1])
+            
+    else:
+        for k in range(n/2-1):
+            print "Echantillons ",2*k," et ",2*k+1," en cours..."
+            rep[2*k],rep[2*k+1] = fft(echs[2*k],echs[2*k+1])
+        rep[n-1] = fft(echs[n-2])
+    rep[n-1] = fft(echs[n-1])
 
 def fft(sig, sig2=[], mid=True, lin=True, freqMax=12000):
     """param sig : signal a traiter
@@ -25,7 +37,7 @@ param lin=True : methode d'interpolation lineaire
 param freqMax=12000 : frequence maximale representee dans le tableau"""
     N = len(sig)
     M = len(sig2)
-    if (M!=0 and M==N):
+    if (M==0 or M==N):
         if sig2==[]:
             C = fftCT(sig,lin)
             if mid:

@@ -1,10 +1,13 @@
+#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
+
 import numpy as np
 import scipy.io.wavfile
 import math as m
 from numpy import int8
 
 def quantification(fileName):
-    ampli = scipy.io.wavfile.read( "db/waves/" + fileName )
+    ampli = scipy.io.wavfile.read("db/waves/" + fileName)
     freq = ampli[0]
     ampli = ampli[1]
     N=len(ampli)
@@ -17,7 +20,7 @@ def quantification(fileName):
             ampMax = ampli[i]
         if ampMin > ampli[i]:
             ampMin = ampli[i]
-    ampAbs = 2* (ampMax + m.fabs(ampMin))
+    ampAbs = 2 * (ampMax + m.fabs(ampMin))
     print ampAbs
     
     for i in range(N):

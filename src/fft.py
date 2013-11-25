@@ -11,6 +11,8 @@ import util
 import numpy as np
 import matplotlib.pyplot as plt
 
+""" Utiliser "fftListes" et lui envoyer la liste des echantillons. """
+
 def fftListe(echs):
     return [fft(echs[k]) for k in range(len(echs))]
 

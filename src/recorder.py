@@ -6,7 +6,6 @@
 import os
 import pyaudio
 import wave
-from synchronisation import synchro
 from constantes import *
 
 def recorder(db):

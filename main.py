@@ -1,10 +1,12 @@
 #!/usr/bin/python
 # -*-coding:utf-8 -*
 """ Main du programme, permet le choix entre enregistrer un élément ou réaliser l'analyse d'un enregistrement déjà effectué """
+import scipy.io.wavfile
 import sys
 sys.path.append("src")
-
+from quantification import quantification
 from db import Db
+from recorder import recorder
 db = Db("db/")
 choice = -1
 while( not choice in range(1,4) ):
@@ -16,7 +18,6 @@ while( not choice in range(1,4) ):
 
 if choice == 1:
     #Réaliser un enregistrement
-    from recorder import recorder
     recorder(db)
 elif choice == 2:
     fileOk = False
@@ -34,9 +35,8 @@ elif choice == 2:
         fileOk = True
         filesList = db.printFilesList(dirList[dirChoice])
         for f in filesList:
-            print f
-            #Réalisation de l'analyse
-            pass
+            m = db.getWaveFile(f)
+            print m
 elif choice == 3:
     choice3 = -1
     while( not choice3 in range(1,2) ):

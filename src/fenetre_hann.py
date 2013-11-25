@@ -32,7 +32,8 @@ def hann_window(signal):
 				L.append(signal[k * int(ecart_fenetre * RATE) + i] * 0.5 \
                 *(1 - np.cos(2 * np.pi * float(i) / (RATE * temps_fenetre))))
 			except IndexError:
-				break 
+				k = l/(ecart_fenetre*RATE)
+				break
 		liste.append(L)
 		k+=1
 	return liste	

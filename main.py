@@ -5,13 +5,12 @@ import scipy.io.wavfile
 import sys
 sys.path.append("src")
 
-
 from db import Db
 from recorder import recorder
 from discrete_cosine_transform import *
 from fft import fft
-from fenetre_hann import *
-
+from fenetre_hann import hann_window
+from passe_haut import passe_haut
 
 db = Db("db/")
 choice = -1
@@ -40,9 +39,47 @@ elif choice == 2:
         print "Dossier choisi : ", dirList[dirChoice]
         fileOk = True
         filesList = db.printFilesList(dirList[dirChoice])
+        action = int( input( "À partir de quelle action souhaitez-vous agir ?\n\
+0-Tout\n1-Filtre passe-haut\n2-Fenêtre de Hann\n3-Transformée de Fourier Rapide\n " ) )
         for f in filesList:
+            if fileOk == False:
+                break
             m = db.getWaveFile(f)
-            print m
+
+            if action == 1:
+                m = db.getFile("handling/passe_haut.txt")
+            elif action == 2:
+                m = db.getFile("handling/hann.txt")
+            elif action == 3:
+                m = db.getFile("handling/fft.txt")
+            elif action == 4:
+                m = db.getFile("handling/mel.txt")
+            elif action == 5:
+                m = db.getFile("handling/fftinverse.txt")
+            
+            content = m[1]
+            
+            print "Extraction réussie...\n"
+            if action <= 1:
+                print "Filtre passe-haut en cours..."
+                content = passe_haut(content)
+                print "Filtre passe-haut terminé..."
+                db.addFile("handling/passe_haut.txt",content)
+                print "Sauvegarde effectuée...\n"
+            if action <= 2:
+                print "Fenêtre de Hann en cours..."
+                content = hann_window(content)
+                print "Fenêtre de Hann terminée..."
+                db.addFile("handling/hann.txt",content)
+                print "Sauvegarde effectuée...\n"
+            if action <= 3:
+                print "Transformée de Fourier rapide en cours..."
+                content = fft(content)
+                print "Transformée de Fourier rapide terminée..."
+                db.addFile("handling/fft.txt",content)
+                print "Sauvegarde effectuée...\n"
+            print "Ok"
+            fileOk = False
 elif choice == 3:
     choice3 = -1
     while( not choice3 in range(1,2) ):

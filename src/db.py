@@ -4,6 +4,7 @@ import os
 import pickle
 import random
 import scipy.io.wavfile
+import wave
 
 """ Instancie la base de données """
 class Db:
@@ -93,8 +94,18 @@ class Db:
         else:
             print "Le fichier n'existe pas"
             
+    def addFile(self,fileName,content,dirFile=""):
+        """ Ajoute un fichier à la liste des fichiers gérés par la base de données 
+            Paramètres : 
+                @fileName : nom du fichier dans le dossier storage 
+        """
+        if len(dirFile) == 0:
+            dirFile = "storage"
+        with open(Db.prefix + dirFile + "/" + fileName,"w") as f:
+            pickle.Pickler(f).dump(content)
+        self.addFileToList(fileName)
             
-            
+    
     def putDatasIntoFile(self,datas,fileName,dirFile=""):
         """ 
             Ajoute un jeu de données 

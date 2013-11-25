@@ -4,6 +4,7 @@ import os
 import pickle
 import random
 import scipy.io.wavfile
+import wave
 
 """ Instancie la base de données """
 class Db:

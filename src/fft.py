@@ -25,7 +25,7 @@ param lin=True : methode d'interpolation lineaire
 param freqMax=12000 : frequence maximale representee dans le tableau"""
     N = len(sig)
     M = len(sig2)
-    if (M!=0 and M==N):
+    if (M==0 or (M!=0 and M==N)):
         if sig2==[]:
             C = fftCT(sig,lin)
             if mid:

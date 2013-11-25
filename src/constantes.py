@@ -12,4 +12,9 @@ RATE = 44100 #Fréquence
 # Synchro:
 COEFF_LISSAGE = 25 # à déterminer empiriquement
 T_MIN = 50 # blanc minimum avant le son
-COEFF_COUPE = 1e-63 # en pourcent
+COEFF_COUPE = 1e-83 # en pourcent
+
+# fenetre hann : 
+
+ecart_fenetre = 1./441.
+temps_fenetre = 0.030

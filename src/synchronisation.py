@@ -21,6 +21,7 @@ def synchro(amplitudes,coeff_lissage,t_min,coeff_coupe):
     COEFF = t_min*RATE/coeff_lissage/1000
     for i in range(N_lissage):
         amplitude_lisse[i] = reduce(add, [m.exp(abs(amplitudes[i * coeff_lissage + j]/100)) for j in range(coeff_lissage)], 0)/coeff_lissage
+        print amplitude_lisse[i]
         if(i == 0):
             maxi = amplitude_lisse[i]
             mini = maxi
@@ -77,6 +78,6 @@ def synchro(amplitudes,coeff_lissage,t_min,coeff_coupe):
         
     return amplitudes_coupe
     
-ampli = scipy.io.wavfile.read("0.wav")
-ampli2 = synchro(ampli[1],COEFF_LISSAGE,T_MIN,COEFF_COUPE)
-scipy.io.wavfile.write("0e.wav", ampli[0], int16(ampli2))
+#ampli = scipy.io.wavfile.read("0.wav")
+#ampli2 = synchro(ampli[1],COEFF_LISSAGE,T_MIN,COEFF_COUPE)
+#scipy.io.wavfile.write("0e.wav", ampli[0], int16(ampli2))

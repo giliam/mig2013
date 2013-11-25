@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from numpy import zeros
+from numpy import int16
 import scipy.io.wavfile
 from constantes import *
 from operator import add
+import math as m
 
 """ coeff_lissage est un entier paramétrant l'intensité du lissage indispensable pour éviter de commencer trop tôt à cause du bruit (à déterminer)
     t_min est l'intervalle de temps de sécurité (à déterminer)
@@ -18,54 +20,53 @@ def synchro(amplitudes,coeff_lissage,t_min,coeff_coupe):
     mini = 0
     COEFF = t_min*RATE/coeff_lissage/1000
     for i in range(N_lissage):
-        amplitude_lisse[i] = reduce(add, [amplitudes[i * coeff_lissage + j] for j in range(coeff_lissage)], 0)/coeff_lissage
+        amplitude_lisse[i] = reduce(add, [m.exp(abs(amplitudes[i * coeff_lissage + j]/100)) for j in range(coeff_lissage)], 0)/coeff_lissage
         if(i == 0):
             maxi = amplitude_lisse[i]
             mini = maxi
-        elif(abs(amplitude_lisse[i]) > abs(maxi)):
+        elif(amplitude_lisse[i] > maxi):
             maxi = amplitude_lisse[i]
-        elif(abs(amplitude_lisse[i]) < abs(mini)):
+        elif(amplitude_lisse[i] < mini):
             mini = amplitude_lisse[i]
+
+    print "maxi", maxi
+    print "mini", mini
         
-    valeur_seuil = coeff_coupe*(abs(maxi)-abs(mini))
+    valeur_seuil = coeff_coupe*(maxi-mini)
+    print "valeur_seuil", valeur_seuil
+
+    compt = 0
+    for i in range(N_lissage):
+        if(amplitude_lisse[i] > valeur_seuil):
+            compt += 1
+
+    print "compt ", compt*coeff_lissage
     
     i_min = 0
     i_max = N_lissage - 1
-    Depasse = False
-    i_dernierHaut = 0
+    i_minTrouve = False
+    i_maxTrouve = False
+    
     for i in range(N_lissage):
-        if(abs(amplitude_lisse[i]) > valeur_seuil):
-            i_dernierHaut = i
-        if(not Depasse):
-            if(abs(amplitude_lisse[i]) > valeur_seuil):
-                Depasse = True
-                i_min = i
-        else:
-            if(abs(amplitude_lisse[i]) < valeur_seuil and (i - i_dernierHaut) > COEFF):
-                i_max = i
-                break
-        
-    """for i in range(N_lissage):
-        if amplitude_lisse[i] > valeur_seuil and i-t_min*RATE/coeff_lissage/1000 >= 0:
+        if((not i_minTrouve) and amplitude_lisse[i] > valeur_seuil):
+            i_minTrouve = True
             i_min = i
-        elif amplitude_lisse[i] > valeur_seuil and i-t_min*RATE/coeff_lissage/1000 < 0:
-            print "L'enregistrement a commence trop tard"
-            # return ""
-            
-    for i in range(N_lissage-1, -1, -1):
-        if amplitude_lisse[i] > valeur_seuil and i+t_min*RATE/coeff_lissage/1000 < N_lissage:
-            i_max = i
-        elif amplitude_lisse[i] > valeur_seuil and i+t_min*RATE/coeff_lissage/1000 > N_lissage:
-            print "L'enregistrement a fini trop tot"
-            # return """
-
+            print "i_min", i_min
+        if((not i_maxTrouve) and amplitude_lisse[N_lissage - i - 1] > valeur_seuil):
+            i_max = N_lissage - i - 1
+            i_maxTrouve = True
+            print "i_max", i_max
+        if(i_minTrouve and i_maxTrouve):
+            print "fin pour i = ", i
+            break
+    
     if(i_min < COEFF):
         print "L'enregistrement a commence trop tard"
     if(i_max > N_lissage - COEFF):
         print "L'enregistrement a fini trop tot"
 
-    print i_min
-    print i_max
+    print i_min*coeff_lissage
+    print i_max*coeff_lissage
     print N
 
     taille = (i_max-i_min)*coeff_lissage
@@ -78,8 +79,4 @@ def synchro(amplitudes,coeff_lissage,t_min,coeff_coupe):
     
 ampli = scipy.io.wavfile.read("0.wav")
 ampli2 = synchro(ampli[1],COEFF_LISSAGE,T_MIN,COEFF_COUPE)
-print "taille2", len(ampli2)
-print ampli[1]
-print ampli2
-print ampli[0]
-scipy.io.wavfile.write("0e.wav", ampli[0], ampli2)
+scipy.io.wavfile.write("0e.wav", ampli[0], int16(ampli2))

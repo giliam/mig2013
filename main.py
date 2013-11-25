@@ -4,9 +4,15 @@
 import scipy.io.wavfile
 import sys
 sys.path.append("src")
-from quantification import quantification
+
+
 from db import Db
 from recorder import recorder
+from discrete_cosine_transform import *
+from fft import fft
+from fenetre_hann import *
+
+
 db = Db("db/")
 choice = -1
 while( not choice in range(1,4) ):

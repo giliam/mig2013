@@ -77,6 +77,6 @@ def synchro(amplitudes,coeff_lissage,t_min,coeff_coupe):
         
     return amplitudes_coupe
     
-ampli = scipy.io.wavfile.read("0.wav")
-ampli2 = synchro(ampli[1],COEFF_LISSAGE,T_MIN,COEFF_COUPE)
-scipy.io.wavfile.write("0e.wav", ampli[0], int16(ampli2))
+#ampli = scipy.io.wavfile.read("0.wav")
+#ampli2 = synchro(ampli[1],COEFF_LISSAGE,T_MIN,COEFF_COUPE)
+#scipy.io.wavfile.write("0e.wav", ampli[0], int16(ampli2))

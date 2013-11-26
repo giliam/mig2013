@@ -1,8 +1,8 @@
 D = 13 #nombre de valeurs gardees sur les MFCC
 
-tabMel = [[(i+1)*(k+1) for i in range(D)] for k in range(3)] #liste des tableaux de mel de l'echantillon sonore
+#tabMel = [[(i+1)*(k+1) for i in range(D)] for k in range(3)] #liste des tableaux de mel de l'echantillon sonore
 
-print tabMel
+#print tabMel
 
 def creeVecteur(tabMel):
 	choice = -1
@@ -39,4 +39,4 @@ def creeVecteur(tabMel):
 				break
 		break
 	return output
-print(creeVecteur(tabMel))			
+#print(creeVecteur(tabMel))			

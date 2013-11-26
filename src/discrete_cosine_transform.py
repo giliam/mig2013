@@ -4,6 +4,7 @@
 import numpy as np
 import scipy as sc
 import math
+from operator import add
 
 
 TAILLE_TABLEAU_MEL_ENTREE = 24
@@ -24,7 +25,7 @@ def inverseDCTI(x): # x represente le tableau en mel donne par les fonctions pre
 def inverseDCTII(x):
         X = np.zeros(B)
         for k in range(B):
-                X[k]= reduce(add, [x[n]*math.cos(math.pi(n + 0.5) * k / B) \
+                X[k]= reduce(add, [x[n]*math.cos(math.pi*(n + 0.5) * k / B) \
                 for n in range(B)]) * math.sqrt(2. / B)
         return X
 

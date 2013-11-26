@@ -17,12 +17,12 @@ def fftListe(echs):
     rep = [[] for k in range(n)]
     if n%2 == 1:
         for k in range(n/2):
-            print "Echantillons ",2*k," et ",2*k+1," en cours..."
+            #print "Echantillons ",2*k," et ",2*k+1," en cours..."
             rep[2*k],rep[2*k+1] = fft(echs[2*k],echs[2*k+1])
             
     else:
         for k in range(n/2-1):
-            print "Echantillons ",2*k," et ",2*k+1," en cours..."
+            #print "Echantillons ",2*k," et ",2*k+1," en cours..."
             rep[2*k],rep[2*k+1] = fft(echs[2*k],echs[2*k+1])
         rep[n-1] = fft(echs[n-2])
     rep[n-1] = fft(echs[n-1])

@@ -153,4 +153,10 @@ aS'handling/fft_inverse_88.txt'
 p76
 aS'handling/fft_88.txt'
 p77
+aS'handling/mel_0.txt'
+p78
+aS'handling/mel_tab_0.txt'
+p79
+aS'handling/fft_inverse_0.txt'
+p80
 a.

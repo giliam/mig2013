@@ -90,6 +90,7 @@ elif choice == 2:
                 print "Application de la fonction Mel en cours..."
                 for k in range(len(content)):
                     content[k] = fct_mel_pas(content[k],1./44100.)
+                    print content[k]
                 print "Application de la fonction Mel terminée..."
                 db.addFile("handling/mel_" + str(numeroTraitement) + ".txt",content)
                 print "Sauvegarde effectuée...\n"

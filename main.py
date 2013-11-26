@@ -7,10 +7,11 @@ sys.path.append("src")
 
 from db import Db
 from recorder import recorder
-from discrete_cosine_transform import *
-from fft import fft
-from fenetre_hann import hann_window
 from passe_haut import passe_haut
+from fenetre_hann import hann_window
+from fft import fftListe
+from mel import fct_mel_pas
+from discrete_cosine_transform import *
 
 db = Db("db/")
 choice = -1
@@ -75,9 +76,15 @@ elif choice == 2:
                 print "Sauvegarde effectuée...\n"
             if action <= 3:
                 print "Transformée de Fourier rapide en cours..."
-                content = fft(content)
+                content = fftListe(content)
                 print "Transformée de Fourier rapide terminée..."
                 db.addFile("handling/fft_" + str(k) + ".txt",content)
+                print "Sauvegarde effectuée...\n"
+            if action <= 4:
+                print "Application de la fonction Mel en cours..."
+                content = fct_mel_pas(content,1/44100)
+                print "Application de la fonction Mel terminée..."
+                db.addFile("handling/mel_" + str(k) + ".txt",content)
                 print "Sauvegarde effectuée...\n"
             print "Ok"
             fileOk = False

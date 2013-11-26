@@ -54,33 +54,31 @@ elif choice == 2:
             if action == 1:
                 content = m[1]
             elif action == 2:
-                content = db.getFile("handling/passe_haut_" + str(numeroTraitement) + ".txt")                
+                content = db.getFile("handling/passe_haut_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt")                
             elif action == 3:
-                content = db.getFile("handling/hann_" + str(numeroTraitement) + ".txt")
+                content = db.getFile("handling/hann_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt")
             elif action == 4:
-                content = db.getFile("handling/fft_" + str(numeroTraitement) + ".txt")
+                content = db.getFile("handling/fft_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt")
             elif action == 5:
-                content = db.getFile("handling/mel_" + str(numeroTraitement) + ".txt")
+                content = db.getFile("handling/mel_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt")
             elif action == 6:
-                content = db.getFile("handling/mel_tab_" + str(numeroTraitement) + ".txt")
+                content = db.getFile("handling/mel_tab_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt")
             elif action == 7:
-                content = db.getFile("handling/fft_inverse_" + str(numeroTraitement) + ".txt")
+                content = db.getFile("handling/fft_inverse_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt")
             else:
                 content = m[1]
-            print content
-            raise Exception("")
             print "Extraction réussie...\n"
             if action <= 1:
                 print "Filtre passe-haut en cours..."
                 content = passe_haut(content)
                 print "Filtre passe-haut terminé..."
-                db.addFile("handling/passe_haut_" + str(numeroTraitement) + ".txt",content)
+                db.addFile("handling/passe_haut_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
                 print "Sauvegarde effectuée...\n"
             if action <= 2:
                 print "Fenêtre de Hann en cours..."
                 content = hann_window(content)
                 print "Fenêtre de Hann terminée..."
-                db.addFile("handling/hann_" + str(numeroTraitement) + ".txt",content)
+                db.addFile("handling/hann_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
                 print "Sauvegarde effectuée...\n"
             if action <= 3:
                 print "Transformée de Fourier rapide en cours..."
@@ -89,28 +87,28 @@ elif choice == 2:
                     for l in range(len(content[k])):
                         content[k][l]=abs(content[k][l])
                 print "Transformée de Fourier rapide terminée..."
-                db.addFile("handling/fft_" + str(numeroTraitement) + ".txt",content)
+                db.addFile("handling/fft_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
                 print "Sauvegarde effectuée...\n"
             if action <= 4:
                 print "Application de la fonction Mel en cours..."
                 for k in range(len(content)):
                     content[k] = fct_mel_pas(content[k],10)
                 print "Application de la fonction Mel terminée..."
-                db.addFile("handling/mel_" + str(numeroTraitement) + ".txt",content)
+                db.addFile("handling/mel_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
                 print "Sauvegarde effectuée...\n"
             if action <= 5:    
                 print "Construction de la liste Mel en cours..."
                 for k in range(len(content)):
                     content[k] = mel_tab(content[k],10)
                 print "Construction de la liste Mel terminée..."
-                db.addFile("handling/mel_tab_" + str(numeroTraitement) + ".txt",content)
+                db.addFile("handling/mel_tab_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
                 print "Sauvegarde effectuée...\n"
             if action <= 6:    
                 print "Transformée de Fourier inverse en cours..."
                 for k in range(len(content)):
                     content[k] = inverseDCTII(content[k])
                 print "Transformée de Fourier inverse terminée..."
-                db.addFile("handling/fft_inverse_" + str(numeroTraitement) + ".txt",content)
+                db.addFile("handling/fft_inverse_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
                 print "Sauvegarde effectuée...\n"
             if action == 7:
                 print "Premier essai de Markov..."

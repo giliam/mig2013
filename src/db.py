@@ -5,6 +5,7 @@ import pickle
 import random
 import scipy.io.wavfile
 import wave
+from numpy import int16
 
 """ Instancie la base de données """
 class Db:
@@ -73,6 +74,14 @@ class Db:
         wf.writeframes(b''.join(frames))
         wf.close()
         
+        self.addFileToList(fileName,"waves")
+        self.syncToFile()
+        
+        
+    
+    def addWaveFromAmp(self,fileName,freq,amp):
+        print "waves/" + fileName
+        scipy.io.wavfile.write(Db.prefix + "waves/" + fileName, freq, int16(amp))
         self.addFileToList(fileName,"waves")
         self.syncToFile()
     

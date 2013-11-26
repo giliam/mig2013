@@ -63,7 +63,6 @@ def fct_mel_pas(listMel,pas):
 		mf=int(2595.0*log10(1+f/700.0))
 		mi=int(mf/pas)
 		list1[mi]=amp
-		print 2595.0*log10(1+f/700.0)
 		# on affecte les amplitudes de f a mel de f
 	if list1[0] == -1.:
 		i = 0
@@ -74,10 +73,8 @@ def fct_mel_pas(listMel,pas):
 	#le dernier indice est necessairement egale
 	i = 0
 	while list1[N1 - i - 1] == -1.:
-		i += 1
+		i = i + 1
 	N1 = N1 - i
-	print i
-	raise Exception("")
 	list2 = zeros(N1, float)
 	for i in range(N1):
 		list2[i] = list1[i]
@@ -102,6 +99,12 @@ def tab_capture(listMel,pas,melbas,melhaut):
 	amp=0
 	for i in range(indbas,indhaut):
 		amp=listMel[i]+amp
+	########################################################################
+	##			DÉBOGAGE DÉGUEULASSE
+	##			ATTENTION
+	########################################################################
+	if amp<=0:
+		amp=1
 	return(log10(amp))
 	
 def mel_tab(listMel,pas):

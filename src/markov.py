@@ -254,7 +254,7 @@ class ContinuousMarkov(object):
 
         print("Final likelyhood : {}".format(oldLike))
 
-
+"""
 def generateSequence(model, deltas, num, var):
     N = num + random.randint(-var, var)
     n, m = model.shape
@@ -288,7 +288,7 @@ def generateSigma(delta):
                 l[i].append(0)
 
     return Matrix(l)
-"""
+
 d = 2 # dimension d
 n = 3 # n etats
 m = 3 # m gaussiennes

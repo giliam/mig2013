@@ -5,10 +5,11 @@ import scipy.io.wavfile
 import sys
 sys.path.append("src")
 
-
-from numpy import abs
+from constantes import *
+from numpy import abs,int16
 from db import Db
 from recorder import recorder
+from synchronisation import synchro
 from passe_haut import passe_haut
 from fenetre_hann import hann_window
 from fft import fftListe
@@ -62,8 +63,12 @@ elif choice == 2:
                 content = db.getFile("handling/mel_" + str(numeroTraitement) + ".txt")
             elif action == 6:
                 content = db.getFile("handling/mel_tab_" + str(numeroTraitement) + ".txt")
+            elif action == 7:
+                content = db.getFile("handling/fft_inverse_" + str(numeroTraitement) + ".txt")
             else:
                 content = m[1]
+            print content
+            raise Exception("")
             print "Extraction réussie...\n"
             if action <= 1:
                 print "Filtre passe-haut en cours..."
@@ -89,15 +94,14 @@ elif choice == 2:
             if action <= 4:
                 print "Application de la fonction Mel en cours..."
                 for k in range(len(content)):
-                    content[k] = fct_mel_pas(content[k],1./44100.)
-                    print content[k]
+                    content[k] = fct_mel_pas(content[k],10)
                 print "Application de la fonction Mel terminée..."
                 db.addFile("handling/mel_" + str(numeroTraitement) + ".txt",content)
                 print "Sauvegarde effectuée...\n"
             if action <= 5:    
                 print "Construction de la liste Mel en cours..."
                 for k in range(len(content)):
-                    content[k] = mel_tab(content[k],1./44100.)
+                    content[k] = mel_tab(content[k],10)
                 print "Construction de la liste Mel terminée..."
                 db.addFile("handling/mel_tab_" + str(numeroTraitement) + ".txt",content)
                 print "Sauvegarde effectuée...\n"
@@ -107,6 +111,22 @@ elif choice == 2:
                     content[k] = inverseDCTII(content[k])
                 print "Transformée de Fourier inverse terminée..."
                 db.addFile("handling/fft_inverse_" + str(numeroTraitement) + ".txt",content)
+                print "Sauvegarde effectuée...\n"
+            if action == 7:
+                print "Premier essai de Markov..."
+                """#Nombre de phonems et nombre d'états
+                n = len(content)
+                m = n
+                #
+                d = 13
+                PI = 
+                A = 
+                C = 
+                mu = 
+                sigma = 
+                content = ContinuousMarkov(n, m, d, OA_PI, OA_A, OA_C, OA_G_mu, OA_G_sigma)
+                print "Premier essai de Markov réussi !"""
+                db.addFile("handling/markov_" + str(numeroTraitement) + ".txt",content)
                 print "Sauvegarde effectuée...\n"
             print "Ok"
             fileOk = False
@@ -140,13 +160,14 @@ elif choice == 3:
         for f in filesList:
             ampli = db.getWaveFile(f)
             ampli2 = synchro(ampli[1], COEFF_LISSAGE, T_MIN, COEFF_COUPE)
-            scipy.io.wavfile.write("db/waves/mod/"+f, ampli[0], int16(ampli2))
-    fileChoice = -1
-    while( not fileChoice in range(len(filesList)) ):
-        try:
-            fileChoice = int( input( "Choisissez un fichier a traiter et entrez son numero : " ) )
-        except NameError:
-            print "Ceci n'est pas un nombre !"
-    db.deleteFileFromList(filesList[fileChoice],dirName)
+            db.addWaveFromAmp("mod/" + f,ampli[0],ampli2)
+    elif choice3 == 4:
+        fileChoice = -1
+        while( not fileChoice in range(len(filesList)) ):
+            try:
+                fileChoice = int( input( "Choisissez un fichier a traiter et entrez son numero : " ) )
+            except NameError:
+                print "Ceci n'est pas un nombre !"
+        db.deleteFileFromList(filesList[fileChoice],dirName)
 else:
     pass

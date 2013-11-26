@@ -41,26 +41,27 @@ elif choice == 2:
         fileOk = True
         k = 0
         filesList = db.printFilesList(dirList[dirChoice])
-        #action = int( input( "À partir de quelle action souhaitez-vous agir ?\n\0-Tout\n1-Filtre passe-haut\n2-Fenêtre de Hann\n3-Transformée de Fourier Rapide\n " ) )
-        action = 0
+        action = int( input( "À partir de quelle action souhaitez-vous agir ?\n0-Tout\n1-Filtre passe-haut\n2-Fenêtre de Hann\n3-Transformée de Fourier Rapide\n4-Fonction Mel\n5-Création de la liste Mel\n6-Transformée de Fourier inverse\n " ) )
         for f in filesList:
             if fileOk == False:
                 break
             m = db.getWaveFile(f)
             
             if action == 1:
-                m = db.getFile("handling/passe_haut_" + str(k) + ".txt")
+                content = m[1]
             elif action == 2:
-                m = db.getFile("handling/hann_" + str(k) + ".txt")                
+                content = db.getFile("handling/passe_haut_" + str(k) + ".txt")                
             elif action == 3:
-                m = db.getFile("handling/fft_" + str(k) + ".txt")
+                content = db.getFile("handling/hann_" + str(k) + ".txt")
             elif action == 4:
-                m = db.getFile("handling/mel_" + str(k) + ".txt")
+                content = db.getFile("handling/fft_" + str(k) + ".txt")
             elif action == 5:
-                m = db.getFile("handling/mel_tab_" + str(k) + ".txt")
-            
-            content = m[1]
-            
+                content = db.getFile("handling/mel_" + str(k) + ".txt")
+            elif action == 6:
+                content = db.getFile("handling/mel_tab_" + str(k) + ".txt")
+            else:
+                content = m[1]
+
             print "Extraction réussie...\n"
             if action <= 1:
                 print "Filtre passe-haut en cours..."
@@ -93,6 +94,13 @@ elif choice == 2:
                     content[k] = mel_tab(content[k],1./44100.)
                 print "Construction de la liste Mel terminée..."
                 db.addFile("handling/mel_tab_" + str(k) + ".txt",content)
+                print "Sauvegarde effectuée...\n"
+            if action <= 6:    
+                print "Transformée de Fourier inverse en cours..."
+                for k in range(len(content)):
+                    content[k] = inverseDCTII(content[k])
+                print "Transformée de Fourier inverse terminée..."
+                db.addFile("handling/fft_inverse_" + str(k) + ".txt",content)
                 print "Sauvegarde effectuée...\n"
             print "Ok"
             fileOk = False

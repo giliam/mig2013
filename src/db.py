@@ -42,7 +42,7 @@ class Db:
                     return content
                 elif fileName in self.filesList:
                     with open(Db.prefix + dirFile + "/" + fileName,"r") as f:
-                        content = f.read()
+                        content = pickle.Unpickler(f).load()
                     return content
             except IOError:
                 raise Exception("La lecture de fichier a échoué")

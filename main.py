@@ -14,6 +14,7 @@ from fenetre_hann import hann_window
 from fft import fftListe
 from mel import fct_mel_pas, mel_tab
 from discrete_cosine_transform import inverseDCTII
+from markov import *
 
 db = Db("db/")
 choice = -1
@@ -63,7 +64,6 @@ elif choice == 2:
                 content = db.getFile("handling/mel_tab_" + str(numeroTraitement) + ".txt")
             else:
                 content = m[1]
-
             print "Extraction réussie...\n"
             if action <= 1:
                 print "Filtre passe-haut en cours..."

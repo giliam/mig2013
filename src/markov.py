@@ -23,7 +23,7 @@ def calcMat(v):
     return Matrix(l)
 
 def modify(tmp):
-    print("CHANGING BIATCHES")
+    #print("CHANGING BIATCHES")
     #print("tmp : {}".format(tmp))
     n, m = tmp.shape
     s = 0.
@@ -81,7 +81,7 @@ class ContinuousMarkov(object):
             v = x_.T*(sigma**-1)*x_
             exp = math.exp(-1./2.*v[0])
             if exp/den > 1:
-                print("COME ON, SON OF A BITCH !")
+                #print("COME ON, SON OF A BITCH !")
                 exp = den = 1
                 """print("sigma**-1 : {}".format(sigma**-1))
                 print("x_ : {}".format(x_))
@@ -255,9 +255,6 @@ class ContinuousMarkov(object):
         print("Final likelyhood : {}".format(oldLike))
 
 
-# Random number generator initilization
-random.seed()
-
 def generateSequence(model, deltas, num, var):
     N = num + random.randint(-var, var)
     n, m = model.shape
@@ -291,7 +288,7 @@ def generateSigma(delta):
                 l[i].append(0)
 
     return Matrix(l)
-
+"""
 d = 2 # dimension d
 n = 3 # n etats
 m = 3 # m gaussiennes
@@ -313,9 +310,10 @@ varA = 3
 varU = 3
 
 seqs = generateSequences([modelO, modelA], [deltaO, deltaA], [numO, numA], [varO, varA], 10)
-"""for i in range(len(seqs)):
+
+for i in range(len(seqs)):
     print("--------------------------")
-    print(seqs[i])"""
+    print(seqs[i])
 
 OA_PI = [0.85, 0.05, 0.05]
 OA_A = [[0.85, 0.13, 0.02], [0.05, 0.9, 0.05], [0.4, 0.2, 0.4]]
@@ -340,7 +338,7 @@ print("p : {}".format(p))
 alpha, p = OA.forward(test2)
 print("p : {}".format(p))
 
-"""seqs = [[Matrix([1, 2]), Matrix([2, 1])], [Matrix([1, 0]), Matrix([0, 1])]]
+seqs = [[Matrix([1, 2]), Matrix([2, 1])], [Matrix([1, 0]), Matrix([0, 1])]]
 PI = [.8, .1, .1]
 A = [[.8, .1, .1], [.2, .4, .4], [.15, .25, .6]]
 C = [[.1, .1, .8], [.7, .15, .15], [.2, .4, .4]]

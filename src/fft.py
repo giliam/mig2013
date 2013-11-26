@@ -26,6 +26,7 @@ def fftListe(echs):
             rep[2*k],rep[2*k+1] = fft(echs[2*k],echs[2*k+1])
         rep[n-1] = fft(echs[n-2])
     rep[n-1] = fft(echs[n-1])
+    return rep
 
 def fft(sig, sig2=[], mid=True, lin=True, freqMax=12000):
     """param sig : signal a traiter

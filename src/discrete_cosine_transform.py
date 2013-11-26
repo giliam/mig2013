@@ -24,8 +24,8 @@ def inverseDCTI(x): # x represente le tableau en mel donne par les fonctions pre
 def inverseDCTII(x):
         X = np.zeros(B)
         for k in range(B):
-                X[k]= reduce(add, [math.cos(math.pi(n + 0.5) * k / B) \
-                for n in range(N)]) * math.sqrt(2. / B)
+                X[k]= reduce(add, [x[n]*math.cos(math.pi(n + 0.5) * k / B) \
+                for n in range(B)]) * math.sqrt(2. / B)
         return X
 
 def inverseDCTIII(x):

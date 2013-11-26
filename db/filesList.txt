@@ -145,4 +145,8 @@ aS'handling/hann_0.txt'
 p72
 aS'handling/fft_0.txt'
 p73
+aS'handling/mel_88.txt'
+p74
+aS'handling/mel_tab_88.txt'
+p75
 a.

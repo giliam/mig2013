@@ -10,8 +10,8 @@ from recorder import recorder
 from passe_haut import passe_haut
 from fenetre_hann import hann_window
 from fft import fftListe
-from mel import fct_mel_pas
-from discrete_cosine_transform import *
+from mel import fct_mel_pas, mel_tab
+from discrete_cosine_transform import inverseDCTII
 
 db = Db("db/")
 choice = -1
@@ -57,7 +57,7 @@ elif choice == 2:
             elif action == 4:
                 m = db.getFile("handling/mel_" + str(k) + ".txt")
             elif action == 5:
-                m = db.getFile("handling/fftinverse_" + str(k) + ".txt")
+                m = db.getFile("handling/mel_tab_" + str(k) + ".txt")
             
             content = m[1]
             
@@ -82,9 +82,17 @@ elif choice == 2:
                 print "Sauvegarde effectuée...\n"
             if action <= 4:
                 print "Application de la fonction Mel en cours..."
-                content = fct_mel_pas(content,1/44100)
+                for k in range(len(content)):
+                    content[k] = fct_mel_pas(content[k],1./44100.)
                 print "Application de la fonction Mel terminée..."
                 db.addFile("handling/mel_" + str(k) + ".txt",content)
+                print "Sauvegarde effectuée...\n"
+            if action <= 5:    
+                print "Construction de la liste Mel en cours..."
+                for k in range(len(content)):
+                    content[k] = mel_tab(content[k],1./44100.)
+                print "Construction de la liste Mel terminée..."
+                db.addFile("handling/mel_tab_" + str(k) + ".txt",content)
                 print "Sauvegarde effectuée...\n"
             print "Ok"
             fileOk = False

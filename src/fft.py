@@ -48,7 +48,7 @@ param freqMax=12000 : frequence maximale representee dans le tableau"""
             C = fftCT([sig[k]+sig2[k]*1j for k in range(N)],lin)
             C1 = [(C[k]+C[N-k].conjugate())/2 for k in range(1,N)]
             C2 = [(C[k]-C[N-k].conjugate())/(2j) for k in range(1,N)]
-            if mid: return C1[len(C1)/2:],C2[len(C2)/2:]
+            if mid: return C1[:len(C1)/2],C2[:len(C2)/2]
             else: return C1,C2
     else:
         print "Deux echantillons de meme taille needed !"

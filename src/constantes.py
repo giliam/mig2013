@@ -16,5 +16,5 @@ COEFF_COUPE = 0.0000001 # en pourcent
 
 # fenetre hann : 
 
-ecart_fenetre = 10./441.
+ecart_fenetre = 0.01301587
 temps_fenetre = 0.023219954648526

@@ -40,6 +40,7 @@ def hann_window(signal):
 
 if __name__ == "__main__":
     #test de verification 	
-	z = [250.*i/100000 for i in range (88200)]
-	
-	print(len(hann_window(z)[15]))
+	z = hann_window([250.*i/100000 for i in range (88200)])
+	for i in range(len(z)):
+		print(len(z[i]))
+

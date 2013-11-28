@@ -102,11 +102,6 @@ double[] fftCT(double[] sig)
 	}
 	return tmp[p];
 }
-
-        /*even = fftCTRec(sig[0::2])
-        odd = fftCTRec(sig[1::2])
-        return [even[k] + np.exp(-2j*np.pi*k/N)*odd[k] for k in range(N/2)] + \
-               [even[k] - np.exp(-2j*np.pi*k/N)*odd[k] for k in range(N/2)]*/
 			   
 bool is2Power(int N)
 	return N==1 || (N%2==0 && is2Power(N/2));

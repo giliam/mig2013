@@ -24,7 +24,6 @@ def inverseDCTII(x):
 	X[0] = reduce(add, [x[n] for n in range(B)])/math.sqrt(B)
 	for k in range(1, B):
 		X[k]= reduce(add, [x[n]*math.cos(math.pi*(n+0.5)*k/B) for n in range(B)])*math.sqrt(2./B)
-		print 
 	return X
 
 def inverseDCTIII(x):

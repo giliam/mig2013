@@ -2,7 +2,6 @@
 # -*-coding:utf-8 -*
 import os
 import pickle
-import random
 import scipy.io.wavfile
 import wave
 from numpy import int16
@@ -196,7 +195,6 @@ class Db:
                     @*extRequired = "all" : envoie l'extension des fichiers à afficher sous forme de tuples de noms d'extensions 
                                                 exemple : .wav, .txt """
         filesListExt = []
-        print len(self.filesList)
         for k,f in enumerate(self.filesList):
             #On récupère l'extension du fichier parcouru
             a,ext = os.path.splitext(f)
@@ -224,7 +222,7 @@ class Db:
         
     def addLog(self,s,fileName=""):
         if Db.verbose:
-            print s
+            pass
         self.log += "\n" + s
         #self.addFile("dblog" + fileName + ".txt",self.log,"logs/")
         

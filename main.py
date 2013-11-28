@@ -93,7 +93,7 @@ def main(verbose=True,action=-1,verboseUltime=True):
         print "Fichier choisi : ", dirList[dirChoice]
         amp = db.getFile("handling/" + str(dirChoice))
         db.addWaveFromAmp("output/" + str(dirChoice) + ".wav",44100,amp,"output/",False)
-    elif choice == 4:
+    elif choice == 5:
         choice3 = -1
         while( not choice3 in range(1,4) ):
             try:

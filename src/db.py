@@ -41,7 +41,7 @@ class Db:
         if fileName in self.filesList:
             try:
                 if dirFile == "waves":
-                    content = scipy.io.wavfile.read(Db.prefix + dirFile + "/" + fileName, "r")
+                    content = scipy.io.wavfile.read(Db.prefix + dirFile + "/" + fileName)
                     return content
                 elif fileName in self.filesList:
                     with open(Db.prefix + dirFile + "/" + fileName,"r") as f:

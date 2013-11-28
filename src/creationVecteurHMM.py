@@ -1,3 +1,5 @@
+
+from constantes import *
 from constantes import TAILLE_FINALE_MFCC
 
 D = TAILLE_FINALE_MFCC

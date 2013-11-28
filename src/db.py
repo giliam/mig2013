@@ -2,7 +2,6 @@
 # -*-coding:utf-8 -*
 import os
 import pickle
-import random
 import scipy.io.wavfile
 import wave
 from numpy import int16
@@ -15,10 +14,13 @@ class Db:
             
     filesListName = "filesList"
     prefix = ""
+    verbose = False
     
-    def __init__(self, prefix = ""):
+    def __init__(self, prefix = "", verbose = False):
         """ Constructeur """
         Db.prefix = prefix
+        Db.verbose = verbose
+        self.log = ""
         try:
             with open(Db.prefix + Db.filesListName + ".txt","r") as f:
                 self.filesList = pickle.Unpickler(f).load()
@@ -48,7 +50,7 @@ class Db:
             except IOError:
                 raise Exception("La lecture de fichier a échoué")
         else:
-            print "le fichier n'est pas géré pas la base de données"
+            self.addLog("le fichier n'est pas géré pas la base de données")
             return ""
 
 
@@ -97,11 +99,11 @@ class Db:
             if not fileName in self.filesList:
                 self.filesList.append(fileName)
                 self.syncToFile()
-                print "L'insertion du fichier a bien été effectuée"
+                self.addLog("L'insertion du fichier a bien été effectuée")
             else:
-                print "Le fichier est déjà dans la bibliothèque"
+                self.addLog("Le fichier est déjà dans la bibliothèque")
         else:
-            print "Le fichier n'existe pas"
+            self.addLog("Le fichier n'existe pas")
             
             
     
@@ -133,7 +135,8 @@ class Db:
             self.addFileToList(fileName)
             self.syncToFile()
         except IOError:
-            raise Exception("La lecture de fichier a échoué")
+            self.addLog("La lecture de fichier a échoué")
+            return False
     
     
     
@@ -149,18 +152,18 @@ class Db:
             try:
                 dirName = os.path.dirname(fileName)
                 os.remove(Db.prefix + dirFile + "/" + fileName)
-                print "Le fichier a bien été supprimé"
+                self.addLog("Le fichier a bien été supprimé")
             except OSError:
-                print "La suppression a échoué"
+                self.addLog("La suppression a échoué")
             try:
                 os.rmdir(Db.prefix + dirFile + "/" + dirName)
-                print "Le dossier a bien été supprimé"
+                self.addLog("Le dossier a bien été supprimé")
             except OSError:
                 pass
             self.syncToFile()
-            print "La suppression du fichier a bien été effectuée"
+            self.addLog("La suppression du fichier a bien été effectuée")
         else:
-            print "Le fichier n'existe pas ou n'est pas géré par la base de données"
+            self.addLog("Le fichier n'existe pas ou n'est pas géré par la base de données")
     
     
     
@@ -180,7 +183,7 @@ class Db:
             with open(Db.prefix + Db.filesListName + ".txt","w") as f:
                 c = pickle.Pickler(f)
                 c.dump([])
-            print "Réinitialisation réussie pour les fichiers"
+            self.addLog("Réinitialisation réussie pour les fichiers")
     reset = staticmethod(reset)
     
     
@@ -192,7 +195,6 @@ class Db:
                     @*extRequired = "all" : envoie l'extension des fichiers à afficher sous forme de tuples de noms d'extensions 
                                                 exemple : .wav, .txt """
         filesListExt = []
-        print len(self.filesList)
         for k,f in enumerate(self.filesList):
             #On récupère l'extension du fichier parcouru
             a,ext = os.path.splitext(f)
@@ -217,7 +219,20 @@ class Db:
     
     def toString(self):
         print self.filesList
-
+        
+    def addLog(self,s,fileName=""):
+        if Db.verbose:
+            pass
+        self.log += "\n" + s
+        #self.addFile("dblog" + fileName + ".txt",self.log,"logs/")
+        
+    def logDump(self,fileName,log=""):
+        if log == "":
+            name = "dblog"
+            log = self.log
+        else:
+            name = "handlinglog"
+        self.addFile(name + fileName + ".txt",log,"logs/")
     
 if __name__ == "__main__":
     db = Db()

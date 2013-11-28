@@ -14,19 +14,22 @@ from passe_haut import passe_haut
 from fenetre_hann import hann_window
 from fft import fftListe
 from creationVecteurHMM import creeVecteur
-from mel import fct_mel_pas, mel_tab
-from discrete_cosine_transform import inverseDCTII
+from triangularFilterbank import triangularFilter
+from inverseDCT import inverseDCTII
 from tableauEnergyPerFrame import construitTableauEnergy
 
 #from markov import *
 
-def main():
-    db = Db("db/")
+def main(verbose=True,action=-1,verboseUltime=True):
+    db = Db("db/",verbose)
     choice = -1
-    while( not choice in range(1,5) ):
+    while( not choice in range(1,6) ):
         try:
-            choice = int(input("Que voulez-vous faire ?\n1-Enregistrer un element\n\
-2-Realiser l'analyse d'un mot\n3-Afficher résultats intermédiaires\n4-Gestion des fichiers de la base de donnees\n"))
+            if verboseUltime:
+                choice = int(input("Que voulez-vous faire ?\n1-Enregistrer un element\n\
+2-Realiser l'analyse d'un mot\n3-Tester\n4-Afficher résultats intermédiaires\n5-Gestion des fichiers de la base de donnees\n"))
+            else:
+                choice = 2
         except NameError:
             print "Ceci n'est pas un nombre !"
 
@@ -51,8 +54,10 @@ def main():
             filesList = db.printFilesList(dirList[dirChoice])
             action = int( input( "À partir de quelle action souhaitez-vous agir ?\n0-Tout\n1-Filtre passe-haut\n2-Fenêtre de Hann\n3-Transformée de Fourier Rapide\n4-Fonction Mel\n5-Création de la liste Mel\n6-Transformée de Fourier inverse\n7-Creation de vecteurs\n " ) )
             for f in filesList:
-                m = db.getWaveFile(f)
-                
+                try:
+                    m = db.getWaveFile(f)
+                except IOError:
+                    break
                 if action == 1:
                     content = m[1]
                 elif action == 2:
@@ -69,76 +74,14 @@ def main():
                     content = db.getFile("handling/fft_inverse_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt")
                 else:
                     content = m[1]
-                print "Extraction reussie...\n"
-                if action <= 1:
-                    print "Filtre passe-haut en cours..."
-                    content = passe_haut(content)
-                    print "Filtre passe-haut termine..."
-                    db.addFile("handling/passe_haut_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
-                    print "Sauvegarde effectuee...\n"
-                if action <= 2:
-                    print "Fenêtre de Hann en cours..."
-                    content = hann_window(content)
-                    print "Fenêtre de Hann terminee..."
-                    db.addFile("handling/hann_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
-                    print "Sauvegarde effectuee...\n"
-                if action <= 3:
-                    print "Transformee de Fourier rapide en cours..."
-                    content = fftListe(content)
-		    energyTable = construitTableauEnergy(content)
-                    for k in range(len(content)):
-                        for l in range(len(content[k])):
-                            content[k][l]=abs(content[k][l])
-                    print "Transformee de Fourier rapide terminee..."
-                    db.addFile("handling/fft_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
-                    print "Sauvegarde effectuee...\n"
-                if action <= 4:
-                    print "Application de la fonction Mel en cours..."
-                    for k in range(len(content)):
-                        content[k] = fct_mel_pas(content[k],10)
-                    print "Application de la fonction Mel terminee..."
-                    db.addFile("handling/mel_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
-                    print "Sauvegarde effectuee...\n"
-                if action <= 5:    
-                    print "Construction de la liste Mel en cours..."
-                    for k in range(len(content)):
-                        content[k] = mel_tab(content[k],10)
-                    print "Construction de la liste Mel terminee..."
-                    db.addFile("handling/mel_tab_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
-                    print "Sauvegarde effectuee...\n"
-                if action <= 6:    
-                    print "Transformee de Fourier inverse en cours..."
-                    for k in range(len(content)):
-                        content[k] = inverseDCTII(content[k])
-                    print "Transformee de Fourier inverse terminee..."
-                    db.addFile("handling/fft_inverse_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
-                    print "Sauvegarde effectuee...\n"
-                if action <= 7:    
-                    print "Creation de vecteurs HMM en cours..."
-                    content = creeVecteur(content, energyTable)
-                    print "Creation de vecteurs HMM terminee..."
-                    db.addFile("handling/vecteurs_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
-                    print "Sauvegarde effectuee...\n"
-                if action == 8:
-                    print "Premier essai de Markov..."
-                    """#Nombre de phonems et nombre d'états
-                    n = len(content)
-                    m = n
-                    #
-                    d = 13
-                    PI = 
-                    A = 
-                    C = 
-                    mu = 
-                    sigma = 
-                    content = ContinuousMarkov(n, m, d, OA_PI, OA_A, OA_C, OA_G_mu, OA_G_sigma)
-                    print "Premier essai de Markov réussi !"""
-                    db.addFile("handling/markov_" + str(numeroTraitement) + ".txt",content)
-                    print "Sauvegarde effectuee...\n"
-                print "Ok"
+                handlingOneWord(content,db,dirChoice,numeroTraitement)
                 fileOk = False
                 numeroTraitement+=1
     elif choice == 3:
+        print "Vous allez d'abord réaliser l'enregistrement du mot que vous cherchez à tester"
+        fileName = recorder(db,"tmp",1,False)
+        m,l = handlingOneWord(c,db,fileName,0)
+    elif choice == 4:
         print "Voici la liste des mots a etudier : "
         dirList = db.printDirFiles("storage/handling/")
         dirChoice = -1
@@ -150,7 +93,7 @@ def main():
         print "Fichier choisi : ", dirList[dirChoice]
         amp = db.getFile("handling/" + str(dirChoice))
         db.addWaveFromAmp("output/" + str(dirChoice) + ".wav",44100,amp,"output/",False)
-    elif choice == 4:
+    elif choice == 5:
         choice3 = -1
         while( not choice3 in range(1,4) ):
             try:
@@ -190,5 +133,92 @@ def main():
             db.deleteFileFromList(filesList[fileChoice],dirName)
     else:
         pass
+
+
+
+def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0):
+    """ Fait le traitement d'un mot pour en construire les vecteurs de Markov et tester ensuite la compatibilité avec les automates existants 
+            Retourne un tuple (motLePlusCompatible,log) """
+    log = ""
+    if action <= 1:
+        log += "Filtre passe-haut en cours..."
+        content = passe_haut(content)
+        log += "Filtre passe-haut termine..."
+        db.addFile("handling/passe_haut_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
+        log += "Sauvegarde effectuee...\n"
+    if action <= 2:
+        log += "Fenêtre de Hann en cours..."
+        content = hann_window(content)
+        log += "Fenêtre de Hann terminee..."
+        db.addFile("handling/hann_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
+        log += "Sauvegarde effectuee...\n"
+    if action <= 3:
+        log += "Transformee de Fourier rapide en cours..."
+        content = fftListe(content)
+        energyTable = construitTableauEnergy(content)
+        for k in range(len(content)):
+            for l in range(len(content[k])):
+                content[k][l]=abs(content[k][l])
+        log += "Transformee de Fourier rapide terminee..."
+        db.addFile("handling/fft_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
+        log += "Sauvegarde effectuee...\n"
+    """
+    if action <= 4:
+        log += "Application de la fonction Mel en cours..."
+        for k in range(len(content)):
+            content[k] = fct_mel_pas(content[k],10)
+        log += "Application de la fonction Mel terminee..."
+        db.addFile("handling/mel_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
+        log += "Sauvegarde effectuee...\n"
+    if action <= 5:    
+        log += "Construction de la liste Mel en cours..."
+        for k in range(len(content)):
+            content[k] = mel_tab(content[k],10)
+        log += "Construction de la liste Mel terminee..."
+        db.addFile("handling/mel_tab_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
+        log += "Sauvegarde effectuee...\n"
+    """
+    if action <=5:
+        log += "Application de la fonction Mel en cours..."
+        for k in range(len(content)):
+            content[k] = triangularFilter(content[k],RATE)
+        log += "Application de la fonction Mel terminee..."
+        db.addFile("handling/mel_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
+        log += "Sauvegarde effectuee...\n"
+    if action <= 6:    
+        log += "Transformee de Fourier inverse en cours..."
+        for k in range(len(content)):
+            content[k] = inverseDCTII(content[k])
+        log += "Transformee de Fourier inverse terminee..."
+        db.addFile("handling/fft_inverse_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
+        log += "Sauvegarde effectuee...\n"
+    if action <= 7:    
+        log += "Creation de vecteurs HMM en cours..."
+        content = creeVecteur(content, energyTable)
+        log += "Creation de vecteurs HMM terminee..."
+        db.addFile("handling/vecteurs_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
+        log += "Sauvegarde effectuee...\n"
+    """if action == 8:
+        log += "Premier essai de Markov..."
+        #Nombre de phonems et nombre d'états
+        n = len(content)
+        m = n
+        #
+        d = 13
+        PI = 
+        A = 
+        C = 
+        mu = 
+        sigma = 
+        content = ContinuousMarkov(n, m, d, OA_PI, OA_A, OA_C, OA_G_mu, OA_G_sigma)
+        print "Premier essai de Markov réussi !
+        db.addFile("handling/markov_" + str(numeroTraitement) + ".txt",content)
+        log += "Sauvegarde effectuee...\n"
+    """
+    db.logDump(str(dirChoice) + "_" + str(numeroTraitement),log)
+    db.logDump(str(dirChoice) + "_" + str(numeroTraitement))
+    motLePlusCompatible = "cheval"
+    return motLePlusCompatible,log
+
 if __name__ == "__main__":
-    main()
+    main(False)

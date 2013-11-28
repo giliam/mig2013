@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 from constantes import *
+=======
+from constantes import TAILLE_FINALE_MFCC
+
+>>>>>>> 43f0cdf9cfaf9e16b1ccf14de4f6b0c0758a7219
 D = TAILLE_FINALE_MFCC
 
 #tabMel = [[(i+1)*(k+1) for i in range(D)] for k in range(3)] #liste des tableaux de mel de l'echantillon sonore
@@ -13,7 +18,7 @@ def creeVecteur(tabMel, energyTable):
 		output[t][D-1] = energyTable[t]
 	while( not choice in range(2) ):
 		try:
-			choice = 0
+			choice = 1
 			#choice = int( input( "Voulez-vous incorporer les differences premieres ? \n 0 : non   1 : oui : " )) 
 		except NameError:
 			print "Choix non valable"
@@ -26,13 +31,13 @@ def creeVecteur(tabMel, energyTable):
 			for t in range(1, len(tabMel)):
 				for k in range(D-1):
 					output[t][k] += delta[t][k]
-			print "output :"
-			print output
-			print "delta :"
-			print delta
+			#print "output :"
+			#print output
+			#print "delta :"
+			#print delta
 			while( not choice in range(2) ):
 				try:
-					choice = 0
+					choice = 1
 					#choice = int( input( "Voulez-vous incorporer les differences secondes ? \n 0 : non   1 : oui " ) )
 				except NameError:
 					print "Choix non valable"

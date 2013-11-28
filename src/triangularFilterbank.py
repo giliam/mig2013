@@ -1,12 +1,14 @@
+#!/usr/bin/python
+# -*-coding:utf-8 -*
 import numpy as np
 import math
 
-FE = 44100 #frequence d'echantillonage
 
 def mel(f):
 	return 2595*math.log(1+f/700.)/math.log(10)
 
 def triangularFilter(tab,FE):
+	""" Prend en paramètre une fenêtre de Hamming et la fréquence d'échantillonage et retourne la fenêtre de Mel """
 	pasOutput = mel(FE/2.)/12.
 	pasFFT = FE/(2.*len(tab))
 	outputTab = [0 for i in range(24)]
@@ -16,7 +18,6 @@ def triangularFilter(tab,FE):
 		milieu = (debut+fin)/2.
 		for k in range(len(tab)):
 			f = k*pasFFT
-			print f,mel(f),debut,fin
 			if(mel(f) > debut and mel(f)<milieu):
 				outputTab[n]+= abs(((mel(f)-debut)/(pasOutput/2.))*tab[k])
 			elif(mel(f) > milieu and mel(f) < fin):

@@ -1,4 +1,6 @@
-/* HTML Recording script by Maxime Ernoult */
+/* HTML5Script 
+An audio recorder for the speech recognition project
+for mig2013 SE team by Maxime Ernoult */
 
 navigator.getUserMedia = (navigator.getUserMedia || 
                             navigator.webkitGetUserMedia ||
@@ -83,18 +85,54 @@ function stopRecord(){
     
 }
 
-function mediaOnDataAvailable(data){
+function mediaOnDataAvailable(blob){
     /* A la fin de l'enregistrement, récupère le blob dans data 
        et lance le traitement                                       */
+
+    var SERVERURL;
+
+    //Log dans la console
     console.log("Data available !!!");
-    console.log(data);
+    console.log(blob);
 
     //Rend le blob disponible au chargement
     var link = document.getElementById('dlLink');
-    link.href = window.URL.createObjectURL(data.data);
+    link.href = window.URL.createObjectURL(blob.data);
     link.innerHTML = "dl";
 
+    //Communique les data au serveur
+    servInteract(blob.data);
+}
 
+function servInteract(data){
+    // Envoie le blob au serveur
+    var formData = new FormData();
+    formData.append('userSession', userSession);
+    formData.append('OGGBlob', blob);
+
+    var req = new XMLHttpRequest();
+    req.open('POST', SERVERURL, true);
+    req.onstatechange = function(e){
+        if (req.readyStatus === 4){
+            if (req.status == 400){
+                wordResponse(req.responseXML);         
+            }
+        }
+    }
+    req.send()
+
+}
+
+function wordResponse(respXML){
+    if (respXML.getElementsByTagName().length()){
+        var responseWord = respXML.getElementsByTagName('word');
+        var responseTime = respXML.getElementsByTagName('responseTime');
+    }
+    else{
+        var responseWord = "Erreur :'(";
+    }
+    var responseElement = document.getElementById('responseWord');
+    responseElement.innerHTML = responseWord;
 
 }
 

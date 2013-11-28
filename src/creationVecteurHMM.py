@@ -14,7 +14,7 @@ def creeVecteur(tabMel, energyTable):
 		output[t][D-1] = energyTable[t]
 	while( not choice in range(2) ):
 		try:
-			choice = 0
+			choice = 1
 			#choice = int( input( "Voulez-vous incorporer les differences premieres ? \n 0 : non   1 : oui : " )) 
 		except NameError:
 			print "Choix non valable"
@@ -27,13 +27,13 @@ def creeVecteur(tabMel, energyTable):
 			for t in range(1, len(tabMel)):
 				for k in range(D-1):
 					output[t][k] += delta[t][k]
-			print "output :"
-			print output
-			print "delta :"
-			print delta
+			#print "output :"
+			#print output
+			#print "delta :"
+			#print delta
 			while( not choice in range(2) ):
 				try:
-					choice = 0
+					choice = 1
 					#choice = int( input( "Voulez-vous incorporer les differences secondes ? \n 0 : non   1 : oui " ) )
 				except NameError:
 					print "Choix non valable"

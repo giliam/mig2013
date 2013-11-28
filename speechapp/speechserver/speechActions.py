@@ -26,11 +26,11 @@ import coreProject
 
 def requestHandling(clientDb, action, data):
 	
-	if not action in ["add_word","list_word_records","rm_word_record","recognize_spoken_word"]:
+	if not action in ["add_word","list_word_records","rm_word_record","recognize_spoken_word","listen_recording"]:
 		return "Unavailable action"
 	
 	if action == "add_word": #Pas encore possible de stocker un HMM, à voir plus tard
-		try:				 #
+		try:				
 			word = data["word"]
 			content = data["audiofile"]
 		except IOError:
@@ -56,7 +56,22 @@ def requestHandling(clientDb, action, data):
 			return "File not found"
 	
 	elif action == "rm_word_record":
-		word = data[]
+		try:
+			word = data["word"]
+			del clientDb[word]
+		except IOException:
+			return "File not found"
+	
+	elif action == "listen_recording"
+		try:
+			return data["audiofile"]
+		except IOException:
+			return "file not found" 
+	
+	
+	
+	
+		
 	 
 
 			

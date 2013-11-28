@@ -21,13 +21,13 @@ def creeVecteur(tabMel, energyTable):
 		except NameError:
 			print "Choix non valable"
 		if (choice == 1):
-			delta = [[0 for k in range(D-1)] for i in range(len(tabMel))]
+			delta = [[0 for k in range(D)] for i in range(len(tabMel))]
 			choice = -1
 			for t in range(1,len(tabMel)):
-				for k in range(D-1):
+				for k in range(D):
 					delta[t][k] = output[t][k]-output[t-1][k]
 			for t in range(1, len(tabMel)):
-				for k in range(D-1):
+				for k in range(D):
 					output[t][k] += delta[t][k]
 			#print "output :"
 			#print output
@@ -41,7 +41,7 @@ def creeVecteur(tabMel, energyTable):
 					print "Choix non valable"
 				if (choice == 1):
 					for t in range(1,len(tabMel)):
-						for k in range(D-1):
+						for k in range(D):
 							output[t][k] += delta[t][k]-delta[t-1][k]
 				break
 		break

@@ -3,24 +3,26 @@
 #include <cmath>
 #include <complex>
 
+typedef complex<double> cDouble;
+
 void hello()
 {
     std::cout<<"Hello world !";
 }
 
-double* listToTab(boost::python::list l)
+cDouble* listToTab(boost::python::list l)
 {
     int N = boost::python::len(l);
-    double *t = (double*)malloc(N*sizeof(double));
+    ccDouble *t = (cDouble*)malloc(N*sizeof(cDouble));
     for (int i=0;i<N;i++)
-        t[i] = boost::python::extract<double>(l.pop());
+        t[i] = boost::python::extract<cDouble>(l.pop());
     return t;
 }
 
-double** listOfListToTab(boost::python::list l)
+cDouble** listOfListToTab(boost::python::list l)
 {
     int N = boost::python::len(l);
-    double** t = (double**)malloc(N*sizeof(double*));
+    cDouble** t = (cDouble**)malloc(N*sizeof(cDouble*));
     for (int i=0;i<N;i++)
         t[i] = listToTab(boost::python::extract<boost::python::list>(l.pop()));
     return t;
@@ -30,27 +32,27 @@ bool is2Power(int N) { return N==1 || (N%2==0 && is2Power(N/2)); }
 
 int get2Power(int N) { return pow(2, ceil(log(N)/log(2))); }
 
-double e(int k, int N) { return exp(-2j*M_PI*k/N); }
+cDouble e(int k, int N) { return exp(-2j*M_PI*k/N); }
 
-boost::python::list tabToList(double *t)
+boost::python::list tabToList(cDouble *t)
 {
     boost::python::list l = boost::python::list();
-    int N = sizeof(t)/sizeof(double);
+    int N = sizeof(t)/sizeof(cDouble);
     for (int i=0;i<N;i++)
         l.append(t[i]);
     return l;
 }
 
-double* fftCT(double *sig)
+cDouble* fftCT(cDouble *sig)
 {
-    int N = sizeof(sig)/sizeof(double);
+    int N = sizeof(sig)/sizeof(cDouble);
     //int iMax = (int)(log(N)/log(2));
     int i,j,k,p=0,f=1;
-    double ekN;
-    double **tmp = (double**)malloc(2*sizeof(double*));
+    cDouble ekN;
+    cDouble **tmp = (cDouble**)malloc(2*sizeof(cDouble*));
 
     for (i=0;i<2;i++)
-        tmp[i] = (double*)malloc(N*sizeof(double));
+        tmp[i] = (cDouble*)malloc(N*sizeof(cDouble));
     for (i=0;i<N;i++)
         tmp[0][i] = sig[i];
     for (i=N/2;i!=1;i/=2)
@@ -68,19 +70,19 @@ double* fftCT(double *sig)
     return tmp[p];
 }
 
-double* fft(double *sig, bool mid = true)
+cDouble* fft(cDouble *sig, bool mid = true)
 {
-    int N = sizeof(sig)/sizeof(double);
+    int N = sizeof(sig)/sizeof(cDouble);
     //M = len(sig2)
     //if (M==0 or M==N):
         //if sig2==[]:
-            double* C;
+            cDouble* C;
             if (is2Power(N))
                 C = fftCT(sig);
             else {
                 std::cout<<"zPad needed";
                 int NPadded = get2Power(N);
-                double* sigPadded = (double*)malloc(NPadded*sizeof(double));
+                cDouble* sigPadded = (cDouble*)malloc(NPadded*sizeof(cDouble));
                 for (int i=0;i<N;i++)
                     sigPadded[i] = sig[i];
                 for (int i=N;i<NPadded;i++)
@@ -89,8 +91,8 @@ double* fft(double *sig, bool mid = true)
             }
 
             if (mid) {
-                int n = (sizeof(C)/sizeof(double))/2;
-                double *rep = (double*)malloc(n*sizeof(double));
+                int n = (sizeof(C)/sizeof(cDouble))/2;
+                cDouble *rep = (cDouble*)malloc(n*sizeof(cDouble));
                 for (int i=0;i<n;i++)
                     rep[i] = C[i];
                 return rep;
@@ -98,18 +100,18 @@ double* fft(double *sig, bool mid = true)
                 return C;
         //else:
             /*C = fftCT([sig[k]+sig2[k]*1j for k in range(N)],lin)
-            C1 = [(C[k]+C[N-k].conjugate())/2 for k in range(1,N)]
-            C2 = [(C[k]-C[N-k].conjugate())/(2j) for k in range(1,N)]
-            if mid: return C1[len(C1)/2:],C2[len(C2)/2:]
-            else: return C1,C2
-    //else:
-        print "Deux echantillons de meme taille needed !"
-        return [],[]*/
+C1 = [(C[k]+C[N-k].conjugate())/2 for k in range(1,N)]
+C2 = [(C[k]-C[N-k].conjugate())/(2j) for k in range(1,N)]
+if mid: return C1[len(C1)/2:],C2[len(C2)/2:]
+else: return C1,C2
+//else:
+print "Deux echantillons de meme taille needed !"
+return [],[]*/
 }
 
 boost::python::list fftListe(boost::python::list pyEchs)
 {
-    double **echs = listOfListToTab(pyEchs);
+    cDouble **echs = listOfListToTab(pyEchs);
     int nbEchs = boost::python::len(pyEchs);
     boost::python::list rep = boost::python::list();
 
@@ -122,22 +124,22 @@ boost::python::list fftListe(boost::python::list pyEchs)
 }
 
 /*def fftListe(echs):
-    n = len(echs)
-    rep = [[] for k in range(n)]
-    if n%2 == 1:
-        for k in range(n/2):
-            print "Echantillons ",2*k," et ",2*k+1," en cours..."
-            rep[2*k],rep[2*k+1] = fft(echs[2*k],echs[2*k+1])
+n = len(echs)
+rep = [[] for k in range(n)]
+if n%2 == 1:
+for k in range(n/2):
+print "Echantillons ",2*k," et ",2*k+1," en cours..."
+rep[2*k],rep[2*k+1] = fft(echs[2*k],echs[2*k+1])
 
-    else:
-        for k in range(n/2-1):
-            print "Echantillons ",2*k," et ",2*k+1," en cours..."
-            rep[2*k],rep[2*k+1] = fft(echs[2*k],echs[2*k+1])
-        print "Echantillon ",n-2," en cours..."
-        rep[n-1] = fft(echs[n-2])
-    print "Echantillon ",n-1," en cours..."
-    rep[n-1] = fft(echs[n-1])
-    return rep
+else:
+for k in range(n/2-1):
+print "Echantillons ",2*k," et ",2*k+1," en cours..."
+rep[2*k],rep[2*k+1] = fft(echs[2*k],echs[2*k+1])
+print "Echantillon ",n-2," en cours..."
+rep[n-1] = fft(echs[n-2])
+print "Echantillon ",n-1," en cours..."
+rep[n-1] = fft(echs[n-1])
+return rep
 
 */
 

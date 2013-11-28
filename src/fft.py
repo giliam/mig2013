@@ -71,3 +71,34 @@ def fftCTRec(sig):
         odd = fftCTRec(sig[1::2])
         return [even[k] + np.exp(-2j*np.pi*k/N)*odd[k] for k in range(N/2)] + \
                [even[k] - np.exp(-2j*np.pi*k/N)*odd[k] for k in range(N/2)]
+
+
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Nov 21 14:36:29 2013
+
+@author: Croig
+"""
+
+import util
+import matplotlib.pyplot as plt
+
+import fft_c
+               
+freq1,freq2 = 220,440
+freqEch = 44100
+l = 1024
+s1 = util.getSin(200,l)
+s2 = util.getSin(300,l) + util.getSin(1000,l) + util.getSin(3000,l) + util.getSin(20000,l)
+s3 = util.getSin(400,l) + util.getSin(1000,l) + util.getSin(2000,l) + util.getSin(20000,l)
+s4= util.getSin(500,l) + util.getSin(1000,l) + util.getSin(1000,l) + util.getSin(20000,l)
+s5 = util.getSin(600,l) + util.getSin(1000,l) + util.getSin(500,l) + util.getSin(20000,l)
+C = fft_c.fftListe([s1])
+print(C[0])
+plt.plot([abs(C[0][k]) for k in range(len(C[0]))])
+plt.show()
+#plt.plot([abs(C[k]) for k in range(len(C))])
+#NC = len(C[0])
+
+
+

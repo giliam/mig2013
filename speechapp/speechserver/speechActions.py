@@ -39,21 +39,24 @@ def requestHandling(clientDb, action, data):
 			
 			
 	elif action == "recognize_spoken_word":
-	try:
-		content = data["audiofile")]
-	word,log = handlingOneWord(content,clientDb,1,1):
-	return word
+		try:
+			content = data["audiofile")]
+		word,log = handlingOneWord(content,clientDb,1,1):
+		return word
 		
 	elif action == "lits_word_records": #renvoie un tableau de mots enregistrés
 		tab = zeros(len(clientDb))
 		i = 0
-		for k,v in clientDb.iteritems():
-			tab[i] = k
-			i += 1
-		return tab
+		try:
+			for k,v in clientDb.iteritems():
+				tab[i] = k
+				i += 1
+			return tab
+		except IOError:
+			return "File not found"
 	
 	elif action == "rm_word_record":
-		
+		word = data[]
 	 
 
 			

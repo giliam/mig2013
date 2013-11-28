@@ -23,10 +23,10 @@ from tableauEnergyPerFrame import construitTableauEnergy
 def main():
     db = Db("db/")
     choice = -1
-    while( not choice in range(1,5) ):
+    while( not choice in range(1,6) ):
         try:
             choice = int(input("Que voulez-vous faire ?\n1-Enregistrer un element\n\
-2-Realiser l'analyse d'un mot\n3-Afficher résultats intermédiaires\n4-Gestion des fichiers de la base de donnees\n"))
+2-Realiser l'analyse d'un mot\n3-Tester\n4-Afficher résultats intermédiaires\n5-Gestion des fichiers de la base de donnees\n"))
         except NameError:
             print "Ceci n'est pas un nombre !"
 
@@ -139,6 +139,9 @@ def main():
                 fileOk = False
                 numeroTraitement+=1
     elif choice == 3:
+        print "Vous allez d'abord réaliser l'enregistrement du mot que vous cherchez à tester"
+        recorder(db,"tmp",1,False)
+    elif choice == 4:
         print "Voici la liste des mots a etudier : "
         dirList = db.printDirFiles("storage/handling/")
         dirChoice = -1

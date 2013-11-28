@@ -1,3 +1,5 @@
+from constantes import TAILLE_FINALE_MFCC
+
 D = TAILLE_FINALE_MFCC
 
 #tabMel = [[(i+1)*(k+1) for i in range(D)] for k in range(3)] #liste des tableaux de mel de l'echantillon sonore

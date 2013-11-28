@@ -8,18 +8,26 @@ import os
 import pyaudio
 import wave
 from constantes import *
+import random
+import hashlib
 
-def recorder(db):
+
+def recorder(db,dirName="",nbRecording=-1,askForWord=True):
 	""" Procède à l'enregistrement """ 
 
-	nb_mots = raw_input("Combien d'enregistrement par mots ? ")
-	nb_mots = int(nb_mots)
+	if nbRecording < 0:
+		nbRecording = raw_input("Combien d'enregistrement par mots ? ")
+		nbRecording = int(nbRecording)
 
 	while True:
-		mot = raw_input("Entrez le mot a enregistrer : ")
+		if askForWord:
+			mot = raw_input("Entrez le mot a enregistrer : ")
+		else:
+			mot = ""
+			
 		temps = raw_input("Entrez le nombre de secondes pour l'enregistrement : ")
 		temps = float(temps)
-		for i in range(nb_mots):
+		for i in range(nbRecording):
 			raw_input("Appuyez sur une touche pour commencer l'enregistrement : ")
 			p = pyaudio.PyAudio()
 
@@ -42,7 +50,12 @@ def recorder(db):
 			stream.stop_stream()
 			stream.close()
 			p.terminate()
-			name = mot + "/" + str(i) + ".wav"
+			if dirName != "":
+				random.seed()
+				name = dirName + "/" + hashlib.sha224(str(random.randint(0,1e10))).hexdigest() + ".wav"
+			else:
+				name = mot + "/" + str(i) + ".wav"
 			db.addWave(name,CHANNELS,p.get_sample_size(FORMAT), RATE, frames,p)
 			
 			print "Fin du mot ", i
+			return name

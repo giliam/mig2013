@@ -1,45 +1,36 @@
+#!/usr/bin/python
+# -*-coding:utf-8 -*
 import pickle
-import os
-os.chdir("C:/Users/Axel/Desktop/")
-
+import sys
+sys.path.append("../../src")
+from db import Db
 print(__file__)
+dbUser = Db("../../db/",True,"userDbList")
+#Initialisation
+dbUser.addFile("users/registre.txt",{})
+#Lecture
+userList = dbUser.getFile("users/registre.txt")
 
-def creer(dico):
-	with open("registre.txt","w") as f:
-		pickle.Pickler(f).dump(dico)
+userList["cle1"] = "valznizugn"
+userList["cle21"] = "vaazeleur"
+userList["cle3"] = "valedfgnur"
+userList["cle54"] = "valvvv<iopeur"
+dbUser.addFile("users/registre.txt",userList)
+#Affichage
+print userList
 
-def lecture():
-	with open("registre.txt","r") as f:
-		contenu = pickle.Unpickler(f).load()
-	return(contenu)
+#Suppression
+del userList["cle1"]
 
-def append(cle,valeur):
-	dico=lecture()
-	dico[cle]=valeur
-	with open("registre.txt","w") as f:
-		pickle.Pickler(f).dump(dico)
+#Renvoie le client
+if "cle1" in userList:
+	print userList["cle1"]
 		
-def affichage(dico):	
-	for cle in dico:
-		print(cle, ":", dico[cle])
-
-def removeClient(cle):
-	dico=lecture()
-	del dico["cle"]
-	init(dico)
-	
-def renvoitClient(cle):	
-	if 'cle' in dic:
-		return(dic['cle'])
-		
-def nouveauClient(mdp,listeAcces):	
-	return([mdp,listeAcces])
-
-def ajoutClient(nom,mdp,listeAcces):
-	append(nom,nouveauClient(mdp,listeAcces))
-	
-"""systeme de test"""	
-creer({})
-ajoutClient("Bob","mdpbob",[1,0,0])
-ajoutClient("Joe","mdpjoe",[1,0,1])
-affichage(lecture())
+#Nouveau client
+def ajoutClient(userList,username,password):
+	if username in userList:
+		print "Existe déjà"
+	else:
+		userList[username] = password
+		print "Bien ajouté"
+	dbUser.addFile("users/registre.txt",userList)

@@ -3,7 +3,7 @@
 #include <cmath>
 #include <complex>
 
-typedef complex<double> cDouble;
+typedef std::complex<double> cDouble;
 
 void hello()
 {
@@ -13,7 +13,7 @@ void hello()
 cDouble* listToTab(boost::python::list l)
 {
     int N = boost::python::len(l);
-    ccDouble *t = (cDouble*)malloc(N*sizeof(cDouble));
+    cDouble *t = (cDouble*)malloc(N*sizeof(cDouble));
     for (int i=0;i<N;i++)
         t[i] = boost::python::extract<cDouble>(l.pop());
     return t;
@@ -32,7 +32,7 @@ bool is2Power(int N) { return N==1 || (N%2==0 && is2Power(N/2)); }
 
 int get2Power(int N) { return pow(2, ceil(log(N)/log(2))); }
 
-cDouble e(int k, int N) { return exp(-2j*M_PI*k/N); }
+cDouble e(int k, int N) { return exp((cDouble)(-2j*M_PI*k/N)); }
 
 boost::python::list tabToList(cDouble *t)
 {
@@ -117,7 +117,7 @@ boost::python::list fftListe(boost::python::list pyEchs)
 
     for (int i=0;i<nbEchs;i++)
     {
-        std::cout<<"Traitement du " + i + "eme echantillon";
+        std::cout<<"Traitement du " << i << "eme echantillon";
         rep.append(tabToList(fft(echs[i])));
     }
     return rep;

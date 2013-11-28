@@ -12,13 +12,12 @@ from recorder import recorder
 from synchronisation import synchro
 from passe_haut import passe_haut
 from fenetre_hann import hann_window
-from fft import fftListe
 from creationVecteurHMM import creeVecteur
 from triangularFilterbank import triangularFilter
 from inverseDCT import inverseDCTII
 from tableauEnergyPerFrame import construitTableauEnergy
-
-#from markov import *
+from fft import *
+from hmm import *
 
 def main(verbose=True,action=-1,verboseUltime=True):
     db = Db("db/",verbose)
@@ -223,4 +222,4 @@ def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0):
     return motLePlusCompatible,log
 
 if __name__ == "__main__":
-    main(False)
+    main(True)

@@ -119,10 +119,9 @@ boost::python::list fftListe(boost::python::list pyEchs, bool mid=true)
     return rep;
 }
 
-BOOST_PYTHON_MODULE(fft_c)
+BOOST_PYTHON_MODULE(fft)
 {
     using namespace boost::python;
-    def("hello", hello);
     def("fftListe", fftListe);
 }
 

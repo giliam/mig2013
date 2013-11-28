@@ -1,16 +1,33 @@
 ###########################################
-	
- 	SpeechApp
+#	                                      #
+# 	            SpeechApp                 #
+#	                                      #
 ###########################################
 
 Application web permettant la reconnaissance des mots isolés.
 
-Doit être codée en HTML5 et adaptable au format mobile
-Programmé avec la version développement de Django (> 1.6)
-Pour obtenir django, faites :
+Le client se rend sur une application web où il se logge, et prend des enregistrements,
+envoyés à un serveur les traitant, puis les soumettant au programme.
+
+DONE:
+    Enregistreur client HTML5/JS fonctionnelle (wumzi)
+        -> Fonctionnel sous Firefox
+        -> A tester sous chrome
+
+
+TO-DO:
+    Interfacage avec le coeur (giliam)
+    App côté serveur (wumzi)
+    Serveur intermédiaire (wumzi)
+        -> avec Framework Python: Django, web.py ?
+
+
+######################################
+Pour obtenir Django, faites :
 
 git clone https://github.com/django/django.git
 
 puis dans le répertoire d'import de django:
 
 sudo python setup.py install
+######################################

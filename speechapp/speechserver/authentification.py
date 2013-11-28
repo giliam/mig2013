@@ -25,21 +25,30 @@ def affichage(dico):
 
 def removeClient(cle):
 	dico=lecture()
-	del dico["cle"]
+	del dico[cle]
 	init(dico)
 	
-def renvoitClient(cle):	
-	if 'cle' in dic:
-		return(dic['cle'])
+def renvoitClient(cle):
+	dico=lecture()
+	if cle in dico:
+		return(dico[cle])
 		
-def nouveauClient(mdp,listeAcces):	
-	return([mdp,listeAcces])
-
 def ajoutClient(nom,mdp,listeAcces):
-	append(nom,nouveauClient(mdp,listeAcces))
+	append(nom,[mdp,listeAcces])
+	
+def checkAuth(nom,mdp,acces):
+	res=False
+	dico=lecture()
+	if renvoitClient(nom)[0]==mdp:
+		if acces in renvoitClient(nom)[1]:
+			res=True
+	return(res)
 	
 """systeme de test"""	
 creer({})
-ajoutClient("Bob","mdpbob",[1,0,0])
-ajoutClient("Joe","mdpjoe",[1,0,1])
+ajoutClient("A","a",["a"])
+ajoutClient("Joe","mdpjoe",["a","b"])
+print(renvoitClient("A"))
+print(renvoitClient("A")[1])
 affichage(lecture())
+print(checkAuth("A","a","a"))

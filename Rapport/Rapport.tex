@@ -7,6 +7,8 @@
 \usepackage{amsfonts}
 \usepackage{textcomp}
 
+\usepackage{listings} %Pour le code
+
 \usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
 
 \title{[MIG] Systèmes Embarqués}
@@ -33,10 +35,14 @@
             	Duis massa elit, vulputate quis lectus vel\cite{ref1}, consectetur ultrices ipsum. Nulla facilisi. Nulla metus lorem, tempus eu arcu non, pulvinar laoreet turpis. Etiam interdum vehicula nunc at convallis. Vestibulum euismod risus at velit interdum suscipit. Vestibulum eu tincidunt massa, sit amet luctus diam. In tempor, nibh sed vulputate mollis, turpis nisl egestas risus, in egestas erat nulla et est. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non tellus fringilla, vehicula nisi eu, commodo lorem. Aliquam erat volutpat. Sed sed tempor ipsum.
             \subsection{Variables}
         \section{Mise en pratique}
-        	Nam fermentum dui ut elit imperdiet, id vulputate est commodo. Fusce in eros lectus. Etiam vel purus sodales, fermentum erat in, varius ligula. Donec id est eget diam commodo adipiscing in eget felis. Donec et dictum nibh. Cras in mauris fringilla, sollicitudin nunc eu, ultricies erat. Vestibulum at lorem vel mi tempus congue. 
-    \chapter{La CLASSEUHQUOI!}
-        Suspendisse eget felis quis mauris faucibus dignissim quis vitae dui\cite{ref1}. Maecenas non leo et leo viverra auctor a quis metus. Sed volutpat lectus at sem tincidunt sollicitudin. Maecenas tortor leo, feugiat eget gravida at, scelerisque sit amet nisi. Sed non nunc lorem. Pellentesque ultricies tincidunt ipsum ut sagittis. Maecenas leo tellus, luctus sed gravida vitae\cite{ref2}, dignissim nec sapien. Mauris quis accumsan orci, nec ultricies ante. In sit amet eleifend eros. Ut posuere facilisis risus nec gravida. Nullam consequat sollicitudin mi, nec lacinia quam consectetur et. Integer sagittis nibh metus, at sodales nunc gravida ac. Nunc semper urna nisl, quis congue quam gravida sit amet. Sed a ante imperdiet, luctus purus at, blandit dui.
-
+        	Suspendisse eget felis quis mauris faucibus dignissim quis vitae dui\cite{ref1}. Maecenas non leo et leo viverra auctor a quis metus. Sed volutpat lectus at sem tincidunt sollicitudin. Maecenas tortor leo, feugiat eget gravida at, scelerisque sit amet nisi. Sed non nunc lorem. Pellentesque ultricies tincidunt ipsum ut sagittis. Maecenas leo tellus, luctus sed gravida vitae\cite{ref2}, dignissim nec sapien. Mauris quis accumsan orci, nec ultricies ante. In sit amet eleifend eros. Ut posuere facilisis risus nec gravida. Nullam consequat sollicitudin mi, nec lacinia quam consectetur et. Integer sagittis nibh metus, at sodales nunc gravida ac. Nunc semper urna nisl, quis congue quam gravida sit amet. Sed a ante imperdiet, luctus purus at, blandit dui.
+    \chapter{Le code}
+        \section{Python}
+        	\lstinputlisting[language=Python, firstline=2, lastline=37, frame
+=trBL]{exemple.py}
+        \section{C/C++}
+        \lstinputlisting[language=C++, firstline=46, lastline=71, frame
+=trBL]{exemple.cpp}
 \bibliographystyle{unsrt} % Pour la biblio
 \bibliography{Biblio}
 

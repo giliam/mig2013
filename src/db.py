@@ -16,9 +16,10 @@ class Db:
     prefix = ""
     verbose = False
     
-    def __init__(self, prefix = "", verbose = False):
+    def __init__(self, prefix = "", verbose = False, filesListName = "filesList"):
         """ Constructeur """
         Db.prefix = prefix
+        Db.filesListName = filesListName
         Db.verbose = verbose
         self.log = ""
         try:

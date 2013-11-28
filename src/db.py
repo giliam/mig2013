@@ -79,11 +79,11 @@ class Db:
         
         
     
-    def addWaveFromAmp(self,fileName,freq,amp):
-        print "waves/" + fileName
-        scipy.io.wavfile.write(Db.prefix + "waves/" + fileName, freq, int16(amp))
-        self.addFileToList(fileName,"waves")
-        self.syncToFile()
+    def addWaveFromAmp(self,fileName,freq,amp,dirName="waves/",addToList=True):
+        scipy.io.wavfile.write(Db.prefix + dirName + fileName, freq, int16(amp))
+        if addToList:
+            self.addFileToList(fileName,"waves")
+            self.syncToFile()
     
     
     def addFileToList(self,fileName,dirFile=""):

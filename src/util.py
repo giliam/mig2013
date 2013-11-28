@@ -28,3 +28,13 @@ def reduc(M,N):
 def pgcd(a,b):
     # une fonction fractions.gcd(a, b) est déjà implémentée dans Python
     return gcd(a, b)
+    
+def W(k,N):
+    return np.exp(-(2*np.pi*k/N)*1j)
+    
+def restreindre(sig):
+    M = float(max(abs(sig)))
+    return [float(sig[k])/M for k in range(len(sig))]
+    
+def getSin(freq, N, freqEch=44100):
+    return [np.sin(2*np.pi*freq*t/freqEch) for t in range(N)]

@@ -15,7 +15,7 @@ from fenetre_hann import hann_window
 from fft import fftListe
 from creationVecteurHMM import creeVecteur
 from triangularFilterbank import triangularFilter
-from discrete_cosine_transform import inverseDCTII
+from inverseDCT import inverseDCTII
 from tableauEnergyPerFrame import construitTableauEnergy
 
 #from markov import *
@@ -80,6 +80,7 @@ def main(verbose=True,action=-1,verboseUltime=True):
     elif choice == 3:
         print "Vous allez d'abord réaliser l'enregistrement du mot que vous cherchez à tester"
         fileName = recorder(db,"tmp",1,False)
+        m,l = handlingOneWord(c,db,fileName,0)
     elif choice == 4:
         print "Voici la liste des mots a etudier : "
         dirList = db.printDirFiles("storage/handling/")
@@ -197,9 +198,9 @@ def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0):
         log += "Creation de vecteurs HMM terminee..."
         db.addFile("handling/vecteurs_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
         log += "Sauvegarde effectuee...\n"
-    if action == 8:
+    """if action == 8:
         log += "Premier essai de Markov..."
-        """#Nombre de phonems et nombre d'états
+        #Nombre de phonems et nombre d'états
         n = len(content)
         m = n
         #
@@ -210,9 +211,10 @@ def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0):
         mu = 
         sigma = 
         content = ContinuousMarkov(n, m, d, OA_PI, OA_A, OA_C, OA_G_mu, OA_G_sigma)
-        print "Premier essai de Markov réussi !"""
+        print "Premier essai de Markov réussi !
         db.addFile("handling/markov_" + str(numeroTraitement) + ".txt",content)
         log += "Sauvegarde effectuee...\n"
+    """
     db.logDump(str(dirChoice) + "_" + str(numeroTraitement),log)
     db.logDump(str(dirChoice) + "_" + str(numeroTraitement))
     motLePlusCompatible = "cheval"

@@ -6,8 +6,8 @@ du client
 
 actions possibles : add_word_record, list_word_records, rm_word_record, 
                     recognize_spoken_word"""
-
+ 
 import coreProject
 
-def requestHandling(user):
+def requestHandling(clientDb, action, form):
     pass

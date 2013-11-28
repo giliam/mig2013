@@ -34,14 +34,14 @@ class SpeechServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
         user = form['user']
         hashedPass = form['hashedPass']
+        clientDB = form['clientDB']
         
 
-        #Check if the user is authorizd
-        if checkAuth(user, hashedPass):
-            clientDB = form['clientDB']
+        #Check if the user is authorized and he has access to clientDb
+        if checkAuth(user, hashedPass, clientDb):
             
             action = form['action']
-            respMessage = speechActions.requestHandling(action, form)
+            respMessage = speechActions.requestHandling(clientDb, action, form)
         else:
             respMessage = "You're not authorized to call me !\
                             Register at speech.wumzi.info"

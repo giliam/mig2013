@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import hmm as h
+
+"""
 import operator as op
 import numpy as np
 import math
@@ -66,14 +69,14 @@ class ContinuousMarkov(object):
             if exp/den > 1:
                 #print("COME ON, SON OF A BITCH !")
                 return 1.1
-                """print("sigma**-1 : {}".format(sigma**-1))
+                print("sigma**-1 : {}".format(sigma**-1))
                 print("x_ : {}".format(x_))
                 print(sigma.det())
                 print(sigma)
                 print("v : {}".format(v))
                 print("exp : {}".format(exp))
                 print("den : {}".format(den))
-                print("rap too big !!!! {}".format(exp/den))"""
+                print("rap too big !!!! {}".format(exp/den))
             else:
                 return exp/den
         else:
@@ -83,14 +86,14 @@ class ContinuousMarkov(object):
             if exp/den > 1:
                 #print("COME ON, SON OF A BITCH !")
                 exp = den = 1
-                """print("sigma**-1 : {}".format(sigma**-1))
+                print("sigma**-1 : {}".format(sigma**-1))
                 print("x_ : {}".format(x_))
                 print(sigma.det())
                 print(sigma)
                 print("v : {}".format(v))
                 print("exp : {}".format(exp))
                 print("den : {}".format(den))
-                print("rap too big !!!! {}".format(exp/den))"""
+                print("rap too big !!!! {}".format(exp/den))
             return exp/den
 
     def calcProbabilitiesVector(self, x):
@@ -254,7 +257,6 @@ class ContinuousMarkov(object):
 
         print("Final likelyhood : {}".format(oldLike))
 
-"""
 def generateSequence(model, deltas, num, var):
     N = num + random.randint(-var, var)
     n, m = model.shape
@@ -364,3 +366,4 @@ C = [[0.1, 0.1, 0.8], [0.3, 0.4, 0.3]]
 G_mu = [[Matrix([1, 2]), Matrix([1, 2]), Matrix([1, 2])], [Matrix([2, 1]), Matrix([2, 1]), Matrix([2, 1])]]
 G_sigma = [[Matrix([[1, 0], [0, 1]]), Matrix([[1, 0], [0, 1]]), Matrix([[1, 0], [0, 1]])], [Matrix([[1, 0], [0, 1]]), Matrix([[1, 0], [0, 1]]), Matrix([[1, 0], [0, 1]])]]
 M = ContinuousMarkov(n, m, d, PI, A, C, G_mu, G_sigma)"""
+

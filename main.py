@@ -16,7 +16,9 @@ from fft import fftListe
 from creationVecteurHMM import creeVecteur
 from mel import fct_mel_pas, mel_tab
 from discrete_cosine_transform import inverseDCTII
-from markov import *
+from tableauEnergyPerFrame import construitTableauEnergy
+
+#from markov import *
 
 def main():
     db = Db("db/")
@@ -83,6 +85,7 @@ def main():
                 if action <= 3:
                     print "Transformee de Fourier rapide en cours..."
                     content = fftListe(content)
+		    energyTable = construitTableauEnergy(content)
                     for k in range(len(content)):
                         for l in range(len(content[k])):
                             content[k][l]=abs(content[k][l])
@@ -112,7 +115,7 @@ def main():
                     print "Sauvegarde effectuee...\n"
                 if action <= 7:    
                     print "Creation de vecteurs HMM en cours..."
-                    content = creeVecteur(content)
+                    content = creeVecteur(content, energyTable)
                     print "Creation de vecteurs HMM terminee..."
                     db.addFile("handling/vecteurs_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
                     print "Sauvegarde effectuee...\n"

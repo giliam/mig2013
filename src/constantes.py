@@ -18,3 +18,7 @@ COEFF_COUPE = 0.0000001 # en pourcent
 
 ecart_fenetre = 0.01301587
 temps_fenetre = 0.023219954648526
+
+#Creation MFCC
+
+TAILLE_FINALE_MFCC = 13

@@ -52,10 +52,12 @@ def recorder(db,dirName="",nbRecording=-1,askForWord=True):
 			p.terminate()
 			if dirName != "":
 				random.seed()
-				name = dirName + "/" + hashlib.sha224(str(random.randint(0,1e10))).hexdigest() + ".wav"
+				n = hashlib.sha224(str(random.randint(0,1e10))).hexdigest()
+				name = dirName + "/" + n + ".wav"
 			else:
-				name = mot + "/" + str(i) + ".wav"
+				n = str(i)
+				name = mot + "/" + n + ".wav"
 			db.addWave(name,CHANNELS,p.get_sample_size(FORMAT), RATE, frames,p)
 			
 			print "Fin du mot ", i
-			return name
+			return n

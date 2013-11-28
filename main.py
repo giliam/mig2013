@@ -80,7 +80,9 @@ def main(verbose=True,action=-1,verboseUltime=True):
     elif choice == 3:
         print "Vous allez d'abord réaliser l'enregistrement du mot que vous cherchez à tester"
         fileName = recorder(db,"tmp",1,False)
-        m,l = handlingOneWord(c,db,fileName,0)
+        freq,amp = db.getWaveFile("tmp/" + fileName + ".wav")
+        m,l = handlingOneWord(amp,db,fileName,0)
+        print m
     elif choice == 4:
         print "Voici la liste des mots a etudier : "
         dirList = db.printDirFiles("storage/handling/")

@@ -140,7 +140,7 @@ def main():
                 numeroTraitement+=1
     elif choice == 3:
         print "Vous allez d'abord réaliser l'enregistrement du mot que vous cherchez à tester"
-        recorder(db,"tmp",1,False)
+        fileName = recorder(db,"tmp",1,False)
     elif choice == 4:
         print "Voici la liste des mots a etudier : "
         dirList = db.printDirFiles("storage/handling/")

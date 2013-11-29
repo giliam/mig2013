@@ -44,7 +44,7 @@ def requestHandling(clientDb, action, data):
 		word,log = handlingOneWord(content,clientDb,1,1):
 		return word
 		
-	elif action == "lits_word_records": #renvoie un tableau de mots enregistrés
+	elif action == "list_word_records": #renvoie un tableau de mots enregistrés
 		tab = zeros(len(clientDb))
 		i = 0
 		try:
@@ -59,13 +59,13 @@ def requestHandling(clientDb, action, data):
 		try:
 			word = data["word"]
 			del clientDb[word]
-		except IOException:
+		except IOError:
 			return "File not found"
 	
 	elif action == "listen_recording"
 		try:
 			return data["audiofile"]
-		except IOException:
+		except IOError:
 			return "file not found" 
 	
 	

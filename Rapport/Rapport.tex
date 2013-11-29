@@ -65,6 +65,27 @@
 		}
 	}
 }
+
+\usepackage{etoolbox}
+
+\makeatletter
+\def\@makechapterhead#1{%
+  \vspace*{50\p@}%
+  {\parindent \z@ \raggedright \normalfont
+    \interlinepenalty\@M
+    \Huge\bfseries  \thechapter.\quad #1\par\nobreak
+    \vskip 40\p@
+  }}
+
+\def\@endpart{}
+	
+\let\nonewpagechapter\chapter
+	
+\patchcmd\nonewpagechapter{\if@openright\cleardoublepage\else\clearpage\fi}{}{}{}
+	
+\patchcmd{\part}{\null\vfil}{}{}{}
+\makeatother
+
 \title{[MIG] Syst�mes Embarqu�s}
 \author{Julien \bsc{Caillard}, Adrien \bsc{De La Vaissi�re}, Thomas \bsc{Debarre},\\ Matthieu \bsc{Denoux}, Maxime \bsc{Ernoult}, Axel \bsc{Goering},\\ Cl�ment \bsc{Joudet}, Nathana�l \bsc{Kasriel}, Anis \bsc{Khlif},\\ Sofiane \bsc{Mahiou}, Paul \bsc{Musti�re}, Cl�ment \bsc{Roig}, David \bsc{Vitoux}}
 \date{18/11/13 - 6/12/13}
@@ -74,7 +95,7 @@
 \tableofcontents
 
 \part{La reconnaissance vocale}
-    \chapter{Le traitement du signal}
+    \nonewpagechapter{Le traitement du signal}
         \section{Filtre 1}
         	Lorem ipsum dolor sit amet\cite{ref1}, consectetur adipiscing elit. Nam lobortis massa eget justo lacinia ultricies. Aenean egestas nunc metus. Pellentesque nibh nibh, placerat eget dui porta, ornare egestas tellus. Donec dictum vel nulla sed feugiat. Donec id bibendum orci, in accumsan nibh. Nunc placerat, sem et sollicitudin elementum, arcu velit scelerisque nibh, et convallis sapien erat a dolor. Pellentesque aliquet lorem erat, eget mollis est dapibus et. Praesent convallis ac nisl sit amet porta.
         \section{Filtre 2}

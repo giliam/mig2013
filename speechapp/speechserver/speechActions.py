@@ -8,22 +8,9 @@ actions possibles : add_word_record, list_word_records, rm_word_record,
                     recognize_spoken_word"""
 import scipy.io.wavfile
 import sys
-sys.path.append("src")
-
-from constantes import *
-from numpy import abs,int16
+sys.path.append("../../")
+from main import *
 import numpy as np
-from db import Db
-from recorder import recorder
-from synchronisation import synchro
-from passe_haut import passe_haut
-from fenetre_hann import hann_window
-from fft import fftListe
-from creationVecteurHMM import creeVecteur
-from triangularFilterbank import triangularFilter
-from inverseDCT import inverseDCTII
-from tableauEnergyPerFrame import construitTableauEnergy
-import coreProject
 
 def requestHandling(clientDb, action, data):
 	
@@ -34,16 +21,19 @@ def requestHandling(clientDb, action, data):
 		try:				
 			word = data["word"]
 			content = data["audiofile"]
-		except IOError:
+		except KeyError:
 			return "File not found"
 		
 			
 			
 	elif action == "recognize_spoken_word":
 		try:
-			content = data["audiofile")]
-		word,log = handlingOneWord(content,clientDb,1,1):
-		return word
+			dbWaves = Db("db/",False)
+			content = data["audiofile"]
+			word,log = handlingOneWord(content,dbWaves,1,1,0,clientDb):
+			return word
+		except KeyError
+			return "File not found"
 		
 	elif action == "list_word_records": #renvoie un tableau de mots enregistrés
 		tab = np.zeros(len(clientDb))
@@ -53,20 +43,20 @@ def requestHandling(clientDb, action, data):
 				tab[i] = elt
 				i += 1
 			return tab
-		except IOError:
+		except KeyError:
 			return "File not found"
 	
 	elif action == "rm_word_record":
 		try:
 			word = data["word"]
 			del clientDb[word]
-		except IOError:
+		except KeyError:
 			return "File not found"
 	
 	elif action == "listen_recording"
 		try:
 			return data["audiofile"]
-		except IOError:
+		except KeyError:
 			return "file not found" 
 	
 	

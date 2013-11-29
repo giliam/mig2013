@@ -51,6 +51,7 @@ def main(verbose=True,action=-1,verboseUltime=True):
             fileOk = True
             numeroTraitement = 0
             filesList = db.printFilesList(dirList[dirChoice])
+            print filesList
             action = int( input( "À partir de quelle action souhaitez-vous agir ?\n0-Tout\n1-Filtre passe-haut\n2-Fenêtre de Hann\n3-Transformée de Fourier Rapide\n4-Fonction Mel\n5-Création de la liste Mel\n6-Transformée de Fourier inverse\n7-Creation de vecteurs\n " ) )
             for f in filesList:
                 try:
@@ -73,7 +74,9 @@ def main(verbose=True,action=-1,verboseUltime=True):
                     content = db.getFile("handling/fft_inverse_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt")
                 else:
                     content = m[1]
-                handlingOneWord(content,db,dirChoice,numeroTraitement)
+                mot,log = handlingOneWord(content,db,dirChoice,numeroTraitement)
+                if verbose:
+                    print log
                 fileOk = False
                 numeroTraitement+=1
     elif choice == 3:
@@ -142,27 +145,27 @@ def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0):
             Retourne un tuple (motLePlusCompatible,log) """
     log = ""
     if action <= 1:
-        log += "Filtre passe-haut en cours..."
+        log += "Filtre passe-haut en cours...\n"
         content = passe_haut(content)
-        log += "Filtre passe-haut termine..."
+        log += "Filtre passe-haut termine...\n"
         db.addFile("handling/passe_haut_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
-        log += "Sauvegarde effectuee...\n"
+        log += "Sauvegarde effectuee...\n\n"
     if action <= 2:
-        log += "Fenêtre de Hann en cours..."
+        log += "Fenêtre de Hann en cours...\n"
         content = hann_window(content)
-        log += "Fenêtre de Hann terminee..."
+        log += "Fenêtre de Hann terminee...\n"
         db.addFile("handling/hann_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
-        log += "Sauvegarde effectuee...\n"
+        log += "Sauvegarde effectuee...\n\n"
     if action <= 3:
-        log += "Transformee de Fourier rapide en cours..."
-        content = fftListe(content)
+        log += "Transformee de Fourier rapide en cours...\n"
+        content = fftListe(content,True)
         energyTable = construitTableauEnergy(content)
         for k in range(len(content)):
             for l in range(len(content[k])):
                 content[k][l]=abs(content[k][l])
-        log += "Transformee de Fourier rapide terminee..."
+        log += "Transformee de Fourier rapide terminee...\n"
         db.addFile("handling/fft_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
-        log += "Sauvegarde effectuee...\n"
+        log += "Sauvegarde effectuee...\n\n"
     """
     if action <= 4:
         log += "Application de la fonction Mel en cours..."
@@ -180,25 +183,25 @@ def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0):
         log += "Sauvegarde effectuee...\n"
     """
     if action <=5:
-        log += "Application de la fonction Mel en cours..."
+        log += "Application de la fonction Mel en cours...\n"
         for k in range(len(content)):
             content[k] = triangularFilter(content[k],RATE)
-        log += "Application de la fonction Mel terminee..."
+        log += "Application de la fonction Mel terminee...\n"
         db.addFile("handling/mel_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
-        log += "Sauvegarde effectuee...\n"
+        log += "Sauvegarde effectuee...\n\n"
     if action <= 6:    
-        log += "Transformee de Fourier inverse en cours..."
+        log += "Transformee de Fourier inverse en cours...\n"
         for k in range(len(content)):
             content[k] = inverseDCTII(content[k])
-        log += "Transformee de Fourier inverse terminee..."
+        log += "Transformee de Fourier inverse terminee...\n"
         db.addFile("handling/fft_inverse_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
         log += "Sauvegarde effectuee...\n"
     if action <= 7:    
-        log += "Creation de vecteurs HMM en cours..."
+        log += "Creation de vecteurs HMM en cours...\n"
         content = creeVecteur(content, energyTable)
-        log += "Creation de vecteurs HMM terminee..."
+        log += "Creation de vecteurs HMM terminee...\n"
         db.addFile("handling/vecteurs_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
-        log += "Sauvegarde effectuee...\n"
+        log += "Sauvegarde effectuee...\n\n"
     """if action == 8:
         log += "Premier essai de Markov..."
         #Nombre de phonems et nombre d'états

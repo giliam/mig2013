@@ -12,6 +12,7 @@ sys.path.append("src")
 
 from constantes import *
 from numpy import abs,int16
+import numpy as np
 from db import Db
 from recorder import recorder
 from synchronisation import synchro
@@ -45,11 +46,11 @@ def requestHandling(clientDb, action, data):
 		return word
 		
 	elif action == "list_word_records": #renvoie un tableau de mots enregistrés
-		tab = zeros(len(clientDb))
+		tab = np.zeros(len(clientDb))
 		i = 0
 		try:
-			for k,v in clientDb.iteritems():
-				tab[i] = k
+			for k, elt in enumerate(clientDb):
+				tab[i] = elt
 				i += 1
 			return tab
 		except IOError:

@@ -227,5 +227,9 @@ def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0,hmmList=[]):
     motLePlusCompatible = "cheval"
     return motLePlusCompatible,log
 
+def ampToHMMFromList(content):
+    return ""
+
+
 if __name__ == "__main__":
     main(True)

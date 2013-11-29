@@ -7,7 +7,7 @@ Created on Tue Nov 26 08:26:19 2013
 """
 
 from Tkinter import *
-from main import main
+#from main import main
 
 def result():             #fonction principale qui renvoie le mot reconnu
     return 'Cheval'

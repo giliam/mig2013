@@ -8,7 +8,7 @@ typedef std::complex<double> cDouble;
 cDouble* listToTab(boost::python::list l)
 {
     int N = boost::python::len(l);
-    cDouble *t = (cDouble*)c(N*sizeof(cDouble));
+    cDouble *t = (cDouble*)malloc(N*sizeof(cDouble));
     for (int i=0;i<N;i++)
         t[i] = boost::python::extract<cDouble>(l[i]);
     return t;

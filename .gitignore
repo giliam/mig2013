@@ -20,6 +20,7 @@ __pycache__
 
 db/storage/handling
 db/logs
+db/waves
 
 # Installer logs
 pip-log.txt

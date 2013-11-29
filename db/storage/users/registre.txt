@@ -1,8 +1,0 @@
-(dp0
-S'test'
-p1
-(lp2
-S'bob'
-p3
-aI1
-as.

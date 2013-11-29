@@ -97,9 +97,9 @@ def main(verbose=True,action=-1,verboseUltime=True):
         db.addWaveFromAmp("output/" + str(dirChoice) + ".wav",44100,amp,"output/",False)
     elif choice == 5:
         choice3 = -1
-        while( not choice3 in range(1,4) ):
+        while( not choice3 in range(1,5) ):
             try:
-                choice3 = int(input("Que voulez-vous faire ?\n1-Supprimer un fichier\n2-Supprimer un wav\n3-Synchroniser les wav\n"))
+                choice3 = int(input("Que voulez-vous faire ?\n1-Supprimer un fichier\n2-Supprimer un wav\n3-Synchroniser les wav\n4-Synchroniser tous les fichiers\n"))
             except NameError:
                 print "Ceci n'est pas un nombre !"
         if choice3 == 1:
@@ -126,13 +126,8 @@ def main(verbose=True,action=-1,verboseUltime=True):
                 ampli2 = synchro(ampli[1], COEFF_LISSAGE, T_MIN, COEFF_COUPE)
                 db.addWaveFromAmp("mod/" + f,ampli[0],ampli2)
         elif choice3 == 4:
-            fileChoice = -1
-            while( not fileChoice in range(len(filesList)) ):
-                try:
-                    fileChoice = int( input( "Choisissez un fichier a traiter et entrez son numero : " ) )
-                except NameError:
-                    print "Ceci n'est pas un nombre !"
-            db.deleteFileFromList(filesList[fileChoice],dirName)
+            db.sync()
+            db.sync("", "waves/")
     else:
         pass
 

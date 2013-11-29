@@ -180,14 +180,13 @@ class Db:
             raise Exception("Le fichier n'existe pas")
     
     
-    def sync(self):
-        """ Met le fichier de stockage de la liste des fichiers à jour """
-        try:
-            with open(Db.prefix + Db.filesListName + ".txt","w") as f:
-                pickle.Pickler(f).dump(self.filesList)
-        except IOError:
-            raise Exception("Le fichier n'existe pas")
-    
+    def sync(self, dirName = "", dirIni = "storage/"):
+        """ Met le fichier de stockage de la liste des fichiers à jour en parcourant toute l'arborescence """
+        for f in os.listdir(Db.prefix + dirIni + dirName):
+            if os.path.isfile(os.path.join(Db.prefix + dirIni + dirName, f)):
+                self.addFileToList(os.path.join(dirName, f),dirIni)
+            else:
+                self.sync(dirName + f + "/",dirIni)
     
     
     def reset(force=False):

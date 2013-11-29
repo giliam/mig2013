@@ -6,12 +6,16 @@ navigator.getUserMedia = (navigator.getUserMedia ||
                             navigator.webkitGetUserMedia ||
                             navigator.mozGetUserMedia);
                     // raccourci cross-browser
+
 mediaRecorder = null //Object MediaRecorder
 audioElement = document.getElementById('audio'); //L'object audio pour le direct play
 mediaStream = null; //Le flux LocalMediaStream
 
 var recording = false;
 
+var user = "demo";
+var hashedPass = "8b1c1c1eae6c650485e77efbc336c5bfb84ffe0b0bea65610b721762";
+var clientDB = "demo"
 
 onload = function(){
     /* Au chargement, si l'API MediaRecorder est supportée, 
@@ -104,17 +108,23 @@ function mediaOnDataAvailable(blob){
     servInteract(blob.data);
 }
 
-function servInteract(data){
+function servInteract(OGGBlob){
     // Envoie le blob au serveur
     var formData = new FormData();
     formData.append('userSession', userSession);
-    formData.append('OGGBlob', blob);
+    formData.append('hashedPass', hashedPass);
+    formData.append('clientDB', clientDB);
+    
+    formaData.append('action', 'recognize_spoken_word');
+
+    formData.append('audioBlob', OGGBlob);
+    formData.append('audioType', 'ogg');
 
     var req = new XMLHttpRequest();
     req.open('POST', SERVERURL, true);
     req.onstatechange = function(e){
         if (req.readyStatus === 4){
-            if (req.status == 400){
+            if (req.status == 200){
                 wordResponse(req.responseXML);         
             }
         }
@@ -125,8 +135,7 @@ function servInteract(data){
 
 function wordResponse(respXML){
     if (respXML.getElementsByTagName().length()){
-        var responseWord = respXML.getElementsByTagName('word');
-        var responseTime = respXML.getElementsByTagName('responseTime');
+        var responseWord = respXML.getElementsByTagName('respWord');
     }
     else{
         var responseWord = "Erreur :'(";

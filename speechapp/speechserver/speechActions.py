@@ -48,9 +48,12 @@ def requestHandling(clientDbId, action, data):
 
 	elif action == "recognize_spoken_word":
 		try:
-			content = data["audiofile"]
-			word,log = handlingOneWord(content,dbWaves,1,1,0,clientDb)
-			return word
+	        audioBlob = data["audioBlob"]
+            audioType = data["audioType"]
+            if audioType == "ogg":
+                audioBlob = convert_ogg_blob_to_wave_blob(audioBlob)
+			respWord, log = handlingOneWord(audioBlob, dbWaves, 1, 1, 0, clientDb)
+			return {'respWord': respWord}
 		except KeyError:
 			return "File not found"
 		

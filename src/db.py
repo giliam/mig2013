@@ -148,12 +148,15 @@ class Db:
         """
         if len(dirFile) == 0:
             dirFile = "storage"
-        if os.access(Db.prefix + dirFile + "/" + fileName,os.F_OK) and fileName in self.filesList:
+        if fileName in self.filesList:
             self.filesList.remove(fileName)
             try:
                 dirName = os.path.dirname(fileName)
-                os.remove(Db.prefix + dirFile + "/" + fileName)
-                self.addLog("Le fichier a bien été supprimé")
+                if os.access(Db.prefix + dirFile + "/" + fileName,os.F_OK):
+                    os.remove(Db.prefix + dirFile + "/" + fileName)
+                    self.addLog("Le fichier a bien été supprimé")
+                else:
+                    self.addLog("Le fichier n'existe pas")
             except OSError:
                 self.addLog("La suppression a échoué")
             try:
@@ -223,7 +226,7 @@ class Db:
         
     def addLog(self,s,fileName=""):
         if Db.verbose:
-            pass
+            print s
         self.log += "\n" + s
         #self.addFile("dblog" + fileName + ".txt",self.log,"logs/")
         

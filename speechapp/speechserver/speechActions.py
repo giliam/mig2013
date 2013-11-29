@@ -12,6 +12,7 @@ sys.path.append("src")
 
 from constantes import *
 from numpy import abs,int16
+import numpy as np
 from db import Db
 from recorder import recorder
 from synchronisation import synchro
@@ -29,27 +30,26 @@ def requestHandling(clientDb, action, data):
 	if not action in ["add_word","list_word_records","rm_word_record","recognize_spoken_word","listen_recording"]:
 		return "Unavailable action"
 	
+
 	if action == "add_word": #Pas encore possible de stocker un HMM, à voir plus tard
-		try:				
+		try:
 			word = data["word"]
 			content = data["audiofile"]
 		except IOError:
 			return "File not found"
-		
-			
-			
+
 	elif action == "recognize_spoken_word":
 		try:
-			content = data["audiofile")]
+			content = data["audiofile"]
 		word,log = handlingOneWord(content,clientDb,1,1):
 		return word
 		
 	elif action == "list_word_records": #renvoie un tableau de mots enregistrés
-		tab = zeros(len(clientDb))
+		tab = np.zeros(len(clientDb))
 		i = 0
 		try:
-			for k,v in clientDb.iteritems():
-				tab[i] = k
+			for k, elt in enumerate(clientDb):
+				tab[i] = elt
 				i += 1
 			return tab
 		except IOError:
@@ -67,17 +67,3 @@ def requestHandling(clientDb, action, data):
 			return data["audiofile"]
 		except IOError:
 			return "file not found" 
-	
-	
-	
-	
-		
-	 
-
-			
-		
-		
-		
-		
-		
-    

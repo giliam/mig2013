@@ -8,76 +8,72 @@ actions possibles : add_word_record, list_word_records, rm_word_record,
                     recognize_spoken_word"""
 import scipy.io.wavfile
 import sys
-sys.path.append("src")
-
-from constantes import *
-from numpy import abs,int16
+sys.path.append("../../")
+sys.path.append("../../src")
+from main import *
 from db import Db
-from recorder import recorder
-from synchronisation import synchro
-from passe_haut import passe_haut
-from fenetre_hann import hann_window
-from fft import fftListe
-from creationVecteurHMM import creeVecteur
-from triangularFilterbank import triangularFilter
-from inverseDCT import inverseDCTII
-from tableauEnergyPerFrame import construitTableauEnergy
-import coreProject
+import numpy as np
+dbWaves = Db("../../db/",False)
+dbWaves.addFile("hmmList.txt",{})
+dbWaves.addFile("clientDbList.txt",{})
 
-def requestHandling(clientDb, action, data):
-	
+
+def requestHandling(clientDbId, action, data):
 	if not action in ["add_word","list_word_records","rm_word_record","recognize_spoken_word","listen_recording"]:
 		return "Unavailable action"
 	
+
 	if action == "add_word": #Pas encore possible de stocker un HMM, à voir plus tard
-		try:				
+		try:
+			hmmList = dbWaves.getFile("hmmList.txt")
+			if len(hmmList) == 0:
+				nextId = 0
+			else:
+				nextId = max(hmmList.keys())+1
 			word = data["word"]
 			content = data["audiofile"]
-		except IOError:
+			hmm = ampToHMMFromList(content)
+			hmmList[nextId] = (word,nextId)
+			db.addFile("hmmList.txt",hmmList)
+			db.addFile("hmm/" + str(nextId) + ".txt",hmm)
+			clientDbsList = dbWaves.getFile("clientDbList.txt")
+			if word in clientDbsList[clientDbId]:
+				return "Word already in clientDb"
+			else:
+				clientDbsList[clientDbId][word] = "hmm/" + str(nextId) + ".txt"
+				dbWaves.add("clientDbList.txt", clientDbsList)
+
+		except KeyError:
 			return "File not found"
-		
-			
-			
+
 	elif action == "recognize_spoken_word":
 		try:
-			content = data["audiofile")]
-		word,log = handlingOneWord(content,clientDb,1,1):
-		return word
+			content = data["audiofile"]
+			word,log = handlingOneWord(content,dbWaves,1,1,0,clientDb)
+			return word
+		except KeyError:
+			return "File not found"
 		
-	elif action == "lits_word_records": #renvoie un tableau de mots enregistrés
-		tab = zeros(len(clientDb))
+	elif action == "list_word_records": #renvoie un tableau de mots enregistrés
+		tab = np.zeros(len(clientDb))
 		i = 0
 		try:
-			for k,v in clientDb.iteritems():
-				tab[i] = k
+			for k, elt in enumerate(clientDb):
+				tab[i] = elt
 				i += 1
 			return tab
-		except IOError:
+		except KeyError:
 			return "File not found"
 	
 	elif action == "rm_word_record":
 		try:
 			word = data["word"]
 			del clientDb[word]
-		except IOException:
+		except KeyError:
 			return "File not found"
 	
-	elif action == "listen_recording"
+	elif action == "listen_recording":
 		try:
 			return data["audiofile"]
-		except IOException:
+		except KeyError:
 			return "file not found" 
-	
-	
-	
-	
-		
-	 
-
-			
-		
-		
-		
-		
-		
-    

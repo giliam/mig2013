@@ -1,15 +1,38 @@
 \select@language {french}
+<<<<<<< HEAD
 \contentsline {part}{I\hspace {1em}La reconnaissance vocale}{2}
-\contentsline {chapter}{\numberline {1}Le traitement du signal}{3}
-\contentsline {section}{\numberline {1.1}Filtre 1}{3}
-\contentsline {section}{\numberline {1.2}Filtre 2}{3}
-\contentsline {subsection}{\numberline {1.2.1}début du filtre 2}{3}
-\contentsline {subsection}{\numberline {1.2.2}fin du filtre 2}{3}
+\contentsline {chapter}{\numberline {1}Le traitement du signal}{2}
+\contentsline {section}{\numberline {1.1}Filtre 1}{2}
+\contentsline {section}{\numberline {1.2}Filtre 2}{2}
+\contentsline {subsection}{\numberline {1.2.1}dï¿½but du filtre 2}{2}
+\contentsline {subsection}{\numberline {1.2.2}fin du filtre 2}{2}
+\contentsline {chapter}{\numberline {2}Les MMC}{3}
+\contentsline {section}{\numberline {2.1}Principe}{3}
+\contentsline {subsection}{\numberline {2.1.1}Graphe}{3}
+\contentsline {subsection}{\numberline {2.1.2}Variables}{3}
+\contentsline {section}{\numberline {2.2}Mise en pratique}{3}
+\contentsline {chapter}{\numberline {3}Le code}{4}
+\contentsline {section}{\numberline {3.1}Python}{4}
+\contentsline {section}{\numberline {3.2}C/C++}{5}
+=======
+\contentsline {section}{\numberline {0.1}Pr\'esentation des enjeux}{2}
+\contentsline {section}{\numberline {0.2}Objectifs du projet}{2}
+\contentsline {part}{I\hspace {1em}D\'emarche Technique}{3}
+\contentsline {chapter}{\numberline {1}Analyse, formatage du signal}{3}
+\contentsline {section}{\numberline {1.1}Enregistrement, recadrage, filtrage HF}{3}
+\contentsline {section}{\numberline {1.2}Echantillonnage, fen\^etrage}{3}
+\contentsline {section}{\numberline {1.3}Transform\'ee de Fourier}{3}
+\contentsline {section}{\numberline {1.4}MEL}{3}
+\contentsline {section}{\numberline {1.5}Transform\'ee inverse}{3}
 \contentsline {chapter}{\numberline {2}Les MMC}{4}
-\contentsline {section}{\numberline {2.1}Principe}{4}
-\contentsline {subsection}{\numberline {2.1.1}Graphe}{4}
-\contentsline {subsection}{\numberline {2.1.2}Variables}{4}
-\contentsline {section}{\numberline {2.2}Mise en pratique}{4}
-\contentsline {chapter}{\numberline {3}Le code}{5}
-\contentsline {section}{\numberline {3.1}Python}{5}
-\contentsline {section}{\numberline {3.2}C/C++}{6}
+\contentsline {section}{\numberline {2.1}Principe, mod\`ele discret}{4}
+\contentsline {section}{\numberline {2.2}Phase d'apprentissage}{4}
+\contentsline {section}{\numberline {2.3}Phase de reconnaissance}{4}
+\contentsline {part}{II\hspace {1em}Approche commerciale}{5}
+\contentsline {chapter}{\numberline {1}C\^ot\'e web}{5}
+\contentsline {chapter}{\numberline {2}Applications}{6}
+\contentsline {chapter}{\numberline {3}Budget, mod\`ele \'economique}{7}
+\contentsline {part}{III\hspace {1em}Le Code}{8}
+\contentsline {chapter}{\numberline {1}Python}{8}
+\contentsline {chapter}{\numberline {2}C/C++}{10}
+>>>>>>> afb612e1c4c7e4b5ae67173b8d9300a061cfa364

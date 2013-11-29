@@ -226,7 +226,7 @@ class Db:
         
     def addLog(self,s,fileName=""):
         if Db.verbose:
-            pass
+            print s
         self.log += "\n" + s
         #self.addFile("dblog" + fileName + ".txt",self.log,"logs/")
         

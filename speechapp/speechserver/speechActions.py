@@ -17,15 +17,14 @@ def requestHandling(clientDb, action, data):
 	if not action in ["add_word","list_word_records","rm_word_record","recognize_spoken_word","listen_recording"]:
 		return "Unavailable action"
 	
+
 	if action == "add_word": #Pas encore possible de stocker un HMM, à voir plus tard
-		try:				
+		try:
 			word = data["word"]
 			content = data["audiofile"]
 		except KeyError:
 			return "File not found"
-		
-			
-			
+
 	elif action == "recognize_spoken_word":
 		try:
 			dbWaves = Db("db/",False)
@@ -58,17 +57,3 @@ def requestHandling(clientDb, action, data):
 			return data["audiofile"]
 		except KeyError:
 			return "file not found" 
-	
-	
-	
-	
-		
-	 
-
-			
-		
-		
-		
-		
-		
-    

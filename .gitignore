@@ -18,6 +18,9 @@ lib
 lib64
 __pycache__
 
+db/storage/handling
+db/logs
+
 # Installer logs
 pip-log.txt
 

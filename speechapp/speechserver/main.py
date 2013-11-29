@@ -7,7 +7,7 @@ et renvoie les transcriptions
 """
 
 import BaseHTTPServer
-import cgi
+from cgi import FieldStorage
 
 #from speechActions import requestHandling
 from clientAuth import checkAuth
@@ -25,7 +25,7 @@ class SpeechServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def do_POST(self):
         """Respond to a POST request"""
         
-        form = cgi.FieldStorage(
+        form = FieldStorage(
             fp=self.rfile, 
             headers=self.headers,
             environ={'REQUEST_METHOD':'POST',

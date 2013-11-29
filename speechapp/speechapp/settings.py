@@ -1,3 +1,6 @@
+#!/usr/bin env python2
+# -*- coding: utf-8 -*-
+
 """
 Django settings for speechapp project.
 
@@ -45,6 +48,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'speechapp',
 )
 
 ROOT_URLCONF = 'speechapp.urls'
@@ -65,7 +69,7 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/dev/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr-fr'
 
 TIME_ZONE = 'UTC'
 

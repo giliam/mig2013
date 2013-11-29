@@ -4,7 +4,7 @@
 import scipy.io.wavfile
 import sys
 sys.path.append("src")
-
+import os
 from constantes import *
 from numpy import abs,int16
 from db import Db
@@ -54,27 +54,25 @@ def main(verbose=True,action=-1,verboseUltime=True):
             print filesList
             action = int( input( "À partir de quelle action souhaitez-vous agir ?\n0-Tout\n1-Filtre passe-haut\n2-Fenêtre de Hann\n3-Transformée de Fourier Rapide\n4-Fonction Mel\n5-Création de la liste Mel\n6-Transformée de Fourier inverse\n7-Creation de vecteurs\n " ) )
             for f in filesList:
-                try:
-                    m = db.getWaveFile(f)
-                except IOError:
-                    break
+                dirName = os.path.dirname(f)
+                m = db.getWaveFile(f)
                 if action == 1:
                     content = m[1]
                 elif action == 2:
-                    content = db.getFile("handling/passe_haut_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt")                
+                    content = db.getFile("handling/passe_haut_" + dirName + "_" + str(numeroTraitement) + ".txt")                
                 elif action == 3:
-                    content = db.getFile("handling/hann_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt")
+                    content = db.getFile("handling/hann_" + dirName + "_" + str(numeroTraitement) + ".txt")
                 elif action == 4:
-                    content = db.getFile("handling/fft_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt")
+                    content = db.getFile("handling/fft_" + dirName + "_" + str(numeroTraitement) + ".txt")
                 elif action == 5:
-                    content = db.getFile("handling/mel_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt")
+                    content = db.getFile("handling/mel_" + dirName + "_" + str(numeroTraitement) + ".txt")
                 elif action == 6:
-                    content = db.getFile("handling/mel_tab_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt")
+                    content = db.getFile("handling/mel_tab_" + dirName + "_" + str(numeroTraitement) + ".txt")
                 elif action == 7:
-                    content = db.getFile("handling/fft_inverse_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt")
+                    content = db.getFile("handling/fft_inverse_" + dirName + "_" + str(numeroTraitement) + ".txt")
                 else:
                     content = m[1]
-                mot,log = handlingOneWord(content,db,dirChoice,numeroTraitement)
+                mot,log = handlingOneWord(content,db,dirName,numeroTraitement)
                 if verbose:
                     print log
                 fileOk = False
@@ -140,9 +138,11 @@ def main(verbose=True,action=-1,verboseUltime=True):
 
 
 
-def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0):
+def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0,hmmList=[]):
     """ Fait le traitement d'un mot pour en construire les vecteurs de Markov et tester ensuite la compatibilité avec les automates existants 
             Retourne un tuple (motLePlusCompatible,log) """
+    if hmmList == []:
+        print "Liste vide"
     log = ""
     if action <= 1:
         log += "Filtre passe-haut en cours...\n"
@@ -223,6 +223,10 @@ def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0):
     db.logDump(str(dirChoice) + "_" + str(numeroTraitement))
     motLePlusCompatible = "cheval"
     return motLePlusCompatible,log
+
+def ampToHMMFromList(content):
+    return ""
+
 
 if __name__ == "__main__":
     main(True)

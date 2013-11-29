@@ -1,3 +1,0 @@
-S'Filtre passe-haut en cours...Filtre passe-haut termine...Sauvegarde effectuee...\nFen\xc3\xaatre de Hann en cours...Fen\xc3\xaatre de Hann terminee...Sauvegarde effectuee...\nTransformee de Fourier rapide en cours...Transformee de Fourier rapide terminee...Sauvegarde effectuee...\nApplication de la fonction Mel en cours...Application de la fonction Mel terminee...Sauvegarde effectuee...\nTransformee de Fourier inverse en cours...Transformee de Fourier inverse terminee...Sauvegarde effectuee...\nCreation de vecteurs HMM en cours...Creation de vecteurs HMM terminee...Sauvegarde effectuee...\n'
-p0
-.

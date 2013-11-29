@@ -18,7 +18,7 @@ def recorder(db,dirName="",nbRecording=-1,askForWord=True):
 	if nbRecording < 0:
 		nbRecording = raw_input("Combien d'enregistrement par mots ? ")
 		nbRecording = int(nbRecording)
-
+	n = ""
 	while True:
 		if askForWord:
 			mot = raw_input("Entrez le mot a enregistrer : ")
@@ -60,4 +60,4 @@ def recorder(db,dirName="",nbRecording=-1,askForWord=True):
 			db.addWave(name,CHANNELS,p.get_sample_size(FORMAT), RATE, frames,p)
 			
 			print "Fin du mot ", i
-			return n
+	return n

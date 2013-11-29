@@ -180,6 +180,15 @@ class Db:
             raise Exception("Le fichier n'existe pas")
     
     
+    def sync(self):
+        """ Met le fichier de stockage de la liste des fichiers à jour """
+        try:
+            with open(Db.prefix + Db.filesListName + ".txt","w") as f:
+                pickle.Pickler(f).dump(self.filesList)
+        except IOError:
+            raise Exception("Le fichier n'existe pas")
+    
+    
     
     def reset(force=False):
         """ Reset la liste des fichiers """
@@ -187,7 +196,7 @@ class Db:
             with open(Db.prefix + Db.filesListName + ".txt","w") as f:
                 c = pickle.Pickler(f)
                 c.dump([])
-            self.addLog("Réinitialisation réussie pour les fichiers")
+            print "Réinitialisation réussie pour les fichiers"
     reset = staticmethod(reset)
     
     

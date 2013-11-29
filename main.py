@@ -55,10 +55,7 @@ def main(verbose=True,action=-1,verboseUltime=True):
             action = int( input( "À partir de quelle action souhaitez-vous agir ?\n0-Tout\n1-Filtre passe-haut\n2-Fenêtre de Hann\n3-Transformée de Fourier Rapide\n4-Fonction Mel\n5-Création de la liste Mel\n6-Transformée de Fourier inverse\n7-Creation de vecteurs\n " ) )
             for f in filesList:
                 dirName = os.path.dirname(f)
-                try:
-                    m = db.getWaveFile(f)
-                except IOError:
-                    break
+                m = db.getWaveFile(f)
                 if action == 1:
                     content = m[1]
                 elif action == 2:

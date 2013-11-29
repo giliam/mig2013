@@ -8,7 +8,7 @@ typedef std::complex<double> cDouble;
 cDouble* listToTab(boost::python::list l)
 {
     int N = boost::python::len(l);
-    cDouble *t = (cDouble*)malloc(N*sizeof(cDouble));
+    cDouble *t = (cDouble*)c(N*sizeof(cDouble));
     for (int i=0;i<N;i++)
         t[i] = boost::python::extract<cDouble>(l[i]);
     return t;
@@ -60,6 +60,9 @@ cDouble* fftCT(cDouble *sig)
         p = f;
         f = (p+1)%2;
     }
+	
+	free(tmp[f]);
+	
     return tmp[p];
 }
 
@@ -77,6 +80,7 @@ cDouble* fft(cDouble *sig, int N, int *sizeC, bool mid)
         for (int i=N;i<NPadded;i++)
              sigPadded[i] = 0;
         C = fftCT(sigPadded);
+		free(sigPadded);
     }
 
     if (mid) {
@@ -85,6 +89,7 @@ cDouble* fft(cDouble *sig, int N, int *sizeC, bool mid)
         for (int i=0;i<n;i++)
             rep[i] = C[i];
         *sizeC = n;
+		free(C);
         return rep;
     } else {
         *sizeC = N;
@@ -114,6 +119,7 @@ boost::python::list fftListe(boost::python::list pyEchs, bool mid=true)
     int sizeLastEch  = boost::python::len(pyEchs[nbEchs-1]);
     C = fft(echs[nbEchs-1], sizeLastEch, &sizeC, mid);
     rep.append(tabToList(C, sizeC));
+	free(C);
 
     std::cout << "Done !" << std::endl;
     return rep;

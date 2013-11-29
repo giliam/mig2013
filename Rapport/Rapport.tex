@@ -93,31 +93,78 @@
 \begin{document}
 \maketitle
 \tableofcontents
+\newpage
 
-\part{La reconnaissance vocale}
-    \nonewpagechapter{Le traitement du signal}
-        \section{Filtre 1}
+
+\chapter*{Introduction}
+	\section{Présentation des enjeux}
+		 Nam scelerisque cursus ligula ac suscipit. Fusce non molestie libero. Duis metus justo, sodales id velit et, placerat venenatis libero. Morbi faucibus ut orci sit amet elementum. Vestibulum blandit tortor eu blandit lacinia. Fusce sit amet orci nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+
+Sed dictum sit amet neque nec facilisis. Nulla varius consectetur ante id varius. Phasellus sit amet auctor leo, in aliquet neque. Suspendisse ornare laoreet nisl, quis tempus ipsum rutrum nec. Maecenas dapibus faucibus eros, at ornare dolor molestie sit amet. Phasellus ultrices viverra libero, a tempus lectus auctor id. Vestibulum a hendrerit ipsum, sed tristique nulla. Vivamus eget cursus magna. Integer vestibulum fringilla urna, vel volutpat dui tempor malesuada. Mauris quis porta lacus, molestie lobortis velit. Cras aliquet sodales massa eget blandit. Pellentesque eget convallis elit. Pellentesque in sapien et turpis blandit scelerisque id quis turpis. Integer lobortis laoreet dapibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
+	\section{Objectifs du projet}
+		 Sed sodales diam arcu, quis euismod sapien condimentum vitae. Suspendisse vitae lobortis elit. Proin consectetur ante nec tristique tincidunt. Sed porttitor risus ac ultricies ultrices. Nullam hendrerit accumsan est nec egestas. Sed purus lacus, laoreet ac malesuada et, consectetur vitae turpis. Mauris eu dictum urna, ac hendrerit sem. Donec sem enim, adipiscing ac molestie et, faucibus et lectus. Praesent nec ligula elit. Ut a consequat orci, id aliquet leo. Etiam urna neque, fermentum non auctor vitae, volutpat vitae magna. Vestibulum faucibus metus vitae leo facilisis volutpat. Nam bibendum erat at magna rhoncus fermentum.
+
+Donec suscipit tortor non commodo suscipit. Fusce commodo tristique felis eu venenatis. Vestibulum convallis id leo id mollis. Pellentesque facilisis, lectus non imperdiet rhoncus, urna leo faucibus lorem, quis suscipit neque urna nec magna. Fusce venenatis augue sit amet odio dictum, vel malesuada justo aliquet. Integer venenatis ornare lorem, sed pulvinar leo facilisis a. Nullam imperdiet, urna eget suscipit sagittis, eros sem tristique justo, vitae sollicitudin libero enim in enim. Aenean non feugiat felis, ultrices pharetra turpis. Donec congue nunc augue, posuere faucibus ipsum lacinia sed. Curabitur et metus interdum, scelerisque neque quis, dignissim ipsum. Donec ac justo tempor, vehicula sem ac, dictum leo. Sed sit amet eros leo. Ut volutpat viverra metus sed fringilla. Morbi pharetra urna eu aliquet accumsan. Proin porta tortor vitae purus tempus, vel vehicula enim sollicitudin. Donec sed lorem sed velit tincidunt ultricies ut nec lorem. 
+
+\part{Démarche Technique}
+    \nonewpagechapter{Analyse, formatage du signal}
+        \section{Enregistrement, recadrage, filtrage HF}
         	Lorem ipsum dolor sit amet\cite{ref1}, consectetur adipiscing elit. Nam lobortis massa eget justo lacinia ultricies. Aenean egestas nunc metus. Pellentesque nibh nibh, placerat eget dui porta, ornare egestas tellus. Donec dictum vel nulla sed feugiat. Donec id bibendum orci, in accumsan nibh. Nunc placerat, sem et sollicitudin elementum, arcu velit scelerisque nibh, et convallis sapien erat a dolor. Pellentesque aliquet lorem erat, eget mollis est dapibus et. Praesent convallis ac nisl sit amet porta.
-        \section{Filtre 2}
+        \section{Echantillonnage, fenêtrage}
         	Nam eu sollicitudin massa. Duis sagittis velit mi. Nunc dictum risus ac interdum lacinia\cite{ref2}. Aliquam a fermentum lectus. Praesent dapibus molestie mauris sed vestibulum. Curabitur sodales egestas est a pellentesque. Quisque id vulputate erat, a sagittis turpis. Proin vulputate congue ante, a laoreet orci posuere venenatis. Suspendisse ullamcorper ac dolor nec dapibus.
+<<<<<<< HEAD
         \subsection{dï¿½but du filtre 2}
         	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas rutrum aliquet odio ac volutpat. Suspendisse massa enim, faucibus ut mi dignissim, fringilla ultrices dolor. Quisque bibendum vel nisl eget interdum. Phasellus sed ultricies orci. Aenean egestas risus ut ante porttitor tempus. Suspendisse malesuada, neque ut ullamcorper hendrerit, nibh justo porta purus, quis suscipit neque nisi in nunc. Pellentesque est nisi, porta semper mauris quis, commodo ultricies turpis.
         \subsection{fin du filtre 2}
         	Vivamus posuere malesuada metus, et fringilla felis congue sed. Fusce a nibh in urna molestie viverra vel in est. Donec ipsum nibh, commodo tristique bibendum vitae, consequat quis ipsum. Donec sed diam aliquet velit aliquam viverra. Etiam tincidunt egestas nibh, sit amet facilisis quam vulputate scelerisque. Maecenas nec eros rutrum, tempus ipsum sit amet, tempus dui. Quisque adipiscing varius neque, at egestas erat consequat vitae. Donec sit amet urna iaculis, pharetra arcu in, porttitor quam. Ut nunc ante, tincidunt placerat libero eu, hendrerit lacinia leo. Nam sapien enim, feugiat nec orci eget, porta suscipit diam. Nulla mattis molestie est vitae blandit. Nullam bibendum tempus odio, quis vestibulum quam consectetur at. 
+=======
+        	\section{Transformée de Fourier}
+        	Nam eu sollicitudin massa. Duis sagittis velit mi. Nunc dictum risus ac interdum lacinia\cite{ref2}. Aliquam a fermentum lectus. Praesent dapibus molestie mauris sed vestibulum. Curabitur sodales egestas est a pellentesque. Quisque id vulputate erat, a sagittis turpis. Proin vulputate congue ante, a laoreet orci posuere venenatis. Suspendisse ullamcorper ac dolor nec dapibus.
+        	\section{MEL}
+        	Nam eu sollicitudin massa. Duis sagittis velit mi. Nunc dictum risus ac interdum lacinia\cite{ref2}. Aliquam a fermentum lectus. Praesent dapibus molestie mauris sed vestibulum. Curabitur sodales egestas est a pellentesque. Quisque id vulputate erat, a sagittis turpis. Proin vulputate congue ante, a laoreet orci posuere venenatis. Suspendisse ullamcorper ac dolor nec dapibus.
+        	\section{Transformée inverse}
+        	Nam eu sollicitudin massa. Duis sagittis velit mi. Nunc dictum risus ac interdum lacinia\cite{ref2}.
+>>>>>>> afb612e1c4c7e4b5ae67173b8d9300a061cfa364
     \chapter{Les MMC}
-        \section{Principe}
-            \subsection{Graphe}
-            	Duis massa elit, vulputate quis lectus vel\cite{ref1}, consectetur ultrices ipsum. Nulla facilisi. Nulla metus lorem, tempus eu arcu non, pulvinar laoreet turpis. Etiam interdum vehicula nunc at convallis. Vestibulum euismod risus at velit interdum suscipit. Vestibulum eu tincidunt massa, sit amet luctus diam. In tempor, nibh sed vulputate mollis, turpis nisl egestas risus, in egestas erat nulla et est. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non tellus fringilla, vehicula nisi eu, commodo lorem. Aliquam erat volutpat. Sed sed tempor ipsum.
-            \subsection{Variables}
-        \section{Mise en pratique}
-        	Suspendisse eget felis quis mauris faucibus dignissim quis vitae dui\cite{ref1}. Maecenas non leo et leo viverra auctor a quis metus. Sed volutpat lectus at sem tincidunt sollicitudin. Maecenas tortor leo, feugiat eget gravida at, scelerisque sit amet nisi. Sed non nunc lorem. Pellentesque ultricies tincidunt ipsum ut sagittis. Maecenas leo tellus, luctus sed gravida vitae\cite{ref2}, dignissim nec sapien. Mauris quis accumsan orci, nec ultricies ante. In sit amet eleifend eros. Ut posuere facilisis risus nec gravida. Nullam consequat sollicitudin mi, nec lacinia quam consectetur et. Integer sagittis nibh metus, at sodales nunc gravida ac. Nunc semper urna nisl, quis congue quam gravida sit amet. Sed a ante imperdiet, luctus purus at, blandit dui.
-    \chapter{Le code}
-        \section{Python}
-        	\SetCodeStyle{Python}
-        	\lstinputlisting[language=Python, firstline=2, lastline=37]{exemple.py}
-        \section{C/C++}
-        	\SetCodeStyle{C++}
-        	\lstinputlisting[language=C++, firstline=46, lastline=71]{exemple.cpp}
+        \section{Principe, modèle discret}
+        	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas dapibus scelerisque elit pulvinar ornare. In sollicitudin dui eu eros feugiat, sit amet eleifend ante dapibus. Donec id aliquet dolor, at ullamcorper nibh. Nulla egestas odio tempus nunc venenatis fringilla. Fusce in risus eu augue ullamcorper euismod nec et lacus. Nullam elementum adipiscing tellus, vel aliquet tortor ultricies quis. In justo libero, dictum sed risus sodales, hendrerit tempor eros. Sed varius metus velit, nec placerat neque tincidunt ac. 
+        \section{Phase d'apprentissage}
+        	Morbi cursus risus eget scelerisque interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eget nibh tellus. In dolor purus, viverra nec eleifend id, commodo dignissim ipsum. Nullam viverra turpis at sodales commodo. Nunc sollicitudin nisi sit amet purus gravida, a porttitor velit bibendum. Cras varius nibh purus, vel sollicitudin lorem adipiscing id. 
+        \section{Phase de reconnaissance}
+        	Fusce commodo bibendum malesuada. Suspendisse ultrices pulvinar nulla, at ornare mauris accumsan tempus. Donec a mi libero. Fusce ut ante massa. Sed pretium augue ante, eu pellentesque nibh hendrerit sollicitudin. Maecenas placerat vehicula nulla, id tincidunt lectus placerat a. Vivamus et mattis quam, in sagittis felis. Aenean lobortis cursus nibh, eget vulputate mauris porta vel. Praesent at diam dictum, varius arcu id, sollicitudin lacus. Nullam sit amet mi non diam rutrum tincidunt. Pellentesque pretium magna velit, ac sagittis lectus iaculis non. Aenean vulputate fermentum tellus, non volutpat neque bibendum quis. Praesent malesuada orci quis diam ullamcorper iaculis. Nullam vitae purus euismod, fermentum mi a, mattis purus. 
+
+\part{Approche commerciale}
+		\setcounter{chapter}{0}
+    \nonewpagechapter{Côté web}
+    	 Cras accumsan, sapien a mattis cursus, augue turpis rhoncus leo, et mattis lorem mi sed nisi. Fusce quam tortor, vulputate et tincidunt in, condimentum quis risus. Phasellus facilisis est id ipsum fermentum, eget aliquet arcu tristique. Mauris lacinia urna non risus ullamcorper auctor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean a tincidunt mauris. Maecenas felis massa, tempus nec lorem et, accumsan iaculis nunc.
+
+Suspendisse tincidunt eros nibh, mollis feugiat elit feugiat eget. Ut porta gravida orci in congue. Vestibulum et lectus adipiscing purus tempor feugiat. Morbi consectetur eget tellus ut feugiat. Sed ipsum nisl, feugiat vitae volutpat et, accumsan eget orci. Proin non leo eros. Vivamus malesuada neque et erat bibendum malesuada.
+
+In hac habitasse platea dictumst. Vivamus eleifend erat ac quam aliquam, vehicula ultricies arcu iaculis. Suspendisse potenti. Quisque at commodo quam. Etiam ultricies elit leo, vel congue lorem tristique eget. Quisque sodales dignissim diam, ac malesuada libero scelerisque sed. Aliquam bibendum luctus elit vel suscipit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque quis mi at mi vulputate rhoncus.
+
+Integer convallis id libero vel egestas. Cras ultricies porta nisl, ut tempus purus pulvinar tristique. Duis ut hendrerit libero. Aliquam sit amet erat sit amet dolor sagittis feugiat. Nulla elit enim, iaculis et congue eget, porta hendrerit purus. Aliquam in facilisis metus. Vivamus euismod adipiscing pellentesque. Fusce a pellentesque lorem. Sed pretium ut ligula non blandit. Phasellus vitae mollis dolor. In a eleifend magna, non mollis magna. Etiam nisi tellus, blandit ut ante ut, vehicula tristique nunc. 
+    \chapter{Applications}
+    	 Praesent in tincidunt augue. Nunc sagittis, mauris et ultrices pulvinar, velit nisl fermentum leo, ultricies pellentesque quam leo at lectus. Phasellus id mi nec ante scelerisque lacinia. Nunc scelerisque metus vel ultricies facilisis. Praesent venenatis nulla id mi dictum, non accumsan elit scelerisque. Nullam tempor ullamcorper elit, vitae molestie magna sagittis in. Sed lacinia, nibh vitae iaculis posuere, est dolor ornare ligula, quis malesuada orci tortor sed libero. Phasellus pellentesque ligula massa, ut rutrum velit malesuada eu.
+
+Sed vehicula mi sem. Fusce placerat fringilla est eu ornare. Integer vehicula aliquet blandit. Quisque nec aliquam nibh. Vivamus dui dui, tincidunt id arcu ut, faucibus tempor ipsum. Praesent pharetra mauris vel dictum ullamcorper. Donec varius nisl vel neque aliquam, ac viverra sapien ornare. Donec quis adipiscing purus, accumsan pellentesque metus. Integer nec velit nec arcu ullamcorper consequat a id magna. Nam sed dictum dolor. Duis euismod, ligula at malesuada pellentesque, turpis sapien fringilla metus, ac sollicitudin nisi neque ut tellus. Aliquam ante dolor, fermentum at justo sit amet, vestibulum congue nisi. Etiam eu imperdiet lorem. Fusce eu neque ac lectus pulvinar sollicitudin. Integer imperdiet nec tellus nec condimentum. Quisque ut ullamcorper nunc, eget egestas mauris.
+
+Nam elementum aliquet magna quis dictum. Aliquam ac ultrices magna. Mauris sed aliquet purus. Nullam vitae lacus mi. Aliquam nec scelerisque enim, id rutrum nisl. Sed vehicula, arcu non bibendum aliquet, nisl mauris porta lorem, id volutpat elit massa eu velit. Quisque non orci a tortor scelerisque scelerisque. Nunc non nunc nunc. Donec aliquam felis mauris, quis ullamcorper nulla laoreet ac. Aenean eros urna, volutpat at fringilla vel, semper id justo. Nunc quam nisi, facilisis a dapibus ac, porta in ipsum. 
+    \chapter{Budget, modèle économique}
+    	 Praesent quis mauris tellus. Nulla ut dui vel ligula aliquet posuere. Morbi dignissim pellentesque consequat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin eleifend feugiat enim, nec egestas neque semper non. Vestibulum ullamcorper lorem eu dui pretium, eu pretium odio pellentesque. Mauris sed fringilla nisl. Sed ut vestibulum elit. Aenean lobortis rutrum ligula sit amet convallis. Praesent fermentum malesuada felis at interdum. Donec iaculis nunc lectus, ut facilisis turpis accumsan sit amet. Nunc elementum ut lacus sed elementum. Morbi rutrum tristique dignissim.
+
+Sed interdum augue ac velit tristique, eget lacinia mauris consectetur. Fusce aliquet arcu ut lectus congue volutpat. Sed lobortis leo sit amet neque gravida egestas. Praesent diam nulla, adipiscing eu ullamcorper et, posuere ac lectus. Nulla adipiscing diam in felis cursus, non eleifend sapien vehicula. Maecenas et magna metus. Nunc fringilla risus sapien, nec sagittis arcu adipiscing quis. Cras vitae consequat leo, sagittis bibendum lorem. Quisque interdum, nibh a interdum blandit, augue nisl fringilla neque, sed sollicitudin tortor leo id lacus. Ut vel euismod eros, sed bibendum quam. Etiam interdum elit ut orci blandit, vitae vulputate nunc gravida. Aenean ipsum tellus, facilisis eget ipsum id, posuere interdum enim. Suspendisse vitae leo egestas, tempus erat sit amet, malesuada tortor.
+
+Quisque a tempus metus. Fusce ornare accumsan libero porttitor feugiat. Nullam tempor velit vel cursus commodo. Fusce condimentum augue felis, sed varius quam varius vel. Etiam et neque vitae ante ultricies mattis. Suspendisse vehicula ligula felis, at vestibulum nisl dictum et. Morbi ante odio, lacinia et massa at, posuere sollicitudin ante. Fusce dignissim laoreet sagittis. Aenean non egestas enim. Vestibulum rutrum, nisl vel condimentum fringilla, tellus justo adipiscing est, ut sollicitudin mauris nisi dapibus felis. Aliquam diam elit, pretium rhoncus malesuada mattis, tincidunt non ipsum. Duis ut ipsum bibendum libero porttitor placerat vel et velit. 
+    
+\part{Le Code}
+	\setcounter{chapter}{0}
+	\nonewpagechapter{Python}
+    \SetCodeStyle{Python}
+    \lstinputlisting[language=Python, firstline=2, lastline=37]{exemple.py}
+  \chapter{C/C++}
+     \SetCodeStyle{C++}
+     \lstinputlisting[language=C++, firstline=46, lastline=71]{exemple.cpp}
+
 \bibliographystyle{unsrt} % Pour la biblio
 \bibliography{Biblio}
 

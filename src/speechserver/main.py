@@ -10,11 +10,20 @@ import BaseHTTPServer
 from cgi import FieldStorage
 from xml.etree import ElementTree as ET
 
-#from speechActions import requestHandling
+from speechActions import requestHandling
 from clientAuth import checkAuth
+
+from core import db
+
 
 
 class SpeechServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+    def __init__(self):
+        super().__init__()
+        
+        #Keep the authDB in memory while running server
+        self.authDB = db.Db("../../db/", True, "userDbList")
+
     def do_GET(self):
         '''Respond to a GET request'''
         self.send_response(200)
@@ -39,7 +48,7 @@ class SpeechServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         
 
         #Check if the user is authorized and he has access to clientDb
-        if checkAuth(user, hashedPass, clientDb):
+        if checkAuth(user, hashedPass, clientDb, self.authDB):
             action = form['action']
             respData = speechActions.requestHandling(clientDb, action, form)
             respXML = buildXMLResponse(respData)
@@ -73,6 +82,7 @@ class SpeechServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         for child in root:
             data[child.tag] = child.text
         return data
+
 
 
 def run(adress, port):

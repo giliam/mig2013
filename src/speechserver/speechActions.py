@@ -7,13 +7,9 @@ du client
 actions possibles : add_word_record, list_word_records, rm_word_record, 
                     recognize_spoken_word"""
 
-import scipy.io.wavfile
-import sys
-sys.path.append("../../")
-sys.path.append("../../src")
-from main import *
-from db import Db
-import numpy as np
+from core.main import *
+from core.db import Db
+
 dbWaves = Db("../../db/",False)
 dbWaves.addFile("hmmList.txt",{})
 dbWaves.addFile("clientDbList.txt",{})
@@ -59,15 +55,8 @@ def requestHandling(clientDbId, action, data):
 			return "File not found"
 		
 	elif action == "list_word_records": #renvoie un tableau de mots enregistrés
-		tab = np.zeros(len(clientDb))
-		i = 0
-		try:
-			for k, elt in enumerate(clientDb):
-				tab[i] = elt
-				i += 1
-			return tab
-		except KeyError:
-			return "File not found"
+		tab = [element for element in clientDB]
+        return tab
 	
 	elif action == "rm_word_record":
 		try:

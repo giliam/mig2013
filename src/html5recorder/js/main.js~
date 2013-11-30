@@ -1,11 +1,11 @@
 /* HTML5Script 
 An audio recorder for the speech recognition project
-for mig2013 SE team by Maxime Ernoult */
+of the mig2013 SE team */
 
 navigator.getUserMedia = (navigator.getUserMedia || 
                             navigator.webkitGetUserMedia ||
                             navigator.mozGetUserMedia);
-                    // raccourci cross-browser
+                    // cross-browser shortcut
 
 mediaRecorder = null //Object MediaRecorder
 audioElement = document.getElementById('audio'); //L'object audio pour le direct play
@@ -39,7 +39,7 @@ function initRecording(localMediaStream){
     mediaRecorder.ondataavailable = mediaOnDataAvailable;
     mediaStream = localMediaStream;
 
-    console.log('getUserMedia initialisé');  
+    console.log('getUserMedia initialised');  
 }    
 
 function main(){
@@ -51,7 +51,7 @@ function main(){
             changeLogoBG('green');
         }
         catch (e){
-            console.log("Erreur d'enregistremnt\n" + e);
+            console.log("Recording issue\n" + e);
         }
     }
     else{
@@ -61,7 +61,7 @@ function main(){
             changeLogoBG('white');
         }
         catch (e){
-            console.log("Erreur d'arrêt\n" + e);
+            console.log("Recording stop issue\n" + e);
         }
     }
 
@@ -99,10 +99,8 @@ function mediaOnDataAvailable(blob){
     console.log("Data available !!!");
     console.log(blob);
 
-    //Rend le blob disponible au chargement
-    var link = document.getElementById('dlLink');
-    link.href = window.URL.createObjectURL(blob.data);
-    link.innerHTML = "dl";
+    //Envoie à la console une adresse de téléchargement de l'échantillon
+    console.log(window.URL.createObjectURL(blob.data);
 
     //Communique les data au serveur
     servInteract(blob.data);
@@ -138,7 +136,7 @@ function wordResponse(respXML){
         var responseWord = respXML.getElementsByTagName('respWord');
     }
     else{
-        var responseWord = "Erreur :'(";
+        var responseWord = "Error :'(";
     }
     var responseElement = document.getElementById('responseWord');
     responseElement.innerHTML = responseWord;

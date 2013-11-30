@@ -123,9 +123,10 @@ class Db:
             
     
     def deleteFileFromList(self,fileName,dirFile=""):
-        """ Supprime un fichier de la liste des fichiers gérés par la base de données SANS supprimer le fichier physique
-            Paramètres : 
-                @fileName : nom du fichier dans le dossier storage 
+        """ Remove a file from the list but does NOT remove the file from the disk
+            Parameters : 
+                @fileName : name of the file in the storage directory prefixed by dirFile
+                @dirFile : prefix of the file
         """
         if len(dirFile) == 0:
             dirFile = "storage"
@@ -153,7 +154,7 @@ class Db:
     
     
     def syncToFile(self):
-        """ Met le fichier de stockage de la liste des fichiers à jour """
+        """ Synchronize the list of the files stored from the current attribute """
         try:
             with open(Db.prefixPath + Db.filesListName + ".txt","w") as f:
                 pickle.Pickler(f).dump(self.filesList)
@@ -162,7 +163,7 @@ class Db:
     
     
     def sync(self, dirName = "", dirIni = "storage/"):
-        """ Met le fichier de stockage de la liste des fichiers à jour en parcourant toute l'arborescence """
+        """ Synchronize the list of the files stored by studying recursively the current tree """
         for f in os.listdir(Db.prefixPath + dirIni + dirName):
             if os.path.isfile(os.path.join(Db.prefixPath + dirIni + dirName, f)):
                 self.addFileToList(os.path.join(dirName, f),dirIni)
@@ -171,7 +172,7 @@ class Db:
     
     
     def reset(force=False):
-        """ Reset la liste des fichiers """
+        """ Reset the files list """
         if force or int(input("Êtes-vous sûr de vouloir réinitialiser la liste des fichiers ? (Oui = 0/Non = 1)")) == 0:
             with open(Db.prefixPath + Db.filesListName + ".txt","w") as f:
                 c = pickle.Pickler(f)
@@ -183,16 +184,16 @@ class Db:
     
     
     def printFilesList(self,dirName="",printBool=True,*extRequired):
-        """ Affiche la liste des fichiers gérés par la base de données
-                Paramètres :
-                    @*extRequired = "all" : envoie l'extension des fichiers à afficher sous forme de tuples de noms d'extensions 
-                                                exemple : .wav, .txt """
+        """ Display the files list
+            Parameters:
+                @dirName : a prefixed 
+                @*extRequired : contains the extensions to display (e.g. <.wav, .txt>) """
         filesListExt = []
         for k,f in enumerate(self.filesList):
             #On récupère l'extension du fichier parcouru
             a,ext = os.path.splitext(f)
             d = os.path.dirname(f)
-            if (dirName == "" or d == dirName ) and (ext in extRequired or len(extRequired) == 0):
+            if (dirName == "" or d == dirName ) and (len(extRequired) == 0 or ext in extRequired):
                 if printBool:
                     print k, " - ", f
                 filesListExt.append(f)
@@ -200,9 +201,9 @@ class Db:
     
     
     def printDirFiles(self,dirName="storage/"):
-        """ Affiche la liste des dossiers dans un des sous-dossiers de stockage
-                Paramètres :
-                    @dirName = "storage/" : dossier qu'on parcourra """
+        """ Display the list of files in a directory
+            Parameters :
+                @dirName = "storage/" : directory to browse """
         dirListExt = []
         l = os.listdir(Db.prefixPath + dirName)
         for k,f in enumerate(l):

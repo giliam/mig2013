@@ -15,7 +15,7 @@ SpeechServer is our interface that let authorized external applications
 === How to use it ===
 
 The server is running on port 8001 by default.
-Send him POST Form requests, he will answer your with some nice XML
+Send him POST Form requests, he will answer you with some nice XML
 
 
 === API ===

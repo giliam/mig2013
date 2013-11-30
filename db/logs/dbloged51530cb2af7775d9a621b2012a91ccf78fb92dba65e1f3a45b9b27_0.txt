@@ -1,3 +1,0 @@
-S"\nL'insertion du fichier a bien \xc3\xa9t\xc3\xa9 effectu\xc3\xa9e\nL'insertion du fichier a bien \xc3\xa9t\xc3\xa9 effectu\xc3\xa9e\nL'insertion du fichier a bien \xc3\xa9t\xc3\xa9 effectu\xc3\xa9e\nL'insertion du fichier a bien \xc3\xa9t\xc3\xa9 effectu\xc3\xa9e\nL'insertion du fichier a bien \xc3\xa9t\xc3\xa9 effectu\xc3\xa9e\nL'insertion du fichier a bien \xc3\xa9t\xc3\xa9 effectu\xc3\xa9e\nL'insertion du fichier a bien \xc3\xa9t\xc3\xa9 effectu\xc3\xa9e\nLe fichier n'existe pas"
-p0
-.

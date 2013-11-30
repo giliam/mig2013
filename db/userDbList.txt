@@ -1,4 +1,0 @@
-(lp0
-S'users/registre.txt'
-p1
-a.

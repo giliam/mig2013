@@ -3,7 +3,8 @@
 #           Html5Recorder                #
 #                                        #
 ##########################################
-#    contact: max@wumzi.info             #
+#   Isolated word recognition project    #
+#    dev-contact: max@wumzi.info         #
 ##########################################
 
 A web-app written for the MIG SE team and its project of isolated word
@@ -13,6 +14,5 @@ It is made of an HTML/JS interface using getUserMedia API and MediaRecorder API,
 which records the user's word, send them to our server, and responds by the
 word recognized, if it's been.
 
-Because of the unstable state of MediaRecorder API, the app is currently (as of
-28/11/13) only supported by the latest version of Mozilla Firefox.   
+COMPATIBILITY :     - designed for the latest version of Mozilla Firefox (25) 
 

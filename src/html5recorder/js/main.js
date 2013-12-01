@@ -31,7 +31,8 @@ onload = function(){
 		    }
         );
     }
-    microphone.className = "wobble";
+    var microphone = document.getElementById('microphone');
+    microphone.className = "";
 };
 
 function initRecording(localMediaStream){

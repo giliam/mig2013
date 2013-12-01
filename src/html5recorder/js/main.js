@@ -32,7 +32,6 @@ onload = function(){
         );
     }
     var microphone = document.getElementById('microphone');
-    microphone.className = "";
 };
 
 function initRecording(localMediaStream){
@@ -50,7 +49,7 @@ function main(){
     if (!recording){
         try{
             microphone.className = "wobble animated";
-            microphone.style.borderColor = '#003173';
+            microphone.style.border = '5px solid #003173';
             startRecord();
             recording = true;
             //changeLogoBG('green');
@@ -65,7 +64,7 @@ function main(){
             recording = false;
             //changeLogoBG('white');
             microphone.className = "";
-            microphone.style.borderColor = 'white';
+            microphone.style.border = '5px solid white';
         }
         catch (e){
             console.log("Recording stop issue\n" + e);

@@ -31,6 +31,7 @@ onload = function(){
 		    }
         );
     }
+    microphone.className = "wobble";
 };
 
 function initRecording(localMediaStream){
@@ -44,11 +45,14 @@ function initRecording(localMediaStream){
 
 function main(){
     /* Decide quelle action lancer lorsque le bouton est togglé */
+    var microphone = document.getElementById('microphone');
     if (!recording){
         try{
+            microphone.className = "wobble animated";
+            microphone.style.borderColor = '#003173';
             startRecord();
             recording = true;
-            changeLogoBG('green');
+            //changeLogoBG('green');
         }
         catch (e){
             console.log("Recording issue\n" + e);
@@ -58,7 +62,9 @@ function main(){
         try{
             stopRecord();
             recording = false;
-            changeLogoBG('white');
+            //changeLogoBG('white');
+            microphone.className = "";
+            microphone.style.borderColor = 'white';
         }
         catch (e){
             console.log("Recording stop issue\n" + e);

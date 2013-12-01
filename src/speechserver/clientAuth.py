@@ -3,58 +3,55 @@
 import pickle
 import sys
 
-from core.db import Db
+from core.utils.db import Db
 
+DEBUG = False
 
 class AuthUser:
     def __init__(self, authDB):
-        
-    def newUser(self, userList, fileName="registre"):
+        self.db = Db("../../db/", "userDbList", DEBUG)
+        self.userList = self.db.getFile("users/" + fileName + ".txt")
+
+    def init_set(self, userList, fileName="registre"):
 	    """ Crée et initialise le dictionnaire contenant les utilisateurs et leurs données """
-	    dbUser.addFile("users/" + fileName + ".txt", userList)
+	    self.db.addFile("users/" + fileName + ".txt", userList)
 
 
-    def lecture(self, fileName="registre"):
-	    """ Renvoie la liste des utilisateurs et leurs données """
-	    return dbUser.getFile("users/" + fileName + ".txt")
-
-
-    def ajouteUtilisateur(self, cle,valeur,fileName="registre"):
+    def newUser(self, client, hashedPass, authorizedDbs, fileName="registre"):
 	    """ Ajoute un utilisateur et des données """
-	    userList = lecture()
-	    userList[cle] = valeur
-	    dbUser.addFile("users/" + fileName + ".txt",userList)
+        if not self.userList.get(client):
+	        self.userList[cle] = valeur
+	        self.db.addFile("users/" + fileName + ".txt",userList)
+            return True
+        return False
                 
         
-    def affichage(userList):   
-	    """ Affiche la liste des utilisateurs et leurs données """     
-	    for cle,valeur in userList.items():
-		    print(cle, ":", valeur)
-	    if userList == {}:
-		    print "Il n'y a pas d'utilisateur"
+    def __str__(self):   
+	    """ Affiche la liste des utilisateurs et leurs données """
+        data = ["%s :\t %s" % (client, clientData) for client, clientData in userList.items()]
+		return '\n'.join(data)
 
 
-    def supprimeClient(cle):
+    def rmClient(client):
 	    """ Supprime un client du dictionnaire """ 
-	    dico=lecture(dbUser)
-	    del dico[cle]
+        if self.userList.get(client):
+	        del self.userList[client]
+            return True
+        return False
             
 
-    def renvoieClient(cle):
+    def getClient(client):
 	    """ Retourne un client s'il se trouve dans la liste des utilisateurs """
-	    dico=lecture()
-	    if cle in dico:
-		    return(dico[cle])
+	    return self.userList.get(client):
 
 
-    def ajouteClient(nom,mdp,listeAcces):
+    def addClient(nom, mdp, listeAcces):
 	    """ Ajoute un utilisateur au système """
 	    ajouteUtilisateur(nom,[mdp,listeAcces])
           
       
-    def checkAuth(nom,mdp,acces):
+    def checkAuth(self.nom, mdp, acces):
 	    """ Vérifie que le nom entré se trouve bien dans la liste des utilisateurs """
-	    dico=lecture()
 	    l = renvoieClient(nom)
 	    if l[0] == mdp:
 		    if acces in l[1]:

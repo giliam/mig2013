@@ -15,7 +15,7 @@ class Db:
     prefixPath = ""
     verbose = False
     
-    def __init__(self, prefixPath = "", verbose = False, filesListName = "filesList"):
+    def __init__(self, prefixPath = "", filesListName = "filesList", verbose = False):
         """ Constructor which needs prefix of the directory which contains (or will contain) the stored files """
         Db.prefixPath = prefixPath
         Db.filesListName = filesListName
@@ -173,7 +173,8 @@ class Db:
     
     def reset(force=False):
         """ Reset the files list """
-        if force or int(input("Êtes-vous sûr de vouloir réinitialiser la liste des fichiers ? (Oui = 0/Non = 1)")) == 0:
+        msg = "Êtes-vous sûr de vouloir réinitialiser la liste des fichiers ? (Oui = 0/Non = 1)"
+        if force or int(input(msg)) == 0:
             with open(Db.prefixPath + Db.filesListName + ".txt","w") as f:
                 c = pickle.Pickler(f)
                 c.dump([])
@@ -211,7 +212,7 @@ class Db:
             print k, " - ", f
         return l
     
-    def toString(self):
+    def __str__(self):
         print self.filesList
         
     def addLog(self,s,fileName=""):
@@ -228,8 +229,9 @@ class Db:
             name = "handlinglog"
         self.addFile(name + fileName + ".txt",log,"logs/")
     
+
 if __name__ == "__main__":
     db = Db()
     db.addFileToList("test.txt")
     db.getFile("test.txt")
-    db.toString()
+    print(db)

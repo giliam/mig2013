@@ -14,12 +14,13 @@ dbWaves = Db("../../db/",False)
 dbWaves.addFile("hmmList.txt",{})
 dbWaves.addFile("clientDbList.txt",{})
 
-
+class requestHandling:
+    def __init__(self, ):
 def requestHandling(clientDbId, action, data):
 	if not action in ["add_word","list_word_records","rm_word_record","recognize_spoken_word","listen_recording"]:
 		return "Unavailable action"
 	
-
+    '''
 	if action == "add_word": #Pas encore possible de stocker un HMM, à voir plus tard
 		try:
 			hmmList = dbWaves.getFile("hmmList.txt")
@@ -42,8 +43,9 @@ def requestHandling(clientDbId, action, data):
 
 		except KeyError:
 			return "File not found"
+    '''
 
-	elif action == "recognize_spoken_word":
+	if action == "recognize_spoken_word":
 		try:
 	        audioBlob = data["audioBlob"]
             audioType = data["audioType"]
@@ -53,7 +55,8 @@ def requestHandling(clientDbId, action, data):
 			return {'respWord': respWord}
 		except KeyError:
 			return "File not found"
-		
+	
+    '''	
 	elif action == "list_word_records": #renvoie un tableau de mots enregistrés
 		tab = [element for element in clientDB]
         return tab
@@ -69,4 +72,4 @@ def requestHandling(clientDbId, action, data):
 		try:
 			return data["audiofile"]
 		except KeyError:
-			return "file not found" 
+			return "file not found"'''

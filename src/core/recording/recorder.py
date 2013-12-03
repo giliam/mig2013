@@ -1,9 +1,7 @@
-#!/usr/bin/env python2
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 """ Réalise l'enregistrement d'un certain nombre d'échantillons audio déterminé par l'utilisateur.
 		Nécessite PYAUDIO pour fonctionner : http://www.lfd.uci.edu/~gohlke/pythonlibs/ """
-		
 import os
 import pyaudio
 import wave
@@ -12,7 +10,7 @@ import random
 import hashlib
 
 
-def recorder(db,dirName="",nbRecording=-1,askForWord=True):
+def recorder(db,dirName="",nbRecording=-1,askForWord=True,seconds=-1):
 	""" Procède à l'enregistrement """ 
 
 	if nbRecording < 0:
@@ -25,8 +23,10 @@ def recorder(db,dirName="",nbRecording=-1,askForWord=True):
 		else:
 			mot = ""
 			
-		temps = raw_input("Entrez le nombre de secondes pour l'enregistrement : ")
-		temps = float(temps)
+		if seconds < 0:
+			seconds = raw_input("Entrez le nombre de secondes pour l'enregistrement : ")
+		seconds = float(seconds)
+		
 		for i in range(nbRecording):
 			raw_input("Appuyez sur une touche pour commencer l'enregistrement : ")
 			p = pyaudio.PyAudio()
@@ -37,15 +37,15 @@ def recorder(db,dirName="",nbRecording=-1,askForWord=True):
 							input=True,
 							frames_per_buffer=CHUNK)
 
-			print "Enregistrement[", i, "]:"
+			#print "Enregistrement[", i, "]:"
 
 			frames = []
 
-			for j in range(0, int(RATE / CHUNK * temps)): 
+			for j in range(0, int(RATE / CHUNK * seconds)): 
 				data = stream.read(CHUNK)
 				frames.append(data)
 			
-			print "Fin - Enregistrement[", i, "]:"
+			#print "Fin - Enregistrement[", i, "]:"
 
 			stream.stop_stream()
 			stream.close()
@@ -59,5 +59,6 @@ def recorder(db,dirName="",nbRecording=-1,askForWord=True):
 				name = mot + "/" + n + ".wav"
 			db.addWave(name,CHANNELS,p.get_sample_size(FORMAT), RATE, frames,p)
 			
-			print "Fin du mot ", i
+			#print "Fin du mot ", i
+			break
 	return n

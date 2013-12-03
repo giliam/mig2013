@@ -18,7 +18,7 @@ from handling.fft import *
 from hmm.hmm import *
 
 def main(verbose=True,action=-1,verboseUltime=True):
-    db = Db("../../db/",verbose)
+    db = Db("../../db/",verbose=verbose)
     choice = -1
     while( not choice in range(1,6) ):
         try:
@@ -214,6 +214,8 @@ def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0,hmmList=[]):
     """
     db.logDump(str(dirChoice) + "_" + str(numeroTraitement),log)
     db.logDump(str(dirChoice) + "_" + str(numeroTraitement))
+    for h in hmmList:
+        pass
     motLePlusCompatible = "cheval"
     return motLePlusCompatible,log
 

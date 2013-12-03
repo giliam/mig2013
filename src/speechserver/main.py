@@ -17,7 +17,7 @@ from core import db
 
 
 
-class SpeechServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+class SpeechServerHandler( BaseHTTPServer.BaseHTTPRequestHandler ):
     def __init__(self):
         super().__init__()
         
@@ -25,7 +25,7 @@ class SpeechServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         self.authDB = db.Db("../../db/", True, "userDbList")
 
     def do_GET(self):
-        '''Respond to a GET request'''
+        """ Respond to a GET request """
         self.send_response(200)
         self.send_header('Content-type', 'text/plain')
         self.end_headers()

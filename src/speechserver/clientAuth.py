@@ -1,8 +1,5 @@
 #!/usr/bin/python
 # -*-coding:utf-8 -*
-import pickle
-import sys
-
 from core.utils.db import Db
 
 DEBUG = False
@@ -16,16 +13,17 @@ class AuthUser:
         self.db = Db("../../db/", "userDbList", DEBUG)
         self.userList = self.db.getFile("users/" + fileName + ".txt")
 
+    
     def newClient(self, client, hashedPass, authorizedDBs):
-	    """ Ajoute un utilisateur et des données """
+	""" Ajoute un utilisateur et des données """
         if not self.userList.get(client):
             self.userList[client] = [hashedPass, authorizedDBs]
-	        self.commit()
+            self.commit()
             return True
         return False
-
+    
     def updateClient(self, client, hashedPass, authorizedDBs):
-	    """ Ajoute un utilisateur et des données """
+	""" Ajoute un utilisateur et des données """
         if self.userList.get(client):
 	        self.userList[client] = [hashedPass, authorizedDBs]
 	        self.commit()

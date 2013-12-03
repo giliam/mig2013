@@ -1,4 +1,4 @@
-
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 """
 Graphical User Interface for the isolated word recognition project
@@ -6,12 +6,14 @@ Made for the MIG SE team s
 """
 
 from Tkinter import *
+from recording.recorder import recorder
+from utils.db import Db
 #from main import main
 
-def result():             #fonction principale qui renvoie le mot reconnu
+def result(amp):             #fonction principale qui renvoie le mot reconnu
     return 'Cheval'
 
-def ouverture():         #fonction qui ouvre une deuxième fenêtre graphique, et qui affiche le résultat
+def ouverture(amp):         #fonction qui ouvre une deuxième fenêtre graphique, et qui affiche le résultat
     #print saisir.get()
     fenetre2=Tk()
     fenetre2.attributes('-fullscreen', 1) #plein écran
@@ -22,7 +24,7 @@ def ouverture():         #fonction qui ouvre une deuxième fenêtre graphique, e
     titre_logiciel.pack()
       
     panneau2=Label(fenetre2, text='Résultat:\n\n', font=("DIN", '14'))
-    res=result()
+    res=result(amp)
     resultat=Label(fenetre2, text= res,font =("DIN", "28", "bold"), fg="#16d924")
     espace=Label(fenetre2, text="\n \n")
     panneau2.pack()
@@ -41,8 +43,10 @@ def ouverture():         #fonction qui ouvre une deuxième fenêtre graphique, e
     
 
 def enregistrer():
-    #print saisir.get()
-    ouverture()
+    db = Db("../../db/",verbose=False)
+    fileName = recorder(db,"tmp",1,False)
+    freq,amp = db.getWaveFile("tmp/" + fileName + ".wav")
+    ouverture(amp)
     
 
 fenetre1=Tk()

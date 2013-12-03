@@ -1,6 +1,6 @@
 (function(window){
 
-  var WORKER_PATH = 'recorderWorker.js';
+  var WORKER_PATH = 'js/recorderWorker.js';
 
   var Recorder = function(source, cfg){
     var config = cfg || {};
@@ -69,7 +69,7 @@
     }
 
     source.connect(this.node);
-    this.node.connect(this.context.destination);    //this should not be necessary
+    //this.node.connect(this.context.destination);    //this should not be necessary
   };
 
   Recorder.forceDownload = function(blob, filename){

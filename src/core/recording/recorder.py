@@ -60,5 +60,5 @@ def recorder(db,dirName="",nbRecording=-1,askForWord=True,seconds=-1):
 			db.addWave(name,CHANNELS,p.get_sample_size(FORMAT), RATE, frames,p)
 			
 			#print "Fin du mot ", i
-			break
+		break
 	return n

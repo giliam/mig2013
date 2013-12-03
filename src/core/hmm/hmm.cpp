@@ -1,7 +1,10 @@
 #include <vector>
 #include <iostream>
 #include <cmath>
+#include <string>
 #include <boost/python.hpp>
+
+const long double MIN_VALUE = 0.00001;
 
 long double det(long double **sigma, int d) {
     long double r = 1;
@@ -19,50 +22,53 @@ long double calcProduct(long double **sigma, long double *mu, long double* x, in
     return r;
 }
 
-long double* sumVect(long double *v1, long double *v2, long double a, int d) {
-    long double *r = (long double*)malloc(sizeof(long double)*d);
-    for (int i = 0; i < d; i++) {
-        r[i] = v1[i] + v2[i]*a;
-    }
+void sumVects(long double ***seqs, long double ****gammas, int d, int sN, int *sS, int i, int k, long double *r) {
+    for (int a = 0; a < d; a++)
+        r[a] = 0;
 
-    return r;
-}
-
-long double** sumMat(long double **mat, long double *v1, long double *v2, long double a, int d) {
-    long double **r = (long double**)malloc(sizeof(long double)*d*d);
-    for (int i = 0; i < d; i++) {
-        r[i] = (long double*)malloc(sizeof(long double)*d);
-        for (int j = 0; j < d; j++) {
-            if (i == j)
-                r[i][j] = mat[i][j] + (v1[i]-v2[i])*(v1[i]-v2[i])*a;
-            else
-                r[i][j] = 0;
+    for (int s = 0; s < sN; s++) {
+        for (int t = 0; t < sS[s]; t++) {
+            for (int a = 0; a < d; a++)
+                r[a] += seqs[s][t][a]*gammas[s][t][i][k];
         }
     }
-
-    return r;
 }
 
-long double* mulVect(long double *v, long double a, int d) {
-    long double *r = (long double*)malloc(sizeof(long double)*d);
+void sumMats(long double ***seqs, long double *mu, long double ****gammas, int d, int sN, int *sS, int i, int k, long double **r) {
+    for (int a = 0; a < d; a++) {
+        for (int b = 0; b < d; b++)
+            r[a][b] = 0;
+    }
+
+    for (int s = 0; s < sN; s++) {
+        for (int t = 0; t < sS[s]; t++) {
+            for (int a = 0; a < d; a++)
+                r[a][a] += (seqs[s][t][a]-mu[a])*(seqs[s][t][a]-mu[a])*gammas[s][t][i][k];
+        }
+    }
+}
+
+void mulVect(long double *v, long double a, int d, long double *r) {
+    if (a == 0) { // Sum of sums is 0, so each sum is 0
+        for (int i = 0; i < d; i++)
+            r[i] = 100; // Far far far valueso it's useless
+        return;
+    }
+
     for (int i = 0; i < d; i++)
         r[i] = v[i]/a;
-
-    return r;
 }
 
-long double** mulMat(long double **m, long double a, int d) {
+void mulMat(long double **m, long double a, int d, long double **r) {
     long double s = 0;
     for (int i = 0; i < d; i++)
         s += m[i][i]/a;
 
-    long double **r = (long double**)malloc(sizeof(long double)*d*d);
     for (int i = 0; i < d; i++) {
-        r[i] = (long double*)malloc(sizeof(long double)*d);
         for (int j = 0; j < d; j++) {
             if (i == j) {
-                if (m[i][j] <= 0)
-                    r[i][j] = s/(d*d);
+                if (m[i][j] <= MIN_VALUE) // Cap min values
+                    r[i][j] = MIN_VALUE;
                 else
                     r[i][j] = m[i][j]/a;
             }
@@ -70,25 +76,26 @@ long double** mulMat(long double **m, long double a, int d) {
                 r[i][j] = 0;
         }
     }
-
-    return r;
 }
 
 class ContinuousMarkov {
 public:
-    ContinuousMarkov(int n, int m, int d, long double *PI, long double**A, long double **C, long double ***G_mu, long double ****G_sigma);
+    ContinuousMarkov(std::string name, int n, int m, int d, long double *PI, long double**A, long double **C, long double ***G_mu, long double ****G_sigma);
+    ~ContinuousMarkov();
 
     void render();
 
     long double calcGaussianValue(long double **sigma, long double *mu, long double *x); // Calculates a single probability for a vector x_ in the gaussian sigma
-    long double* calcProbabilitiesVector(long double *x); // Calculate a probability for a vector x in each state's mixture
-    long double** calcProbabilitiesSequence(long double **seq, int s); // Calculate probabilities for each vector of the sequence seq
-    long double** forward(long double **seq, int s, long double **prob, long double *p); // Implementation of the forward algorithm
-    long double** backward(long double **seq, int s, long double **prob); // Implementation of the backward algorithm (doesn't return overall probability)
+    void calcProbabilitiesVector(long double *x, long double *r); // Calculate a probability for a vector x in each state's mixture
+    void calcProbabilitiesSequence(long double **seq, int s, long double **prob); // Calculate probabilities for each vector of the sequence seq
+    long double forward(long double **seq, int s, long double **prob, long double **alpha); // Implementation of the forward algorithm, returns the overall probability of the sequence
+    void backward(long double **seq, int s, long double **prob, long double **beta); // Implementation of the backward algorithm (doesn't return overall probability)
     void calcXiOldGamma(long double **seq, int s, long double **alpha, long double **beta, long double p, long double **prob, long double ***xi, long double **oldGamma); // Calculates Xis and Old Gammas for latter calculus
-    long double*** calcGamma(long double **seq, int s, long double **alpha, long double **beta, long double **prob); // Calculates gamma for latter calculus
+    void calcGamma(long double **seq, int s, long double **alpha, long double **beta, long double **prob, long double ***gamma); // Calculates gamma for latter calculus
     void calcSums(long double ***seqs, int sN, int *sS, long double ****gammas, long double **littleSums, long double ***littleVect, long double ****littleMat, long double *fatSums); // Calculates partial sums for latter calculus
-    void baumWelch(long double ***seqs, int sN, int *sS, int maxIt = 1, int epsilon = 0.0000000001);
+    double baumWelch(long double ***seqs, int sN, int *sS, int maxIt = 100, int epsilon = 0.0000000001); // Baum-Welch Algorithm Implementation, learning algorithm
+
+    std::string name;
 
     int n;
     int m;
@@ -100,7 +107,8 @@ public:
     long double ****G_sigma;
 };
 
-ContinuousMarkov::ContinuousMarkov(int n, int m, int d, long double *PI, long double **A, long double **C, long double ***G_mu, long double ****G_sigma) {
+ContinuousMarkov::ContinuousMarkov(std::string name, int n, int m, int d, long double *PI, long double **A, long double **C, long double ***G_mu, long double ****G_sigma) {
+    this->name = name;
     this->n = n;
     this->m = m;
     this->d = d;
@@ -111,8 +119,11 @@ ContinuousMarkov::ContinuousMarkov(int n, int m, int d, long double *PI, long do
     this->G_sigma = G_sigma;
 }
 
+ContinuousMarkov::~ContinuousMarkov() {
+}
+
 void ContinuousMarkov::render() {
-    std::cout << "Markov's Continuous Automat" << std::endl;
+    std::cout << "Markov's Continuous Automat : " << name << std::endl;
     std::cout << "PI : [";
     for (int i = 0; i < n; i++) {
         if (i != n-1)
@@ -200,29 +211,20 @@ long double ContinuousMarkov::calcGaussianValue(long double **sigma, long double
         return num/den;
 }
 
-long double* ContinuousMarkov::calcProbabilitiesVector(long double *x) {
-    long double* r = (long double*)malloc(sizeof(long double)*n);
+void ContinuousMarkov::calcProbabilitiesVector(long double *x, long double *r) {
     for (int i = 0; i < n; i++) {
         r[i] = 0;
         for (int j = 0; j < m; j++)
             r[i] += C[i][j]*calcGaussianValue(G_sigma[i][j], G_mu[i][j], x);
     }
-
-    return r;
 }
 
-long double** ContinuousMarkov::calcProbabilitiesSequence(long double **seq, int s) {
-    long double **r = (long double**)malloc(sizeof(long double)*s*n);
+void ContinuousMarkov::calcProbabilitiesSequence(long double **seq, int s, long double **prob) {
     for (int i = 0; i < s; i++)
-        r[i] = calcProbabilitiesVector(seq[i]);
-
-    return r;
+        calcProbabilitiesVector(seq[i], prob[i]);
 }
 
-long double** ContinuousMarkov::forward(long double **seq, int s, long double **prob, long double *p) {
-    long double **alpha = (long double**)malloc(sizeof(long double)*s*n);
-    for (int t = 0; t < s; t++) // Initialization of the alpha
-        alpha[t] = (long double*)malloc(sizeof(long double)*n);
+long double ContinuousMarkov::forward(long double **seq, int s, long double **prob, long double **alpha) {
     for (int i = 0; i < n; i++) // Setting for each state value at t=0
         alpha[0][i] = PI[i]*prob[0][i];
 
@@ -235,17 +237,14 @@ long double** ContinuousMarkov::forward(long double **seq, int s, long double **
         }
     }
 
-    *p = 0;
+    long double p = 0;
     for (int i = 0; i < n; i++)
-        *p += alpha[s-1][i];
+        p += alpha[s-1][i];
 
-    return alpha;
+    return p;
 }
 
-long double** ContinuousMarkov::backward(long double **seq, int s, long double **prob) {
-    long double **beta = (long double**)malloc(sizeof(long double)*s*n);
-    for (int t = 0; t < s; t++) // Initialization of the beta
-        beta[t] = (long double*)malloc(sizeof(long double)*n);
+void ContinuousMarkov::backward(long double **seq, int s, long double **prob, long double **beta) {
     for (int i = 0; i < n; i++) // Setting for each state value at t=s-1
         beta[s-1][i] = 1;
 
@@ -257,8 +256,6 @@ long double** ContinuousMarkov::backward(long double **seq, int s, long double *
             beta[t][i] = r;
         }
     }
-
-    return beta;
 }
 
 // Uses xi and oldGamma. WARNING : xi and oldGamma must be defined !
@@ -274,17 +271,14 @@ void ContinuousMarkov::calcXiOldGamma(long double **seq, int s, long double **al
     }
 }
 
-long double*** ContinuousMarkov::calcGamma(long double **seq, int s, long double **alpha, long double **beta, long double **prob) {
-    long double ***gamma = (long double***)malloc(sizeof(long double)*s*n*m);
+void ContinuousMarkov::calcGamma(long double **seq, int s, long double **alpha, long double **beta, long double **prob, long double ***gamma) {
     for (int t = 0; t < s; t++) {
         long double sumAB = 0;
         for (int i = 0; i < n; i++)
             sumAB += alpha[t][i]*beta[t][i];
 
-        gamma[t] = (long double**)malloc(sizeof(long double)*n*m);
         for (int i = 0; i < n; i++) {
             long double AB = alpha[t][i]*beta[t][i]/sumAB;
-            gamma[t][i] = (long double*)malloc(sizeof(long double)*m);
             for (int k = 0; k < m; k++) {
                 if (prob[t][i] == 0) // This means the sum of probabilities is 0, thus a single one of them will be 0 too
                     gamma[t][i][k] = 0;
@@ -293,8 +287,6 @@ long double*** ContinuousMarkov::calcGamma(long double **seq, int s, long double
             }
         }
     }
-
-    return gamma;
 }
 
 // Uses littleSums, littleVect, littleMat, fatSums. WARNING : they must be defined !
@@ -310,102 +302,119 @@ void ContinuousMarkov::calcSums(long double ***seqs, int sN, int *sS, long doubl
             }
 
             for (int s = 0; s < sN; s++) {
-                for (int t = 0; t < sS[s]; t++) {
+                for (int t = 0; t < sS[s]; t++)
                     littleSums[i][k] += gammas[s][t][i][k];
-                    littleVect[i][k] = sumVect(littleVect[i][k], seqs[s][t], gammas[s][t][i][k], d);
-                    littleMat[i][k] = sumMat(littleMat[i][k], seqs[s][t], G_mu[i][k], gammas[s][t][i][k], d);
-                }
             }
+            sumVects(seqs, gammas, d, sN, sS, i, k, littleVect[i][k]);
+            sumMats(seqs, G_mu[i][k], gammas, d, sN, sS, i, k, littleMat[i][k]);
             fatSums[i] += littleSums[i][k];
         }
     }
 }
 
-void ContinuousMarkov::baumWelch(long double ***seqs, int sN, int *sS, int maxIt, int epsilon) {
+double ContinuousMarkov::baumWelch(long double ***seqs, int sN, int *sS, int maxIt, int epsilon) {
     long double oldLike = -1;
+    long double like = 1;
+    long double mean = 0;
+    long double rap = 1;
     int it = 0;
-    bool decrease = false;
+    //bool decrease = false;
     int totalSize = 0;
     for (int s = 0; s < sN; s++)
         totalSize += sS[s];
 
-    while (it < maxIt) {
-        long double ***alphas = (long double***)malloc(sizeof(long double)*totalSize*n);
-        long double ***betas = (long double***)malloc(sizeof(long double)*totalSize*n);
-        long double *ps = (long double*)malloc(sizeof(long double)*sN);
-        long double ***probs = (long double***)malloc(sizeof(long double)*totalSize*n);
+    // Allocation of new model parameters
+    long double *_PI = (long double*)malloc(sizeof(long double)*n);
+    long double **_A = (long double**)malloc(sizeof(long double)*n*n);
+    long double **_C = (long double**)malloc(sizeof(long double)*n*m);
+    long double ***_G_mu = (long double***)malloc(sizeof(long double)*n*m*d);
+    long double ****_G_sigma = (long double****)malloc(sizeof(long double)*n*m*d*d);
+    for (int i = 0; i < n; i++) {
+        _A[i] = (long double*)malloc(sizeof(long double)*n);
+        _C[i] = (long double*)malloc(sizeof(long double)*m);
+        _G_mu[i] = (long double**)malloc(sizeof(long double)*m*d);
+        _G_sigma[i] = (long double***)malloc(sizeof(long double)*m*d*d);
+        for (int j = 0; j < m; j++) {
+            _G_mu[i][j] = (long double*)malloc(sizeof(long double)*d);
+            _G_sigma[i][j] = (long double**)malloc(sizeof(long double)*d*d);
+            for (int a = 0; a < d; a++)
+                _G_sigma[i][j][a] = (long double*)malloc(sizeof(long double)*d);
+        }
+    }
 
-        long double ****xis = (long double****)malloc(sizeof(long double)*totalSize*n*n);
-        long double ***oldGammas = (long double***)malloc(sizeof(long double)*totalSize*n);
-        long double ****gammas = (long double****)malloc(sizeof(long double)*totalSize*n*n);
+    // Allocation of temporary arrays
+    long double ***alphas = (long double***)malloc(sizeof(long double)*totalSize*n);
+    long double ***betas = (long double***)malloc(sizeof(long double)*totalSize*n);
+    long double *ps = (long double*)malloc(sizeof(long double)*sN);
+    long double ***probs = (long double***)malloc(sizeof(long double)*totalSize*n);
+
+    long double ****xis = (long double****)malloc(sizeof(long double)*totalSize*n*n);
+    long double ***oldGammas = (long double***)malloc(sizeof(long double)*totalSize*n);
+    long double ****gammas = (long double****)malloc(sizeof(long double)*totalSize*n*n);
+
+    for (int s = 0; s < sN; s++) {
+        alphas[s] = (long double**)malloc(sizeof(long double)*sS[s]*n);
+        betas[s] = (long double**)malloc(sizeof(long double)*sS[s]*n);
+        probs[s] = (long double**)malloc(sizeof(long double)*sS[s]*n);
+        xis[s] = (long double***)malloc(sizeof(long double)*sS[s]*n*n);
+        oldGammas[s] = (long double**)malloc(sizeof(long double)*sS[s]*n);
+        gammas[s] = (long double***)malloc(sizeof(long double)*sS[s]*n*n);
+        for (int t = 0; t < sS[s]; t++) {
+            alphas[s][t] = (long double*)malloc(sizeof(long double)*n);
+            betas[s][t] = (long double*)malloc(sizeof(long double)*n);
+            probs[s][t] = (long double*)malloc(sizeof(long double)*n);
+            xis[s][t] = (long double**)malloc(sizeof(long double)*n*n);
+            oldGammas[s][t] = (long double*)malloc(sizeof(long double)*n);
+            gammas[s][t] = (long double**)malloc(sizeof(long double)*n*n);
+            for (int i = 0; i < n; i++) {
+                xis[s][t][i] = (long double*)malloc(sizeof(long double)*n);
+                gammas[s][t][i] = (long double*)malloc(sizeof(long double)*n);
+            }
+        }
+    }
+
+    // Allocation of partial sums
+    long double **littleSums = (long double**)malloc(sizeof(long double)*n*m);
+    long double ***littleVect = (long double***)malloc(sizeof(long double)*n*m*d);
+    long double ****littleMat = (long double****)malloc(sizeof(long double)*n*m*d*d);
+    long double *fatSums = (long double*)malloc(sizeof(long double)*n);
+    for (int i = 0; i < n; i++) {
+        littleSums[i] = (long double*)malloc(sizeof(long double)*m);
+        littleVect[i] = (long double**)malloc(sizeof(long double)*m*d);
+        littleMat[i] = (long double***)malloc(sizeof(long double)*m*d*d);
+        for (int j = 0; j < m; j++) {
+            littleVect[i][j] = (long double*)malloc(sizeof(long double)*d);
+            littleMat[i][j] = (long double**)malloc(sizeof(long double)*d*d);
+            for (int a = 0; a < d; a++)
+                littleMat[i][j][a] = (long double*)malloc(sizeof(long double)*d);
+        }
+    }
+
+    long double r = 0;
+    long double num = 0;
+    long double den = 0;
+    while (it < maxIt) {
         for (int s = 0; s < sN; s++)
-            probs[s] = calcProbabilitiesSequence(seqs[s], sS[s]);
+                calcProbabilitiesSequence(seqs[s], sS[s], probs[s]);
 
         for (int s = 0; s < sN; s++) {
-            alphas[s] = forward(seqs[s], sS[s], probs[s], &ps[s]);
-            betas[s] = backward(seqs[s], sS[s], probs[s]);
-
-            // Allocation of xis and oldGammas
-            xis[s] = (long double***)malloc(sizeof(long double)*sS[s]*n*n);
-            oldGammas[s] = (long double**)malloc(sizeof(long double)*sS[s]*n);
-            for (int t = 0; t < sS[s]; t++) {
-                xis[s][t] = (long double**)malloc(sizeof(long double)*n*n);
-                for (int i = 0; i < n; i++)
-                    xis[s][t][i] = (long double*)malloc(sizeof(long double)*n);
-                oldGammas[s][t] = (long double*)malloc(sizeof(long double)*n);
-            }
+            ps[s] = forward(seqs[s], sS[s], probs[s], alphas[s]);
+            backward(seqs[s], sS[s], probs[s], betas[s]);
 
             calcXiOldGamma(seqs[s], sS[s], alphas[s], betas[s], ps[s], probs[s], xis[s], oldGammas[s]);
-            gammas[s] = calcGamma(seqs[s], sS[s], alphas[s], betas[s], probs[s]);
+            calcGamma(seqs[s], sS[s], alphas[s], betas[s], probs[s], gammas[s]);
         }
 
-        // Allocation of partial sums
-        long double **littleSums = (long double**)malloc(sizeof(long double)*n*m);
-        long double ***littleVect = (long double***)malloc(sizeof(long double)*n*m*d);
-        long double ****littleMat = (long double****)malloc(sizeof(long double)*n*m*d*d);
-        long double *fatSums = (long double*)malloc(sizeof(long double)*n);
-        for (int i = 0; i < n; i++) {
-            littleSums[i] = (long double*)malloc(sizeof(long double)*m);
-            littleVect[i] = (long double**)malloc(sizeof(long double)*m*d);
-            littleMat[i] = (long double***)malloc(sizeof(long double)*m*d*d);
-            for (int j = 0; j < m; j++) {
-                littleVect[i][j] = (long double*)malloc(sizeof(long double)*d);
-                littleMat[i][j] = (long double**)malloc(sizeof(long double)*d*d);
-                for (int a = 0; a < d; a++)
-                    littleMat[i][j][a] = (long double*)malloc(sizeof(long double)*d);
-            }
-        }
+        // Calculation of sums
         calcSums(seqs, sN, sS, gammas, littleSums, littleVect, littleMat, fatSums);
 
-        // Allocation of new model parameters
-        long double *_PI = (long double*)malloc(sizeof(long double)*n);
-        long double **_A = (long double**)malloc(sizeof(long double)*n*n);
-        long double **_C = (long double**)malloc(sizeof(long double)*n*m);
-        long double ***_G_mu = (long double***)malloc(sizeof(long double)*n*m*d);
-        long double ****_G_sigma = (long double****)malloc(sizeof(long double)*n*m*d*d);
-        for (int i = 0; i < n; i++) {
-            _A[i] = (long double*)malloc(sizeof(long double)*n);
-            _C[i] = (long double*)malloc(sizeof(long double)*m);
-            _G_mu[i] = (long double**)malloc(sizeof(long double)*m*d);
-            _G_sigma[i] = (long double***)malloc(sizeof(long double)*m*d*d);
-            for (int j = 0; j < m; j++) {
-                _G_mu[i][j] = (long double*)malloc(sizeof(long double)*d);
-                _G_sigma[i][j] = (long double**)malloc(sizeof(long double)*d*d);
-                for (int a = 0; a < d; a++)
-                    _G_sigma[i][j][a] = (long double*)malloc(sizeof(long double)*d);
-            }
-        }
-
-        long double r = 0;
-        long double num = 0;
-        long double den = 0;
         for (int i = 0; i < n; i++) {
             // Setting PI and A
             r = 0;
             den = 0;
             for (int s = 0; s < sN; s++) {
                 r += oldGammas[s][0][i];
-                for (int t = 0; t < sS[s]; t++)
+                for (int t = 0; t < sS[s]-1; t++)
                     den += oldGammas[s][t][i];
             }
             _PI[i] = r/sN;
@@ -413,38 +422,44 @@ void ContinuousMarkov::baumWelch(long double ***seqs, int sN, int *sS, int maxIt
             if (den == 0) { // This means the probability to be in state i at time t is 0
                 // So probabilities to go from i at t to j at t+1 will be 0 for each j
                 for (int j = 0; j < n; j++)
-                    _A[i][j] = 0;
+                    _A[i][j] = (long double)(1./n); // Need to put equi-probabilities
             }
             else {
                 for (int j = 0; j < n; j++) {
                     num = 0;
                     for (int s = 0; s < sN; s++) {
-                        for (int t = 0; t < sS[s]; t++)
+                        for (int t = 0; t < sS[s]-1; t++)
                             num += xis[s][t][i][j];
                     }
                     _A[i][j] = num/den;
                 }
             }
 
-            // Setting C, G_mu and G_sigma
-            for (int k = 0; k < m; k++) {
-                _C[i][k] = littleSums[i][k]/fatSums[i];
-                _G_mu[i][k] = mulVect(littleVect[i][k], littleSums[i][k], d);
-                _G_sigma[i][k] = mulMat(littleMat[i][k], littleSums[i][k], d);
+            if (fatSums[i] == 0) { // C will be problematic
+                for (int k = 0; k < m; k++)
+                    _C[i][k] = (long double)(1./m); // Need to put equi-probabilities
+            } else { // Setting C normally
+                for (int k = 0; k < m; k++)
+                    _C[i][k] = littleSums[i][k]/fatSums[i];
             }
 
+            // Setting G_mu and G_sigma
+            for (int k = 0; k < m; k++) {
+                mulVect(littleVect[i][k], littleSums[i][k], d, _G_mu[i][k]);
+                mulMat(littleMat[i][k], littleSums[i][k], d, _G_sigma[i][k]);
+            }
         }
 
-        long double like = 1;
-        long double mean = 0;
+        like = 1;
+        mean = 0;
         for (int s = 0; s < sN; s++) {
             like *= ps[s];
             mean += ps[s];
         }
 
         mean /= sN;
-        std::cout << "Likelyhood : " << like << " (" << mean << ")" << std::endl << std::endl;
-        long double rap = 1;
+        //std::cout << "Likelyhood : " << like << " (" << mean << ")" << std::endl << std::endl;
+        rap = 1;
         if (oldLike != -1) {
             rap = like/oldLike;
             if (rap < 1) {
@@ -456,28 +471,125 @@ void ContinuousMarkov::baumWelch(long double ***seqs, int sN, int *sS, int maxIt
         }
 
         oldLike = like;
-        PI = _PI;
-        A = _A;
-        C = _C;
-        G_mu = _G_mu;
-        G_sigma = _G_sigma;
+
+        for (int i = 0; i < n; i++) {
+            PI[i] = _PI[i];
+            for (int j = 0; j < n; j++)
+                A[i][j] = _A[i][j];
+            for (int k = 0; k < m; k++) {
+                C[i][k] = _C[i][k];
+
+                for (int a = 0; a < d; a++) {
+                    G_mu[i][k][a] = _G_mu[i][k][a];
+                    G_sigma[i][k][a][a] = _G_sigma[i][k][a][a];
+                }
+            }
+        }
 
         it++;
     }
 
-    if (it == maxIt)
-        std::cout << "Ended on max iteration" << std::endl;
-    else if (decrease)
-        std::cout << "Ended on decreasing likelyhood" << std::endl;
+    double result = 0;
+    if (oldLike == 0)
+        result = 0.5;
     else
-        std::cout << "Ended on stationary likelyhod" << std::endl;
+        result = log10l(oldLike);
 
-    std::cout << "Final likelyhood (iteration " << it << ") : " << oldLike << std::endl;
+    if (it == maxIt) {
+        //std::cout << "Ended on max iteration" << std::endl;
+        result = 1 - result;
+    }/* else {
+        if (decrease)
+            std::cout << "Ended on decreasing likelyhood" << std::endl;
+        else
+            std::cout << "Ended on stationary likelyhod" << std::endl;
+    }*/
+
+    //std::cout << "HMM '" << name << "' -> final likelyhood (iteration " << it << " of " << maxIt << ") : " << oldLike << " and mean : " << mean << std::endl << std::endl;
+
+    // Freeings
+    // Freeing of new model parameters
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            for (int a = 0; a < d; a++)
+                free(_G_sigma[i][j][a]);
+            free(_G_mu[i][j]);
+            free(_G_sigma[i][j]);
+        }
+        free(_A[i]);
+        free(_C[i]);
+        free(_G_mu[i]);
+        free(_G_sigma[i]);
+    }
+    free(_PI);
+    free(_A);
+    free(_C);
+    free(_G_mu);
+    free(_G_sigma);
+
+    // Freeing of temporary arrays
+    for (int s = 0; s < sN; s++) {
+        for (int t = 0; t < sS[s]; t++) {
+            for (int i = 0; i < n; i++) {
+                free(xis[s][t][i]);
+                free(gammas[s][t][i]);
+            }
+            free(alphas[s][t]);
+            free(betas[s][t]);
+            free(probs[s][t]);
+            free(xis[s][t]);
+            free(oldGammas[s][t]);
+            free(gammas[s][t]);
+        }
+        free(alphas[s]);
+        free(betas[s]);
+        free(probs[s]);
+        free(xis[s]);
+        free(oldGammas[s]);
+        free(gammas[s]);
+    }
+    free(alphas);
+    free(betas);
+    free(ps);
+    free(probs);
+    free(xis);
+    free(oldGammas);
+    free(gammas);
+
+    // Freeing of partial sums
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            for (int a = 0; a < d; a++)
+                free(littleMat[i][j][a]);
+            free(littleVect[i][j]);
+            free(littleMat[i][j]);
+        }
+        free(littleSums[i]);
+        free(littleVect[i]);
+        free(littleMat[i]);
+    }
+    free(littleSums);
+    free(littleVect);
+    free(littleMat);
+    free(fatSums);
+
+    return result;
 }
 
-ContinuousMarkov *M = NULL;
+std::vector<ContinuousMarkov*> markovs;
 
-void createMarkov(int n, int m, int d, boost::python::list _PI, boost::python::list _A, boost::python::list _C, boost::python::list _G_mu, boost::python::list _G_sigma) {
+int findMarkov(std::string s) {
+    for (unsigned int i = 0; i < markovs.size(); i++) {
+        if (markovs.at(i)->name.compare(s) == 0)
+            return (int)i;
+    }
+
+    std::cout << "HMM '" << s << "' not found !" << std::endl;
+    return -1;
+}
+
+void createMarkov(boost::python::str _name, int n, int m, int d, boost::python::list _PI, boost::python::list _A, boost::python::list _C, boost::python::list _G_mu, boost::python::list _G_sigma) {
+    std::string name = boost::python::extract<std::string>(_name);
     long double *PI = (long double*)malloc(sizeof(long double)*n);
     long double **A = (long double**)malloc(sizeof(long double)*n*n);
     long double **C = (long double**)malloc(sizeof(long double)*n*m);
@@ -510,32 +622,72 @@ void createMarkov(int n, int m, int d, boost::python::list _PI, boost::python::l
         }
     }
 
-    M = new ContinuousMarkov(n, m, d, PI, A, C, G_mu, G_sigma);
+    ContinuousMarkov *M = new ContinuousMarkov(name, n, m, d, PI, A, C, G_mu, G_sigma);
+    markovs.push_back(M);
 }
 
-long double forward(boost::python::list _seq) {
-    if (!M)
+void removeMarkov(boost::python::str _name) {
+    std::string name = boost::python::extract<std::string>(_name);
+    int id = findMarkov(name);
+    if (id == -1)
+        return;
+
+    ContinuousMarkov *M = markovs.at(id);
+    markovs.erase(markovs.begin()+id);
+    delete M;
+}
+
+void renderMarkov(boost::python::str _name) {
+    std::string name = boost::python::extract<std::string>(_name);
+    int id = findMarkov(name);
+    if (id != -1)
+        markovs.at(id)->render();
+}
+
+long double forward(boost::python::str _name, boost::python::list _seq) {
+    std::string name = boost::python::extract<std::string>(_name);
+    int id = findMarkov(name);
+    if (id == -1)
         return -1;
 
     int s = boost::python::len(_seq);
 
-    long double **seq = (long double**)malloc(sizeof(long double)*s*M->d);
+    long double **seq = (long double**)malloc(sizeof(long double)*s*markovs.at(id)->d);
     for (int t = 0; t < s; t++) {
-        seq[t] = (long double*)malloc(sizeof(long double)*M->d);
-        for (int i = 0; i < M->d; i++)
+        seq[t] = (long double*)malloc(sizeof(long double)*markovs.at(id)->d);
+        for (int i = 0; i < markovs.at(id)->d; i++)
             seq[t][i] = boost::python::extract<long double>(_seq[t][i]);
     }
 
     long double p;
-    long double **prob = M->calcProbabilitiesSequence(seq, s);
-    M->forward(seq, s, prob, &p);
+    long double **prob = (long double**)malloc(sizeof(long double)*s*markovs.at(id)->n);
+    long double **alpha = (long double**)malloc(sizeof(long double)*s*markovs.at(id)->n);
+    for (int t = 0; t < s; t++) {
+        prob[t] = (long double*)malloc(sizeof(long double)*markovs.at(id)->n);
+        alpha[t] = (long double*)malloc(sizeof(long double)*markovs.at(id)->n);
+    }
 
+    markovs.at(id)->calcProbabilitiesSequence(seq, s, prob);
+    p = markovs.at(id)->forward(seq, s, prob, alpha);
+
+    for (int t = 0; t < s; t++) {
+        free(seq[t]);
+        free(prob[t]);
+        free(alpha[t]);
+    }
+    free(seq);
+    free(prob);
+    free(alpha);
+
+    std::cout << "Forward : " << p << std::endl;
     return p;
 }
 
-void baumWelch(boost::python::list _seqs) {
-    if (!M)
-        return;
+double baumWelch(boost::python::str _name, boost::python::list _seqs, int it) {
+    std::string name = boost::python::extract<std::string>(_name);
+    int id = findMarkov(name);
+    if (id == -1)
+        return 0.8;
 
     int sN = boost::python::len(_seqs);
 
@@ -546,29 +698,85 @@ void baumWelch(boost::python::list _seqs) {
         totalSize += sS[s];
     }
 
-    long double ***seqs = (long double***)malloc(sizeof(long double)*totalSize*M->d);
+    long double ***seqs = (long double***)malloc(sizeof(long double)*totalSize*markovs.at(id)->d);
     for (int s = 0; s < sN; s++) {
-        seqs[s] = (long double**)malloc(sizeof(long double)*sS[s]*M->d);
+        seqs[s] = (long double**)malloc(sizeof(long double)*sS[s]*markovs.at(id)->d);
         for (int t = 0; t < sS[s]; t++) {
-            seqs[s][t] = (long double*)malloc(sizeof(long double)*M->d);
-            for (int i = 0; i < M->d; i++)
+            seqs[s][t] = (long double*)malloc(sizeof(long double)*markovs.at(id)->d);
+            for (int i = 0; i < markovs.at(id)->d; i++)
                 seqs[s][t][i] = boost::python::extract<long double>(_seqs[s][t][i]);
         }
     }
 
-    M->baumWelch(seqs, sN, sS);
+    double d = markovs.at(id)->baumWelch(seqs, sN, sS, it);
+
+    for (int s = 0; s < sN; s++) {
+        for (int t = 0; t < sS[s]; t++) {
+            free(seqs[s][t]);
+        }
+        free(seqs[s]);
+    }
+    free(seqs);
+    free(sS);
+
+    return d;
 }
 
-void renderMarkov() {
-    if (M)
-        M->render();
+boost::python::str recognize(boost::python::list _seq) {
+    int s = boost::python::len(_seq);
+
+    int d = 13;
+    long double **seq = (long double**)malloc(sizeof(long double)*s*d);
+    for (int t = 0; t < s; t++) {
+        seq[t] = (long double*)malloc(sizeof(long double)*d);
+        for (int i = 0; i < d; i++)
+            seq[t][i] = boost::python::extract<long double>(_seq[t][i]);
+    }
+
+    long double p;
+    long double maxP = 0;
+    std::string maxName;
+    long double **prob;
+    long double **alpha;
+
+    for (int id = 0; id < (int)markovs.size(); id++) {
+        prob = (long double**)malloc(sizeof(long double)*s*markovs.at(id)->n);
+        alpha = (long double**)malloc(sizeof(long double)*s*markovs.at(id)->n);
+        for (int t = 0; t < s; t++) {
+            prob[t] = (long double*)malloc(sizeof(long double)*markovs.at(id)->n);
+            alpha[t] = (long double*)malloc(sizeof(long double)*markovs.at(id)->n);
+        }
+
+        markovs.at(id)->calcProbabilitiesSequence(seq, s, prob);
+        p = markovs.at(id)->forward(seq, s, prob, alpha);
+
+        if (p > maxP) {
+            maxP = p;
+            maxName = markovs.at(id)->name;
+        }
+
+        for (int t = 0; t < s; t++) {
+            free(prob[t]);
+            free(alpha[t]);
+        }
+        free(prob);
+        free(alpha);
+    }
+
+    for (int t = 0; t < s; t++)
+        free(seq[t]);
+    free(seq);
+
+    return boost::python::str(maxName);
 }
 
 BOOST_PYTHON_MODULE(hmm)
 {
     using namespace boost::python;
     def("createMarkov", createMarkov);
+    def("removeMarkov", removeMarkov);
     def("renderMarkov", renderMarkov);
     def("forward", forward);
     def("baumWelch", baumWelch);
+    def("recognize", recognize);
 }

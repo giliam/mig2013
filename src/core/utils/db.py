@@ -6,24 +6,23 @@ import scipy.io.wavfile
 import wave
 from numpy import int16
 
-""" Instancie la base de données """
 class Db:
-    """ Créé un gestionnaire de fichiers pour stocker les HMM 
-        Attributs :
-            -> filesList : liste des fichiers gérés par la base de données """
+    """ Files manager to store .wav and hmm
+        Attributes :
+            -> filesList : name of the file containing the list of files stored """
             
     filesListName = "filesList"
-    prefix = ""
+    prefixPath = ""
     verbose = False
     
-    def __init__(self, prefix = "", verbose = False, filesListName = "filesList"):
-        """ Constructeur """
-        Db.prefix = prefix
+    def __init__(self, prefixPath = "", filesListName = "filesList", verbose = False):
+        """ Constructor which needs prefix of the directory which contains (or will contain) the stored files """
+        Db.prefixPath = prefixPath
         Db.filesListName = filesListName
         Db.verbose = verbose
         self.log = ""
         try:
-            with open(Db.prefix + Db.filesListName + ".txt","r") as f:
+            with open(Db.prefixPath + Db.filesListName + ".txt","r") as f:
                 self.filesList = pickle.Unpickler(f).load()
         except IOError:
             Db.reset(True)
@@ -32,20 +31,20 @@ class Db:
 
 
     def getFile(self,fileName,dirFile=""):
-        """ Ajoute un fichier à la liste des fichiers gérés par la base de données 
-            Paramètres : 
-                @fileName : nom du fichier dans le dossier storage
-                @dirFile : ajoute une façon spécifique de gérer certains fichiers
+        """ Add a file to the list of files handled par the database system
+            Parameters : 
+                @fileName : name of the file in the storage directory prefixed by dirFile
+                @dirFile : add a prefix to files and give others handling available
         """
         if len(dirFile) == 0:
             dirFile = "storage"
         if fileName in self.filesList:
             try:
                 if dirFile == "waves":
-                    content = scipy.io.wavfile.read(Db.prefix + dirFile + "/" + fileName)
+                    content = scipy.io.wavfile.read(Db.prefixPath + dirFile + "/" + fileName)
                     return content
                 elif fileName in self.filesList:
-                    with open(Db.prefix + dirFile + "/" + fileName,"r") as f:
+                    with open(Db.prefixPath + dirFile + "/" + fileName,"r") as f:
                         content = pickle.Unpickler(f).load()
                     return content
             except IOError:
@@ -58,19 +57,19 @@ class Db:
     
     
     def getWaveFile(self,fileName):
-        """ Alias de getFile pour les Wave """
+        """ Alias of getFile for .wav """
         return self.getFile(fileName,"waves")
     
     
     
     def addWave(self,fileName,CHANNELS,FORMAT,RATE,frames,p):
-        if os.access(Db.prefix + "waves/" + fileName,os.F_OK):
+        if os.access(Db.prefixPath + "waves/" + fileName,os.F_OK):
             pass
             #Il faudrait rajouter la gestion de l'existence de deux mêmes fichiers
         dirName = os.path.dirname(fileName)
-        if not os.access(Db.prefix + "waves/" + dirName,os.F_OK):
-            os.mkdir(Db.prefix + "waves/" + dirName)
-        wf = wave.open(Db.prefix + "waves/" + fileName, 'wb')
+        if not os.access(Db.prefixPath + "waves/" + dirName,os.F_OK):
+            os.mkdir(Db.prefixPath + "waves/" + dirName)
+        wf = wave.open(Db.prefixPath + "waves/" + fileName, 'wb')
         wf.setnchannels(CHANNELS)
         wf.setsampwidth(FORMAT)
         wf.setframerate(RATE)
@@ -83,20 +82,21 @@ class Db:
         
     
     def addWaveFromAmp(self,fileName,freq,amp,dirName="waves/",addToList=True):
-        scipy.io.wavfile.write(Db.prefix + dirName + fileName, freq, int16(amp))
+        scipy.io.wavfile.write(Db.prefixPath + dirName + fileName, freq, int16(amp))
         if addToList:
             self.addFileToList(fileName,"waves")
             self.syncToFile()
     
     
     def addFileToList(self,fileName,dirFile=""):
-        """ Ajoute un fichier à la liste des fichiers gérés par la base de données 
-            Paramètres : 
-                @fileName : nom du fichier dans le dossier storage 
+        """ Add a file to the list. Needs that the file already exists
+            Parameters : 
+                @fileName : name of the file in the storage directory prefixed by dirFile
+                @dirFile : prefix of the file
         """
         if len(dirFile) == 0:
             dirFile = "storage"
-        if os.access(Db.prefix + dirFile + "/" + fileName,os.F_OK):
+        if os.access(Db.prefixPath + dirFile + "/" + fileName,os.F_OK):
             if not fileName in self.filesList:
                 self.filesList.append(fileName)
                 self.syncToFile()
@@ -109,42 +109,24 @@ class Db:
             
     
     def addFile(self,fileName,content,dirFile=""):
-        """ Ajoute un fichier à la liste des fichiers gérés par la base de données 
-            Paramètres : 
-                @fileName : nom du fichier dans le dossier storage 
+        """ Add a file to the list and to the storage directory
+            Parameters :
+                @fileName : name of the file in the storage directory prefixed by dirFile
+                @content : the content to pickle in the file 
+                @dirFile : prefix of the file
         """
         if len(dirFile) == 0:
             dirFile = "storage"
-        with open(Db.prefix + dirFile + "/" + fileName,"w") as f:
+        with open(Db.prefixPath + dirFile + "/" + fileName,"w") as f:
             pickle.Pickler(f).dump(content)
         self.addFileToList(fileName)
             
     
-    def putDatasIntoFile(self,datas,fileName,dirFile=""):
-        """ 
-            Ajoute un jeu de données 
-            Paramètres :
-                @datas : a besoin d'implémenter la méthode __getstate__ ou d'être un tel type 
-                @fileName : nom du fichier 
-                @dirFile : ajoute une différence de stockage entre les types de fichiers
-        """
-        if len(dirFile) == 0:
-            dirFile = "storage"
-        try:
-            with open(Db.prefix + dirFile + "/" + fileName,"w") as f:
-                pickle.Pickler(f).dump(datas)
-            self.addFileToList(fileName)
-            self.syncToFile()
-        except IOError:
-            self.addLog("La lecture de fichier a échoué")
-            return False
-    
-    
-    
     def deleteFileFromList(self,fileName,dirFile=""):
-        """ Supprime un fichier de la liste des fichiers gérés par la base de données SANS supprimer le fichier physique
-            Paramètres : 
-                @fileName : nom du fichier dans le dossier storage 
+        """ Remove a file from the list but does NOT remove the file from the disk
+            Parameters : 
+                @fileName : name of the file in the storage directory prefixed by dirFile
+                @dirFile : prefix of the file
         """
         if len(dirFile) == 0:
             dirFile = "storage"
@@ -152,15 +134,15 @@ class Db:
             self.filesList.remove(fileName)
             try:
                 dirName = os.path.dirname(fileName)
-                if os.access(Db.prefix + dirFile + "/" + fileName,os.F_OK):
-                    os.remove(Db.prefix + dirFile + "/" + fileName)
+                if os.access(Db.prefixPath + dirFile + "/" + fileName,os.F_OK):
+                    os.remove(Db.prefixPath + dirFile + "/" + fileName)
                     self.addLog("Le fichier a bien été supprimé")
                 else:
                     self.addLog("Le fichier n'existe pas")
             except OSError:
                 self.addLog("La suppression a échoué")
             try:
-                os.rmdir(Db.prefix + dirFile + "/" + dirName)
+                os.rmdir(Db.prefixPath + dirFile + "/" + dirName)
                 self.addLog("Le dossier a bien été supprimé")
             except OSError:
                 pass
@@ -172,27 +154,28 @@ class Db:
     
     
     def syncToFile(self):
-        """ Met le fichier de stockage de la liste des fichiers à jour """
+        """ Synchronize the list of the files stored from the current attribute """
         try:
-            with open(Db.prefix + Db.filesListName + ".txt","w") as f:
+            with open(Db.prefixPath + Db.filesListName + ".txt","w") as f:
                 pickle.Pickler(f).dump(self.filesList)
         except IOError:
             raise Exception("Le fichier n'existe pas")
     
     
     def sync(self, dirName = "", dirIni = "storage/"):
-        """ Met le fichier de stockage de la liste des fichiers à jour en parcourant toute l'arborescence """
-        for f in os.listdir(Db.prefix + dirIni + dirName):
-            if os.path.isfile(os.path.join(Db.prefix + dirIni + dirName, f)):
+        """ Synchronize the list of the files stored by studying recursively the current tree """
+        for f in os.listdir(Db.prefixPath + dirIni + dirName):
+            if os.path.isfile(os.path.join(Db.prefixPath + dirIni + dirName, f)):
                 self.addFileToList(os.path.join(dirName, f),dirIni)
             else:
                 self.sync(dirName + f + "/",dirIni)
     
     
     def reset(force=False):
-        """ Reset la liste des fichiers """
-        if force or int(input("Êtes-vous sûr de vouloir réinitialiser la liste des fichiers ? (Oui = 0/Non = 1)")) == 0:
-            with open(Db.prefix + Db.filesListName + ".txt","w") as f:
+        """ Reset the files list """
+        msg = "Êtes-vous sûr de vouloir réinitialiser la liste des fichiers ? (Oui = 0/Non = 1)"
+        if force or int(input(msg)) == 0:
+            with open(Db.prefixPath + Db.filesListName + ".txt","w") as f:
                 c = pickle.Pickler(f)
                 c.dump([])
             print "Réinitialisation réussie pour les fichiers"
@@ -202,16 +185,16 @@ class Db:
     
     
     def printFilesList(self,dirName="",printBool=True,*extRequired):
-        """ Affiche la liste des fichiers gérés par la base de données
-                Paramètres :
-                    @*extRequired = "all" : envoie l'extension des fichiers à afficher sous forme de tuples de noms d'extensions 
-                                                exemple : .wav, .txt """
+        """ Display the files list
+            Parameters:
+                @dirName : a prefixed 
+                @*extRequired : contains the extensions to display (e.g. <.wav, .txt>) """
         filesListExt = []
         for k,f in enumerate(self.filesList):
             #On récupère l'extension du fichier parcouru
             a,ext = os.path.splitext(f)
             d = os.path.dirname(f)
-            if (dirName == "" or d == dirName ) and (ext in extRequired or len(extRequired) == 0):
+            if (dirName == "" or d == dirName ) and (len(extRequired) == 0 or ext in extRequired):
                 if printBool:
                     print k, " - ", f
                 filesListExt.append(f)
@@ -219,17 +202,17 @@ class Db:
     
     
     def printDirFiles(self,dirName="storage/"):
-        """ Affiche la liste des dossiers dans un des sous-dossiers de stockage
-                Paramètres :
-                    @dirName = "storage/" : dossier qu'on parcourra """
+        """ Display the list of files in a directory
+            Parameters :
+                @dirName = "storage/" : directory to browse """
         dirListExt = []
-        l = os.listdir(Db.prefix + dirName)
+        l = os.listdir(Db.prefixPath + dirName)
         for k,f in enumerate(l):
             #On récupère l'extension du fichier parcouru
             print k, " - ", f
         return l
     
-    def toString(self):
+    def __str__(self):
         print self.filesList
         
     def addLog(self,s,fileName=""):
@@ -246,8 +229,9 @@ class Db:
             name = "handlinglog"
         self.addFile(name + fileName + ".txt",log,"logs/")
     
+
 if __name__ == "__main__":
     db = Db()
     db.addFileToList("test.txt")
     db.getFile("test.txt")
-    db.toString()
+    print(db)

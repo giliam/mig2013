@@ -8,12 +8,22 @@ et renvoie les transcriptions
 
 import BaseHTTPServer
 from cgi import FieldStorage
+from xml.etree import ElementTree as ET
 
-#from speechActions import requestHandling
+from speechActions import requestHandling
 from clientAuth import checkAuth
+
+from core import db
+
 
 
 class SpeechServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+    def __init__(self):
+        super().__init__()
+        
+        #Keep the authDB in memory while running server
+        self.authDB = db.Db("../../db/", True, "userDbList")
+
     def do_GET(self):
         '''Respond to a GET request'''
         self.send_response(200)
@@ -38,11 +48,12 @@ class SpeechServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         
 
         #Check if the user is authorized and he has access to clientDb
-        if checkAuth(user, hashedPass, clientDb):
+        if checkAuth(user, hashedPass, clientDb, self.authDB):
             action = form['action']
-            respMessage = speechActions.requestHandling(clientDb, action, form)
+            respData = speechActions.requestHandling(clientDb, action, form)
+            respXML = buildXMLResponse(respData)
         else:
-            respMessage = "You're not authorized to call me !\
+            respXML = "You're not authorized to call me !\
                             Register at speech.wumzi.info"
           
 
@@ -50,7 +61,28 @@ class SpeechServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-type', 'text/plain')
         self.end_headers()
-        self.wfile.write(respMessage)
+        self.wfile.write(respXML)
+
+    @classmethod
+    def buildXMLResponse(cls, **data):
+        """Build the XML doc response from the data dictionnary"""
+        root = ET.Element()
+        for key, value in data:
+            elem = ET.SubElement(root, key)
+            elem.text = value
+
+        return ElementTree.tostring(root, encoding="utf-8")
+
+
+    @classmethod
+    def parseXMLRequest(cls, XMLString):
+        """Build a dict from an XML doc"""
+        data = {}
+        root = ET.fromstring(XMLString)
+        for child in root:
+            data[child.tag] = child.text
+        return data
+
 
 
 def run(adress, port):

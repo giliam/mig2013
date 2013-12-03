@@ -1,9 +1,8 @@
 
 # -*- coding: utf-8 -*-
 """
-Created on Tue Nov 26 08:26:19 2013
-
-@author: Mac
+Graphical User Interface for the isolated word recognition project
+Made for the MIG SE team s
 """
 
 from Tkinter import *

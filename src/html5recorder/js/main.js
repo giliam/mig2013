@@ -1,17 +1,21 @@
 /* HTML5Script 
 An audio recorder for the speech recognition project
-for mig2013 SE team by Maxime Ernoult */
+of the mig2013 SE team */
 
 navigator.getUserMedia = (navigator.getUserMedia || 
                             navigator.webkitGetUserMedia ||
                             navigator.mozGetUserMedia);
-                    // raccourci cross-browser
+                    // cross-browser shortcut
+
 mediaRecorder = null //Object MediaRecorder
 audioElement = document.getElementById('audio'); //L'object audio pour le direct play
 mediaStream = null; //Le flux LocalMediaStream
 
 var recording = false;
 
+var user = "demo";
+var hashedPass = "8b1c1c1eae6c650485e77efbc336c5bfb84ffe0b0bea65610b721762";
+var clientDB = "demo"
 
 onload = function(){
     /* Au chargement, si l'API MediaRecorder est supportée, 
@@ -27,6 +31,7 @@ onload = function(){
 		    }
         );
     }
+    var microphone = document.getElementById('microphone');
 };
 
 function initRecording(localMediaStream){
@@ -35,29 +40,34 @@ function initRecording(localMediaStream){
     mediaRecorder.ondataavailable = mediaOnDataAvailable;
     mediaStream = localMediaStream;
 
-    console.log('getUserMedia initialisé');  
+    console.log('getUserMedia initialised');  
 }    
 
 function main(){
     /* Decide quelle action lancer lorsque le bouton est togglé */
+    var microphone = document.getElementById('microphone');
     if (!recording){
         try{
+            microphone.className = "wobble animated";
+            microphone.style.border = '5px solid #003173';
             startRecord();
             recording = true;
-            changeLogoBG('green');
+            //changeLogoBG('green');
         }
         catch (e){
-            console.log("Erreur d'enregistremnt\n" + e);
+            console.log("Recording issue\n" + e);
         }
     }
     else{
         try{
             stopRecord();
             recording = false;
-            changeLogoBG('white');
+            //changeLogoBG('white');
+            microphone.className = "";
+            microphone.style.border = '5px solid white';
         }
         catch (e){
-            console.log("Erreur d'arrêt\n" + e);
+            console.log("Recording stop issue\n" + e);
         }
     }
 
@@ -95,26 +105,30 @@ function mediaOnDataAvailable(blob){
     console.log("Data available !!!");
     console.log(blob);
 
-    //Rend le blob disponible au chargement
-    var link = document.getElementById('dlLink');
-    link.href = window.URL.createObjectURL(blob.data);
-    link.innerHTML = "dl";
+    //Envoie à la console une adresse de téléchargement de l'échantillon
+    console.log(window.URL.createObjectURL(blob.data));
 
     //Communique les data au serveur
     servInteract(blob.data);
 }
 
-function servInteract(data){
+function servInteract(OGGBlob){
     // Envoie le blob au serveur
     var formData = new FormData();
     formData.append('userSession', userSession);
-    formData.append('OGGBlob', blob);
+    formData.append('hashedPass', hashedPass);
+    formData.append('clientDB', clientDB);
+    
+    formaData.append('action', 'recognize_spoken_word');
+
+    formData.append('audioBlob', OGGBlob);
+    formData.append('audioType', 'ogg');
 
     var req = new XMLHttpRequest();
     req.open('POST', SERVERURL, true);
     req.onstatechange = function(e){
         if (req.readyStatus === 4){
-            if (req.status == 400){
+            if (req.status == 200){
                 wordResponse(req.responseXML);         
             }
         }
@@ -125,11 +139,10 @@ function servInteract(data){
 
 function wordResponse(respXML){
     if (respXML.getElementsByTagName().length()){
-        var responseWord = respXML.getElementsByTagName('word');
-        var responseTime = respXML.getElementsByTagName('responseTime');
+        var responseWord = respXML.getElementsByTagName('respWord');
     }
     else{
-        var responseWord = "Erreur :'(";
+        var responseWord = "Error :'(";
     }
     var responseElement = document.getElementById('responseWord');
     responseElement.innerHTML = responseWord;

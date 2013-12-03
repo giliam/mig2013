@@ -3,8 +3,8 @@
 from distutils.core import setup
 from distutils.extension import Extension
 
-moduleHMM = Extension('hmm', sources = ['hmm.cpp'], libraries = ["boost_python"])
-moduleFFT = Extension('fft', sources = ['fft.cpp'], libraries = ["boost_python"])
+moduleHMM = Extension('hmm', sources = ['hmm/hmm.cpp'], libraries = ["boost_python"])
+moduleFFT = Extension('fft', sources = ['handling/fft.cpp'], libraries = ["boost_python"])
 
 setup (name = 'MIG SE',
         version = '0.1',

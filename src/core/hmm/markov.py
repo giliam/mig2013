@@ -179,11 +179,11 @@ def metaCoupures(seqs):
 
     return mus
 
-def buildHMMs(HMMs, maxIt):
+def buildHMMs(HMMs, HMMsPath, maxIt):
     G_mu = []
     seqs = []
-    for i in range(len(HMMs)):
-        seqs.append(getData("training/{}.txt".format(HMMs[i])))
+    for i in range(len(HMMsPath)):
+        seqs.append(getData(HMMsPath[i]))
         G_mu = G_mu + metaCoupures(seqs[i])
 
     n = len(G_mu)
@@ -202,22 +202,23 @@ def buildHMMs(HMMs, maxIt):
             print("HMM '{}' final likelyhood (log) : {}".format(HMMs[i], 1-x))
             print("WARNING : Baum-Welch algorithm ended because of iterations' limit ({})".format(maxIt))
         else:
-            print("HMM '{}' final likelyhood (log) : {}".format(HMMs[i], x))
+            pass
+            #print("HMM '{}' final likelyhood (log) : {}".format(HMMs[i], x))
         print("")
 
 def recognize(seq):
-    print("Sequence recognized as : {}".format(hmm.recognize(seq)))
-    print("")
+    return(hmm.recognize(seq))
 
-def recognizeList(name):
-    seqs = getData("tests/{}.txt".format(name))
+def recognizeList(name,path):
+    seqs = getData(path)
     for i in range(len(seqs)):
         print("Sequence {} of {} recognized as : {}".format(i, name, hmm.recognize(seqs[i])))
     print("")
+    
+if __name__ == "__main__":
+    HMMs = ["Deux", "Trois", "Cinq"]
 
-HMMs = ["Deux", "Trois", "Cinq"]
+    buildHMMs(HMMs, 500)
 
-buildHMMs(HMMs, 500)
-
-recognizeList("Julien")
-recognizeList("Adrien")
+    recognizeList("Julien")
+    recognizeList("Adrien")

@@ -72,7 +72,7 @@ cDouble* fft(cDouble *sig, int N, int *sizeC, bool mid)
     if (is2Power(N)) {
         C = fftCT(sig);
     } else {
-        std::cout<<"zPad needed";
+        //std::cout<<"zPad needed";
         int NPadded = get2Power(N);
         cDouble* sigPadded = (cDouble*)malloc(NPadded*sizeof(cDouble));
         for (int i=0;i<N;i++)
@@ -109,19 +109,19 @@ boost::python::list fftListe(boost::python::list pyEchs, bool mid=true)
     for (int i=0;i<nbEchs-1;i++)
     {
         if (i%5==0) {
-			std::cout<<"Traitement du " << i << "eme echantillon..." << std::endl;
+			//std::cout<<"Traitement du " << i << "eme echantillon..." << std::endl;
 		}
         C = fft(echs[i], 1024, &sizeC, mid);
         rep.append(tabToList(C, sizeC));
     }
 	
-    std::cout << "Traitement du dernier echantillon..." << std::endl;
+    //std::cout << "Traitement du dernier echantillon..." << std::endl;
     int sizeLastEch  = boost::python::len(pyEchs[nbEchs-1]);
     C = fft(echs[nbEchs-1], sizeLastEch, &sizeC, mid);
     rep.append(tabToList(C, sizeC));
 	free(C);
 
-    std::cout << "Done !" << std::endl;
+    //std::cout << "Done !" << std::endl;
     return rep;
 }
 

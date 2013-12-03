@@ -10,14 +10,14 @@ import random
 import hashlib
 
 
-def recorder(db,dirName="",nbRecording=-1,askForWord=True,seconds=-1):
+def recorder(db,dirName="",nbRecording=-1,askForWord=True,seconds=-1,nbWords=1):
 	""" Procède à l'enregistrement """ 
 
 	if nbRecording < 0:
 		nbRecording = raw_input("Combien d'enregistrement par mots ? ")
 		nbRecording = int(nbRecording)
 	n = ""
-	while True:
+	for k in range(nbWords)
 		if askForWord:
 			mot = raw_input("Entrez le mot a enregistrer : ")
 		else:
@@ -60,5 +60,4 @@ def recorder(db,dirName="",nbRecording=-1,askForWord=True,seconds=-1):
 			db.addWave(name,CHANNELS,p.get_sample_size(FORMAT), RATE, frames,p)
 			
 			#print "Fin du mot ", i
-		break
 	return n

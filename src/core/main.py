@@ -15,7 +15,7 @@ from handling.triangularFilterbank import triangularFilter
 from handling.inverseDCT import inverseDCTII
 from hmm.tableauEnergyPerFrame import construitTableauEnergy
 from handling.fft import *
-from hmm.hmm import *
+from hmm.markov import buildHMMs, recognize, recognizeList
 
 def main(verbose=True,action=-1,verboseUltime=True):
     db = Db("../../db/",verbose=verbose)
@@ -134,8 +134,6 @@ def main(verbose=True,action=-1,verboseUltime=True):
 def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0,hmmList=[]):
     """ Fait le traitement d'un mot pour en construire les vecteurs de Markov et tester ensuite la compatibilité avec les automates existants 
             Retourne un tuple (motLePlusCompatible,log) """
-    if hmmList == []:
-        print "Liste vide"
     log = ""
     if action <= 1:
         log += "Filtre passe-haut en cours...\n"
@@ -195,33 +193,25 @@ def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0,hmmList=[]):
         log += "Creation de vecteurs HMM terminee...\n"
         db.addFile("handling/vecteurs_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
         log += "Sauvegarde effectuee...\n\n"
-    """if action == 8:
-        log += "Premier essai de Markov..."
-        #Nombre de phonems et nombre d'états
-        n = len(content)
-        m = n
-        #
-        d = 13
-        PI = 
-        A = 
-        C = 
-        mu = 
-        sigma = 
-        content = ContinuousMarkov(n, m, d, OA_PI, OA_A, OA_C, OA_G_mu, OA_G_sigma)
-        print "Premier essai de Markov réussi !
-        db.addFile("handling/markov_" + str(numeroTraitement) + ".txt",content)
-        log += "Sauvegarde effectuee...\n"
-    """
     db.logDump(str(dirChoice) + "_" + str(numeroTraitement),log)
     db.logDump(str(dirChoice) + "_" + str(numeroTraitement))
-    for h in hmmList:
-        pass
-    motLePlusCompatible = "cheval"
+    buildHMMs(["Deux","Trois", "Cinq"],["../../db/storage/training/Deux.txt","../../db/storage/training/Trois.txt","../../db/storage/training/Cinq.txt"], 500)
+    print "Mot reconnu : ", recognize(content)
     return motLePlusCompatible,log
+
+
+#def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0,hmmList=[]):
+def test():
+    db = Db("../../db/",verbose=False)
+    fileName = recorder(db,"tmp",1,False,1)
+    freq,amp = db.getWaveFile("tmp/" + fileName + ".wav")
+    mot,log = handlingOneWord(amp, db, "test", 0)
+    print "Mot reconnu : ", mot
+
+test()
 
 def ampToHMMFromList(content):
     return ""
-
 
 if __name__ == "__main__":
     main(True)

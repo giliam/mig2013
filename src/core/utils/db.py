@@ -162,13 +162,21 @@ class Db:
             raise Exception("Le fichier n'existe pas")
     
     
-    def sync(self, dirName = "", dirIni = "storage/"):
+    def recursiveSync(self, dirName = "", dirIni = "storage/"):
         """ Synchronize the list of the files stored by studying recursively the current tree """
         for f in os.listdir(Db.prefixPath + dirIni + dirName):
             if os.path.isfile(os.path.join(Db.prefixPath + dirIni + dirName, f)):
                 self.addFileToList(os.path.join(dirName, f),dirIni)
             else:
                 self.sync(dirName + f + "/",dirIni)
+
+    def sync(self, dirName = "", dirIni = "storage/" ):
+        #Delete files that don't exist anymore in the list
+        for k,f in enumerate(self.filesList):
+            if not os.access(Db.prefixPath + dirIni + f,os.F_OK) and not os.access(Db.prefixPath + "storage/" + f,os.F_OK):
+                del self.filesList[k]
+        self.addFile(Db.prefixPath + Db.filesListName + ".txt", self.filesList)
+        self.recursiveSync(dirName, dirIni)
     
     
     def reset(force=False):

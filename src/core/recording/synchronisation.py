@@ -4,7 +4,7 @@
 from numpy import zeros
 from numpy import int16
 import scipy.io.wavfile
-from utils.constantes import *
+from core.utils.constantes import *
 from operator import add
 import math as m
 

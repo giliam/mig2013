@@ -7,8 +7,8 @@ du client
 actions possibles : add_word_record, list_word_records, rm_word_record, 
                     recognize_spoken_word"""
 
-from core.main import *
-from core.db import Db
+from shell import *
+from core.utils.db import Db
 
 
 ACTIONS = ["add_word","list_word_records","rm_word_record","recognize_spoken_word","listen_recording"]

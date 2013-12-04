@@ -23,7 +23,7 @@
 \contentsline {part}{II\hspace {1em}Approche commerciale}{8}
 \contentsline {chapter}{\numberline {1}C\^ot\'e web}{8}
 \contentsline {chapter}{\numberline {2}Applications}{9}
-\contentsline {chapter}{\numberline {3}Budget, mod\`ele \'economique}{10}
-\contentsline {part}{III\hspace {1em}Le Code}{11}
-\contentsline {chapter}{\numberline {1}Python}{11}
-\contentsline {chapter}{\numberline {2}C/C++}{13}
+\contentsline {chapter}{\numberline {3}Budget, mod\`ele \'economique}{11}
+\contentsline {part}{III\hspace {1em}Le Code}{12}
+\contentsline {chapter}{\numberline {1}Python}{12}
+\contentsline {chapter}{\numberline {2}C/C++}{14}

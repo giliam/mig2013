@@ -190,7 +190,12 @@ class Db:
     reset = staticmethod(reset)
     
     
-    
+    def syncHmm(self):
+        hmmList = self.getFile("hmmList.txt")
+        for k,f in hmmList.items():
+            if not os.access(Db.prefixPath + "hmm/" + f,os.F_OK):
+                del hmmList[k]
+        self.addFile("hmmList.txt", hmmList)
     
     def printFilesList(self,dirName="",printBool=True,*extRequired):
         """ Display the files list

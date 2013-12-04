@@ -94,5 +94,5 @@ class AuthUser:
 if __name__ == "__main__":
     authUserHandler = AuthUser()
     print(authUserHandler)
-    authUserHandler.newClient("test","bob",[1])
+    authUserHandler.newClient("demo","demo",[1])
     print(authUserHandler)

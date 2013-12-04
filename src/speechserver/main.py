@@ -10,8 +10,8 @@ import BaseHTTPServer
 from cgi import FieldStorage
 from xml.etree import ElementTree as ET
 
-from speechActions import requestHandling
-from clientAuth import AuthUser
+from speechserver.speechActions import requestHandling
+from speechserver.clientAuth import AuthUser
 
 from core.utils import db
 
@@ -19,10 +19,11 @@ from core.utils import db
 
 class SpeechServerHandler( BaseHTTPServer.BaseHTTPRequestHandler ):
     def __init__(self, request, client_address, server, authDB=''):
+        print "init3"
+        #self.authDB = authDB
         BaseHTTPServer.BaseHTTPRequestHandler.__init__(self, request, client_address, server)
-        
+        print "init2"
         #Keep the authDB in memory while running server
-        self.authDB = authDB
 
     def do_GET(self):
         """ Respond to a GET request """
@@ -44,16 +45,16 @@ class SpeechServerHandler( BaseHTTPServer.BaseHTTPRequestHandler ):
 
         user = form.getvalue('user')
         hashedPass = form.getvalue('hashedPass')
-        clientDB = form.getvalue('clientDB')
+        clientDB = ''#form.getvalue('clientDB')
         
-        form = dict(form)
+        #form = dict(form)
         #print(form)
 
         #Check if the user is authorized and he has access to clientDb
         authUser = AuthUser()
-        if authUser.checkAuth(user, hashedPass, clientDb, self.authDB):
+        if True or authUser.checkAuth(user, authUser.hashPass(hashedPass), clientDB):
             action = form.getvalue('action')
-            respData = speechActions.requestHandling(clientDb, action, form)
+            respData = requestHandling(clientDB, action, form)
             respXML = buildXMLResponse(respData)
         else:
             respXML = "You're not authorized to call me !\

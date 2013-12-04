@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-# -*- coding; utf-8 -*-
+# -*- coding: utf-8 -*-
 
 """Module de conversion de fichiers ogg en wav
 Il faut avoir sox et soundrecorder sur le serveur"""
@@ -40,6 +40,7 @@ def convert_ogg_blob_to_wave_blob(oggBlob):
 
     #Now convert the file
 
+    print(path_orig_ogg(id))
     os.system('soundconverter -b -m audio/x-wav -s .wav "%s"' %  path_orig_ogg(id))
     #Resample to 44.1kHz
     os.system('sox -r 44.1k -e signed -c 2 -b 16 %s %s' % (path_mid_wave(id), path_final_wave(id)))
@@ -50,7 +51,8 @@ def convert_ogg_blob_to_wave_blob(oggBlob):
         waveBlob =  finalwavefile.read()
     
     #Remove the files
-    rm_multi(path_orig_ogg(id), path_mid_wave(id), path_final_wave(id))
+    #rm_multi(path_orig_ogg(id), path_mid_wave(id), path_final_wave(id))
+    print("success")
     return waveBlob
 
 def convert_ogg_to_wav(ogg_path, out_wav_path):
@@ -70,7 +72,7 @@ def convert_ogg_to_wav(ogg_path, out_wav_path):
 
     return waveBlob
     
-def sox_handling(oggBlob,pathToTmp="../../db/waves/tmp/"):
+def sox_handling(oggBlob,pathToTmp="../db/waves/tmp/"):
     tempFileName = hashlib.sha224(str(randint(0,1e10))).hexdigest()
     fileName = pathToTmp + str(tempFileName) + ".wav"
     with open(fileName, 'w') as origoggfile:

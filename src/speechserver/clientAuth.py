@@ -19,7 +19,7 @@ class AuthUser:
     
     def newClient(self, client, hashedPass, authorizedDBs):
 	""" Ajoute un utilisateur et des données """
-        if not client in self.userList:
+        if not self.getClient(client):
             self.userList[client] = hashedPass, authorizedDBs
             self.commit()
             return True
@@ -48,28 +48,30 @@ class AuthUser:
 
     def getClient(self, client):
 	""" Retourne un client s'il se trouve dans la liste des utilisateurs """
-	if not client in self.userList:
+	if self.userList.get(client):
 	    return self.userList[client]
 	else:
-	    return ""
+	    return False
 
 
     def checkAuth(self, client, submittedHashedPass, clientDB=""):
 	""" Vérifie que le nom entré se trouve bien dans la liste des utilisateurs """
-	hashedPass, clientDBs = self.getClient(client)
-	if hashedPass == submittedHashedPass:
-	    if clientDB == "" or clientDB in clientDBs:
-		return True
+	if self.getClient(client):
+	    hashedPass, clientDBs = self.getClient(client)
+	    if hashedPass == submittedHashedPass:
+		if clientDB == "" or clientDB in clientDBs:
+		    return True
 	return False
     
     def logIn(self, client, submittedHashedPass):
 	""" Connecte l'utilisateur """
-	hashedPass, clientDBs = self.getClient(client)
-	if hashedPass == submittedHashedPass:
-	    self.username = client
-	    self.password = submittedHashedPass
-	    self.connected = True
-	    return True
+	if self.getClient(client):
+	    hashedPass, clientDBs = self.getClient(client)
+	    if hashedPass == submittedHashedPass:
+		self.username = client
+		self.password = submittedHashedPass
+		self.connected = True
+		return True
 	return False
 
     def hashPass(self,password):

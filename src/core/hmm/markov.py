@@ -202,8 +202,8 @@ def buildHMMs(HMMs, HMMsPath, maxIt, path="db/"):
             print("HMM '{}' final likelyhood (log) : {}".format(HMMs[i], 1-x))
             print("WARNING : Baum-Welch algorithm ended because of iterations' limit ({})".format(maxIt))
         else:
-            print("HMM '{}' final likelyhood (log) : {}".format(HMMs[i], x))
-
+            pass
+            #print("HMM '{}' final likelyhood (log) : {}".format(HMMs[i], x))
 def recognize(seq):
     return(hmm.recognize(seq))
 

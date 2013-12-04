@@ -75,6 +75,8 @@ def main(verbose=True,action=-1,verboseUltime=True):
                 fileOk = False
                 numeroTraitement+=1
     elif choice == 3:
+        #(db,dirName="",nbRecording=-1,askForWord=True,seconds=-1,nbWords=1):
+        #fileName = recorder(db,"tmp/",1,False,2,1)
         finalTest()
     elif choice == 4:
         print "Voici la liste des mots a etudier : "

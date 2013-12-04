@@ -65,9 +65,7 @@ class Gui:
             auth = AuthUser()
             print auth.hashPass(passwordIn)
             auth.checkAuth(loginIn, auth.hashPass(passwordIn), "")
-            print "try to quit"
-            self.fenetre2.quit
-            print "normally quit"
+            self.fenetre2.destroy()
             self.displayRecorder()
             
     def registerAuth(self):

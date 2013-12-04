@@ -28,6 +28,12 @@
 \contentsline {chapter}{\numberline {1}C\^ot\'e web}{10}
 \contentsline {chapter}{\numberline {2}Applications}{11}
 \contentsline {chapter}{\numberline {3}Budget, mod\`ele \'economique}{13}
-\contentsline {part}{III\hspace {1em}Le Code}{14}
-\contentsline {chapter}{\numberline {1}Python}{14}
-\contentsline {chapter}{\numberline {2}C/C++}{16}
+\contentsline {section}{\numberline {3.1}Introduction}{13}
+\contentsline {section}{\numberline {3.2}Les salaires}{13}
+\contentsline {section}{\numberline {3.3}Le compte de r\'esultat pr\'evisionnel}{14}
+\contentsline {section}{\numberline {3.4}Le bilan}{14}
+\contentsline {section}{\numberline {3.5}Les imp\^ots}{15}
+\contentsline {section}{\numberline {3.6}Conclusion}{15}
+\contentsline {part}{III\hspace {1em}Le Code}{16}
+\contentsline {chapter}{\numberline {1}Python}{16}
+\contentsline {chapter}{\numberline {2}C/C++}{18}

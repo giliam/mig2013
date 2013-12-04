@@ -12,7 +12,7 @@ class AuthUser:
 
     def __init__(self, fileName="registre"):
         self.userListFile = fileName
-        self.db = Db("../../db/", "userDbList", DEBUG)
+        self.db = Db("../db/", "userDbList", DEBUG)
         self.userList = self.db.getFile("users/" + fileName + ".txt")
 	self.username = ""
 	self.password = ""
@@ -75,7 +75,12 @@ class AuthUser:
 		self.connected = True
 		return True
 	return False
-
+    
+    def logOut(self):
+	self.username = ""
+	self.password = ""
+	self.connected = False
+    
     def hashPass(self,password):
 	return hashlib.sha224(password).hexdigest()
     

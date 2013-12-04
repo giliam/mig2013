@@ -463,7 +463,7 @@ double ContinuousMarkov::baumWelch(long double ***seqs, int sN, int *sS, int max
         if (oldLike != -1) {
             rap = like/oldLike;
             if (rap < 1) {
-                decrease = true;
+                //decrease = true;
                 break;
             }
             else if (rap < (1+epsilon))

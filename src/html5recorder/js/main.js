@@ -2,46 +2,74 @@
 An audio recorder for the speech recognition project
 of the mig2013 SE team */
 
+
+// cross-browser shortcuts
 navigator.getUserMedia = (navigator.getUserMedia || 
                             navigator.webkitGetUserMedia ||
                             navigator.mozGetUserMedia);
-                    // cross-browser shortcut
+window.AudioContext = window.AudioContext || window.webkitAudioContext;
+window.URL = window.URL || window.webkitURL || window.mozURL;
 
-mediaRecorder = null //Object MediaRecorder
-audioElement = document.getElementById('audio'); //L'object audio pour le direct play
-mediaStream = null; //Le flux LocalMediaStream
+
+var mediaRecorder; //Object MediaRecorder
+//var audioElement = document.getElementById('audio'); //L'object audio pour le direct play
+var mediaStream; //Le flux LocalMediaStream pour moz browsers
+
+var webkitaudio_context;
+var webkitrecorder;
+
 
 var recording = false;
+var nav = null; //Enregistre le type de navigateur: moz ou webkit
+
 
 var user = "demo";
 var hashedPass = "8b1c1c1eae6c650485e77efbc336c5bfb84ffe0b0bea65610b721762";
-var clientDB = "demo"
+var clientDB = "demo";
+var SERVERURL = 'localhost:8010';
+
 
 onload = function(){
     /* Au chargement, si l'API MediaRecorder est supportée, 
     on initialise l'entrée audio avec l'API getUserMedia */
-    if (typeof MediaRecorder === 'undefined' || !navigator.getUserMedia){
-        alert('MediaRecorder is unsupported');
-    } 
-    else{
-        navigator.getUserMedia({audio: true},
-            initRecording,
-            function(err) {
-		        console.log("The following error occured: " + err);
-		    }
-        );
+    if (navigator.getUserMedia){
+        if (typeof MediaRecorder === 'undefined'){
+            if (navigator.getUserMedia && window.AudioContext && window.URL){
+                nav = 'webkit';
+                webkitaudio_context = new AudioContext;
+
+            }
+            else{
+                alert("Votre navigateur ne nous supporte pas :°(");
+            }
+        } 
+        else{
+            nav = 'moz';
+        }
     }
-    var microphone = document.getElementById('microphone');
-};
+
+    if (nav != null){
+        navigator.getUserMedia({audio: true},
+                initRecording,
+                function(err) {
+		            console.log("The following error occured: " + err);
+		        }
+            );
+        console.log(nav + ' compatibilty mode running ...');
+
+    }
+};  
+
 
 function initRecording(localMediaStream){
-    /* Initialise l'enregistrement */
-    mediaRecorder = new MediaRecorder(localMediaStream);
-    mediaRecorder.ondataavailable = mediaOnDataAvailable;
-    mediaStream = localMediaStream;
+    if (nav == 'moz'){
+        mozinitRecording(localMediaStream);
+    }
+    else if (nav == 'webkit'){
+        webkitinitRecording(localMediaStream);
+    }
+}
 
-    console.log('getUserMedia initialised');  
-}    
 
 function main(){
     /* Decide quelle action lancer lorsque le bouton est togglé */
@@ -73,87 +101,170 @@ function main(){
 
 }
 
+
 function startRecord(){
     /* Lance un enregistrement */
-    mediaRecorder.start();
-    var audioElement = document.getElementById('audio');
-    audioElement.src = window.URL.createObjectURL(mediaStream);
+    navSwitch(mozstartRecorder, webkitstartRecorder);
     console.log('recording');
-    
-
 }
 
 function stopRecord(){
     /* Stopper et clore un enregistrement */
-	if (mediaStream){
-		/* Si on enregistre */
-		console.log('stopRecord');
-        var audioElement = document.getElementById('audio');
-		audioElement.src = '';
-        mediaRecorder.stop();		
-	}
-    
+    navSwitch(mozstopRecorder, webkitstopRecorder); 
 }
 
-function mediaOnDataAvailable(blob){
-    /* A la fin de l'enregistrement, récupère le blob dans data 
-       et lance le traitement                                       */
 
-    var SERVERURL;
+function navSwitch(mozaction, webkitaction){
+    console.log(nav);
+    if (nav == 'moz'){
+        mozaction();
+    }
+    else if (nav == 'webkit'){
+        webkitaction();
+    }
+}
+
+
+function preInteract(audioBlob, blobType){
+    if (nav == 'webkit'){
+        var url = URL.createObjectURL(audioBlob);
+    }
+    else if (nav == 'moz'){
+        var url = window.URL.createObjectURL(audioBlob.data);
+    }
+    showDlLink(url);
+
 
     //Log dans la console
     console.log("Data available !!!");
-    console.log(blob);
+    console.log(audioBlob);
 
     //Envoie à la console une adresse de téléchargement de l'échantillon
-    console.log(window.URL.createObjectURL(blob.data));
+    console.log(url);
 
     //Communique les data au serveur
-    servInteract(blob.data);
+    servInteract(audioBlob.data, blobType);
+
 }
 
-function servInteract(OGGBlob){
+function showDlLink(url){
+    console.log(url);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+function mozinitRecording(localMediaStream){
+    /* Initialise l'enregistrement */
+    mediaRecorder = new MediaRecorder(localMediaStream);
+    mediaRecorder.ondataavailable = mozmediaOnDataAvailable;
+    mediaStream = localMediaStream;
+
+    console.log('getUserMedia initialised');  
+}  
+
+
+function mozstartRecorder(){
+    mediaRecorder.start();
+    //var audioElement = document.getElementById('audio');
+    //audioElement.src = window.URL.createObjectURL(mediaStream);
+    //console.log(audioElement.src);
+}
+
+
+function mozstopRecorder(){
+    if (mediaStream){
+		console.log('stopRecord');
+        mediaRecorder.stop();
+        //var audioElement = document.getElementById('audio');
+        //audioElement.src = '';
+    }
+}
+
+
+function mozmediaOnDataAvailable(blob){
+    /* A la fin de l'enregistrement, récupère le blob dans data 
+       et lance le traitement                                       */
+    console.log("moz data available");
+    preInteract(blob, 'ogg');
+}
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+function webkitinitRecording(localMediaStream){
+    var input = webkitaudio_context.createMediaStreamSource(localMediaStream);
+    //input.connect(webkitaudio_context.destination);
+    webkitrecorder = new Recorder(input);
+
+}
+
+
+function webkitstartRecorder(){
+    webkitrecorder && webkitrecorder.record();
+}
+
+
+function webkitstopRecorder(){
+    webkitrecorder && webkitrecorder.stop();
+
+    webkitrecorder && webkitrecorder.exportWAV(function(audioBlob) {
+          preInteract(audioBlob, 'wav');
+        });
+
+    webkitrecorder.clear();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+function servInteract(audioBlob, blobType){
     // Envoie le blob au serveur
     var formData = new FormData();
-    formData.append('userSession', userSession);
+    formData.append('user', user);
     formData.append('hashedPass', hashedPass);
     formData.append('clientDB', clientDB);
     
-    formaData.append('action', 'recognize_spoken_word');
+    formData.append('action', 'recognize_spoken_word');
 
-    formData.append('audioBlob', OGGBlob);
-    formData.append('audioType', 'ogg');
+    formData.append('audioBlob', audioBlob);
+    formData.append('audioType', blobType);
 
     var req = new XMLHttpRequest();
-    req.open('POST', SERVERURL, true);
-    req.onstatechange = function(e){
+    req.open('POST', 'handler', false);
+    /*req.onstatechange = function(){
+        console.log('ez');
+        console.log(req.readyStatus);
         if (req.readyStatus === 4){
+            console.log('4');
             if (req.status == 200){
+                console.log(200);
                 wordResponse(req.responseXML);         
             }
         }
-    }
-    req.send()
+    }*/
+    //req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    req.send(formData);
+    console.log(req);
+    resp = req.responseXML;
+    console.log(resp);
+    wordResponse(resp);
 
 }
 
+
 function wordResponse(respXML){
-    if (respXML.getElementsByTagName().length()){
-        var responseWord = respXML.getElementsByTagName('respWord');
+    if (respXML.getElementsByTagName('respWord')){
+        var responseWord = respXML.getElementsByTagName('respWord')[0].textContent;;
+        console.log(responseWord.name);
     }
     else{
         var responseWord = "Error :'(";
     }
     var responseElement = document.getElementById('responseWord');
+    console.log(responseWord);
     responseElement.innerHTML = responseWord;
 
-}
-
-function changeLogoBG(color){
-    /* Change la couleur d'arrière-plan du logo microphone */
-    if (!color){
-        color = 'white';
-    }
-    document.getElementById("microphone").style.backgroundColor = color;
-    return color;
 }

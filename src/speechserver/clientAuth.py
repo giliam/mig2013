@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*-coding:utf-8 -*
-from core.utils.db import Db
-
+from utils.db import Db
+import hashlib
 DEBUG = False
 
 class AuthUser:
@@ -12,12 +12,15 @@ class AuthUser:
         self.userListFile = fileName
         self.db = Db("../../db/", "userDbList", DEBUG)
         self.userList = self.db.getFile("users/" + fileName + ".txt")
+	self.username = ""
+	self.password = ""
+	self.connected = False
 
     
     def newClient(self, client, hashedPass, authorizedDBs):
 	""" Ajoute un utilisateur et des données """
-        if not self.userList.get(client):
-            self.userList[client] = [hashedPass, authorizedDBs]
+        if not self.getClient(client):
+            self.userList[client] = hashedPass, authorizedDBs
             self.commit()
             return True
         return False
@@ -25,48 +28,69 @@ class AuthUser:
     def updateClient(self, client, hashedPass, authorizedDBs):
 	""" Ajoute un utilisateur et des données """
         if self.userList.get(client):
-	        self.userList[client] = [hashedPass, authorizedDBs]
-	        self.commit()
-            return True
+	    self.userList[client] = [hashedPass, authorizedDBs]
+	    self.commit()
+	    return True
         return False
 
 
     def rmClient(self, client):
-	    """ Supprime un client du dictionnaire """ 
+	""" Supprime un client du dictionnaire """ 
         if self.userList.get(client):
-	        del self.userList[client]
-	        self.commit()
+            del self.userList[client]
+	    self.commit()
             return True
         return False
 
 
+    def getClients(self):
+	print self.userList
+
     def getClient(self, client):
-	    """ Retourne un client s'il se trouve dans la liste des utilisateurs """
-        return self.userList.get(client)
-
-
-    def checkAuth(self, client, submittedHashedPass, clientDB):
-	    """ Vérifie que le nom entré se trouve bien dans la liste des utilisateurs """
-	    hashedPass, clientDBs = self.getClient(client)
-	    if hashedPass == submittedHashedPass:
-		    if clientDB in clientDBs:
-			    return True
+	""" Retourne un client s'il se trouve dans la liste des utilisateurs """
+	if self.userList.get(client):
+	    return self.userList[client]
+	else:
 	    return False
 
 
+    def checkAuth(self, client, submittedHashedPass, clientDB=""):
+	""" Vérifie que le nom entré se trouve bien dans la liste des utilisateurs """
+	if self.getClient(client):
+	    hashedPass, clientDBs = self.getClient(client)
+	    if hashedPass == submittedHashedPass:
+		if clientDB == "" or clientDB in clientDBs:
+		    return True
+	return False
+    
+    def logIn(self, client, submittedHashedPass):
+	""" Connecte l'utilisateur """
+	if self.getClient(client):
+	    hashedPass, clientDBs = self.getClient(client)
+	    if hashedPass == submittedHashedPass:
+		self.username = client
+		self.password = submittedHashedPass
+		self.connected = True
+		return True
+	return False
+
+    def hashPass(self,password):
+	return hashlib.sha224(password).hexdigest()
+    
+    
     def commit(self):
         """ Write the changes of the userlist to the DB on disk """
-        self.db.addFile("users/" + self.userListFile + ".txt", userList)
+        self.db.addFile("users/" + self.userListFile + ".txt", self.userList)
 
 
     def __str__(self):   
-	    """ Affiche la liste des utilisateurs et leurs données """
-        data = ["%s :\t %s" % (client, clientData) for client, clientData in userList.items()]
-		return '\n'.join(data)
+	""" Affiche la liste des utilisateurs et leurs données """
+        data = ["%s :\t %s" % (client, clientData) for client, clientData in self.userList.items()]
+	return '\n'.join(data)
 
 
 if __name__ == "__main__":
     authUserHandler = AuthUser()
-	print(authUserHandler)
-	authUserHandler.newClient("test","bob",[1])
-	print(authUserHandler)
+    print(authUserHandler)
+    authUserHandler.newClient("test","bob",[1])
+    print(authUserHandler)

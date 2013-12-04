@@ -18,7 +18,10 @@ lib
 lib64
 __pycache__
 
-db/
+db/logs/
+db/output/
+db/storage/
+db/waves/
 
 # Installer logs
 pip-log.txt

@@ -10,19 +10,19 @@ import BaseHTTPServer
 from cgi import FieldStorage
 from xml.etree import ElementTree as ET
 
-from speechActions import requestHandling
-from clientAuth import checkAuth
+#from speechActions import requestHandling
+#from clientAuth import checkAuth
 
-from core import db
+from core.utils import db
 
 
 
 class SpeechServerHandler( BaseHTTPServer.BaseHTTPRequestHandler ):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, request, client_address, server, authDB=''):
+        BaseHTTPServer.BaseHTTPRequestHandler.__init__(self, request, client_address, server)
         
         #Keep the authDB in memory while running server
-        self.authDB = db.Db("../../db/", True, "userDbList")
+        self.authDB = authDB
 
     def do_GET(self):
         """ Respond to a GET request """
@@ -42,36 +42,40 @@ class SpeechServerHandler( BaseHTTPServer.BaseHTTPRequestHandler ):
                      'CONTENT_TYPE':self.headers['Content-Type'],
                      })
 
-        user = form['user']
-        hashedPass = form['hashedPass']
-        clientDB = form['clientDB']
+        user = form.getvalue('user')
+        hashedPass = form.getvalue('hashedPass')
+        clientDB = form.getvalue('clientDB')
         
+        form = dict(form)
+        print(form)
 
         #Check if the user is authorized and he has access to clientDb
         if checkAuth(user, hashedPass, clientDb, self.authDB):
-            action = form['action']
+            action = form.getvalue('action')
             respData = speechActions.requestHandling(clientDb, action, form)
             respXML = buildXMLResponse(respData)
         else:
             respXML = "You're not authorized to call me !\
                             Register at speech.wumzi.info"
+
+        #respXML = self.buildXMLResponse({'respWord' : user})
           
 
         #And respond
         self.send_response(200)
-        self.send_header('Content-type', 'text/plain')
+        self.send_header('Content-type', 'text/xml')
         self.end_headers()
         self.wfile.write(respXML)
 
     @classmethod
-    def buildXMLResponse(cls, **data):
+    def buildXMLResponse(cls, data):
         """Build the XML doc response from the data dictionnary"""
-        root = ET.Element()
-        for key, value in data:
+        root = ET.Element('root')
+        for key, value in data.items():
             elem = ET.SubElement(root, key)
             elem.text = value
 
-        return ElementTree.tostring(root, encoding="utf-8")
+        return ET.tostring(root, encoding="utf-8")
 
 
     @classmethod
@@ -86,20 +90,19 @@ class SpeechServerHandler( BaseHTTPServer.BaseHTTPRequestHandler ):
 
 
 def run(adress, port):
-    server =  BaseHTTPServer.HTTPServer((adress, port), SpeechServerHandler)
+    server =  BaseHTTPServer.HTTPServer((adress, port), SpeechServerHandler, db.Db("../../db/", "userDbList"))
     server.serve_forever()
 
 
 if __name__ == '__main__':
     import sys
-
     if len(sys.argv) >= 2:
         try:
             PORT = int(sys.argv[1])
         except TypeError:
             print("Please provide an int !")
     else:
-        PORT = 8080
+        PORT = 8010
         print("Port set to default : %s" % PORT)
 
     run('localhost', PORT)

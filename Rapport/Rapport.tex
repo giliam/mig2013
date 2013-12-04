@@ -151,14 +151,10 @@
 		\includegraphics[width=14cm]{Images/VICA.png} 
 	\end{center}
 	\caption{Exemple audiogramme prononciation du mot "VICA"}
-	\label{Exemple audiogramme prononciation du mot "VICA"}
 \end{figure}
 
 				\subsection{Pré accentuation des aigus}
-				Il a donc fallu pondérer l'influence des différentes bandes de fréquences pour rester le plus fidèle possible à la perception de l'oreille humaine. Ainsi, le poids des hautes fréquences (supérieures à $1000$ Hz) a été diminué tandis que le poids des basses fréquences (inférieur à $1000$ Hz) a été augmenté. Pour cela, on affecte l'amplitude d'une fréquence $f$ à une nouvelle fréquence $mel(f)$ selon la règle:
-
-				\subsection{Etalonnage des fréquences}
-L'oreille humaine perçoit les fréquences de façon non linéaire. Ainsi, l'augmentation d'une octave correspond en réalité à la multiplication de la fréquence par 2: par exemple, le la 3 correspond à une fréquence de $440$ Hz tandis que le la 4 correspond à une fréquence de $880$ Hz.
+				
 				\section{Enregistrement, recadrage, filtrage HF}
 					\subsection{Synchronisation}
 Afin de synchroniser le début des enregistrements d'un mot, et de leur donner la même durée, il a été nécessaire de détecter les silences avant et après le mot pour les couper. Le signal est lissé à l'aide d'une moyenne sur plusieurs échantillons pour que les fluctuations inhérantes à l'enregistrement ne gênent pas notre fonction. On détecte alors le moment où le signal (en valeur absolue) dépasse pour la première fois une valeur seuil et celui à partir duquel le signal ne dépasse plus celle-ci. On sait alors où couper le signal d'origine, en élargissant légèrement la coupe afin d'éviter de supprimer des consonnes peu sonores. Cela permet en plus d'afficher un message d'erreur suspectant un enregistrement ayant commencé trop tard ou finit trop tôt.
@@ -169,16 +165,23 @@ Ce filtre consiste en l'utilisation de bibliothèques, SoX et ffmpeg, qui permett
 
 De plus, il a fallu déterminer la valeur de nos constantes de découpe (coefficient de lissage, coefficient de coupe, intervalle de temps de sécurité), qui dépendent bien sûr les unes des autres. Ceci a été fait de manière empirique sur plusieurs enregistrements de mots différents, permettant une découpe automatique la plu satisfaisante possible pour l'ensemble des mots.
         \section{Echantillonnage, fenêtrage}
-        	Nam eu sollicitudin massa. Duis sagittis velit mi. Nunc dictum risus ac interdum lacinia\cite{ref2}. Aliquam a fermentum lectus. Praesent dapibus molestie mauris sed vestibulum. Curabitur sodales egestas est a pellentesque. Quisque id vulputate erat, a sagittis turpis. Proin vulputate congue ante, a laoreet orci posuere venenatis. Suspendisse ullamcorper ac dolor nec dapibus.
-        \subsection{début du filtre 2}
-        	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas rutrum aliquet odio ac volutpat. Suspendisse massa enim, faucibus ut mi dignissim, fringilla ultrices dolor. Quisque bibendum vel nisl eget interdum. Phasellus sed ultricies orci. Aenean egestas risus ut ante porttitor tempus. Suspendisse malesuada, neque ut ullamcorper hendrerit, nibh justo porta purus, quis suscipit neque nisi in nunc. Pellentesque est nisi, porta semper mauris quis, commodo ultricies turpis.
-        \subsection{fin du filtre 2}
-        	Vivamus posuere malesuada metus, et fringilla felis congue sed. Fusce a nibh in urna molestie viverra vel in est. Donec ipsum nibh, commodo tristique bibendum vitae, consequat quis ipsum. Donec sed diam aliquet velit aliquam viverra. Etiam tincidunt egestas nibh, sit amet facilisis quam vulputate scelerisque. Maecenas nec eros rutrum, tempus ipsum sit amet, tempus dui. Quisque adipiscing varius neque, at egestas erat consequat vitae. Donec sit amet urna iaculis, pharetra arcu in, porttitor quam. Ut nunc ante, tincidunt placerat libero eu, hendrerit lacinia leo. Nam sapien enim, feugiat nec orci eget, porta suscipit diam. Nulla mattis molestie est vitae blandit. Nullam bibendum tempus odio, quis vestibulum quam consectetur at. 
+        	Nam eu sollicitudin\cite{ref1} massa. Duis sagittis velit mi. Nunc dictum risus ac interdum lacinia\cite{ref2}. Suspendisse ullamcorper ac dolor nec dapibus. 
         	\section{Transformée de Fourier}
-        	Nam eu sollicitudin massa. Duis sagittis velit mi. Nunc dictum risus ac interdum lacinia\cite{ref2}. Aliquam a fermentum lectus. Praesent dapibus molestie mauris sed vestibulum. Curabitur sodales egestas est a pellentesque. Quisque id vulputate erat, a sagittis turpis. Proin vulputate congue ante, a laoreet orci posuere venenatis. Suspendisse ullamcorper ac dolor nec dapibus.
-        	\section{MEL}
-        	Nam eu sollicitudin massa. Duis sagittis velit mi. Nunc dictum risus ac interdum lacinia\cite{ref2}. Aliquam a fermentum lectus. Praesent dapibus molestie mauris sed vestibulum. Curabitur sodales egestas est a pellentesque. Quisque id vulputate erat, a sagittis turpis. Proin vulputate congue ante, a laoreet orci posuere venenatis. Suspendisse ullamcorper ac dolor nec dapibus.
-        	\section{Transformée inverse}
+        	Nam eu sollicitudin massa.\cite{ref2}. Aliquam a fermentum lectus. Praesent dapibus molestie mauris sed vestibulum. Curabitur sodales egestas est a pellentesque. Quisque id vulputate erat, a sagittis turpis. 
+        	\section{Mel}
+        	Des études de psycho acoustique ont montré que l'oreille humaine ne percevait pas les fréquences selon une échelle linéaire. Il a donc été utile de définir une nouvelle échelle plus subjective : à chaque fréquence $f$, exprimée en Hertz, on fait correspondre une nouvelle fréquence selon une fonction censée représenter le comportement de l'oreille humaine. Par convention, la fréquence de $1000$ Hz correspond à $1000$ mel. Les autres fréquences mel sont ajustées de façon à ce qu'une augmentation de la fréquence mel corresponde à la même augmentation de la tonalité perçue. Cela conduit à la fonction $mel$ suivante: \[mel(f) = 2595*log(1+f/700)\]
+        	
+        	\begin{figure}[hb]
+						\begin{center}
+							\includegraphics[width=14cm]{Images/Mel.png} 
+						\end{center}
+						\caption{Graphe de conversion}
+					\end{figure}
+        	
+        	On remarque que le poids des hautes fréquences (supérieures à $1000$ Hz) est diminué tandis que le poids des basses fréquences (inférieur à $1000$ Hz) est augmenté.
+
+Il est préférable d'employer cette échelle de fréquence dans l'algorithme de reconnaissance: ce dernier doit en effet différencier plusieurs mots selon la perception humaine, c'est-à-dire en simulant le comportement de l'oreille humaine.
+		\section{Transformée inverse}
         	Nam eu sollicitudin massa. Duis sagittis velit mi. Nunc dictum risus ac interdum lacinia\cite{ref2}.
     \chapter{Les MMC}
         \section{Principe, modèle discret}

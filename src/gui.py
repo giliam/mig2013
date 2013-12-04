@@ -16,7 +16,7 @@ from core.hmm.markov import buildHMMs
 class Gui:
     def __init__(self):
         self.auth = AuthUser()
-        self.auth.logIn("giliam", self.auth.hashPass("test"))
+        #self.auth.logIn("giliam", self.auth.hashPass("test"))
         self.nbEnregistrement = 0
         self.listeEnregistrements = []
         self.db = Db("../db/")
@@ -56,22 +56,22 @@ class Gui:
             listVectors.append(content)
         hmmList = self.db.getFile("hmmList.txt")
         hmmList[self.mot] = "client_" + self.mot + ".txt"
+        print hmmList
         self.db.addFile( "hmmList.txt",hmmList )
-        self.db.addFile( "client_" + self.mot + ".txt", self.listeEnregistrements, "hmm/" )
+        self.db.addFile( "client_" + self.mot + ".txt", listVectors, "hmm/" )
         buildHMMs(hmmList.keys(),hmmList.values(), 500, Db.prefixPath + "hmm/")
 
     def enregistrer(self):
         if self.nbEnregistrement == 0:
             self.mot = self.saisirMot.get()
+        fileName = recorder(self.db,"tmp",1,False,1,confirm=False,fileName=self.mot + "_" + str( self.nbEnregistrement ) )
+        cutBeginning(Db.prefixPath + "waves/tmp/", self.mot + "_" + str(self.nbEnregistrement) + ".wav", "")
+        syncFile(Db.prefixPath + "waves/tmp/", self.mot + "_" + str(self.nbEnregistrement) + ".wav", "")
+        self.listeEnregistrements.append("tmp/" + self.mot + "_" + str(self.nbEnregistrement) + ".wav")
+        self.nbEnregistrement += 1
+        self.bouton_enr.config(text="Lancer l'enregistrement numéro " + str(self.nbEnregistrement + 1) )
         if self.nbEnregistrement == NB_ITERATIONS:
             self.creationHmm()
-        else:
-            fileName = recorder(self.db,"tmp",1,False,1,confirm=False,fileName=self.mot + "_" + str( self.nbEnregistrement ) )
-            cutBeginning(Db.prefixPath + "waves/tmp/", self.mot + "_" + str(self.nbEnregistrement) + ".wav", "")
-            syncFile(Db.prefixPath + "waves/tmp/", self.mot + "_" + str(self.nbEnregistrement) + ".wav", "")
-            self.listeEnregistrements.append("tmp/" + self.mot + "_" + str(self.nbEnregistrement) + ".wav")
-            self.nbEnregistrement += 1
-            self.bouton_enr.config(text="Lancer l'enregistrement numéro " + str(self.nbEnregistrement + 1) )
     
     def loginAuth(self):
         loginIn = self.loginC.get()

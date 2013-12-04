@@ -10,8 +10,9 @@
 \contentsline {subsection}{\numberline {1.2.3}Pr\'e accentuation des aigus}{5}
 \contentsline {subsection}{\numberline {1.2.4}Etalonnage des fr\'equences}{5}
 \contentsline {section}{\numberline {1.3}Enregistrement, recadrage, filtrage HF}{5}
-\contentsline {section}{\numberline {1.4}Echantillonnage, fen\^etrage}{5}
-\contentsline {subsection}{\numberline {1.4.1}d\'ebut du filtre 2}{5}
+\contentsline {subsection}{\numberline {1.3.1}Synchronisation}{5}
+\contentsline {section}{\numberline {1.4}Echantillonnage, fen\^etrage}{6}
+\contentsline {subsection}{\numberline {1.4.1}d\'ebut du filtre 2}{6}
 \contentsline {subsection}{\numberline {1.4.2}fin du filtre 2}{6}
 \contentsline {section}{\numberline {1.5}Transform\'ee de Fourier}{6}
 \contentsline {section}{\numberline {1.6}MEL}{6}

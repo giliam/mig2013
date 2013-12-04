@@ -26,7 +26,7 @@ var nav = null; //Enregistre le type de navigateur: moz ou webkit
 var user = "demo";
 var hashedPass = "8b1c1c1eae6c650485e77efbc336c5bfb84ffe0b0bea65610b721762";
 var clientDB = "demo";
-var SERVERURL = 'localhost';
+var SERVERURL = 'localhost:8010';
 
 
 onload = function(){
@@ -233,27 +233,38 @@ function servInteract(audioBlob, blobType){
     formData.append('audioType', blobType);
 
     var req = new XMLHttpRequest();
-    req.open('POST', SERVERURL, true);
-    req.onstatechange = function(e){
+    req.open('POST', 'handler', false);
+    /*req.onstatechange = function(){
+        console.log('ez');
+        console.log(req.readyStatus);
         if (req.readyStatus === 4){
+            console.log('4');
             if (req.status == 200){
+                console.log(200);
                 wordResponse(req.responseXML);         
             }
         }
-    }
-    req.send()
+    }*/
+    //req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    req.send(formData);
+    console.log(req);
+    resp = req.responseXML;
+    console.log(resp);
+    wordResponse(resp);
 
 }
 
 
 function wordResponse(respXML){
-    if (respXML.getElementsByTagName().length()){
-        var responseWord = respXML.getElementsByTagName('respWord');
+    if (respXML.getElementsByTagName('respWord')){
+        var responseWord = respXML.getElementsByTagName('respWord')[0].textContent;;
+        console.log(responseWord.name);
     }
     else{
         var responseWord = "Error :'(";
     }
     var responseElement = document.getElementById('responseWord');
+    console.log(responseWord);
     responseElement.innerHTML = responseWord;
 
 }

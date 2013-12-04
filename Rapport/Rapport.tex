@@ -154,10 +154,7 @@
 \end{figure}
 
 				\subsection{Pré accentuation des aigus}
-				Il a donc fallu pondérer l'influence des différentes bandes de fréquences pour rester le plus fidèle possible à la perception de l'oreille humaine. Ainsi, le poids des hautes fréquences (supérieures à $1000$ Hz) a été diminué tandis que le poids des basses fréquences (inférieur à $1000$ Hz) a été augmenté. Pour cela, on affecte l'amplitude d'une fréquence $f$ à une nouvelle fréquence $mel(f)$ selon la règle:
-
-				\subsection{Etalonnage des fréquences}
-L'oreille humaine perçoit les fréquences de façon non linéaire. Ainsi, l'augmentation d'une octave correspond en réalité à la multiplication de la fréquence par 2: par exemple, le la 3 correspond à une fréquence de $440$ Hz tandis que le la 4 correspond à une fréquence de $880$ Hz.
+				
 				\section{Enregistrement, recadrage, filtrage HF}
 					\subsection{Synchronisation}
 Afin de synchroniser le début des enregistrements d'un mot, et de leur donner la même durée, il a été nécessaire de détecter les silences avant et après le mot pour les couper. Le signal est lissé à l'aide d'une moyenne sur plusieurs échantillons pour que les fluctuations inhérantes à l'enregistrement ne gênent pas notre fonction. On détecte alors le moment où le signal (en valeur absolue) dépasse pour la première fois une valeur seuil et celui à partir duquel le signal ne dépasse plus celle-ci. On sait alors où couper le signal d'origine, en élargissant légèrement la coupe afin d'éviter de supprimer des consonnes peu sonores. Cela permet en plus d'afficher un message d'erreur suspectant un enregistrement ayant commencé trop tard ou finit trop tôt.
@@ -172,7 +169,7 @@ De plus, il a fallu déterminer la valeur de nos constantes de découpe (coefficie
         	\section{Transformée de Fourier}
         	Nam eu sollicitudin massa.\cite{ref2}. Aliquam a fermentum lectus. Praesent dapibus molestie mauris sed vestibulum. Curabitur sodales egestas est a pellentesque. Quisque id vulputate erat, a sagittis turpis. 
         	\section{Mel}
-        	Des études de psycho acoustique ont montré que l'oreille humaine ne percevait pas les fréquences selon une échelle linéaire. Il a donc été utile de définir une nouvelle échelle plus subjective : à chaque fréquence $f$, exprimée en Hertz, on fait correspondre une nouvelle fréquence selon une fonction censée représenter le comportement de l'oreille humaine. Par convention, la fréquence de $1000$ Hz correspond à $1000$ mel. Les autres fréquences mel sont ajustées de façon à ce qu'une augmentation de la fréquence mel corresponde à la même augmentation de la tonalité perçue. Cela conduit à la fonction $mel$ suivante: \begin{math}mel(f) = 2595*log(1+f/700)\end{math}
+        	Des études de psycho acoustique ont montré que l'oreille humaine ne percevait pas les fréquences selon une échelle linéaire. Il a donc été utile de définir une nouvelle échelle plus subjective : à chaque fréquence $f$, exprimée en Hertz, on fait correspondre une nouvelle fréquence selon une fonction censée représenter le comportement de l'oreille humaine. Par convention, la fréquence de $1000$ Hz correspond à $1000$ mel. Les autres fréquences mel sont ajustées de façon à ce qu'une augmentation de la fréquence mel corresponde à la même augmentation de la tonalité perçue. Cela conduit à la fonction $mel$ suivante: \[mel(f) = 2595*log(1+f/700)\]
         	
         	\begin{figure}[hb]
 						\begin{center}

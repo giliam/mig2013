@@ -11,27 +11,26 @@
 \contentsline {subsection}{\numberline {1.2.1}Qu'est-ce que le son ?}{6}
 \contentsline {subsection}{\numberline {1.2.2}Comment le son est-il repr\'esent\'e dans l'ordinateur ?}{6}
 \contentsline {subsection}{\numberline {1.2.3}Pr\'e accentuation des aigus}{7}
-\contentsline {subsection}{\numberline {1.2.4}Etalonnage des fr\'equences}{7}
 \contentsline {section}{\numberline {1.3}Enregistrement, recadrage, filtrage HF}{7}
 \contentsline {subsection}{\numberline {1.3.1}Synchronisation}{7}
-\contentsline {section}{\numberline {1.4}Echantillonnage, fen\^etrage}{8}
-\contentsline {section}{\numberline {1.5}Transform\'ee de Fourier}{8}
+\contentsline {section}{\numberline {1.4}Echantillonnage, fen\^etrage}{7}
+\contentsline {section}{\numberline {1.5}Transform\'ee de Fourier}{7}
 \contentsline {section}{\numberline {1.6}Mel}{8}
-\contentsline {section}{\numberline {1.7}Transform\'ee inverse}{9}
-\contentsline {chapter}{\numberline {2}Les MMC}{10}
-\contentsline {section}{\numberline {2.1}Principe, mod\`ele discret}{10}
-\contentsline {section}{\numberline {2.2}Phase d'apprentissage}{10}
-\contentsline {section}{\numberline {2.3}Phase de reconnaissance}{10}
-\contentsline {part}{II\hspace {1em}Approche commerciale}{11}
-\contentsline {chapter}{\numberline {1}C\^ot\'e web}{11}
-\contentsline {chapter}{\numberline {2}Applications}{12}
-\contentsline {chapter}{\numberline {3}Budget, mod\`ele \'economique}{14}
-\contentsline {section}{\numberline {3.1}Introduction}{14}
-\contentsline {section}{\numberline {3.2}Les salaires}{14}
-\contentsline {section}{\numberline {3.3}Le compte de r\'esultat pr\'evisionnel}{15}
-\contentsline {section}{\numberline {3.4}Le bilan}{15}
-\contentsline {section}{\numberline {3.5}Les imp\^ots}{16}
-\contentsline {section}{\numberline {3.6}Conclusion}{16}
-\contentsline {part}{III\hspace {1em}Le Code}{17}
-\contentsline {chapter}{\numberline {1}Python}{17}
-\contentsline {chapter}{\numberline {2}C/C++}{19}
+\contentsline {section}{\numberline {1.7}Transform\'ee inverse}{8}
+\contentsline {chapter}{\numberline {2}Les MMC}{9}
+\contentsline {section}{\numberline {2.1}Principe, mod\`ele discret}{9}
+\contentsline {section}{\numberline {2.2}Phase d'apprentissage}{9}
+\contentsline {section}{\numberline {2.3}Phase de reconnaissance}{9}
+\contentsline {part}{II\hspace {1em}Approche commerciale}{10}
+\contentsline {chapter}{\numberline {1}C\^ot\'e web}{10}
+\contentsline {chapter}{\numberline {2}Applications}{11}
+\contentsline {chapter}{\numberline {3}Budget, mod\`ele \'economique}{13}
+\contentsline {section}{\numberline {3.1}Introduction}{13}
+\contentsline {section}{\numberline {3.2}Les salaires}{13}
+\contentsline {section}{\numberline {3.3}Le compte de r\'esultat pr\'evisionnel}{14}
+\contentsline {section}{\numberline {3.4}Le bilan}{14}
+\contentsline {section}{\numberline {3.5}Les imp\^ots}{15}
+\contentsline {section}{\numberline {3.6}Conclusion}{15}
+\contentsline {part}{III\hspace {1em}Le Code}{16}
+\contentsline {chapter}{\numberline {1}Python}{16}
+\contentsline {chapter}{\numberline {2}C/C++}{18}

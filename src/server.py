@@ -4,7 +4,7 @@
     USAGE: python server.py PORT 
     default port: 8010 """
 
-import speechserver
+from speechserver import main
 
 if __name__ == '__main__':
     import sys
@@ -18,4 +18,4 @@ if __name__ == '__main__':
         print("Port set to default : %s" % PORT)
 
     print("Launching server ...")
-    speechserver.main.run(PORT)
+    main.run(PORT)

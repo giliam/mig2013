@@ -12,7 +12,7 @@ class AuthUser:
 
     def __init__(self, fileName="registre"):
         self.userListFile = fileName
-        self.db = Db("../../db/", "userDbList", DEBUG)
+        self.db = Db("../db/", "userDbList", DEBUG)
         self.userList = self.db.getFile("users/" + fileName + ".txt")
 	self.username = ""
 	self.password = ""

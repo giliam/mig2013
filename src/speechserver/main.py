@@ -10,8 +10,8 @@ import BaseHTTPServer
 from cgi import FieldStorage
 from xml.etree import ElementTree as ET
 
-#from speechActions import requestHandling
-#from clientAuth import checkAuth
+from speechActions import requestHandling
+from clientAuth import AuthUser
 
 from core.utils import db
 
@@ -47,10 +47,11 @@ class SpeechServerHandler( BaseHTTPServer.BaseHTTPRequestHandler ):
         clientDB = form.getvalue('clientDB')
         
         form = dict(form)
-        print(form)
+        #print(form)
 
         #Check if the user is authorized and he has access to clientDb
-        if checkAuth(user, hashedPass, clientDb, self.authDB):
+        authUser = AuthUser()
+        if authUser.checkAuth(user, hashedPass, clientDb, self.authDB):
             action = form.getvalue('action')
             respData = speechActions.requestHandling(clientDb, action, form)
             respXML = buildXMLResponse(respData)
@@ -89,8 +90,8 @@ class SpeechServerHandler( BaseHTTPServer.BaseHTTPRequestHandler ):
 
 
 
-def run(adress, port):
-    server =  BaseHTTPServer.HTTPServer((adress, port), SpeechServerHandler, db.Db("../../db/", "userDbList"))
+def run(port, adress="localhost"):
+    server =  BaseHTTPServer.HTTPServer((adress, port), SpeechServerHandler, db.Db("../db/", "userDbList"))
     server.serve_forever()
 
 

@@ -20,11 +20,12 @@ from hmm.markov import buildHMMs, recognize, recognizeList
 def main(verbose=True,action=-1,verboseUltime=True):
     db = Db("../../db/",verbose=verbose)
     choice = -1
-    while( not choice in range(1,6) ):
+    while( not choice in range(1,8) ):
         try:
             if verboseUltime:
                 choice = int(input("Que voulez-vous faire ?\n1-Enregistrer un element\n\
-2-Realiser l'analyse d'un mot\n3-Tester\n4-Afficher résultats intermédiaires\n5-Gestion des fichiers de la base de donnees\n"))
+2-Realiser l'analyse d'un mot\n3-Tester\n4-Afficher résultats intermédiaires\n5-Gestion des fichiers de la base de donnees\n\
+6-Creation d'un HMM\n7-Gerer les HMM\n----------------------------\n"))
             else:
                 choice = 2
         except NameError:
@@ -54,9 +55,7 @@ def main(verbose=True,action=-1,verboseUltime=True):
             for f in filesList:
                 dirName = os.path.dirname(f)
                 m = db.getWaveFile(f)
-                if action == 1:
-                    content = m[1]
-                elif action == 2:
+                if action == 2:
                     content = db.getFile("handling/passe_haut_" + dirName + "_" + str(numeroTraitement) + ".txt")                
                 elif action == 3:
                     content = db.getFile("handling/hann_" + dirName + "_" + str(numeroTraitement) + ".txt")
@@ -90,6 +89,8 @@ def main(verbose=True,action=-1,verboseUltime=True):
         amp = db.getFile("handling/" + str(dirChoice))
         db.addWaveFromAmp("output/" + str(dirChoice) + ".wav",44100,amp,"output/",False)
     elif choice == 5:
+        db.sync()
+        db.sync("", "waves/")
         choice3 = -1
         while( not choice3 in range(1,5) ):
             try:
@@ -122,26 +123,67 @@ def main(verbose=True,action=-1,verboseUltime=True):
         elif choice3 == 4:
             db.sync()
             db.sync("", "waves/")
-    else:
-        pass
+    elif choice == 6:
+        fileOk = False
+        while not fileOk:
+            #On choisit le dossier à afficher
+            print "Voici la liste des mots a etudier : "
+            dirList = db.printDirFiles("waves/")
+            dirChoice = -1
+            while( not dirChoice in range(len(dirList)) ):
+                try:
+                    dirChoice = int( input( "Choisissez un fichier a traiter et entrez son numero : " ) )
+                except NameError:
+                    print "Ceci n'est pas un nombre !"
+            print "Dossier choisi : ", dirList[dirChoice]
+            fileOk = True
+            filesList = db.printFilesList(dirList[dirChoice])
+            print filesList
+            if len(filesList) < 6:
+                print "Pas assez d'enregistrements"
+                continue
+            listVectors = []
+            numeroTraitement = 0
+            for f in filesList:
+                dirName = os.path.dirname(f)
+                m = db.getWaveFile(f)
+                content,log = handlingRecording(m[1],db,dirName,numeroTraitement)
+                listVectors.append(content)
+                fileOk = False
+                numeroTraitement+=1
+            print "Sauvegarde :"
+            db.addFile(dirList[dirChoice] + ".txt",listVectors, "hmm/")
+            hmmList = db.getFile("hmmList.txt")
+            hmmList[dirList[dirChoice]] = dirList[dirChoice] + ".txt"
+            print "Extraction :"
+            db.addFile("hmmList.txt",hmmList)
+            buildHMMs(hmmList.keys(),hmmList.values(), 500, Db.prefixPath + "hmm/")
+    elif choice == 7:
+        hmmList = db.getFile("hmmList.txt")
+        print hmmList
 
-
-
-def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0,hmmList=[]):
+def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0):
     """ Fait le traitement d'un mot pour en construire les vecteurs de Markov et tester ensuite la compatibilité avec les automates existants 
             Retourne un tuple (motLePlusCompatible,log) """
+    content,log = handlingRecording(content,db,dirChoice,numeroTraitement,action)
+    hmmList = db.getFile("hmmList.txt")
+    buildHMMs(hmmList.keys(),hmmList.values(), 500, Db.prefixPath + "hmm/")
+    return recognize(content),log
+
+
+def handlingRecording(content,db,dirChoice,numeroTraitement,action=0,hmmList=[]):
     log = ""
     if action <= 1:
         log += "Filtre passe-haut en cours...\n"
         content = passe_haut(content)
         log += "Filtre passe-haut termine...\n"
-        db.addFile("handling/passe_haut_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
+        #db.addFile("handling/passe_haut_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
         log += "Sauvegarde effectuee...\n\n"
     if action <= 2:
         log += "Fenêtre de Hann en cours...\n"
         content = hann_window(content)
         log += "Fenêtre de Hann terminee...\n"
-        db.addFile("handling/hann_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
+        #db.addFile("handling/hann_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
         log += "Sauvegarde effectuee...\n\n"
     if action <= 3:
         log += "Transformee de Fourier rapide en cours...\n"
@@ -151,7 +193,7 @@ def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0,hmmList=[]):
             for l in range(len(content[k])):
                 content[k][l]=abs(content[k][l])
         log += "Transformee de Fourier rapide terminee...\n"
-        db.addFile("handling/fft_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
+        #db.addFile("handling/fft_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
         log += "Sauvegarde effectuee...\n\n"
     """
     if action <= 4:
@@ -174,26 +216,24 @@ def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0,hmmList=[]):
         for k in range(len(content)):
             content[k] = triangularFilter(content[k],RATE)
         log += "Application de la fonction Mel terminee...\n"
-        db.addFile("handling/mel_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
+        #db.addFile("handling/mel_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
         log += "Sauvegarde effectuee...\n\n"
     if action <= 6:    
         log += "Transformee de Fourier inverse en cours...\n"
         for k in range(len(content)):
             content[k] = inverseDCTII(content[k])
         log += "Transformee de Fourier inverse terminee...\n"
-        db.addFile("handling/fft_inverse_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
+        #db.addFile("handling/fft_inverse_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
         log += "Sauvegarde effectuee...\n"
     if action <= 7:    
         log += "Creation de vecteurs HMM en cours...\n"
         content = creeVecteur(content, energyTable)
         log += "Creation de vecteurs HMM terminee...\n"
-        db.addFile("handling/vecteurs_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
+        #db.addFile("handling/vecteurs_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
         log += "Sauvegarde effectuee...\n\n"
     db.logDump(str(dirChoice) + "_" + str(numeroTraitement),log)
     db.logDump(str(dirChoice) + "_" + str(numeroTraitement))
-    buildHMMs(["Deux","Trois", "Cinq"],["../../db/storage/training/Deux.txt","../../db/storage/training/Trois.txt","../../db/storage/training/Cinq.txt"], 500)
-    return recognize(content),log
-
+    return content,log
 
 #def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0,hmmList=[]):
 def finalTest():

@@ -3,6 +3,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[latin1]{inputenc}
 \usepackage[francais]{babel}
+\usepackage{eurosym}
 
 
 \usepackage{amsmath} %Packages mathï¿½matiques
@@ -10,8 +11,9 @@
 \usepackage{textcomp}
 
 \usepackage{graphicx}
+\usepackage{colortbl}
 
-\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage[a4paper, margin=2cm]{geometry}
 
 \usepackage{listings} %Pour le code
 \usepackage{ifthen}
@@ -149,14 +151,10 @@
 		\includegraphics[width=14cm]{Images/VICA.png} 
 	\end{center}
 	\caption{Exemple audiogramme prononciation du mot "VICA"}
-	\label{Exemple audiogramme prononciation du mot "VICA"}
 \end{figure}
 
 				\subsection{Pré accentuation des aigus}
-				Il a donc fallu pondérer l'influence des différentes bandes de fréquences pour rester le plus fidèle possible à la perception de l'oreille humaine. Ainsi, le poids des hautes fréquences (supérieures à $1000$ Hz) a été diminué tandis que le poids des basses fréquences (inférieur à $1000$ Hz) a été augmenté. Pour cela, on affecte l'amplitude d'une fréquence $f$ à une nouvelle fréquence $mel(f)$ selon la règle:
-
-				\subsection{Etalonnage des fréquences}
-L'oreille humaine perçoit les fréquences de façon non linéaire. Ainsi, l'augmentation d'une octave correspond en réalité à la multiplication de la fréquence par 2: par exemple, le la 3 correspond à une fréquence de $440$ Hz tandis que le la 4 correspond à une fréquence de $880$ Hz.
+				
 				\section{Enregistrement, recadrage, filtrage HF}
 					\subsection{Synchronisation}
 Afin de synchroniser le début des enregistrements d'un mot, et de leur donner la même durée, il a été nécessaire de détecter les silences avant et après le mot pour les couper. Le signal est lissé à l'aide d'une moyenne sur plusieurs échantillons pour que les fluctuations inhérantes à l'enregistrement ne gênent pas notre fonction. On détecte alors le moment où le signal (en valeur absolue) dépasse pour la première fois une valeur seuil et celui à partir duquel le signal ne dépasse plus celle-ci. On sait alors où couper le signal d'origine, en élargissant légèrement la coupe afin d'éviter de supprimer des consonnes peu sonores. Cela permet en plus d'afficher un message d'erreur suspectant un enregistrement ayant commencé trop tard ou finit trop tôt.
@@ -167,16 +165,23 @@ Ce filtre consiste en l'utilisation de bibliothèques, SoX et ffmpeg, qui permett
 
 De plus, il a fallu déterminer la valeur de nos constantes de découpe (coefficient de lissage, coefficient de coupe, intervalle de temps de sécurité), qui dépendent bien sûr les unes des autres. Ceci a été fait de manière empirique sur plusieurs enregistrements de mots différents, permettant une découpe automatique la plu satisfaisante possible pour l'ensemble des mots.
         \section{Echantillonnage, fenêtrage}
-        	Nam eu sollicitudin massa. Duis sagittis velit mi. Nunc dictum risus ac interdum lacinia\cite{ref2}. Aliquam a fermentum lectus. Praesent dapibus molestie mauris sed vestibulum. Curabitur sodales egestas est a pellentesque. Quisque id vulputate erat, a sagittis turpis. Proin vulputate congue ante, a laoreet orci posuere venenatis. Suspendisse ullamcorper ac dolor nec dapibus.
-        \subsection{début du filtre 2}
-        	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas rutrum aliquet odio ac volutpat. Suspendisse massa enim, faucibus ut mi dignissim, fringilla ultrices dolor. Quisque bibendum vel nisl eget interdum. Phasellus sed ultricies orci. Aenean egestas risus ut ante porttitor tempus. Suspendisse malesuada, neque ut ullamcorper hendrerit, nibh justo porta purus, quis suscipit neque nisi in nunc. Pellentesque est nisi, porta semper mauris quis, commodo ultricies turpis.
-        \subsection{fin du filtre 2}
-        	Vivamus posuere malesuada metus, et fringilla felis congue sed. Fusce a nibh in urna molestie viverra vel in est. Donec ipsum nibh, commodo tristique bibendum vitae, consequat quis ipsum. Donec sed diam aliquet velit aliquam viverra. Etiam tincidunt egestas nibh, sit amet facilisis quam vulputate scelerisque. Maecenas nec eros rutrum, tempus ipsum sit amet, tempus dui. Quisque adipiscing varius neque, at egestas erat consequat vitae. Donec sit amet urna iaculis, pharetra arcu in, porttitor quam. Ut nunc ante, tincidunt placerat libero eu, hendrerit lacinia leo. Nam sapien enim, feugiat nec orci eget, porta suscipit diam. Nulla mattis molestie est vitae blandit. Nullam bibendum tempus odio, quis vestibulum quam consectetur at. 
+        	Nam eu sollicitudin\cite{ref1} massa. Duis sagittis velit mi. Nunc dictum risus ac interdum lacinia\cite{ref2}. Suspendisse ullamcorper ac dolor nec dapibus. 
         	\section{Transformée de Fourier}
-        	Nam eu sollicitudin massa. Duis sagittis velit mi. Nunc dictum risus ac interdum lacinia\cite{ref2}. Aliquam a fermentum lectus. Praesent dapibus molestie mauris sed vestibulum. Curabitur sodales egestas est a pellentesque. Quisque id vulputate erat, a sagittis turpis. Proin vulputate congue ante, a laoreet orci posuere venenatis. Suspendisse ullamcorper ac dolor nec dapibus.
-        	\section{MEL}
-        	Nam eu sollicitudin massa. Duis sagittis velit mi. Nunc dictum risus ac interdum lacinia\cite{ref2}. Aliquam a fermentum lectus. Praesent dapibus molestie mauris sed vestibulum. Curabitur sodales egestas est a pellentesque. Quisque id vulputate erat, a sagittis turpis. Proin vulputate congue ante, a laoreet orci posuere venenatis. Suspendisse ullamcorper ac dolor nec dapibus.
-        	\section{Transformée inverse}
+        	Nam eu sollicitudin massa.\cite{ref2}. Aliquam a fermentum lectus. Praesent dapibus molestie mauris sed vestibulum. Curabitur sodales egestas est a pellentesque. Quisque id vulputate erat, a sagittis turpis. 
+        	\section{Mel}
+        	Des études de psycho acoustique ont montré que l'oreille humaine ne percevait pas les fréquences selon une échelle linéaire. Il a donc été utile de définir une nouvelle échelle plus subjective : à chaque fréquence $f$, exprimée en Hertz, on fait correspondre une nouvelle fréquence selon une fonction censée représenter le comportement de l'oreille humaine. Par convention, la fréquence de $1000$ Hz correspond à $1000$ mel. Les autres fréquences mel sont ajustées de façon à ce qu'une augmentation de la fréquence mel corresponde à la même augmentation de la tonalité perçue. Cela conduit à la fonction $mel$ suivante: \[mel(f) = 2595*log(1+f/700)\]
+        	
+        	\begin{figure}[hb]
+						\begin{center}
+							\includegraphics[width=14cm]{Images/Mel.png} 
+						\end{center}
+						\caption{Graphe de conversion}
+					\end{figure}
+        	
+        	On remarque que le poids des hautes fréquences (supérieures à $1000$ Hz) est diminué tandis que le poids des basses fréquences (inférieur à $1000$ Hz) est augmenté.
+
+Il est préférable d'employer cette échelle de fréquence dans l'algorithme de reconnaissance: ce dernier doit en effet différencier plusieurs mots selon la perception humaine, c'est-à-dire en simulant le comportement de l'oreille humaine.
+		\section{Transformée inverse}
         	Nam eu sollicitudin massa. Duis sagittis velit mi. Nunc dictum risus ac interdum lacinia\cite{ref2}.
     \chapter{Les MMC}
         \section{Principe, modèle discret}
@@ -213,11 +218,117 @@ Integer convallis id libero vel egestas. Cras ultricies porta nisl, ut tempus pu
 	
 	Pour conclure, les applications pour notre produit sont assez nombreuses, et la demande est de plus en plus forte, ce qui montre sa pertinence.
     \chapter{Budget, modèle économique}
-    	 Praesent quis mauris tellus. Nulla ut dui vel ligula aliquet posuere. Morbi dignissim pellentesque consequat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin eleifend feugiat enim, nec egestas neque semper non. Vestibulum ullamcorper lorem eu dui pretium, eu pretium odio pellentesque. Mauris sed fringilla nisl. Sed ut vestibulum elit. Aenean lobortis rutrum ligula sit amet convallis. Praesent fermentum malesuada felis at interdum. Donec iaculis nunc lectus, ut facilisis turpis accumsan sit amet. Nunc elementum ut lacus sed elementum. Morbi rutrum tristique dignissim.
+    	 \section{Introduction}
+    	 	Après les études techniques et théoriques, l'étude économique est une nécessité. Elle est au coeur des problématiques de l'ingénieur, car c'est elle qui permet de dire si le projet est viable ou non.
+    	 	
+Dans le cas de la programmation d'un logiciel de reconnaissance vocale, divers facteurs sont à prendre en compte, comme les salaires des employés, la communication sur le produit ou les impôts à payer. Il s'agit également de trouver le meilleur moyen pour vendre le logiciel. Faut-il le vendre pour iPhone sur l'App Store ? Le réserver à un public restreint (majoritairement des entreprises) ou le proposer également à des particuliers ?
 
-Sed interdum augue ac velit tristique, eget lacinia mauris consectetur. Fusce aliquet arcu ut lectus congue volutpat. Sed lobortis leo sit amet neque gravida egestas. Praesent diam nulla, adipiscing eu ullamcorper et, posuere ac lectus. Nulla adipiscing diam in felis cursus, non eleifend sapien vehicula. Maecenas et magna metus. Nunc fringilla risus sapien, nec sagittis arcu adipiscing quis. Cras vitae consequat leo, sagittis bibendum lorem. Quisque interdum, nibh a interdum blandit, augue nisl fringilla neque, sed sollicitudin tortor leo id lacus. Ut vel euismod eros, sed bibendum quam. Etiam interdum elit ut orci blandit, vitae vulputate nunc gravida. Aenean ipsum tellus, facilisis eget ipsum id, posuere interdum enim. Suspendisse vitae leo egestas, tempus erat sit amet, malesuada tortor.
+La concurrence importante nous oblige à être à la fois ambitieux et prudent. Nous avons donc décidé d'envisager à la fois la vente sur notre site internet d'un logiciel pour les particuliers, et de proposer des licences en parallèle, permettant notamment aux entreprises d'accéder à nos bases de données, les compléter et créer leurs propres dictionnaires.
+				\section{Les salaires}
+				\begin{table}[h]
+				\centering
+				\begin{tabular}{|c||p{1.7cm}|p{1.8cm}|p{1.7cm}|p{1.9cm}||p{1.7cm}|}
+					\hline
+					Catégorie/ & Salaire & Charges & Salaire & Charges & Budget \\
+					Personnel & brut & salariales & net & patronales & \\
+					\hline
+					\hline
+					David Vitoux & 2290,00  & 503,80  & 1786,20  & 1007,60  & 3 297,60  \\
+					\hline
+					Axel Goering & 2290,00  & 503,80  & 1786,20  & 1007,60  & 3 297,60  \\
+					\hline
+					Sofiane Mahiou & 2290,00  & 503,80  & 1786,20  & 1007,60  & 3 297,60  \\
+					\hline
+					Maxime Ernoult & 2290,00  & 503,80  & 1786,20  & 1007,60  & 3 297,60  \\
+					\hline
+					Adrien De La Vaissière & 2290,00  & 503,80  & 1786,20  & 1007,60  & 3 297,60  \\
+					\hline
+					Clément Joudet & 2290,00  & 503,80  & 1786,20  & 1007,60  & 3 297,60  \\
+					\hline
+					Clément Roig & 2290,00  & 503,80  & 1786,20  & 1007,60  & 3 297,60  \\
+					\hline
+					Anis Khlif & 2290,00  & 503,80  & 1786,20  & 1007,60  & 3 297,60  \\
+					\hline
+					Paul Mustière & 2290,00  & 503,80  & 1786,20  & 1007,60  & 3 297,60  \\
+					\hline
+					Matthieu Denoux & 2290,00  & 503,80  & 1786,20  & 1007,60  & 3 297,60  \\
+					\hline
+					Julien Caillard & 2290,00  & 503,80  & 1786,20  & 1007,60  & 3 297,60  \\
+					\hline
+					Nathanaël Kasriel & 2750,00  & 605,00  & 2145,00  & 1210,00  & 3 960,00  \\
+					\hline
+					Thomas Debarre & 2750,00  & 605,00  & 2145,00  & 1210,00  & 3 960,00  \\
+					\hline
+					Total & 30690,00  & 6751,80  & 23938,20  & 13503,60  & 44193,60  \\
+					\hline
+				\end{tabular}
+				\caption{Salaires en euros}
+				\end{table}
+					Treize employés travaillent sur le projet, pendant un temps effectif d'environ un mois. Deux d'entre eux s'occupent des ressources humaines, pour un salaire de 2750\euro{} brut mensuel, les autres étant considérées comme des développeurs de moins de deux ans d'expérience, avec un salaire de 2290\euro{} euros brut mensuel.
+Sur ce salaire brut, l'employé paye environ 22\% de charges salariales, et l'entreprise 44\% de charges patronales.
+				\section{Le compte de résultat prévisionnel}
+					Le compte de résultat prévisionnel dresse l'ensemble des charges (fixes et variables) de l'entreprise, ainsi que ses produits (recettes).
+					
+Ici nous avons pris le pari de vendre 50 000 versions du logiciel à un prix de 4,17\euro{} hors taxes, et une dizaine de licences permettant d'accéder à nos bases de données pour un prix de 833,33\euro{}. Au niveau des charges, l'ensemble des salaires cités plus haut est à prendre en compte, ainsi que le coût de notre campagne de publicité. Celle-ci peut être décrite en deux principaux pôles : des articles de journaux spécialisés, gratuits, et des annonces google. On peut estimer le prix d'une telle annonce à 10 centimes d'euros le clic. En estimant que 10\% des visiteurs du site par l'intermédiaire de l'annonce vont acheter le produit, on peut évaluer le coût de la publicité à 50 000\euro{}.
 
-Quisque a tempus metus. Fusce ornare accumsan libero porttitor feugiat. Nullam tempor velit vel cursus commodo. Fusce condimentum augue felis, sed varius quam varius vel. Etiam et neque vitae ante ultricies mattis. Suspendisse vehicula ligula felis, at vestibulum nisl dictum et. Morbi ante odio, lacinia et massa at, posuere sollicitudin ante. Fusce dignissim laoreet sagittis. Aenean non egestas enim. Vestibulum rutrum, nisl vel condimentum fringilla, tellus justo adipiscing est, ut sollicitudin mauris nisi dapibus felis. Aliquam diam elit, pretium rhoncus malesuada mattis, tincidunt non ipsum. Duis ut ipsum bibendum libero porttitor placerat vel et velit. 
+La différence des produits et des charges donne alors un chiffre de 164 423\euro{}.
+				\begin{table}[h]
+				\centering
+					\begin{tabular}{|c||p{1.5cm}|p{1.6cm}|p{2cm}|p{1.2cm}|p{2cm}||p{2cm}||p{1.8cm}|}
+						\hline
+						& \multicolumn{5}{c|}{Produit} & \multicolumn{2}{c|}{Charges} \\
+						\hline \hline
+						& Vente & Prix unité (Hors taxes) & Prix unité TTC & Nombre & Total & Salaires & 45 777 \euro{} \\
+						\hline \hline
+						& Logiciel & 4,17 \euro{} & 5 \euro{} & 50000 & 250 200 \euro{} & Frais pub (google) & 50 000 \euro{} \\
+						\hline
+						& Licences & 833,33 \euro{} & 1 000 \euro{} & 10 & 10 000 \euro{} && \\
+						\hline \hline
+						Total & \multicolumn{7}{c|}{164 423 \euro{}} \\
+						\hline
+					\end{tabular}
+				\caption{Compte de résultat provisionnel}
+				\end{table}
+				\section{Le bilan}
+					\begin{table}[h]
+						\centering
+						\begin{tabular}{|c|c||c|c|}
+						\hline
+						\multicolumn{2}{c|}{Actifs} & \multicolumn{2}{c|}{Passif} \\
+						\hline
+						Actifs incorporels & 0,00 \euro{} & Fonds propres & 0,00 \euro{} \\
+						\hline
+						Créances & 0,00 \euro{} & Dettes long terme & Mines Paristech : 100 000\euro{} \\
+						\hline
+						Actifs immobiliers & 0,00 \euro{} & Compte de Résultat prévisionnel & 164 423,00 \euro{} \\
+						\hline
+						Créances clients & 0,00 &&  \\
+						\hline
+						Trésorerie & 0,00 && \\
+						\hline
+					\end{tabular}
+				\caption{Bilan}
+				\end{table}
+					Le bilan prend en compte l'actif et le passif de l'entreprise.
+Cette année, celle-ci n'a pas d'actif réel. Pas de trésorerie, de créances ou d'actifs immobiliers et incorporels. Son passif ne contient pas de fonds propres, et le compte de résultat prévisionnel a été explicité plus haut. On peut en revanche considérer que nous avons effectué un prêt à long terme à l'école des Mines de 100 000\euro{}, afin de financer les prémices du projet.
+				\section{Les impôts}
+					S'agissant des impôts, nous devons dans un premier temps reverser à l'Etat la TVA sur les produits que nous vendons, à un taux de 20\% à compter du 1\up{er} Janvier 2014. Le logiciel étant vendu 4,17\euro{} et la licence 833,33\euro{}, le total de la TVA à reverser sera de 52 040\euro{}.
+Ensuite, l'impôt sur les sociétés est à un taux de 33\% sur les bénéfices. A partir du bilan et de la TVA, on peut estimer nos bénéfices à 112 383\euro{}, et donc un impôt sur les bénéfices à hauteur de 37 086\euro{}.
+					\begin{table}[!h]
+						\centering
+						\begin{tabular}{|c|c|c|}
+						\hline
+						\multicolumn{3}{c|}{Impôts} \\
+						\hline
+						Sur les sociétés & 33\% des bénéfices & 37086,39 \euro{} \\
+						\hline
+						TVA & 20\% sur les ventes & 52 040,00 \euro{} \\
+						\hline
+						\end{tabular}
+						\caption{Les impôts}
+					\end{table}
+				\section{Conclusion}
+					Si nos produits fonctionnent aussi bien que nous l'espérons, l'entreprise sera viable. Mieux encore, en remboursant à taux nul le prêt de l'Ecole des Mines sur cinq ans, nous pouvons réinjecter dès l'an prochain 55 297\euro{} dans le projet afin de le rendre plus compétitif encore, et donc mieux le vendre.
     
 \part{Le Code}
 	\setcounter{chapter}{0}
@@ -233,9 +344,9 @@ Quisque a tempus metus. Fusce ornare accumsan libero porttitor feugiat. Nullam t
 		
 	Dans le domaine des logiciels payants, pour un usage plus sérieux, le marché est dominé par les logiciels Dragon NaturallySpeaking de la firme américaine Nuance. Les prix, selon les modèles, varient entre environ 100\$ pour le modèle de base et environ 1000\$ pour les versions spécialisées dans un domaine professionnel. Le principe est que plus la base de données de mots est grande, plus les erreurs sont fréquentes ; Dragon NaturallySpeaking propose donc des versions adaptées à un domaine particulier. Par exemple, il existe une version "juriste" avec une base de données contenant surtout du vocabulaire technique de droit, et une version "médicine" avec des termes techniques médicaux. Ces versions visant une cible très précise donc plus restreinte, ils sont vendus considérablement plus cher que les versions plus classiques. Cependant, la demande étant en constante augmentation - un tiers des radiologues français utilisent cette technologie, tout comme 95\% des hôpitaux aux Pays Bas -, le marché est assez prometteur. En effet, cette technologie réduit considérablement les tâches administratives de ces professions: une simple relecture au plus est nécessaire. La réussite est renforcée par des taux de réussite exceptionnels avec des bases de données adaptées, et par l'absence de concurrence très forte.
 	
-	Cependant, nous avons choisi de concevoir un logiciel avec une base de données moins spécialisée pour un usage personnel: en effet, dans le temps qui nous est imparti, créer des bases de données étudiées spécialement pour un certain domaine (droit, médecine) nous paraissait très compliqué. Il aurait fallu faire une étude linguistique très poussée pour construire la base de données, alors que nous avons concentré l'essentiel de nos efforts sur l'algorithme de reconnaissance lui-même. Notre produit est donc destiné à un usage plus ludique, ou du moins personnel. Notre cible est donc légèrement différente, puisque les professionnels intéressés par notre produit doivent construire eux-mêmes leur base de données spécifique à leur domaine. L'inconvénient de cette approche est le désagrément de devoir ajouter soi-même les mots, l'avantage étant que la reconnaissance sera plus fiable puisque la voix de l'utilisateur elle-même sert de comparateur, et elle permet d'avoir une base de données réellement personnalisée (celles de Dragon, bien que dédiées à un domaine, ne sont pas totalement personnelles). Le prix envisagé de la licence pour cette utilisation de notre produit est comparable (de l'ordre de 1000euros) à celui des versions personnalisées de Dragon.
+	Cependant, nous avons choisi de concevoir un logiciel avec une base de données moins spécialisée pour un usage personnel: en effet, dans le temps qui nous est imparti, créer des bases de données étudiées spécialement pour un certain domaine (droit, médecine) nous paraissait très compliqué. Il aurait fallu faire une étude linguistique très poussée pour construire la base de données, alors que nous avons concentré l'essentiel de nos efforts sur l'algorithme de reconnaissance lui-même. Notre produit est donc destiné à un usage plus ludique, ou du moins personnel. Notre cible est donc légèrement différente, puisque les professionnels intéressés par notre produit doivent construire eux-mêmes leur base de données spécifique à leur domaine. L'inconvénient de cette approche est le désagrément de devoir ajouter soi-même les mots, l'avantage étant que la reconnaissance sera plus fiable puisque la voix de l'utilisateur elle-même sert de comparateur, et elle permet d'avoir une base de données réellement personnalisée (celles de Dragon, bien que dédiées à un domaine, ne sont pas totalement personnelles). Le prix envisagé de la licence pour cette utilisation de notre produit est comparable (de l'ordre de 1000\euro{}) à celui des versions personnalisées de Dragon.
 	
-	Nous prévoyons également de mettre en vente une version à usage personnel, sans possibilité d'ajouts de mots, au prix de 5euros. Il est difficile de prévoir le potentiel de cette version, puisque les concurrents sont très nombreux, de qualité et de prix très variables.
+	Nous prévoyons également de mettre en vente une version à usage personnel, sans possibilité d'ajouts de mots, au prix de 5\euro{}. Il est difficile de prévoir le potentiel de cette version, puisque les concurrents sont très nombreux, de qualité et de prix très variables.
 
 \bibliographystyle{unsrt} % Pour la biblio
 \bibliography{Biblio}

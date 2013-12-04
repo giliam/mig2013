@@ -7,7 +7,7 @@ from operator import add
 
 
 def sync(amplitudes):
-    tOut = 50
+    tOut = 400
     N = len(amplitudes)
     coeff_lissage = 5
     max = 0
@@ -17,7 +17,7 @@ def sync(amplitudes):
 
     #print("Max is {}".format(max))
 
-    valeurSeuil = 50
+    valeurSeuil = max/8
     #print("Seuil is {}".format(valeurSeuil))
 
     maxDiff = 300
@@ -103,10 +103,18 @@ def sync(amplitudes):
     else:
         return amplitudes_coupe
 def syncFile(path, name):
+    #print("Synching : {}".format(name))
     ampli = scipy.io.wavfile.read(path + name)
     ampli2 = sync(ampli[1])
     scipy.io.wavfile.write(path + "sync_" + name, ampli[0], int16(ampli2))
+    #print("Done\n\n")
+    
+def cutBeginning(path,name):
+    ampli = scipy.io.wavfile.read(path + name)
+    ampli2 = ampli[1][22050:]
+    scipy.io.wavfile.write(path + name, ampli[0], int16(ampli2))
 if __name__ == "__main__":
-    syncFile("0")
-    syncFile("1")
-    syncFile("2")
+    syncFile("3_0")
+    syncFile("3_1")
+    syncFile("5_0")
+    syncFile("5_1")

@@ -1,6 +1,5 @@
 
-from utils.constantes import *
-from utils.constantes import TAILLE_FINALE_MFCC
+from core.utils.constantes import *
 
 D = TAILLE_FINALE_MFCC
 

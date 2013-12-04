@@ -1,7 +1,9 @@
 #!/usr/bin/python
 # -*-coding:utf-8 -*
-from utils.db import Db
+
 import hashlib
+from core.utils.db import Db
+
 DEBUG = False
 
 class AuthUser:

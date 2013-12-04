@@ -3,22 +3,22 @@
 """ Main du programme, permet le choix entre enregistrer un élément ou réaliser l'analyse d'un enregistrement déjà effectué """
 import scipy.io.wavfile
 import os
-from utils.constantes import *
+from core.utils.constantes import *
 from numpy import abs,int16
-from utils.db import Db
-from recording.recorder import recorder
-from recording.synchronisation import synchro
-from handling.passe_haut import passe_haut
-from handling.fenetre_hann import hann_window
-from hmm.creationVecteurHMM import creeVecteur
-from handling.triangularFilterbank import triangularFilter
-from handling.inverseDCT import inverseDCTII
-from hmm.tableauEnergyPerFrame import construitTableauEnergy
-from handling.fft import *
-from hmm.markov import buildHMMs, recognize, recognizeList
+from core.utils.db import Db
+from core.recording.recorder import recorder
+from core.recording.sync import syncFile, cutBeginning
+from core.handling.passe_haut import passe_haut
+from core.handling.fenetre_hann import hann_window
+from core.hmm.creationVecteurHMM import creeVecteur
+from core.handling.triangularFilterbank import triangularFilter
+from core.handling.inverseDCT import inverseDCTII
+from core.hmm.tableauEnergyPerFrame import construitTableauEnergy
+from core.handling.fft import *
+from core.hmm.markov import buildHMMs, recognize, recognizeList
 
 def main(verbose=True,action=-1,verboseUltime=True):
-    db = Db("../../db/",verbose=verbose)
+    db = Db("../db/",verbose=verbose)
     choice = -1
     while( not choice in range(1,8) ):
         try:
@@ -30,10 +30,17 @@ def main(verbose=True,action=-1,verboseUltime=True):
                 choice = 2
         except NameError:
             print "Ceci n'est pas un nombre !"
-
+    ####################################
+    ###        ENREGISTREMENT        ###
+    ####################################
     if choice == 1:
         #Réaliser un enregistrement
         recorder(db)
+        
+        
+    ####################################
+    ###      ANALYSE D'UN SON        ###
+    ####################################
     elif choice == 2:
         fileOk = False
         while not fileOk:
@@ -74,10 +81,21 @@ def main(verbose=True,action=-1,verboseUltime=True):
                     print log
                 fileOk = False
                 numeroTraitement+=1
+                print "Mot reconnu pour " + f + ": ", mot
+                
+                
+    ####################################
+    ###         TEST GLOBAL          ###
+    ####################################
     elif choice == 3:
-        #(db,dirName="",nbRecording=-1,askForWord=True,seconds=-1,nbWords=1):
-        #fileName = recorder(db,"tmp/",1,False,2,1)
-        finalTest()
+        fileName = recorder(db,"tmp",1,False,2,1)
+        cutBeginning( Db.prefixPath + "waves/tmp/", fileName + ".wav" )
+        syncFile( Db.prefixPath + "waves/tmp/cut_", fileName + ".wav" )
+        finalTest("tmp/sync_" + fileName + ".wav")
+        
+    ####################################
+    ###   RESULTATS INTERMEDIAIRES   ###
+    ####################################
     elif choice == 4:
         print "Voici la liste des mots a etudier : "
         dirList = db.printDirFiles("storage/handling/")
@@ -90,6 +108,11 @@ def main(verbose=True,action=-1,verboseUltime=True):
         print "Fichier choisi : ", dirList[dirChoice]
         amp = db.getFile("handling/" + str(dirChoice))
         db.addWaveFromAmp("output/" + str(dirChoice) + ".wav",44100,amp,"output/",False)
+        
+    
+    ######################################
+    ### GESTION DES FICHIERS DE LA BDD ###
+    ######################################
     elif choice == 5:
         choice3 = -1
         while( not choice3 in range(1,6) ):
@@ -126,6 +149,10 @@ def main(verbose=True,action=-1,verboseUltime=True):
         elif choice3 == 5:
             db.sync()
             db.sync("", "waves/")
+            
+    #################################
+    ###     CREATION D'UN HMM     ###
+    #################################
     elif choice == 6:
         fileOk = False
         while not fileOk:
@@ -161,6 +188,10 @@ def main(verbose=True,action=-1,verboseUltime=True):
             print "Extraction :"
             db.addFile("hmmList.txt",hmmList)
             buildHMMs(hmmList.keys(),hmmList.values(), 500, Db.prefixPath + "hmm/")
+    
+    ####################################
+    ###        LISTER LES HMMs       ###
+    ####################################
     elif choice == 7:
         hmmList = db.getFile("hmmList.txt")
         print hmmList
@@ -239,37 +270,44 @@ def handlingRecording(content,db,dirChoice,numeroTraitement,action=0,hmmList=[])
     return content,log
 
 #def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0,hmmList=[]):
-def finalTest():
+def finalTest(fileName = ""):
     db = Db("../../db/",verbose=False)
     fileOk = False
     while not fileOk:
         #On choisit le dossier à afficher
-        print "Voici la liste des mots a etudier : "
-        dirList = db.printDirFiles("waves/")
-        dirChoice = -1
-        while( not dirChoice in range(len(dirList)) ):
-            try:
-                dirChoice = int( input( "Choisissez un fichier a traiter et entrez son numero : " ) )
-            except NameError:
-                print "Ceci n'est pas un nombre !"
-        print "Dossier choisi : ", dirList[dirChoice]
-        fileOk = True
-        numeroTraitement = 0
-        filesList = db.printFilesList(dirList[dirChoice])
-        print filesList
-        fileChoice = -1
-        while( not fileChoice in range(len(filesList)) ):
-            try:
-                fileChoice = int( input( "Choisissez un fichier a traiter et entrez son numero : " ) )
-            except NameError:
-                print "Ceci n'est pas un nombre !"
-        print "Fichier choisi : ", filesList[fileChoice]
-        f = filesList[fileChoice]
+        if fileName == "":
+            print "Voici la liste des mots a etudier : "
+            dirList = db.printDirFiles("waves/")
+            dirChoice = -1
+            while( not dirChoice in range(len(dirList)) ):
+                try:
+                    dirChoice = int( input( "Choisissez un fichier a traiter et entrez son numero : " ) )
+                except NameError:
+                    print "Ceci n'est pas un nombre !"
+            print "Dossier choisi : ", dirList[dirChoice]
+            fileOk = True
+            numeroTraitement = 0
+            filesList = db.printFilesList(dirList[dirChoice])
+            print filesList
+            fileChoice = -1
+            while( not fileChoice in range(len(filesList)) ):
+                try:
+                    fileChoice = int( input( "Choisissez un fichier a traiter et entrez son numero : " ) )
+                except NameError:
+                    print "Ceci n'est pas un nombre !"
+            print "Fichier choisi : ", filesList[fileChoice]
+            n = fileChoice
+            f = filesList[fileChoice]
+            d = dirList[dirChoice]
+        else:
+            f = fileName
+            n = 1
+            d = ""
         dirName = os.path.dirname(f)
         m = db.getWaveFile(f)
-        mot,log = handlingOneWord(m[1],db,dirList[dirChoice],fileChoice)
+        mot,log = handlingOneWord(m[1],db,d,n)
         fileOk = False
         print "Le mot reconnu est", mot
         print "-----------------------------"
 if __name__ == "__main__":
-    main(True)
+    main(False)

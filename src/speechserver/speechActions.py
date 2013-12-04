@@ -23,8 +23,8 @@ class requestHandling:
             return False
 
         if action == "recognize_spoken_word":
-            audioBlob = data.get("audioBlob")
-            audioType = data.get("audioType")
+            audioBlob = data.getvalue("audioBlob")
+            audioType = data.getvalue("audioType")
             if not (audioBlob or audioType):
                 return None
             else:

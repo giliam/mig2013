@@ -112,19 +112,19 @@
 			\section{Approches de la reconnaissance vocale}
 				Avant de rentrer dans des considérations techniques, il est nécessaire de définir un principe d'étude, une stratégie de résolution qui dictera l'orientation générale du projet en plus de rendre les objectifs et  les enjeux plus clairs. Cette partie a pour but de donner un aperçu des différents angles d'attaques du problème donné pouvant être considérés, ainsi que de présenter celui que nous avons choisi, avec quelles motivations. 
 
-	Dans son livre Fundamentals of speech recognition Lawrence Rabiner dégage des travaux de ces prédécesseurs trois approches conceptuelles du problème. Ces approches sont les suivantes : l'approche acoustique-phonétique, l'approche par reconnaissance de motifs et l'approche par intelligence artificielle. Cette dernière n'étant, d'après Rabiner, qu'un avatar de la première ; nous ne présenterons que l'acoustique phonétique et la reconnaissance de motifs que nous avons choisi pour notre projet.
+	Dans son livre Fundamentals of speech recognition Lawrence Rabiner dégage des travaux de ces prédécesseurs trois approches conceptuelles du problème. Ces approches sont les suivantes: l'approche acoustique-phonétique, l'approche par reconnaissance de motifs et l'approche par intelligence artificielle. Cette dernière n'étant, d'après Rabiner, qu'un avatar de la première ; nous ne présenterons que l'acoustique phonétique et la reconnaissance de motifs que nous avons choisi pour notre projet.
 
 		\subsection{Acoustique-phonétique}
 
-	L'approche acoustique-phonétique est indubitablement celle qui paraît la plus naturelle et directe pour faire de la reconnaissance vocale et est celle qui s'impose a priori à l'esprit. Le principe est le suivant : l'ordinateur tâche de découper l'échantillon sonore de manière séquentielle en se basant sur les caractéristiques acoustiques observées et sur les relations connues entre caractéristiques acoustiques et phonème. Ceci dans le but d'identifier une suite de phonèmes et d'ainsi reconnaître un mot. 
+	L'approche acoustique-phonétique est indubitablement celle qui paraît la plus naturelle et directe pour faire de la reconnaissance vocale et est celle qui s'impose a priori à l'esprit. Le principe est le suivant: l'ordinateur tâche de découper l'échantillon sonore de manière séquentielle en se basant sur les caractéristiques acoustiques observées et sur les relations connues entre caractéristiques acoustiques et phonème. Ceci dans le but d'identifier une suite de phonèmes et d'ainsi reconnaître un mot. 
 
-	Définition Wikipédia d'un phonème : En phonologie, domaine de la linguistique, un phonème est la plus petite unité discrète ou distinctive (c'est-à-dire permettant de distinguer des mots les uns des autres) que l'on puisse isoler par segmentation dans la chaîne parlée. Un phonème est en réalité une entité abstraite, qui peut correspondre à plusieurs sons. Il est en effet susceptible d'être prononcé de façon différente selon les locuteurs ou selon sa position et son environnement au sein du mot.
+	Définition Wikipédia d'un phonème: En phonologie, domaine de la linguistique, un phonème est la plus petite unité discrète ou distinctive (c'est-à-dire permettant de distinguer des mots les uns des autres) que l'on puisse isoler par segmentation dans la chaîne parlée. Un phonème est en réalité une entité abstraite, qui peut correspondre à plusieurs sons. Il est en effet susceptible d'être prononcé de façon différente selon les locuteurs ou selon sa position et son environnement au sein du mot.
 
 	Cette approche suppose qu'il existe un ensemble fini de phonèmes différentiables et que leurs propriétés sont suffisamment manifestes pour être extraites d'un signal ou de la donnée de son spectre (tableau des fréquences et de leur amplitude associée, composant un signal à un instant donné) au cours du temps. Même si il est évident que ces caractéristiques dépendent très largement du sujet parlant, on part du principe que les règles régissant la modification des paramètres peuvent être apprises et appliquées. 
 
 	Bien qu'elle ait été vastement étudiée et soit viable on lui préférera l'approche par reconnaissance de motifs qui, pour plusieurs raisons, l'a supplantée dans les systèmes appliqués. C'est celle que nous avons choisi et que nous présentons dans le prochain paragraphe.
 		\subsection{Reconnaissance de motifs}
-		Elle diffère de la méthode précédente par le fait qu'elle ne cherche pas à exhiber des caractéristiques explicites. Elle se compose de deux étapes : « l'entraînement » des motifs, et la reconnaissance via la comparaison de ces motifs. 
+		Elle diffère de la méthode précédente par le fait qu'elle ne cherche pas à exhiber des caractéristiques explicites. Elle se compose de deux étapes: « l'entraînement » des motifs, et la reconnaissance via la comparaison de ces motifs. 
 	L'idée sous-jacente au concept d'entraînement repose sur le principe selon lequel si l'on dispose d'un ensemble suffisamment grand de version d'un motif à reconnaître, on doit être capable de caractériser pertinemment les propriétés acoustiques du motif. Notons que les motifs en question peuvent être de nature très diverses, comme des sons, des mots, des phrases ; ce qui sous-tend l'idée d'un grand nombre d'applications théoriques comme présenté en introduction. La machine apprend alors quelles propriétés acoustiques sont fiables et pertinentes. On effectue ensuite une comparaison entre le signal à reconnaître et les motifs tampons, afin de le classifier en fonction du degré de concordance.
 	
 	Sans plus entrer dans les détails, les avantages de cette approche qui nous on poussé à l'adopter sont les suivants:
@@ -183,24 +183,56 @@ De plus, il a fallu déterminer la valeur de nos constantes de découpe (coefficie
 Il est préférable d'employer cette échelle de fréquence dans l'algorithme de reconnaissance: ce dernier doit en effet différencier plusieurs mots selon la perception humaine, c'est-à-dire en simulant le comportement de l'oreille humaine.
 		\section{Transformée inverse}
         	Nam eu sollicitudin massa. Duis sagittis velit mi. Nunc dictum risus ac interdum lacinia\cite{ref2}.
-    \chapter{Les MMC}
-        \section{Principe, modèle discret}
-        	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas dapibus scelerisque elit pulvinar ornare. In sollicitudin dui eu eros feugiat, sit amet eleifend ante dapibus. Donec id aliquet dolor, at ullamcorper nibh. Nulla egestas odio tempus nunc venenatis fringilla. Fusce in risus eu augue ullamcorper euismod nec et lacus. Nullam elementum adipiscing tellus, vel aliquet tortor ultricies quis. In justo libero, dictum sed risus sodales, hendrerit tempor eros. Sed varius metus velit, nec placerat neque tincidunt ac. 
-        \section{Phase d'apprentissage}
-        	Morbi cursus risus eget scelerisque interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eget nibh tellus. In dolor purus, viverra nec eleifend id, commodo dignissim ipsum. Nullam viverra turpis at sodales commodo. Nunc sollicitudin nisi sit amet purus gravida, a porttitor velit bibendum. Cras varius nibh purus, vel sollicitudin lorem adipiscing id. 
-        \section{Phase de reconnaissance}
-        	Fusce commodo bibendum malesuada. Suspendisse ultrices pulvinar nulla, at ornare mauris accumsan tempus. Donec a mi libero. Fusce ut ante massa. Sed pretium augue ante, eu pellentesque nibh hendrerit sollicitudin. Maecenas placerat vehicula nulla, id tincidunt lectus placerat a. Vivamus et mattis quam, in sagittis felis. Aenean lobortis cursus nibh, eget vulputate mauris porta vel. Praesent at diam dictum, varius arcu id, sollicitudin lacus. Nullam sit amet mi non diam rutrum tincidunt. Pellentesque pretium magna velit, ac sagittis lectus iaculis non. Aenean vulputate fermentum tellus, non volutpat neque bibendum quis. Praesent malesuada orci quis diam ullamcorper iaculis. Nullam vitae purus euismod, fermentum mi a, mattis purus. 
+    \chapter{Modèles de Markov cachés (MMC)}
+        \section{Prérequis et principe}
+        	Un modèle de Markov caché est un modèle statistique qui peut modéliser des processus physiques. Il fait appel aux structures d'automates.
+Un automate représente un système physique. Il est composé d'états (les cercles sur la figure), qui correspondent aux états du système réel, et de transitions (les flèches sur la figure), pour passer d'un état à l'autre. Il existe aussi la notion de chemin: par exemple pour passer de 0 à 3 sur la figure, il faut passer par 1 puis 2: le chemin de 0 à 3 est 0,1,2,3.
 
+				\begin{figure}[hb]
+						\begin{center}
+							\includegraphics[width=10cm]{Images/MMC1.png} 
+						\end{center}
+						\caption{Exemple d'automate}
+				\end{figure}
+				
+Les modèles de Markov cachés sont largement répandus dans la reconnaissance vocale. Entre un modèle discret et un modèle continu, nous avons choisi le dernier car les données en entrée ne font pas partie d'un ensemble fini: il existe une infinité de sons  possibles pour un même phonème. Les modèles de Markov cachés sont particulièrement adaptés pour la reconnaissance vocale car ils permettent un apprentissage constant de la part du programme: il est capable d'apprendre de nouveaux mots de manière autonome, et de s'améliorer au fur et à mesure que la base de données de mots grandit.
+
+Nous avons modélisé chaque mot par un automate, dont les états sont les différents phonèmes du mot. Lorsque l'on prononce un mot, on se dirige dans l'automate grâce aux phonèmes prononcés, jusqu'à rencontrer l'état final. Ceci permet de reconnaître le mot même si une syllabe dure plusieurs secondes: dans ce cas, on se contente de tourner en rond  (en restant sur l'état 0 de la figure par exemple) dans l'automate jusqu'à rencontrer un nouveau phonème. Dans l'automate, la transition de l'état i à k représente la probabilité de passer de l'état i à k, c'est-à-dire la probabilité que le phonème n°k vienne tout de suite après le phonème n°i. \newpage %mise en page
+
+				\begin{figure}[hb]
+						\begin{center}
+							\includegraphics[width=10cm]{Images/MMC2.png} 
+						\end{center}
+						\caption{exemple}
+				\end{figure}
+				
+Résumons la situation lorsque l'on lance notre programme: d'un côté une base de données de mots, représentés chacun par un automate ; de l'autre, un fichier audio: le mot prononcé par l'utilisateur. Le programme se déplace dans chaque automate grâce au fichier audio, il s'oriente en fonction des phonèmes prononcés. Nous appellerons cette opération "faire passer un mot dans un automate".
+
+Lorsque l'on fait passer un mot dans un automate, on peut donc calculer la probabilité qu'il corresponde à cet automate: on multiplie toutes les probabilités rencontrées. Elles dépendent bien sûr du chemin parcouru (i-e des transitions rencontrées). C'est le principe de l'algorithme "Forward".
+
+Il existe plusieurs algorithmes courants sur les modèles de Markov cachés. L'algorithme "Forward" permet de calculer la probabilité qu'un automate corresponde au mot prononcé: en comparant les probabilités dans chacun des automates, on sélectionne la plus grande et on a l'automate qui correspond le mieux.  C'est ce que fait notre application web, face au mot prononcé par le client. 
+L'algorithme de Baum-Welch permet l'apprentissage de nouveaux mots: pour chaque nouveau mot il crée un nouvel automate, et le rend le plus optimisé possible. C'est ce que fait la partie logicielle de notre programme, pour que les programmeurs puissent agrandir la base de données.
+        \section{Phase d'apprentissage}
+        Une fois l'algorithme de reconnaissance vocale implémenté, il nous a fallu l'améliorer. Deux aspects demandent un apprentissage de la part du programme. Il doit d'abord faire grossir l'ensemble des mots reconnus, de manière à pouvoir en reconnaître le plus possible. Mais il est aussi intéressant de lui faire apprendre un mot par des locuteurs différents. Plus le nombre de locuteurs est grand, plus l'algorithme peut être précis.
+        
+Enregistrer plusieurs personnes permet d'obtenir une diversité de spectres qui accroit la précision du programme.
+
+Une fois un mot appris, il est également très utile qu'un même locuteur enregistre de nombreuses versions du mot. Nous avons fait pour notre locuteur 10 versions de chaque mot.
+
+Pour mettre en place un apprentissage, nous avions des besoins matériels (stocker l'ensemble des mots reconnus) mais aussi des besoins humains, et en l'occurrence une diversité de voix.
+        
+        \section{Phase de reconnaissance}
+        
+La phase de reconnaissance constitue le c\oe{}ur du programme. Comme dit précédemment, le programme effectue l'algorithme "Forward" sur chacun des automates et renvoie le mot le plus probable, après avoir comparé toutes les probabilités.
+
+A l'origine, la phase de reconnaissance a été codée en Python. Cependant le temps d'exécution était trop long, nous l'avons donc codé en C++, ce qui a permis de diviser le temps d'exécution par 50 000. Grâce à ce travail laborieux, le programme s'effectue en un temps proche de la seconde. Tout a été mis en place, notamment en amont avec le codage en C++ de la transformée de Fourier rapide, pour privilégier la rapidité de l'exécution. 
+
+Au départ nous n'avions qu'un seul locuteur pour faire la base de donnée des mots reconnus, ce qui ne permettait de faire fonctionner le programme que pour un seul utilisateur : celui qui avait enregistré les mots. Cependant nous avons réussi à enregistrer plusieurs locuteurs, ce qui a permis au programme de reconnaître plusieurs utilisateurs, même un utilisateur qui n'avait enregistré aucun mot.
+        	
 \part{Approche commerciale}
 		\setcounter{chapter}{0}
     \nonewpagechapter{Côté web}
-    	 Cras accumsan, sapien a mattis cursus, augue turpis rhoncus leo, et mattis lorem mi sed nisi. Fusce quam tortor, vulputate et tincidunt in, condimentum quis risus. Phasellus facilisis est id ipsum fermentum, eget aliquet arcu tristique. Mauris lacinia urna non risus ullamcorper auctor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean a tincidunt mauris. Maecenas felis massa, tempus nec lorem et, accumsan iaculis nunc.
-
-Suspendisse tincidunt eros nibh, mollis feugiat elit feugiat eget. Ut porta gravida orci in congue. Vestibulum et lectus adipiscing purus tempor feugiat. Morbi consectetur eget tellus ut feugiat. Sed ipsum nisl, feugiat vitae volutpat et, accumsan eget orci. Proin non leo eros. Vivamus malesuada neque et erat bibendum malesuada.
-
-In hac habitasse platea dictumst. Vivamus eleifend erat ac quam aliquam, vehicula ultricies arcu iaculis. Suspendisse potenti. Quisque at commodo quam. Etiam ultricies elit leo, vel congue lorem tristique eget. Quisque sodales dignissim diam, ac malesuada libero scelerisque sed. Aliquam bibendum luctus elit vel suscipit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque quis mi at mi vulputate rhoncus.
-
-Integer convallis id libero vel egestas. Cras ultricies porta nisl, ut tempus purus pulvinar tristique. Duis ut hendrerit libero. Aliquam sit amet erat sit amet dolor sagittis feugiat. Nulla elit enim, iaculis et congue eget, porta hendrerit purus. Aliquam in facilisis metus. Vivamus euismod adipiscing pellentesque. Fusce a pellentesque lorem. Sed pretium ut ligula non blandit. Phasellus vitae mollis dolor. In a eleifend magna, non mollis magna. Etiam nisi tellus, blandit ut ante ut, vehicula tristique nunc. 
+    	  
     \chapter{Applications}
     	 La reconnaissance vocale est une technologie promise à un futur radieux; les plus grands noms de l'informatique, dont Bill Gates, annonçaient il y a quelques années qu'elle allait remplacer les claviers d'ici peu. Il s'avère aujourd'hui que leurs prédictions ne sont pas encore réalisées, il est tout à fait possible qu'elle se réalise plus tard que prévu. Le principal obstacle à l'explosion de cette technologie étant le manque de fiabilité totale, mais avec les progrès à venir, la technologie deviendra de plus en plus sûre.
     	 
@@ -212,7 +244,7 @@ Integer convallis id libero vel egestas. Cras ultricies porta nisl, ut tempus pu
 	
 	Une autre application possible de la reconnaissance vocale est l'aide aux handicapés, par exemple des commandes vocales pour une chaise roulante. Les phrases utilisées sont très typées (avancer, reculer,...) donc la technologie n'a pas besoin d'être très avancée. De plus, avec la possibilité qu'offre notre produit d'ajouter ses propres mots à la base de données, l'utilisateur lui-même peut rentrer les commandes ce qui assure un taux de reconnaissance très élevé. Notre produit peut donc bien s'adapter à cette utilisation.
 	
-	La technologie est également très utilisée pour un usage plus ludique : fonctions de recherche dans les téléphones mobiles, les ordinateurs, robotique, jeux vidéo, traduction automatique,... Notre produit, dans sa version pour les particuliers, peut servir à ces usages même si la concurrence ne manque pas.
+	La technologie est également très utilisée pour un usage plus ludique: fonctions de recherche dans les téléphones mobiles, les ordinateurs, robotique, jeux vidéo, traduction automatique,... Notre produit, dans sa version pour les particuliers, peut servir à ces usages même si la concurrence ne manque pas.
 	
 	Enfin, la reconnaissance vocale peut servir à des fins sécuritaires, pour des vérifications d'identité. Il s'agit alors de reconnaître le locuteur, ce que notre produit ne permet pas.
 	

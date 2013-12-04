@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from math import *
-from numpy import *
+from numpy import zeros
 
 """Creation de passe haut. Axel"""
 

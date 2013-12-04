@@ -17,7 +17,7 @@ def recorder(db,dirName="",nbRecording=-1,askForWord=True,seconds=-1,nbWords=1):
 		nbRecording = raw_input("Combien d'enregistrement par mots ? ")
 		nbRecording = int(nbRecording)
 	n = ""
-	for k in range(nbWords)
+	for k in range(nbWords):
 		if askForWord:
 			mot = raw_input("Entrez le mot a enregistrer : ")
 		else:

@@ -179,11 +179,11 @@ def metaCoupures(seqs):
 
     return mus
 
-def buildHMMs(HMMs, HMMsPath, maxIt):
+def buildHMMs(HMMs, HMMsPath, maxIt, path="db/"):
     G_mu = []
     seqs = []
     for i in range(len(HMMsPath)):
-        seqs.append(getData(HMMsPath[i]))
+        seqs.append(getData(path + HMMsPath[i]))
         G_mu = G_mu + metaCoupures(seqs[i])
 
     n = len(G_mu)
@@ -202,9 +202,7 @@ def buildHMMs(HMMs, HMMsPath, maxIt):
             print("HMM '{}' final likelyhood (log) : {}".format(HMMs[i], 1-x))
             print("WARNING : Baum-Welch algorithm ended because of iterations' limit ({})".format(maxIt))
         else:
-            pass
-            #print("HMM '{}' final likelyhood (log) : {}".format(HMMs[i], x))
-        print("")
+            print("HMM '{}' final likelyhood (log) : {}".format(HMMs[i], x))
 
 def recognize(seq):
     return(hmm.recognize(seq))

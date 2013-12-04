@@ -89,12 +89,10 @@ def main(verbose=True,action=-1,verboseUltime=True):
         amp = db.getFile("handling/" + str(dirChoice))
         db.addWaveFromAmp("output/" + str(dirChoice) + ".wav",44100,amp,"output/",False)
     elif choice == 5:
-        db.sync()
-        db.sync("", "waves/")
         choice3 = -1
-        while( not choice3 in range(1,5) ):
+        while( not choice3 in range(1,6) ):
             try:
-                choice3 = int(input("Que voulez-vous faire ?\n1-Supprimer un fichier\n2-Supprimer un wav\n3-Synchroniser les wav\n4-Synchroniser tous les fichiers\n"))
+                choice3 = int(input("Que voulez-vous faire ?\n1-Supprimer un fichier\n2-Supprimer un wav\n3-Synchroniser la BDD\n4-Synchroniser les wav\n5-Synchroniser tous les fichiers\n"))
             except NameError:
                 print "Ceci n'est pas un nombre !"
         if choice3 == 1:
@@ -106,6 +104,9 @@ def main(verbose=True,action=-1,verboseUltime=True):
             filesList = db.printDirFiles("waves/")
             dirName = "waves/"
         elif choice3 == 3:
+            db.sync()
+            db.sync("", "waves/")
+        elif choice3 == 4:
             print "Voici la liste des mots a etudier : "
             dirList = db.printDirFiles("waves/")
             dirChoice = -1
@@ -120,7 +121,7 @@ def main(verbose=True,action=-1,verboseUltime=True):
                 ampli = db.getWaveFile(f)
                 ampli2 = synchro(ampli[1], COEFF_LISSAGE, T_MIN, COEFF_COUPE)
                 db.addWaveFromAmp("mod/" + f,ampli[0],ampli2)
-        elif choice3 == 4:
+        elif choice3 == 5:
             db.sync()
             db.sync("", "waves/")
     elif choice == 6:
@@ -268,5 +269,5 @@ def finalTest():
         fileOk = False
         print "Le mot reconnu est", mot
         print "-----------------------------"
-
-main(True)
+if __name__ == "__main__":
+    main(True)

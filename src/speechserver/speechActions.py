@@ -16,7 +16,7 @@ from speechserver.audioConverter import *
 ACTIONS = ["add_word","list_word_records","rm_word_record","recognize_spoken_word","listen_recording"]
 
 class requestHandling:
-    def __init__(self, clientDBid, action, data):
+    def handle(self, clientDBid, action, data):
         self.dbWaves = Db('../db/', verbose=False)
 
         if not action in ACTIONS:
@@ -38,6 +38,10 @@ class requestHandling:
         
         if audioType == 'ogg':
             audioBlob = convert_ogg_blob_to_wave_blob(audioBlob)
+            print(audioBlob)
         
-        respWord, log = handlingOneWord(sox_handling(audioBlob), self.dbWaves, 1, 1, 0, clientDBid)
+        #wav_content = sox_handling(audioBlob)
+        #print wav_content
+        respWord, log = handlingOneWord(audioBlob[1], self.dbWaves, 1, 1, 0)
+        print respWord
         return {'respWord': respWord}

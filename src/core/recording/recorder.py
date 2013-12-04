@@ -25,7 +25,7 @@ def recorder(db,dirName="",nbRecording=-1,askForWord=True,seconds=-1,nbWords=1):
 			
 		if seconds < 0:
 			seconds = raw_input("Entrez le nombre de secondes pour l'enregistrement : ")
-		seconds = float(seconds)
+		seconds = float(seconds) + 1
 		
 		for i in range(nbRecording):
 			raw_input("Appuyez sur une touche pour commencer l'enregistrement : ")

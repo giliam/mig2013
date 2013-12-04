@@ -102,11 +102,11 @@ def sync(amplitudes):
         return sync(amplitudes_coupe2)
     else:
         return amplitudes_coupe
-def syncFile(name):
+def syncFile(path, name):
     #print("Synching : {}".format(name))
-    ampli = scipy.io.wavfile.read("{}.wav".format(name))
+    ampli = scipy.io.wavfile.read(path + name)
     ampli2 = sync(ampli[1])
-    scipy.io.wavfile.write("sync_{}.wav".format(name), ampli[0], int16(ampli2))
+    scipy.io.wavfile.write(path + "sync_" + name, ampli[0], int16(ampli2))
     #print("Done\n\n")
 if __name__ == "__main__":
     syncFile("3_0")

@@ -76,11 +76,7 @@ def main(verbose=True,action=-1,verboseUltime=True):
                 fileOk = False
                 numeroTraitement+=1
     elif choice == 3:
-        print "Vous allez d'abord réaliser l'enregistrement du mot que vous cherchez à tester"
-        fileName = recorder(db,"tmp",1,False)
-        freq,amp = db.getWaveFile("tmp/" + fileName + ".wav")
-        m,l = handlingOneWord(amp,db,fileName,0)
-        print m
+        finalTest()
     elif choice == 4:
         print "Voici la liste des mots a etudier : "
         dirList = db.printDirFiles("storage/handling/")
@@ -196,22 +192,41 @@ def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0,hmmList=[]):
     db.logDump(str(dirChoice) + "_" + str(numeroTraitement),log)
     db.logDump(str(dirChoice) + "_" + str(numeroTraitement))
     buildHMMs(["Deux","Trois", "Cinq"],["../../db/storage/training/Deux.txt","../../db/storage/training/Trois.txt","../../db/storage/training/Cinq.txt"], 500)
-    print "Mot reconnu : ", recognize(content)
-    return motLePlusCompatible,log
+    return recognize(content),log
 
 
 #def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0,hmmList=[]):
-def test():
+def finalTest():
     db = Db("../../db/",verbose=False)
-    fileName = recorder(db,"tmp",1,False,1)
-    freq,amp = db.getWaveFile("tmp/" + fileName + ".wav")
-    mot,log = handlingOneWord(amp, db, "test", 0)
-    print "Mot reconnu : ", mot
+    fileOk = False
+    while not fileOk:
+        #On choisit le dossier à afficher
+        print "Voici la liste des mots a etudier : "
+        dirList = db.printDirFiles("waves/")
+        dirChoice = -1
+        while( not dirChoice in range(len(dirList)) ):
+            try:
+                dirChoice = int( input( "Choisissez un fichier a traiter et entrez son numero : " ) )
+            except NameError:
+                print "Ceci n'est pas un nombre !"
+        print "Dossier choisi : ", dirList[dirChoice]
+        fileOk = True
+        numeroTraitement = 0
+        filesList = db.printFilesList(dirList[dirChoice])
+        print filesList
+        fileChoice = -1
+        while( not fileChoice in range(len(filesList)) ):
+            try:
+                fileChoice = int( input( "Choisissez un fichier a traiter et entrez son numero : " ) )
+            except NameError:
+                print "Ceci n'est pas un nombre !"
+        print "Fichier choisi : ", filesList[fileChoice]
+        f = filesList[fileChoice]
+        dirName = os.path.dirname(f)
+        m = db.getWaveFile(f)
+        mot,log = handlingOneWord(m[1],db,dirList[dirChoice],fileChoice)
+        fileOk = False
+        print "Le mot reconnu est", mot
+        print "-----------------------------"
 
-test()
-
-def ampToHMMFromList(content):
-    return ""
-
-if __name__ == "__main__":
-    main(True)
+main(True)

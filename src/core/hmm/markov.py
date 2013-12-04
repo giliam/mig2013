@@ -204,7 +204,6 @@ def buildHMMs(HMMs, HMMsPath, maxIt):
         else:
             pass
             #print("HMM '{}' final likelyhood (log) : {}".format(HMMs[i], x))
-        print("")
 
 def recognize(seq):
     return(hmm.recognize(seq))

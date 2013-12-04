@@ -5,7 +5,7 @@
 import os
 import pyaudio
 import wave
-from utils.constantes import *
+from core.utils.constantes import *
 import random
 import hashlib
 

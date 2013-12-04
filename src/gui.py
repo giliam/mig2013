@@ -4,14 +4,12 @@
 Graphical User Interface for the isolated word recognition project
 Made for the MIG SE team s
 """
-import sys
-sys.path.append("../speechserver")
-from clientAuth import *
+from speechserver.clientAuth import *
 
 from Tkinter import *
-from recording.recorder import recorder
-from utils.db import Db
-from main import main
+from core.recording.recorder import recorder
+from core.utils.db import Db
+from core.main import main
 
 auth = AuthUser()
 
@@ -51,7 +49,7 @@ class Gui:
         
 
     def enregistrer(self):
-        db = Db("../../db/",verbose=False)
+        db = Db("../db/",verbose=False)
         fileName = recorder(db,"tmp",1,False,saisir.get())
         freq,amp = db.getWaveFile("tmp/" + fileName + ".wav")
         ouverture(amp)

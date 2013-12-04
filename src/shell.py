@@ -3,22 +3,22 @@
 """ Main du programme, permet le choix entre enregistrer un élément ou réaliser l'analyse d'un enregistrement déjà effectué """
 import scipy.io.wavfile
 import os
-from utils.constantes import *
+from core.utils.constantes import *
 from numpy import abs,int16
-from utils.db import Db
-from recording.recorder import recorder
-from recording.sync import syncFile, cutBeginning
-from handling.passe_haut import passe_haut
-from handling.fenetre_hann import hann_window
-from hmm.creationVecteurHMM import creeVecteur
-from handling.triangularFilterbank import triangularFilter
-from handling.inverseDCT import inverseDCTII
-from hmm.tableauEnergyPerFrame import construitTableauEnergy
-from handling.fft import *
-from hmm.markov import buildHMMs, recognize, recognizeList
+from core.utils.db import Db
+from core.recording.recorder import recorder
+from core.recording.sync import syncFile, cutBeginning
+from core.handling.passe_haut import passe_haut
+from core.handling.fenetre_hann import hann_window
+from core.hmm.creationVecteurHMM import creeVecteur
+from core.handling.triangularFilterbank import triangularFilter
+from core.handling.inverseDCT import inverseDCTII
+from core.hmm.tableauEnergyPerFrame import construitTableauEnergy
+from core.handling.fft import *
+from core.hmm.markov import buildHMMs, recognize, recognizeList
 
 def main(verbose=True,action=-1,verboseUltime=True):
-    db = Db("../../db/",verbose=verbose)
+    db = Db("../db/",verbose=verbose)
     choice = -1
     while( not choice in range(1,8) ):
         try:

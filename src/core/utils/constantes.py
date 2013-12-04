@@ -22,3 +22,5 @@ temps_fenetre = 0.023219954648526
 #Creation MFCC
 
 TAILLE_FINALE_MFCC = 13
+
+NB_ITERATIONS = 2

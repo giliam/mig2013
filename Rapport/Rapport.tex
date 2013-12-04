@@ -151,7 +151,6 @@
 		\includegraphics[width=14cm]{Images/VICA.png} 
 	\end{center}
 	\caption{Exemple audiogramme prononciation du mot "VICA"}
-	\label{Exemple audiogramme prononciation du mot "VICA"}
 \end{figure}
 
 				\subsection{Pré accentuation des aigus}
@@ -169,16 +168,23 @@ Ce filtre consiste en l'utilisation de bibliothèques, SoX et ffmpeg, qui permett
 
 De plus, il a fallu déterminer la valeur de nos constantes de découpe (coefficient de lissage, coefficient de coupe, intervalle de temps de sécurité), qui dépendent bien sûr les unes des autres. Ceci a été fait de manière empirique sur plusieurs enregistrements de mots différents, permettant une découpe automatique la plu satisfaisante possible pour l'ensemble des mots.
         \section{Echantillonnage, fenêtrage}
-        	Nam eu sollicitudin massa. Duis sagittis velit mi. Nunc dictum risus ac interdum lacinia\cite{ref2}. Aliquam a fermentum lectus. Praesent dapibus molestie mauris sed vestibulum. Curabitur sodales egestas est a pellentesque. Quisque id vulputate erat, a sagittis turpis. Proin vulputate congue ante, a laoreet orci posuere venenatis. Suspendisse ullamcorper ac dolor nec dapibus.
-        \subsection{début du filtre 2}
-        	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas rutrum aliquet odio ac volutpat. Suspendisse massa enim, faucibus ut mi dignissim, fringilla ultrices dolor. Quisque bibendum vel nisl eget interdum. Phasellus sed ultricies orci. Aenean egestas risus ut ante porttitor tempus. Suspendisse malesuada, neque ut ullamcorper hendrerit, nibh justo porta purus, quis suscipit neque nisi in nunc. Pellentesque est nisi, porta semper mauris quis, commodo ultricies turpis.
-        \subsection{fin du filtre 2}
-        	Vivamus posuere malesuada metus, et fringilla felis congue sed. Fusce a nibh in urna molestie viverra vel in est. Donec ipsum nibh, commodo tristique bibendum vitae, consequat quis ipsum. Donec sed diam aliquet velit aliquam viverra. Etiam tincidunt egestas nibh, sit amet facilisis quam vulputate scelerisque. Maecenas nec eros rutrum, tempus ipsum sit amet, tempus dui. Quisque adipiscing varius neque, at egestas erat consequat vitae. Donec sit amet urna iaculis, pharetra arcu in, porttitor quam. Ut nunc ante, tincidunt placerat libero eu, hendrerit lacinia leo. Nam sapien enim, feugiat nec orci eget, porta suscipit diam. Nulla mattis molestie est vitae blandit. Nullam bibendum tempus odio, quis vestibulum quam consectetur at. 
+        	Nam eu sollicitudin\cite{ref1} massa. Duis sagittis velit mi. Nunc dictum risus ac interdum lacinia\cite{ref2}. Suspendisse ullamcorper ac dolor nec dapibus. 
         	\section{Transformée de Fourier}
-        	Nam eu sollicitudin massa. Duis sagittis velit mi. Nunc dictum risus ac interdum lacinia\cite{ref2}. Aliquam a fermentum lectus. Praesent dapibus molestie mauris sed vestibulum. Curabitur sodales egestas est a pellentesque. Quisque id vulputate erat, a sagittis turpis. Proin vulputate congue ante, a laoreet orci posuere venenatis. Suspendisse ullamcorper ac dolor nec dapibus.
-        	\section{MEL}
-        	Nam eu sollicitudin massa. Duis sagittis velit mi. Nunc dictum risus ac interdum lacinia\cite{ref2}. Aliquam a fermentum lectus. Praesent dapibus molestie mauris sed vestibulum. Curabitur sodales egestas est a pellentesque. Quisque id vulputate erat, a sagittis turpis. Proin vulputate congue ante, a laoreet orci posuere venenatis. Suspendisse ullamcorper ac dolor nec dapibus.
-        	\section{Transformée inverse}
+        	Nam eu sollicitudin massa.\cite{ref2}. Aliquam a fermentum lectus. Praesent dapibus molestie mauris sed vestibulum. Curabitur sodales egestas est a pellentesque. Quisque id vulputate erat, a sagittis turpis. 
+        	\section{Mel}
+        	Des études de psycho acoustique ont montré que l'oreille humaine ne percevait pas les fréquences selon une échelle linéaire. Il a donc été utile de définir une nouvelle échelle plus subjective : à chaque fréquence $f$, exprimée en Hertz, on fait correspondre une nouvelle fréquence selon une fonction censée représenter le comportement de l'oreille humaine. Par convention, la fréquence de $1000$ Hz correspond à $1000$ mel. Les autres fréquences mel sont ajustées de façon à ce qu'une augmentation de la fréquence mel corresponde à la même augmentation de la tonalité perçue. Cela conduit à la fonction $mel$ suivante: \begin{math}mel(f) = 2595*log(1+f/700)\end{math}
+        	
+        	\begin{figure}[hb]
+						\begin{center}
+							\includegraphics[width=14cm]{Images/Mel.png} 
+						\end{center}
+						\caption{Graphe de conversion}
+					\end{figure}
+        	
+        	On remarque que le poids des hautes fréquences (supérieures à $1000$ Hz) est diminué tandis que le poids des basses fréquences (inférieur à $1000$ Hz) est augmenté.
+
+Il est préférable d'employer cette échelle de fréquence dans l'algorithme de reconnaissance: ce dernier doit en effet différencier plusieurs mots selon la perception humaine, c'est-à-dire en simulant le comportement de l'oreille humaine.
+		\section{Transformée inverse}
         	Nam eu sollicitudin massa. Duis sagittis velit mi. Nunc dictum risus ac interdum lacinia\cite{ref2}.
     \chapter{Les MMC}
         \section{Principe, modèle discret}

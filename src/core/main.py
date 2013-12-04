@@ -15,7 +15,7 @@ from handling.triangularFilterbank import triangularFilter
 from handling.inverseDCT import inverseDCTII
 from hmm.tableauEnergyPerFrame import construitTableauEnergy
 from handling.fft import *
-from hmm.hmm import *
+from hmm.markov import buildHMMs, recognize, recognizeList
 
 def main(verbose=True,action=-1,verboseUltime=True):
     db = Db("../../db/",verbose=verbose)
@@ -76,11 +76,7 @@ def main(verbose=True,action=-1,verboseUltime=True):
                 fileOk = False
                 numeroTraitement+=1
     elif choice == 3:
-        print "Vous allez d'abord réaliser l'enregistrement du mot que vous cherchez à tester"
-        fileName = recorder(db,"tmp",1,False)
-        freq,amp = db.getWaveFile("tmp/" + fileName + ".wav")
-        m,l = handlingOneWord(amp,db,fileName,0)
-        print m
+        finalTest()
     elif choice == 4:
         print "Voici la liste des mots a etudier : "
         dirList = db.printDirFiles("storage/handling/")
@@ -134,8 +130,6 @@ def main(verbose=True,action=-1,verboseUltime=True):
 def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0,hmmList=[]):
     """ Fait le traitement d'un mot pour en construire les vecteurs de Markov et tester ensuite la compatibilité avec les automates existants 
             Retourne un tuple (motLePlusCompatible,log) """
-    if hmmList == []:
-        print "Liste vide"
     log = ""
     if action <= 1:
         log += "Filtre passe-haut en cours...\n"
@@ -195,33 +189,44 @@ def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0,hmmList=[]):
         log += "Creation de vecteurs HMM terminee...\n"
         db.addFile("handling/vecteurs_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
         log += "Sauvegarde effectuee...\n\n"
-    """if action == 8:
-        log += "Premier essai de Markov..."
-        #Nombre de phonems et nombre d'états
-        n = len(content)
-        m = n
-        #
-        d = 13
-        PI = 
-        A = 
-        C = 
-        mu = 
-        sigma = 
-        content = ContinuousMarkov(n, m, d, OA_PI, OA_A, OA_C, OA_G_mu, OA_G_sigma)
-        print "Premier essai de Markov réussi !
-        db.addFile("handling/markov_" + str(numeroTraitement) + ".txt",content)
-        log += "Sauvegarde effectuee...\n"
-    """
     db.logDump(str(dirChoice) + "_" + str(numeroTraitement),log)
     db.logDump(str(dirChoice) + "_" + str(numeroTraitement))
-    for h in hmmList:
-        pass
-    motLePlusCompatible = "cheval"
-    return motLePlusCompatible,log
-
-def ampToHMMFromList(content):
-    return ""
+    buildHMMs(["Deux","Trois", "Cinq"],["../../db/storage/training/Deux.txt","../../db/storage/training/Trois.txt","../../db/storage/training/Cinq.txt"], 500)
+    return recognize(content),log
 
 
-if __name__ == "__main__":
-    main(True)
+#def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0,hmmList=[]):
+def finalTest():
+    db = Db("../../db/",verbose=False)
+    fileOk = False
+    while not fileOk:
+        #On choisit le dossier à afficher
+        print "Voici la liste des mots a etudier : "
+        dirList = db.printDirFiles("waves/")
+        dirChoice = -1
+        while( not dirChoice in range(len(dirList)) ):
+            try:
+                dirChoice = int( input( "Choisissez un fichier a traiter et entrez son numero : " ) )
+            except NameError:
+                print "Ceci n'est pas un nombre !"
+        print "Dossier choisi : ", dirList[dirChoice]
+        fileOk = True
+        numeroTraitement = 0
+        filesList = db.printFilesList(dirList[dirChoice])
+        print filesList
+        fileChoice = -1
+        while( not fileChoice in range(len(filesList)) ):
+            try:
+                fileChoice = int( input( "Choisissez un fichier a traiter et entrez son numero : " ) )
+            except NameError:
+                print "Ceci n'est pas un nombre !"
+        print "Fichier choisi : ", filesList[fileChoice]
+        f = filesList[fileChoice]
+        dirName = os.path.dirname(f)
+        m = db.getWaveFile(f)
+        mot,log = handlingOneWord(m[1],db,dirList[dirChoice],fileChoice)
+        fileOk = False
+        print "Le mot reconnu est", mot
+        print "-----------------------------"
+
+main(True)

@@ -10,6 +10,7 @@ actions possibles : add_word_record, list_word_records, rm_word_record,
 from core.main import *
 from core.db import Db
 
+
 ACTIONS = ["add_word","list_word_records","rm_word_record","recognize_spoken_word","listen_recording"]
 
 class requestHandling:
@@ -37,5 +38,6 @@ class requestHandling:
         
         if audioType == 'ogg':
             audioBlob = convert_ogg_blob_to_wave_blob(audioBlob)
-        respWord, log = handlingOneWord(audioBlob, self.dbWaves, 1, 1, 0, clientDb)
+        
+        respWord, log = handlingOneWord(sox_handling(audioBlob), self.dbWaves, 1, 1, 0, clientDb)
         return {'respWord': respWord}

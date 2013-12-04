@@ -3,8 +3,9 @@
 
 """Module de conversion de fichiers ogg en wav
 Il faut avoir sox et soundrecorder sur le serveur"""
-
+import pysox
 import os
+import hashlib
 from random import randint
 
 TMP_DIR = "tmp/"
@@ -36,7 +37,6 @@ def convert_ogg_blob_to_wave_blob(oggBlob):
          origoggfile.write(oggBlob)
          origoggfile.flush()
          os.fsync(origoggfile)
-         origoggfile.close()
 
     #Now convert the file
 
@@ -48,7 +48,6 @@ def convert_ogg_blob_to_wave_blob(oggBlob):
 
     with open(path_final_wave(id), 'r') as finalwavefile:
         waveBlob =  finalwavefile.read()
-        finalwavefile.close()
     
     #Remove the files
     rm_multi(path_orig_ogg(id), path_mid_wave(id), path_final_wave(id))
@@ -58,7 +57,6 @@ def convert_ogg_to_wav(ogg_path, out_wav_path):
     try:
         with open(ogg_path, 'r') as origoggfile:
             waveBlob = convert_ogg_blob_to_wave_blob(origoggfile.read())
-            origoggfile.close()
     except:
         return "Impossible to open ogg file"      
 
@@ -67,11 +65,27 @@ def convert_ogg_to_wav(ogg_path, out_wav_path):
              out_wav.write(waveBlob)
              out_wav.flush()
              os.fsync(out_wav)
-             out_wav.close()
     except:
         return "Impossible to write wav blob to dest file"
 
-    return True
+    return waveBlob
+    
+def sox_handling(oggBlob,pathToTmp="../../db/waves/tmp/"):
+    tempFileName = hashlib.sha224(str(randint(0,1e10))).hexdigest()
+    fileName = pathToTmp + str(tempFileName) + ".wav"
+    with open(fileName, 'w') as origoggfile:
+         origoggfile.write(oggBlob)
+         origoggfile.flush()
+         os.fsync(origoggfile)
+    #NOISE bof : sélectionner première seconde pour le bruit
+    os.system('ffmpeg -i "' + fileName + '" -vn -ss 00:00:00 -t 00:00:01 "' + pathToTmp + 'noiseaud.wav"')
+    os.system('sox "' + pathToTmp + 'noiseaud.wav" -n noiseprof "' + pathToTmp + 'noise.prof"')
+    os.system('sox "' + fileName + '" "' + fileName + '" noisered "' + pathToTmp + 'noise.prof" 0.21')
+    os.remove(pathToTmp + "noise.prof")
+    os.remove(pathToTmp + "noiseaud.wav")
+    with open(fileName, 'r') as finalwavefile:
+        f = finalwavefile.read()
+    return f
 
 if __name__ == '__main__':
-    print(convert_ogg_to_wav('test.oga', 'test.wav')) 
+    print(sox_handling(convert_ogg_to_wav('test.oga', 'test.wav')))

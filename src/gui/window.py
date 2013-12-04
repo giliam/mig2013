@@ -6,15 +6,17 @@ Made for the MIG SE team s
 """
 
 from Tkinter import *
-from recording.recorder import recorder
-from utils.db import Db
+#from recording.recorder import recorder
+#from utils.db import Db
 #from main import main
+
+
+
 
 def result(amp):             #fonction principale qui renvoie le mot reconnu
     return 'Cheval'
 
 def ouverture(amp):         #fonction qui ouvre une deuxième fenêtre graphique, et qui affiche le résultat
-    #print saisir.get()
     fenetre2=Tk()
     fenetre2.attributes('-fullscreen', 1) #plein écran
     
@@ -44,10 +46,20 @@ def ouverture(amp):         #fonction qui ouvre une deuxième fenêtre graphique
 
 def enregistrer():
     db = Db("../../db/",verbose=False)
-    fileName = recorder(db,"tmp",1,False)
+    fileName = recorder(db,"tmp",1,False,saisir.get())
     freq,amp = db.getWaveFile("tmp/" + fileName + ".wav")
     ouverture(amp)
     
+def loginAuth():
+    
+    loginIn = login.get()
+    passwordIn = password.get()
+    if passwordIn == "" or loginIn == "":
+        errorLabel.set('Erreur !')
+    else:
+        
+
+
 
 fenetre1=Tk()
 fenetre1.attributes('-fullscreen', 1)
@@ -56,6 +68,25 @@ titre=Label(fenetre1, text='MIG SE 2013',font =("DIN", "34","bold"), fg='#006eb8
 titre.pack()
 titre_logiciel=Label(fenetre1, text="Reconnaissance vocale\n\n",font =("DIN", "22"),bg='#ffffff')
 titre_logiciel.pack()
+
+errorLabel=Label(fenetre1, text="", font=("DIN", '14'))
+errorLabel.pack()
+
+loginLabel=Label(fenetre1, text="Identifiant : \n", font=("DIN", '14'),bg='#ffffff')
+loginLabel.pack()
+login = StringVar()
+loginForm=Entry(textvariable=login, width=30)
+loginForm.pack()
+
+passwordLabel=Label(fenetre1, text="Mot de passe : \n", font=("DIN", '14'),bg='#ffffff')
+passwordLabel.pack()
+password = StringVar()
+passwordForm=Entry(textvariable=password, width=30)
+passwordForm.pack()
+
+bouton_envoyer=Button(fenetre1, text='Se connecter', command=loginAuth, fg='#000000')
+bouton_envoyer.pack()
+
 demande_temps=Label(fenetre1, text="Combien de temps voulez-vous enregister ? (En s)\n", font=("DIN", '14'),bg='#ffffff')
 demande_temps.pack()
 saisir=StringVar()          # variable pour recevoir le texte saisi
@@ -74,3 +105,5 @@ labl = Label(fenetre1, image=photo,bg='#ffffff')
 labl.pack()
 fenetre1.mainloop()
 #print saisir.get()
+
+

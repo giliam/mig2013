@@ -105,7 +105,6 @@ def sync(amplitudes):
 def syncFile(name):
     #print("Synching : {}".format(name))
     ampli = scipy.io.wavfile.read("{}.wav".format(name))
-    print(ampli)
     ampli2 = sync(ampli[1])
     scipy.io.wavfile.write("sync_{}.wav".format(name), ampli[0], int16(ampli2))
     #print("Done\n\n")

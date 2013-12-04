@@ -198,14 +198,16 @@ class Db:
                 @dirName : a prefixed 
                 @*extRequired : contains the extensions to display (e.g. <.wav, .txt>) """
         filesListExt = []
+        n = 0
         for k,f in enumerate(self.filesList):
             #On récupère l'extension du fichier parcouru
             a,ext = os.path.splitext(f)
             d = os.path.dirname(f)
             if (dirName == "" or d == dirName ) and (len(extRequired) == 0 or ext in extRequired):
                 if printBool:
-                    print k, " - ", f
+                    print n, " - ", k, " - ", f
                 filesListExt.append(f)
+            n += 1
         return filesListExt
     
     
@@ -215,9 +217,11 @@ class Db:
                 @dirName = "storage/" : directory to browse """
         dirListExt = []
         l = os.listdir(Db.prefixPath + dirName)
+        n = 0
         for k,f in enumerate(l):
             #On récupère l'extension du fichier parcouru
-            print k, " - ", f
+            print n, " - ", k, " - ", f
+            n += 1
         return l
     
     def __str__(self):

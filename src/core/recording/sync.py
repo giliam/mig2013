@@ -17,7 +17,7 @@ def sync(amplitudes):
 
     #print("Max is {}".format(max))
 
-    valeurSeuil = 50
+    valeurSeuil = 5000
     #print("Seuil is {}".format(valeurSeuil))
 
     maxDiff = 300

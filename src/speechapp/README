@@ -1,33 +1,18 @@
-###########################################
-#	                                      #
-# 	            SpeechApp                 #
-#	                                      #
-###########################################
+##########################################
+#                                        #
+#           Html5Recorder                #
+#                                        #
+##########################################
+#   Isolated word recognition project    #
+#    dev-contact: max@wumzi.info         #
+##########################################
 
-Application web permettant la reconnaissance des mots isolés.
+A web-app written for the MIG SE team and its project of isolated word
+recognition.
 
-Le client se rend sur une application web où il se logge, et prend des enregistrements,
-envoyés à un serveur les traitant, puis les soumettant au programme.
+It is made of an HTML/JS interface using getUserMedia API and MediaRecorder API,
+which records the user's word, send them to our server, and responds by the
+word recognized, if it's been.
 
-DONE:
-    Enregistreur client HTML5/JS fonctionnelle (wumzi)
-        -> Fonctionnel sous Firefox
-        -> A tester sous chrome
+COMPATIBILITY :     - designed for the latest version of Mozilla Firefox (25) 
 
-
-TO-DO:
-    Interfacage avec le coeur (giliam)
-    App côté serveur (wumzi)
-    Serveur intermédiaire (wumzi)
-        -> avec Framework Python: Django, web.py ?
-
-
-######################################
-Pour obtenir Django, faites :
-
-git clone https://github.com/django/django.git
-
-puis dans le répertoire d'import de django:
-
-sudo python setup.py install
-######################################

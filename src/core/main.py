@@ -7,7 +7,7 @@ from utils.constantes import *
 from numpy import abs,int16
 from utils.db import Db
 from recording.recorder import recorder
-from recording.sync import syncFile
+from recording.sync import syncFile, cutBeginning
 from handling.passe_haut import passe_haut
 from handling.fenetre_hann import hann_window
 from hmm.creationVecteurHMM import creeVecteur
@@ -81,7 +81,7 @@ def main(verbose=True,action=-1,verboseUltime=True):
                     print log
                 fileOk = False
                 numeroTraitement+=1
-                
+                print "Mot reconnu pour " + f + ": ", mot
                 
                 
     ####################################
@@ -89,8 +89,9 @@ def main(verbose=True,action=-1,verboseUltime=True):
     ####################################
     elif choice == 3:
         fileName = recorder(db,"tmp",1,False,2,1)
-        syncFile( Db.prefixPath + "waves/tmp/", fileName + ".wav" )
-        #finalTest("tmp/sync_" + fileName + ".wav")
+        cutBeginning( Db.prefixPath + "waves/tmp/", fileName + ".wav" )
+        syncFile( Db.prefixPath + "waves/tmp/cut_", fileName + ".wav" )
+        finalTest("tmp/sync_" + fileName + ".wav")
         
     ####################################
     ###   RESULTATS INTERMEDIAIRES   ###
@@ -309,4 +310,4 @@ def finalTest(fileName = ""):
         print "Le mot reconnu est", mot
         print "-----------------------------"
 if __name__ == "__main__":
-    main(True)
+    main(False)

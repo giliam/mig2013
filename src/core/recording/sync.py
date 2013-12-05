@@ -102,17 +102,17 @@ def sync(amplitudes):
         return sync(amplitudes_coupe2)
     else:
         return amplitudes_coupe
-def syncFile(path, name):
+def syncFile(path, name, prefix = "sync_"):
     #print("Synching : {}".format(name))
     ampli = scipy.io.wavfile.read(path + name)
     ampli2 = sync(ampli[1])
-    scipy.io.wavfile.write(path + "sync_" + name, ampli[0], int16(ampli2))
+    scipy.io.wavfile.write(path + prefix + name, ampli[0], int16(ampli2))
     #print("Done\n\n")
     
-def cutBeginning(path,name):
+def cutBeginning(path,name,prefix = "cut_"):
     ampli = scipy.io.wavfile.read(path + name)
     ampli2 = ampli[1][22050:]
-    scipy.io.wavfile.write(path + name, ampli[0], int16(ampli2))
+    scipy.io.wavfile.write(path + prefix + name, ampli[0], int16(ampli2))
 if __name__ == "__main__":
     syncFile("3_0")
     syncFile("3_1")

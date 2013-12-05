@@ -175,7 +175,7 @@ class Db:
         for k,f in enumerate(self.filesList):
             if not os.access(Db.prefixPath + dirIni + f,os.F_OK) and not os.access(Db.prefixPath + "storage/" + f,os.F_OK):
                 del self.filesList[k]
-        self.addFile(Db.prefixPath + Db.filesListName + ".txt", self.filesList)
+        self.addFile(Db.filesListName + ".txt", self.filesList)
         self.recursiveSync(dirName, dirIni)
     
     
@@ -190,7 +190,12 @@ class Db:
     reset = staticmethod(reset)
     
     
-    
+    def syncHmm(self):
+        hmmList = self.getFile("hmmList.txt")
+        for k,f in hmmList.items():
+            if not os.access(Db.prefixPath + "hmm/" + f,os.F_OK):
+                del hmmList[k]
+        self.addFile("hmmList.txt", hmmList)
     
     def printFilesList(self,dirName="",printBool=True,*extRequired):
         """ Display the files list
@@ -206,8 +211,8 @@ class Db:
             if (dirName == "" or d == dirName ) and (len(extRequired) == 0 or ext in extRequired):
                 if printBool:
                     print n, " - ", k, " - ", f
+                    n += 1
                 filesListExt.append(f)
-            n += 1
         return filesListExt
     
     
@@ -217,11 +222,9 @@ class Db:
                 @dirName = "storage/" : directory to browse """
         dirListExt = []
         l = os.listdir(Db.prefixPath + dirName)
-        n = 0
         for k,f in enumerate(l):
             #On récupère l'extension du fichier parcouru
-            print n, " - ", k, " - ", f
-            n += 1
+            print k, " - ", f
         return l
     
     def __str__(self):

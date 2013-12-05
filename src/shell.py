@@ -168,7 +168,6 @@ def main(verbose=True,action=-1,verboseUltime=True):
             print "Dossier choisi : ", dirList[dirChoice]
             fileOk = True
             filesList = db.printFilesList(dirList[dirChoice])
-            print filesList
             if len(filesList) < 6:
                 print "Pas assez d'enregistrements"
                 continue
@@ -205,7 +204,7 @@ def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0):
     return recognize(content),log
 
 
-def handlingRecording(content,db,dirChoice,numeroTraitement,action=0,hmmList=[]):
+def handlingRecording(content,db,dirChoice,numeroTraitement,action=0):
     log = ""
     if action <= 1:
         log += "Filtre passe-haut en cours...\n"
@@ -265,13 +264,13 @@ def handlingRecording(content,db,dirChoice,numeroTraitement,action=0,hmmList=[])
         log += "Creation de vecteurs HMM terminee...\n"
         #db.addFile("handling/vecteurs_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
         log += "Sauvegarde effectuee...\n\n"
-    db.logDump(str(dirChoice) + "_" + str(numeroTraitement),log)
-    db.logDump(str(dirChoice) + "_" + str(numeroTraitement))
+    #db.logDump(str(dirChoice) + "_" + str(numeroTraitement),log)
+    #db.logDump(str(dirChoice) + "_" + str(numeroTraitement))
     return content,log
 
 #def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0,hmmList=[]):
 def finalTest(fileName = ""):
-    db = Db("../../db/",verbose=False)
+    db = Db("../db/",verbose=False)
     fileOk = False
     while not fileOk:
         #On choisit le dossier à afficher

@@ -10,7 +10,7 @@ import random
 import hashlib
 
 
-def recorder(db,dirName="",nbRecording=-1,askForWord=True,seconds=-1,nbWords=1):
+def recorder(db,dirName="",nbRecording=-1,askForWord=True,seconds=-1,nbWords=1,fileName="",confirm=True):
 	""" Procède à l'enregistrement """ 
 
 	if nbRecording < 0:
@@ -28,7 +28,8 @@ def recorder(db,dirName="",nbRecording=-1,askForWord=True,seconds=-1,nbWords=1):
 		seconds = float(seconds) + 1
 		
 		for i in range(nbRecording):
-			raw_input("Appuyez sur une touche pour commencer l'enregistrement : ")
+			if confirm:
+				raw_input("Appuyez sur une touche pour commencer l'enregistrement : ")
 			p = pyaudio.PyAudio()
 
 			stream = p.open(format=FORMAT,
@@ -52,12 +53,13 @@ def recorder(db,dirName="",nbRecording=-1,askForWord=True,seconds=-1,nbWords=1):
 			p.terminate()
 			if dirName != "":
 				random.seed()
-				n = hashlib.sha224(str(random.randint(0,1e10))).hexdigest()
-				name = dirName + "/" + n + ".wav"
+				if fileName == "":
+					fileName = hashlib.sha224(str(random.randint(0,1e10))).hexdigest()
+				name = dirName + "/" + fileName + ".wav"
 			else:
 				n = str(i)
 				name = mot + "/" + n + ".wav"
 			db.addWave(name,CHANNELS,p.get_sample_size(FORMAT), RATE, frames,p)
 			
 			#print "Fin du mot ", i
-	return n
+	return fileName

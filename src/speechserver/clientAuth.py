@@ -75,7 +75,12 @@ class AuthUser:
 		self.connected = True
 		return True
 	return False
-
+    
+    def logOut(self):
+	self.username = ""
+	self.password = ""
+	self.connected = False
+    
     def hashPass(self,password):
 	return hashlib.sha224(password).hexdigest()
     
@@ -94,5 +99,5 @@ class AuthUser:
 if __name__ == "__main__":
     authUserHandler = AuthUser()
     print(authUserHandler)
-    authUserHandler.newClient("test","bob",[1])
+    authUserHandler.newClient("demo","demo",[1])
     print(authUserHandler)

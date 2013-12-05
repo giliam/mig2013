@@ -10,20 +10,14 @@ import BaseHTTPServer
 from cgi import FieldStorage
 from xml.etree import ElementTree as ET
 
-from speechActions import requestHandling
-from clientAuth import AuthUser
+from speechserver.speechActions import requestHandling
+from speechserver.clientAuth import AuthUser
 
 from core.utils import db
 
 
 
 class SpeechServerHandler( BaseHTTPServer.BaseHTTPRequestHandler ):
-    def __init__(self, request, client_address, server, authDB=''):
-        BaseHTTPServer.BaseHTTPRequestHandler.__init__(self, request, client_address, server)
-        
-        #Keep the authDB in memory while running server
-        self.authDB = authDB
-
     def do_GET(self):
         """ Respond to a GET request """
         self.send_response(200)
@@ -44,17 +38,18 @@ class SpeechServerHandler( BaseHTTPServer.BaseHTTPRequestHandler ):
 
         user = form.getvalue('user')
         hashedPass = form.getvalue('hashedPass')
-        clientDB = form.getvalue('clientDB')
+        clientDB = ''#form.getvalue('clientDB')
         
-        form = dict(form)
+        #form = dict(form)
         #print(form)
 
         #Check if the user is authorized and he has access to clientDb
         authUser = AuthUser()
-        if authUser.checkAuth(user, hashedPass, clientDb, self.authDB):
+        if True or authUser.checkAuth(user, authUser.hashPass(hashedPass), clientDB):
             action = form.getvalue('action')
-            respData = speechActions.requestHandling(clientDb, action, form)
-            respXML = buildXMLResponse(respData)
+            requestHandler = requestHandling()
+            respData = requestHandler.handle(clientDB, action, form)
+            respXML = self.buildXMLResponse(respData)
         else:
             respXML = "You're not authorized to call me !\
                             Register at speech.wumzi.info"
@@ -91,7 +86,7 @@ class SpeechServerHandler( BaseHTTPServer.BaseHTTPRequestHandler ):
 
 
 def run(port, adress="localhost"):
-    server =  BaseHTTPServer.HTTPServer((adress, port), SpeechServerHandler, db.Db("../db/", "userDbList"))
+    server =  BaseHTTPServer.HTTPServer((adress, port), SpeechServerHandler)
     server.serve_forever()
 
 

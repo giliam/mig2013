@@ -143,7 +143,7 @@
 	Le son est une onde mécanique se traduisant par une variation de la pression au cours du temps. Cette onde est caractérisée par différents facteurs comme son amplitude à chaque instant, qui est en d'autres termes la valeur de la dépression à cet instant, et par les fréquences qui la compose et qui changent au cours du temps.
 				\subsection{Comment le son est-il représenté dans l'ordinateur ?}
 				En se propageant, l'onde mécanique qu'est le son fait vibrer la membrane du micro. L'amplitude de la vibration dépend directement de l'amplitude du son. La position de la membrane est enregistrée à intervalles de temps réguliers définis par l'échantillonnage.
-				L'échantillonnage correspond au nombre de valeurs prélevées en une seconde. Par exemple un échantillonnage à $44100$ Hz correspond à relever la position de la membrane $44100$ fois par secondes. La valeur de la position de la membrane est alors enregistrée sous la forme d'un entier signé codé sur $n$ bits ($n$ valant généralement $8$,$16$,$32$ ou $64$). Plus $n$ est grand, plus la position de la membrane sera stockée de manière précise, et donc plus la qualité du son sera bonne. Grâce à l'échantillonnage et à, on définit aisément le bitrate, qui correspond au débit d'information par seconde, de la façon suivante: bitrate$ = n*$échantillonnage.
+				L'échantillonnage correspond au nombre de valeurs prélevées en une seconde. Par exemple un échantillonnage à $44 100$ Hz correspond à relever la position de la membrane $44 100$ fois par secondes. La valeur de la position de la membrane est alors enregistrée sous la forme d'un entier signé codé sur $n$ bits ($n$ valant généralement $8$,$16$,$32$ ou $64$). Plus $n$ est grand, plus la position de la membrane sera stockée de manière précise, et donc plus la qualité du son sera bonne. Grâce à l'échantillonnage et à, on définit aisément le bitrate, qui correspond au débit d'information par seconde, de la façon suivante: bitrate$ = n*$échantillonnage.
 	Ce dont nous disposons donc pour analyser un signal, est la donnée de l'amplitude en fonction du temps la caractérisant.
 	
 \begin{figure}
@@ -164,21 +164,27 @@ Deux problèmes se posent : En pratique, un bruit trop important perturbe le sign
 Ce filtre consiste en l'utilisation de bibliothèques, SoX et ffmpeg, qui permettent par l'étude d'un court laps de temps de bruit de soustraire le bruit de l'enregistrement. Nous n'avons pas cherché à traiter nous-même le bruit car il s'agit d'un problème complétement à part et qui ne demande pas les mêmes compétences que le traitement du signal effectué jusque là.
 
 De plus, il a fallu déterminer la valeur de nos constantes de découpe (coefficient de lissage, coefficient de coupe, intervalle de temps de sécurité), qui dépendent bien sûr les unes des autres. Ceci a été fait de manière empirique sur plusieurs enregistrements de mots différents, permettant une découpe automatique la plu satisfaisante possible pour l'ensemble des mots.
+						\subsection{Filtrage passe-haut}
+								Les performances de tout  systèmes de reconnaissances dépendent fortement de la variabilité des données (locuteur, environnement, bruit, réverbération, ...). Plus ces données sont variables, plus le taux d'erreur sera grand et un système de reconnaissance qui se veut être utilisable dans la vie de tous les jours: voiture, endroits bruyants ; se doit d'y remédier. Ces effets se font particulièrement sentir dans les basses fréquences, c'est pourquoi le conditionnement du signal en vue de son étude comprend immanquablement un filre passe haut. C'est-à-dire une accentuation de l'amplitude associée aux hautes fréquences et une diminution des basses fréquences. C'est le même principe qui est utilisé dans les égaliseurs des lecteurs de musique d'aujourd'hui qui propose d'augmenter les basses ou les aigus. Les filtres passe-haut améliorent significativement les résultats de reconnaissance comme en témoignent les expériences de H.G. Hirsch P. Meyer et H.W. Ruehl dans leur papier Improved speech recognition using high-pass filtering of subband envelopes. Utiliser un filtre passe-haut présente comme avantage de ne pas nécessiter de procéder au préalable à une reconnaissance de silence contrairement aux techniques de réduction du bruit et de soustraction spectrale.
+
+	Nous effectuons ce filtrage comme présenté dans Voice recognition Algorithms using Mel Frequency Cepstral Coefficient (MFCC) and Dynamic Time Warping (DTW) Techniques de Muda, Begam et Elamvazuthi. Le signal étant caractérisé par une suite $(x_n)$ d'amplitudes, comme présenté dans les prérequis, où n représente un instant de la musique déterminé par l'échantillonnage; on opère linéairement la transformation suivante sur le signal : $y_0 = x_0$ et $y_n = x_n - 0.95*x_{(n-1)}$  pour $n > 0$, où $y$ représente le signal de sortie après transformation.
+	
+	Cette opération consiste effectivement en un filtre passe-haut, en effet un telle formule part du principe que 95\% d'un échantillon a pour origine l'échantillon précédent. Ce constat étant plus pertinent pour les hautes fréquences (car les pics de l'onde associée sont plus rapprochés et engendrent donc un pic d'amplitude plus régulièrement), l'influence des basses fréquences est donc discriminée. 
         \section{Echantillonnage, fenêtrage}
-        	Nam eu sollicitudin\cite{ref1} massa. Duis sagittis velit mi. Nunc dictum risus ac interdum lacinia\cite{ref2}. Suspendisse ullamcorper ac dolor nec dapibus. 
+        	Nam eu sollicitudin\cite{ref1} massa. Duis sagittis velit mi. Nunc dictum risus ac interdum lacinia\cite{ref2}. Suspendisse ullamcorper ac dolor nec dapibus.
         	\section{Transformée de Fourier}
         	Nam eu sollicitudin massa.\cite{ref2}. Aliquam a fermentum lectus. Praesent dapibus molestie mauris sed vestibulum. Curabitur sodales egestas est a pellentesque. Quisque id vulputate erat, a sagittis turpis. 
         	\section{Mel}
-        	Des études de psycho acoustique ont montré que l'oreille humaine ne percevait pas les fréquences selon une échelle linéaire. Il a donc été utile de définir une nouvelle échelle plus subjective : à chaque fréquence $f$, exprimée en Hertz, on fait correspondre une nouvelle fréquence selon une fonction censée représenter le comportement de l'oreille humaine. Par convention, la fréquence de $1000$ Hz correspond à $1000$ mel. Les autres fréquences mel sont ajustées de façon à ce qu'une augmentation de la fréquence mel corresponde à la même augmentation de la tonalité perçue. Cela conduit à la fonction $mel$ suivante: \[mel(f) = 2595*log(1+f/700)\]
+        	Des études de psycho acoustique ont montré que l'oreille humaine ne percevait pas les fréquences selon une échelle linéaire. Il a donc été utile de définir une nouvelle échelle plus subjective : à chaque fréquence $f$, exprimée en Hertz, on fait correspondre une nouvelle fréquence selon une fonction censée représenter le comportement de l'oreille humaine. Par convention, la fréquence de $1 000$ Hz correspond à $1 000$ mel. Les autres fréquences mel sont ajustées de façon à ce qu'une augmentation de la fréquence mel corresponde à la même augmentation de la tonalité perçue. Cela conduit à la fonction $mel$ suivante: \[mel(f) = 2595*log(1+f/700)\]
         	
-        	\begin{figure}[hb]
+        	\begin{figure}[ht]
 						\begin{center}
-							\includegraphics[width=14cm]{Images/Mel.png} 
+							\includegraphics[width=10cm]{Images/Mel.png} 
 						\end{center}
 						\caption{Graphe de conversion}
 					\end{figure}
         	
-        	On remarque que le poids des hautes fréquences (supérieures à $1000$ Hz) est diminué tandis que le poids des basses fréquences (inférieur à $1000$ Hz) est augmenté.
+        	On remarque que le poids des hautes fréquences (supérieures à $1 000$ Hz) est diminué tandis que le poids des basses fréquences (inférieur à $1 000$ Hz) est augmenté.
 
 Il est préférable d'employer cette échelle de fréquence dans l'algorithme de reconnaissance: ce dernier doit en effet différencier plusieurs mots selon la perception humaine, c'est-à-dire en simulant le comportement de l'oreille humaine.
 		\section{Transformée inverse}
@@ -228,6 +234,14 @@ La phase de reconnaissance constitue le c\oe{}ur du programme. Comme dit précéde
 A l'origine, la phase de reconnaissance a été codée en Python. Cependant le temps d'exécution était trop long, nous l'avons donc codé en C++, ce qui a permis de diviser le temps d'exécution par 50 000. Grâce à ce travail laborieux, le programme s'effectue en un temps proche de la seconde. Tout a été mis en place, notamment en amont avec le codage en C++ de la transformée de Fourier rapide, pour privilégier la rapidité de l'exécution. 
 
 Au départ nous n'avions qu'un seul locuteur pour faire la base de donnée des mots reconnus, ce qui ne permettait de faire fonctionner le programme que pour un seul utilisateur : celui qui avait enregistré les mots. Cependant nous avons réussi à enregistrer plusieurs locuteurs, ce qui a permis au programme de reconnaître plusieurs utilisateurs, même un utilisateur qui n'avait enregistré aucun mot.
+
+		\nonewpagechapter*{Récapitulation}
+			\begin{figure}[hb]
+						\begin{center}
+							\includegraphics[width=10cm]{Images/diagramme.png} 
+						\end{center}
+						\caption{exemple}
+				\end{figure}
         	
 \part{Approche commerciale}
 		\setcounter{chapter}{0}
@@ -265,38 +279,38 @@ La concurrence importante nous oblige à être à la fois ambitieux et prudent. Nou
 					Personnel & brut & salariales & net & patronales & \\
 					\hline
 					\hline
-					David Vitoux & 2290,00  & 503,80  & 1786,20  & 1007,60  & 3 297,60  \\
+					David Vitoux & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
 					\hline
-					Axel Goering & 2290,00  & 503,80  & 1786,20  & 1007,60  & 3 297,60  \\
+					Axel Goering & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
 					\hline
-					Sofiane Mahiou & 2290,00  & 503,80  & 1786,20  & 1007,60  & 3 297,60  \\
+					Sofiane Mahiou & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
 					\hline
-					Maxime Ernoult & 2290,00  & 503,80  & 1786,20  & 1007,60  & 3 297,60  \\
+					Maxime Ernoult & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
 					\hline
-					Adrien De La Vaissière & 2290,00  & 503,80  & 1786,20  & 1007,60  & 3 297,60  \\
+					Adrien De La Vaissière & 2 290,00  & 503,80  & 1 786,20  & 1007,60  & 3 297,60  \\
 					\hline
-					Clément Joudet & 2290,00  & 503,80  & 1786,20  & 1007,60  & 3 297,60  \\
+					Clément Joudet & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
 					\hline
-					Clément Roig & 2290,00  & 503,80  & 1786,20  & 1007,60  & 3 297,60  \\
+					Clément Roig & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
 					\hline
-					Anis Khlif & 2290,00  & 503,80  & 1786,20  & 1007,60  & 3 297,60  \\
+					Anis Khlif & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
 					\hline
-					Paul Mustière & 2290,00  & 503,80  & 1786,20  & 1007,60  & 3 297,60  \\
+					Paul Mustière & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
 					\hline
-					Matthieu Denoux & 2290,00  & 503,80  & 1786,20  & 1007,60  & 3 297,60  \\
+					Matthieu Denoux & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
 					\hline
-					Julien Caillard & 2290,00  & 503,80  & 1786,20  & 1007,60  & 3 297,60  \\
+					Julien Caillard & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
 					\hline
-					Nathanaël Kasriel & 2750,00  & 605,00  & 2145,00  & 1210,00  & 3 960,00  \\
+					Nathanaël Kasriel & 2 750,00  & 605,00  & 2 145,00  & 1 210,00  & 3 960,00  \\
 					\hline
-					Thomas Debarre & 2750,00  & 605,00  & 2145,00  & 1210,00  & 3 960,00  \\
+					Thomas Debarre & 2 750,00  & 605,00  & 2 145,00  & 1 210,00  & 3 960,00  \\
 					\hline
-					Total & 30690,00  & 6751,80  & 23938,20  & 13503,60  & 44193,60  \\
+					Total & 30 690,00  & 6751,80  & 23 938,20  & 13 503,60  & 44 193,60  \\
 					\hline
 				\end{tabular}
 				\caption{Salaires en euros}
 				\end{table}
-					Treize employés travaillent sur le projet, pendant un temps effectif d'environ un mois. Deux d'entre eux s'occupent des ressources humaines, pour un salaire de 2750\euro{} brut mensuel, les autres étant considérées comme des développeurs de moins de deux ans d'expérience, avec un salaire de 2290\euro{} euros brut mensuel.
+					Treize employés travaillent sur le projet, pendant un temps effectif d'environ un mois. Deux d'entre eux s'occupent des ressources humaines, pour un salaire de 2 750\euro{} brut mensuel, les autres étant considérées comme des développeurs de moins de deux ans d'expérience, avec un salaire de 2 290\euro{} euros brut mensuel.
 Sur ce salaire brut, l'employé paye environ 22\% de charges salariales, et l'entreprise 44\% de charges patronales.
 				\section{Le compte de résultat prévisionnel}
 					Le compte de résultat prévisionnel dresse l'ensemble des charges (fixes et variables) de l'entreprise, ainsi que ses produits (recettes).
@@ -312,7 +326,7 @@ La différence des produits et des charges donne alors un chiffre de 164 423\euro
 						\hline \hline
 						& Vente & Prix unité (Hors taxes) & Prix unité TTC & Nombre & Total & Salaires & 45 777 \euro{} \\
 						\hline \hline
-						& Logiciel & 4,17 \euro{} & 5 \euro{} & 50000 & 250 200 \euro{} & Frais pub (google) & 50 000 \euro{} \\
+						& Logiciel & 4,17 \euro{} & 5 \euro{} & 50 000 & 250 200 \euro{} & Frais pub (google) & 50 000 \euro{} \\
 						\hline
 						& Licences & 833,33 \euro{} & 1 000 \euro{} & 10 & 10 000 \euro{} && \\
 						\hline \hline
@@ -352,7 +366,7 @@ Ensuite, l'impôt sur les sociétés est à un taux de 33\% sur les bénéfices. A par
 						\hline
 						\multicolumn{3}{c|}{Impôts} \\
 						\hline
-						Sur les sociétés & 33\% des bénéfices & 37086,39 \euro{} \\
+						Sur les sociétés & 33\% des bénéfices & 37 086,39 \euro{} \\
 						\hline
 						TVA & 20\% sur les ventes & 52 040,00 \euro{} \\
 						\hline

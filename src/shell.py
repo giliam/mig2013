@@ -146,9 +146,8 @@ def main(verbose=True,action=-1,verboseUltime=True):
             print "Dossier choisi : ", dirList[dirChoice]
             filesList = db.printFilesList(dirList[dirChoice])
             for f in filesList:
-                ampli = db.getWaveFile(f)
-                ampli2 = synchro(ampli[1], COEFF_LISSAGE, T_MIN, COEFF_COUPE)
-                db.addWaveFromAmp("mod/" + f,ampli[0],ampli2)
+                cutBeginning( Db.prefixPath + "waves/", f, "" )
+                syncFile( Db.prefixPath + "waves/", f, "" )
         elif choice3 == 5:
             db.sync()
             db.sync("", "waves/")

@@ -192,7 +192,7 @@ def buildHMMs(HMMs, HMMsPath, maxIt, path = "../db/hmm/"):
         seqs.append([])
         for j in range(len(HMMsPath[i])):
             seqs[i].append(getData(path + HMMsPath[i][j]))
-            G_mu = G_mu + metaCoupures(seqs[i][j])
+            G_mu = G_mu + metaCoupures(seqs[i][j]) # FAIL : this does not work for multi speaker : G_mu should contain different mus for each speaker
 
     n = len(G_mu)
     d = 13

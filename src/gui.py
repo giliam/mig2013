@@ -12,7 +12,8 @@ from core.recording.sync import syncFile, cutBeginning, sox_handling
 from core.utils.db import Db
 from core.utils.constantes import NB_ITERATIONS
 from shell import handlingRecording
-from core.hmm.markov import buildHMMs
+from core.hmm.markov import buildHMMs, saveHMMs
+
 class Gui:
     def __init__(self):
         self.auth = AuthUser()
@@ -23,33 +24,32 @@ class Gui:
         self.fenetre3enabled = False
         self.noiseOk = False
     
-    def result(self, amp):             #fonction principale qui renvoie le mot reconnu
-        return 'Cheval'
-
-    def ouverture(self, amp):         #fonction qui ouvre une deuxième fenêtre graphique, et qui affiche le résultat
-        fenetre2=Tk()
-        fenetre2.attributes('-alpha', 1) #plein écran
-        fenetre2.title("MIG SE 2013 - Enregistrement")
-        titre=Label(fenetre2, text='\nMIG SE 2013',font=("DIN", "34","bold"), fg='#006eb8')
+    def ouverture(self):         #fonction qui ouvre une deuxième fenêtre graphique, et qui affiche le résultat
+        self.fenetre4=Tk()
+        self.fenetre4.attributes('-alpha', 1) #plein écran
+        self.fenetre4.configure(background='white')
+        self.fenetre4.title("MIG SE 2013 - Liste des mots enregistrés")
+        titre=Label(self.fenetre4, text='\nMIG SE 2013',font=("DIN", "34","bold"), fg='#006eb8', bg="#ffffff")
         titre.pack()
-        titre_logiciel=Label(fenetre2, text="Reconnaissance vocale\n\n\n\n",font =("DIN", "22"))
+        titre_logiciel=Label(self.fenetre4, text="Reconnaissance vocale\n\n\n\n",font =("DIN", "22"), bg="#ffffff")
         titre_logiciel.pack()
           
-        panneau2=Label(fenetre2, text='Résultat:\n\n', font=("DIN", '14'))
-        res=result(amp)
-        resultat=Label(fenetre2, text= res,font =("DIN", "28", "bold"), fg="#16d924")
-        espace=Label(fenetre2, text="\n \n")
+        panneau2=Label(self.fenetre4, text='Liste des mots actuellements reconnus :\n\n', font=("DIN", '14'), bg="#ffffff")
+        hmmList = self.db.getFile("hmmList.txt")
+        res = hmmList.keys()
+        resultat=Label(self.fenetre4, text="\n".join(res),font =("DIN", "28", "bold"), fg="#16d924", bg="#ffffff")
+        espace=Label(self.fenetre4, text="\n \n", bg="#ffffff")
         panneau2.pack()
         resultat.pack()
         espace.pack()
-        bouton_fermer=Button(fenetre2,text='Quitter', command=fenetre2.quit)
+        bouton_fermer=Button(self.fenetre4,text='Quitter', command=self.fenetre4.destroy)
         bouton_fermer.pack()
-        espace4=Label(fenetre2, text= ' \n ')
+        espace4=Label(self.fenetre4, text= ' \n ', bg="#ffffff")
         espace4.pack()
-        fenetre2.mainloop()
+        self.fenetre4.mainloop()
         
     def creationHmm(self):
-        self.bouton_enr.config(text="Terminer l'enregistrement du HMM " + str(self.nbEnregistrement + 1), command=self.fenetre3.destroy)
+        self.bouton_enr.config(text="Terminer l'enregistrement du HMM", command=self.fenetre3.destroy)
         self.noiseOk = False
         listVectors = []
         for l in self.listeEnregistrements:
@@ -57,9 +57,9 @@ class Gui:
             content,log = handlingRecording(content[1],self.db,0,0,0)
             listVectors.append(content)
         hmmList = self.db.getFile("hmmList.txt")
-        if self.mot in hmmList:
+        if hmmList.get(self.mot):
             hmmList[self.mot].append("client_" + self.mot + ".txt")
-        else
+        else:
             hmmList[self.mot] = ["client_" + self.mot + ".txt"]
         self.db.addFile( "hmmList.txt",hmmList )
         self.db.addFile( "client_" + self.mot + ".txt", listVectors, "hmm/" )
@@ -105,6 +105,7 @@ class Gui:
             self.fenetre2.destroy()
             self.bouton_loginpopup.config(text='Se déconnecter')
             self.errorMessage.set("")
+            Button(self.fenetre1,text='Liste des mots enregistrés', command=self.ouverture).pack()
             self.displayRecorder()
             
     def registerAuth(self):
@@ -228,6 +229,7 @@ class Gui:
             self.bouton_loginpopup.pack()
             self.bouton_registerIn=Button(self.fenetre1,text="Enregistrer", command=self.displayRecorder)
             self.displayRecorder()
+            Button(self.fenetre1,text='Liste des mots enregistrés', command=self.ouverture).pack()
 
         bouton_fermer1=Button(self.fenetre1,text='Quitter', command=self.fenetre1.destroy)
         bouton_fermer1.pack()

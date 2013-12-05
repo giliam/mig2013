@@ -13,24 +13,25 @@
 \contentsline {subsection}{\numberline {1.2.3}Pr\'e accentuation des aigus}{7}
 \contentsline {section}{\numberline {1.3}Enregistrement, recadrage, filtrage HF}{7}
 \contentsline {subsection}{\numberline {1.3.1}Synchronisation}{7}
-\contentsline {section}{\numberline {1.4}Echantillonnage, fen\^etrage}{7}
-\contentsline {section}{\numberline {1.5}Transform\'ee de Fourier}{7}
+\contentsline {subsection}{\numberline {1.3.2}Filtrage passe-haut}{7}
+\contentsline {section}{\numberline {1.4}Echantillonnage, fen\^etrage}{8}
+\contentsline {section}{\numberline {1.5}Transform\'ee de Fourier}{8}
 \contentsline {section}{\numberline {1.6}Mel}{8}
-\contentsline {section}{\numberline {1.7}Transform\'ee inverse}{8}
-\contentsline {chapter}{\numberline {2}Mod\`eles de Markov cach\'es (MMC)}{9}
-\contentsline {section}{\numberline {2.1}Pr\'erequis et principe}{9}
-\contentsline {section}{\numberline {2.2}Phase d'apprentissage}{10}
-\contentsline {section}{\numberline {2.3}Phase de reconnaissance}{10}
-\contentsline {part}{II\hspace {1em}Approche commerciale}{12}
-\contentsline {chapter}{\numberline {1}C\^ot\'e web}{12}
-\contentsline {chapter}{\numberline {2}Applications}{13}
-\contentsline {chapter}{\numberline {3}Budget, mod\`ele \'economique}{15}
-\contentsline {section}{\numberline {3.1}Introduction}{15}
-\contentsline {section}{\numberline {3.2}Les salaires}{15}
-\contentsline {section}{\numberline {3.3}Le compte de r\'esultat pr\'evisionnel}{16}
-\contentsline {section}{\numberline {3.4}Le bilan}{16}
-\contentsline {section}{\numberline {3.5}Les imp\^ots}{17}
-\contentsline {section}{\numberline {3.6}Conclusion}{17}
-\contentsline {part}{III\hspace {1em}Le Code}{18}
-\contentsline {chapter}{\numberline {1}Python}{18}
-\contentsline {chapter}{\numberline {2}C/C++}{20}
+\contentsline {section}{\numberline {1.7}Transform\'ee inverse}{9}
+\contentsline {chapter}{\numberline {2}Mod\`eles de Markov cach\'es (MMC)}{10}
+\contentsline {section}{\numberline {2.1}Pr\'erequis et principe}{10}
+\contentsline {section}{\numberline {2.2}Phase d'apprentissage}{11}
+\contentsline {section}{\numberline {2.3}Phase de reconnaissance}{11}
+\contentsline {part}{II\hspace {1em}Approche commerciale}{13}
+\contentsline {chapter}{\numberline {1}C\^ot\'e web}{13}
+\contentsline {chapter}{\numberline {2}Applications}{14}
+\contentsline {chapter}{\numberline {3}Budget, mod\`ele \'economique}{16}
+\contentsline {section}{\numberline {3.1}Introduction}{16}
+\contentsline {section}{\numberline {3.2}Les salaires}{16}
+\contentsline {section}{\numberline {3.3}Le compte de r\'esultat pr\'evisionnel}{17}
+\contentsline {section}{\numberline {3.4}Le bilan}{17}
+\contentsline {section}{\numberline {3.5}Les imp\^ots}{18}
+\contentsline {section}{\numberline {3.6}Conclusion}{18}
+\contentsline {part}{III\hspace {1em}Le Code}{19}
+\contentsline {chapter}{\numberline {1}Python}{19}
+\contentsline {chapter}{\numberline {2}C/C++}{21}

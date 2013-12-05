@@ -1,0 +1,39 @@
+\begin{table}[h]
+				\centering
+				\begin{tabular}{|c||p{1.7cm}|p{1.8cm}|p{1.7cm}|p{1.9cm}||p{1.7cm}|}
+					\hline
+					Catégorie/ & Salaire & Charges & Salaire & Charges & Budget \\
+					Personnel & brut & salariales & net & patronales & \\
+					\hline
+					\hline
+					David Vitoux & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
+					\hline
+					Axel Goering & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
+					\hline
+					Sofiane Mahiou & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
+					\hline
+					Maxime Ernoult & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
+					\hline
+					Adrien De La Vaissière & 2 290,00  & 503,80  & 1 786,20  & 1007,60  & 3 297,60  \\
+					\hline
+					Clément Joudet & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
+					\hline
+					Clément Roig & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
+					\hline
+					Anis Khlif & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
+					\hline
+					Paul Mustière & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
+					\hline
+					Matthieu Denoux & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
+					\hline
+					Julien Caillard & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
+					\hline
+					Nathanaël Kasriel & 2 750,00  & 605,00  & 2 145,00  & 1 210,00  & 3 960,00  \\
+					\hline
+					Thomas Debarre & 2 750,00  & 605,00  & 2 145,00  & 1 210,00  & 3 960,00  \\
+					\hline
+					Total & 30 690,00  & 6751,80  & 23 938,20  & 13 503,60  & 44 193,60  \\
+					\hline
+				\end{tabular}
+				\caption{Salaires en \euro{}}
+				\end{table}

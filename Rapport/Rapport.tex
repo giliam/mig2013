@@ -104,7 +104,7 @@
 
 \chapter*{Introduction}
 	\section{Présentation des enjeux}
-			La reconnaissance vocale automatisée est l'objet d'intenses recherches depuis plus de 50 ans. Nous apparaissant encore aujourd'hui comme futuriste malgré son omniprésence dans les systèmes embarqués de dernier cri (smartphones, automobile ...), l'aspiration à un système automatisé avec lequel nous pourrions communiquer et même dialoguer est profondément ancré dans l'imaginaire commun, et entretenu par de nombreux films de science fiction, tels l'odyssée Star Wars de George Lucas et tend à devenir une réalité (iPhone). Les perspectives économiques s'ouvrant au détenteur d'un système de reconnaissance fiable, robuste, et portable sont innombrables et l'on ne saurait surestimer son importance, (systèmes embarqués, commandes vocales, aide au sourds/muets, ...) et s'inscrit dans le domaine prolifique beaucoup plus large du traitement du signal. Les derniers systèmes les plus aboutis offrent des performances remarquables, mais le problème reste toujours ouvert et suscite plus d'engouement que jamais en raison de la croissante puissance de calcul disponible et les dernières avancées et applications découvertes. La complexité de ce problème s'explique notamment par la grande diversité des thèmes qui lui sont connexes et que tout système se voulant performant se doit d'incorporer (traitement du signal, théorie de l'information, acoustique, linguistique, intelligence artificielle, physiologie, psychologie, ...) et de part l'approche unidirectionnelle de certaines recherches. La reconnaissance vocale requiert des connaissances trop diverses pour être maîtrisées par un seul individu et la capacité à savoir exploiter des ressources dont on est pas expert devient un atout capital. Elle ne se réduit pas à la seule détermination d'une suite de mots prononcés, mais peut s'étendre à divers autres applications telles que la reconnaissance de langage, d'accent, déterminer le sexe et l'âge du locuteur, si il est stressé ou calme, dans quel environnement est-il, tant ces paramètres influent de manière capitale sur l'analyse.
+			La reconnaissance vocale automatisée est l'objet d'intenses recherches depuis plus de 50 ans. Nous apparaissant encore aujourd'hui comme futuriste malgré son omniprésence dans les systèmes embarqués de dernier cri (smartphones, automobile ...), l'aspiration à un système automatisé avec lequel nous pourrions communiquer et même dialoguer est profondément ancré dans l'imaginaire commun, et entretenu par de nombreux films de science fiction, tels l'odyssée Star Wars de George Lucas et tend à devenir une réalité (iPhone). Les perspectives économiques s'ouvrant au détenteur d'un système de reconnaissance fiable, robuste, et portable sont innombrables et l'on ne saurait surestimer son importance, (systèmes embarqués, commandes vocales, aide aux sourds/muets, ...) et s'inscrit dans le domaine prolifique beaucoup plus large du traitement du signal. Les derniers systèmes les plus aboutis offrent des performances remarquables, mais le problème reste toujours ouvert et suscite plus d'engouement que jamais en raison de la croissante puissance de calcul disponible et les dernières avancées et applications découvertes. La complexité de ce problème s'explique notamment par la grande diversité des thèmes qui lui sont connexes et que tout système se voulant performant se doit d'incorporer (traitement du signal, théorie de l'information, acoustique, linguistique, intelligence artificielle, physiologie, psychologie, ...) et de part l'approche unidirectionnelle de certaines recherches. La reconnaissance vocale requiert des connaissances trop diverses pour être maîtrisées par un seul individu et la capacité à savoir exploiter des ressources dont on est pas expert devient un atout capital. Elle ne se réduit pas à la seule détermination d'une suite de mots prononcés, mais peut s'étendre à divers autres applications telles que la reconnaissance de langage, d'accent, déterminer le sexe et l'âge du locuteur, si il est stressé ou calme, dans quel environnement est-il, tant ces paramètres influent de manière capitale sur l'analyse.
 			\section{Objectifs du projet}
 			Ce MIG s'est placé dans une perspective résolument plus humble en raison du temps limité imparti. Il ne s'agissait dés lors pas de réaliser un programme prétendant rivaliser avec les actuels systèmes de reconnaissance, fruits de nombreuses années de recherches et de développement; mais plutôt, à l'instar de l'ingénieur généraliste, de prendre connaissance d'un sujet et d'une problématique et tâcher, en équipe, d'y apporter une solution qui soit la plus optimale possible compte tenu des exigences temporelles et matérielles. La complexité de la discipline fut un des principaux obstacles, et une phase d'appropriation des techniques requises, de part la lecture de livre dédiés, d'articles de recherches ainsi que de thèses a été le poumon du projet. Le caractère abscon de certains articles a rajouté à la difficulté. Le projet des MIG ne réduisant pas non plus à une réalisation technique il s'agissait de garder en vue les perspectives économiques et les composantes juridiques, indissociables d'un tel projet, comme garde fou de toute pérégrination informatique.
 			
@@ -171,7 +171,14 @@ De plus, il a fallu déterminer la valeur de nos constantes de découpe (coefficie
 	
 	Cette opération consiste effectivement en un filtre passe-haut, en effet un telle formule part du principe que 95\% d'un échantillon a pour origine l'échantillon précédent. Ce constat étant plus pertinent pour les hautes fréquences (car les pics de l'onde associée sont plus rapprochés et engendrent donc un pic d'amplitude plus régulièrement), l'influence des basses fréquences est donc discriminée. 
         \section{Echantillonnage, fenêtrage}
-        	Nam eu sollicitudin\cite{ref1} massa. Duis sagittis velit mi. Nunc dictum risus ac interdum lacinia\cite{ref2}. Suspendisse ullamcorper ac dolor nec dapibus.
+        	L'analyse du signal, pour accéder au domaine fréquentiel, s'affranchit de la dépendance temporelle.  Le spectre obtenu ne correspond plus à une perception physique, mais à une moyenne temporelle du spectre perçu. Le procédé que nous avons mis en place pour pallier à ce problème est celui le plus couramment utilisé dans ce domaine: l'échantillonnage. Nous avons découpé le signal à traiter en petites séquences, qui, juxtaposées, approximent une échelle temporelle continue.
+        	
+	La taille des échantillons est un paramètre déterminant sur la qualité et la précision de l'analyse combinée finale. Une fois calculé, le spectre ne reflète plus du tout de dépendance temporelle. La durée d'un échantillon correspond ainsi à la durée minimale d'un événement sonore détectable. Il faut donc réduire cette durée autant que possible, pour obtenir une discrétisation temporelle le plus proche possible de la continuité. Il est en revanche nécessaire de conserver un certain nombre de points par échantillons. En effet, le spectre obtenu par l'analyse sera plus précis et proche de la réalité fréquentielle si le nombre de point du signal analysé est important. La meilleure technique pour contourner ce compromis est d'augmenter la fréquence d'échantillonnage. On obtient alors un nombre important de points qui s'étirent peu dans le temps.
+	
+	Le théorème de Nyquist-Shannon assure qu'un signal reproduit fidèlement toutes les fréquences inférieures à la moitié de sa fréquence d'échantillonnage. Une fréquence d'échantillonnage de 44100Hz (parfois 48000Hz) est donc suffisante pour couvrir la totalité d'une oreille humaine en bonne santé. L'utilisation la plus courante de l'enregistrement audio étant (à notre niveau) la restitution, le matériel et logiciel à notre disposition se cantonnait à ces fréquences d'échantillonnage. Nous avons ainsi dû trouver un compromis entre résolution fréquentielle et précision temporelle. L'hypothèse principale a été que les évènements sonores et variations s'étalant sur une durée inférieure à 20 millisecondes n'étaient pas signifiants pour notre analyse. Le nombre de points a été par cette donnée, couplée à notre fréquence d'échantillonnage lors des enregistrements, à 44100Hz.
+	
+	L'échantillonnage introduit par ailleurs des discontinuités aux bornes des morceaux, qui ne sont pas présentes dans le signal original. Le fenêtrage permet de réduire l'effet de ces discontinuités virtuelles. On découpe le signal en plus de morceaux, tout en conservant la même durée pour chaque échantillon. On obtient des "fenêtres", qui se recoupent les unes les autres. Pour que la même partie du signal ne soit pas retraitée à l'identique, on applique une fonction - dite fonction de fenêtrage, ou dans notre cas, fonction de Hann - qui diminue l'importance des valeurs situées aux extrémités de la fenêtre. Ce procédé a le désavantage de démultiplier le temps de calcul des étapes suivantes de l'algorithme (le nombre d'échantillons est bien plus important pour un signal de même longueur). Certaines applications (notamment pour les téléphones portables) devant réduire la complexité au maximum en font donc abstraction. Notre reconnaissance privilégiant plutôt la précision, et disposant d'une puissance de calcul largement suffisante pour conserver un rendu de l'ordre de la seconde, nous avons opté pour un fenêtrage important (recouvrement total d'un échantillon à l'autre), au prix d'une multiplication du temps de calcul par deux.
+	
         	\section{Transformée de Fourier}
         	Nam eu sollicitudin massa.\cite{ref2}. Aliquam a fermentum lectus. Praesent dapibus molestie mauris sed vestibulum. Curabitur sodales egestas est a pellentesque. Quisque id vulputate erat, a sagittis turpis. 
         	\section{Mel}
@@ -271,110 +278,58 @@ Dans le cas de la programmation d'un logiciel de reconnaissance vocale, divers f
 
 La concurrence importante nous oblige à être à la fois ambitieux et prudent. Nous avons donc décidé d'envisager à la fois la vente sur notre site internet d'un logiciel pour les particuliers, et de proposer des licences en parallèle, permettant notamment aux entreprises d'accéder à nos bases de données, les compléter et créer leurs propres dictionnaires.
 				\section{Les salaires}
-				\begin{table}[h]
-				\centering
-				\begin{tabular}{|c||p{1.7cm}|p{1.8cm}|p{1.7cm}|p{1.9cm}||p{1.7cm}|}
-					\hline
-					Catégorie/ & Salaire & Charges & Salaire & Charges & Budget \\
-					Personnel & brut & salariales & net & patronales & \\
-					\hline
-					\hline
-					David Vitoux & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
-					\hline
-					Axel Goering & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
-					\hline
-					Sofiane Mahiou & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
-					\hline
-					Maxime Ernoult & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
-					\hline
-					Adrien De La Vaissière & 2 290,00  & 503,80  & 1 786,20  & 1007,60  & 3 297,60  \\
-					\hline
-					Clément Joudet & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
-					\hline
-					Clément Roig & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
-					\hline
-					Anis Khlif & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
-					\hline
-					Paul Mustière & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
-					\hline
-					Matthieu Denoux & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
-					\hline
-					Julien Caillard & 2 290,00  & 503,80  & 1 786,20  & 1 007,60  & 3 297,60  \\
-					\hline
-					Nathanaël Kasriel & 2 750,00  & 605,00  & 2 145,00  & 1 210,00  & 3 960,00  \\
-					\hline
-					Thomas Debarre & 2 750,00  & 605,00  & 2 145,00  & 1 210,00  & 3 960,00  \\
-					\hline
-					Total & 30 690,00  & 6751,80  & 23 938,20  & 13 503,60  & 44 193,60  \\
-					\hline
-				\end{tabular}
-				\caption{Salaires en euros}
-				\end{table}
-					Treize employés travaillent sur le projet, pendant un temps effectif d'environ un mois. Deux d'entre eux s'occupent des ressources humaines, pour un salaire de 2 750\euro{} brut mensuel, les autres étant considérées comme des développeurs de moins de deux ans d'expérience, avec un salaire de 2 290\euro{} euros brut mensuel.
-Sur ce salaire brut, l'employé paye environ 22\% de charges salariales, et l'entreprise 44\% de charges patronales.
+				
+				\begin{figure}[hb]
+						\begin{center}
+							\includegraphics[width=10cm]{Images/Salaires.png} 
+						\end{center}
+						\caption{Salaires}
+				\end{figure}
+				
+					Treize employés travaillent sur le projet, pendant un temps effectif d'environ un mois. Deux d'entre eux s'occupent des ressources humaines, pour un salaire de 2750 \euro{} brut mensuel, les autres étant considérées comme des développeurs de moins de deux ans d'expérience, avec un salaire de 2290 \euro{} brut mensuel.
+					
+Sur ce salaire brut, l'employé paye environ 22\% de charges salariales, et l'entreprise 44\% de charges patronales. 
 				\section{Le compte de résultat prévisionnel}
 					Le compte de résultat prévisionnel dresse l'ensemble des charges (fixes et variables) de l'entreprise, ainsi que ses produits (recettes).
 					
-Ici nous avons pris le pari de vendre 50 000 versions du logiciel à un prix de 4,17\euro{} hors taxes, et une dizaine de licences permettant d'accéder à nos bases de données pour un prix de 833,33\euro{}. Au niveau des charges, l'ensemble des salaires cités plus haut est à prendre en compte, ainsi que le coût de notre campagne de publicité. Celle-ci peut être décrite en deux principaux pôles : des articles de journaux spécialisés, gratuits, et des annonces google. On peut estimer le prix d'une telle annonce à 10 centimes d'euros le clic. En estimant que 10\% des visiteurs du site par l'intermédiaire de l'annonce vont acheter le produit, on peut évaluer le coût de la publicité à 50 000\euro{}.
+Pour parvenir à un équilibre budgétaire, il nous faut, pour la première année, vendre 24 000 logiciels à un prix de 4,17 \euro{} hors taxes, et une dizaine de licences permettant d'accéder à nos bases de données pour un prix de 833,33 \euro{}. Au niveau des charges, l'ensemble des salaires cités plus haut est à prendre en compte, ainsi que le coût de notre campagne de publicité. Celle-ci peut être décrite en deux principaux pôles : des articles de journaux spécialisés, gratuits, et des annonces google. On peut estimer le prix d'une telle annonce à 10 centimes d'\euro{} le clic. En estimant que 10\% des visiteurs du site par l'intermédiaire de l'annonce vont acheter le produit, on peut évaluer le coût de la publicité à 24 000 \euro{}.
+
+La différence des produits et des charges donne alors un chiffre de 56 315 \euro{}.
 
 La différence des produits et des charges donne alors un chiffre de 164 423\euro{}.
-				\begin{table}[h]
-				\centering
-					\begin{tabular}{|c||p{1.5cm}|p{1.6cm}|p{2cm}|p{1.2cm}|p{2cm}||p{2cm}||p{1.8cm}|}
-						\hline
-						& \multicolumn{5}{c|}{Produit} & \multicolumn{2}{c|}{Charges} \\
-						\hline \hline
-						& Vente & Prix unité (Hors taxes) & Prix unité TTC & Nombre & Total & Salaires & 45 777 \euro{} \\
-						\hline \hline
-						& Logiciel & 4,17 \euro{} & 5 \euro{} & 50 000 & 250 200 \euro{} & Frais pub (google) & 50 000 \euro{} \\
-						\hline
-						& Licences & 833,33 \euro{} & 1 000 \euro{} & 10 & 10 000 \euro{} && \\
-						\hline \hline
-						Total & \multicolumn{7}{c|}{164 423 \euro{}} \\
-						\hline
-					\end{tabular}
-				\caption{Compte de résultat provisionnel}
-				\end{table}
+				\begin{figure}[hb]
+						\begin{center}
+							\includegraphics[width=10cm]{Images/ResultatPrev.png} 
+						\end{center}
+						\caption{Compte de résultat prévisionnel}
+				\end{figure}
+				
 				\section{Le bilan}
-					\begin{table}[h]
-						\centering
-						\begin{tabular}{|c|c||c|c|}
-						\hline
-						\multicolumn{2}{c|}{Actifs} & \multicolumn{2}{c|}{Passif} \\
-						\hline
-						Actifs incorporels & 0,00 \euro{} & Fonds propres & 0,00 \euro{} \\
-						\hline
-						Créances & 0,00 \euro{} & Dettes long terme & Mines Paristech : 100 000\euro{} \\
-						\hline
-						Actifs immobiliers & 0,00 \euro{} & Compte de Résultat prévisionnel & 164 423,00 \euro{} \\
-						\hline
-						Créances clients & 0,00 &&  \\
-						\hline
-						Trésorerie & 0,00 && \\
-						\hline
-					\end{tabular}
-				\caption{Bilan}
-				\end{table}
+					\begin{figure}[hb]
+						\begin{center}
+							\includegraphics[width=10cm]{Images/ActifPassif.png} 
+						\end{center}
+						\caption{Bilan}
+				\end{figure}
 					Le bilan prend en compte l'actif et le passif de l'entreprise.
-Cette année, celle-ci n'a pas d'actif réel. Pas de trésorerie, de créances ou d'actifs immobiliers et incorporels. Son passif ne contient pas de fonds propres, et le compte de résultat prévisionnel a été explicité plus haut. On peut en revanche considérer que nous avons effectué un prêt à long terme à l'école des Mines de 100 000\euro{}, afin de financer les prémices du projet.
+					
+Cette année, celle-ci n'a pas d'actif réel. Pas de trésorerie, de créances ou d'actifs immobiliers et incorporels. Son passif ne contient pas de fonds propres, et le compte de résultat prévisionnel a été explicité plus haut. On peut en revanche considérer que nous avons effectué un prêt à long terme de 100 000 \euro{}, afin de financer les prémices du projet. 
 				\section{Les impôts}
-					S'agissant des impôts, nous devons dans un premier temps reverser à l'Etat la TVA sur les produits que nous vendons, à un taux de 20\% à compter du 1\up{er} Janvier 2014. Le logiciel étant vendu 4,17\euro{} et la licence 833,33\euro{}, le total de la TVA à reverser sera de 52 040\euro{}.
-Ensuite, l'impôt sur les sociétés est à un taux de 33\% sur les bénéfices. A partir du bilan et de la TVA, on peut estimer nos bénéfices à 112 383\euro{}, et donc un impôt sur les bénéfices à hauteur de 37 086\euro{}.
-					\begin{table}[!h]
-						\centering
-						\begin{tabular}{|c|c|c|}
-						\hline
-						\multicolumn{3}{c|}{Impôts} \\
-						\hline
-						Sur les sociétés & 33\% des bénéfices & 37 086,39 \euro{} \\
-						\hline
-						TVA & 20\% sur les ventes & 52 040,00 \euro{} \\
-						\hline
-						\end{tabular}
-						\caption{Les impôts}
-					\end{table}
-				\section{Conclusion}
-					Si nos produits fonctionnent aussi bien que nous l'espérons, l'entreprise sera viable. Mieux encore, en remboursant à taux nul le prêt de l'Ecole des Mines sur cinq ans, nous pouvons réinjecter dès l'an prochain 55 297\euro{} dans le projet afin de le rendre plus compétitif encore, et donc mieux le vendre.
+					S'agissant des impôts, nous devons dans un premier temps reverser à l'Etat la TVA sur les produits que nous vendons, à un taux de 20\% à compter du 1er Janvier 2014. Le logiciel étant vendu 4,17 \euro{} et la licence 833,33 \euro{}, le total de la TVA à reverser sera de 26 019 \euro{}.
+					
+Ensuite, l'impôt sur les sociétés est à un taux de 33\% sur les bénéfices. A partir du bilan et de la TVA, on peut estimer nos bénéfices à 34 300 \euro{}, et donc un impôt sur les bénéfices à hauteur de 11 319 \euro{}.
+
+					\begin{figure}[hb]
+						\begin{center}
+							\includegraphics[width=10cm]{Images/Impots.png} 
+						\end{center}
+						\caption{Impôts}
+				\end{figure}
+				
+				\section{Conclusion et vue sur le long terme}
+					En considérant un prêt à un taux de 3\% sur cinq ans, et le prêt de locaux et matériels par un incubateur (l'école des Mines par exemple) l'entreprise est viable la première année à partir de 23 000 téléchargements.
+					
+En utilisant les mêmes calculs, pour les quatre années qui suivent, sans faire de mise à jour, il faudrait en moyenne 11 000 ventes de logiciels par an, et 3 ventes de licences.
     
 \part{Le Code}
 	\setcounter{chapter}{0}

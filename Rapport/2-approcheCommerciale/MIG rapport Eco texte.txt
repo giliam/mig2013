@@ -15,21 +15,22 @@ Sur ce salaire brut, l’employé paye environ 22% de charges salariales, et l�
 2. Le compte de résultat prévisionnel
 
 Le compte de résultat prévisionnel dresse l’ensemble des charges (fixes et variables) de l’entreprise, ainsi que ses produits (recettes).
-Ici nous avons pris le pari de vendre 50 000 versions du logiciel à un prix de 4,17 euros hors taxes, et une dizaine de licences permettant d’accéder à nos bases de données pour un prix de 833,33 euros. Au niveau des charges, l’ensemble des salaires cités plus haut est à prendre en compte, ainsi que le coût de notre campagne de publicité. Celle-ci peut être décrite en deux principaux pôles : des articles de journaux spécialisés, gratuits, et des annonces google. On peut estimer le prix d’une telle annonce à 10 centimes d’euros le clic. En estimant que 10% des visiteurs du site par l’intermédiaire de l’annonce vont acheter le produit, on peut évaluer le coût de la publicité à 50 000 euros.
-La différence des produits et des charges donne alors un chiffre de 164 423 euros.
+Pour parvenir à un équilibre budgétaire, il nous faut, pour la première année, vendre 24 000 logiciels à un prix de 4,17 euros hors taxes, et une dizaine de licences permettant d’accéder à nos bases de données pour un prix de 833,33 euros. Au niveau des charges, l’ensemble des salaires cités plus haut est à prendre en compte, ainsi que le coût de notre campagne de publicité. Celle-ci peut être décrite en deux principaux pôles : des articles de journaux spécialisés, gratuits, et des annonces google. On peut estimer le prix d’une telle annonce à 10 centimes d’euros le clic. En estimant que 10% des visiteurs du site par l’intermédiaire de l’annonce vont acheter le produit, on peut évaluer le coût de la publicité à 24 000 euros.
+La différence des produits et des charges donne alors un chiffre de 56 315 euros.
 
 3. Le bilan
 
 Le bilan prend en compte l’actif et le passif de l’entreprise.
-Cette année, celle-ci n’a pas d’actif réel. Pas de trésorerie, de créances ou d’actifs immobiliers et incorporels. Son passif ne contient pas de fonds propres, et le compte de résultat prévisionnel a été explicité plus haut. On peut en revanche considérer que nous avons effectué un prêt à long terme à l’école des Mines de 100 000 euros, afin de financer les prémices du projet. 
+Cette année, celle-ci n’a pas d’actif réel. Pas de trésorerie, de créances ou d’actifs immobiliers et incorporels. Son passif ne contient pas de fonds propres, et le compte de résultat prévisionnel a été explicité plus haut. On peut en revanche considérer que nous avons effectué un prêt à long terme de 100 000 euros, afin de financer les prémices du projet. 
 
 
 4. Les impôts
 
-S’agissant des impôts, nous devons dans un premier temps reverser à l’Etat la TVA sur les produits que nous vendons, à un taux de 20% à compter du 1er Janvier 2014. Le logiciel étant vendu 4,17 euros et la licence 833,33 euros, le total de la TVA à reverser sera de 52 040 euros.
-Ensuite, l’impôt sur les sociétés est à un taux de 33% sur les bénéfices. A partir du bilan et de la TVA, on peut estimer nos bénéfices à 112 383 euros, et donc un impôt sur les bénéfices à hauteur de 37 086 euros.
+S’agissant des impôts, nous devons dans un premier temps reverser à l’Etat la TVA sur les produits que nous vendons, à un taux de 20% à compter du 1er Janvier 2014. Le logiciel étant vendu 4,17 euros et la licence 833,33 euros, le total de la TVA à reverser sera de 26 019 euros.
+Ensuite, l’impôt sur les sociétés est à un taux de 33% sur les bénéfices. A partir du bilan et de la TVA, on peut estimer nos bénéfices à 34 300 euros, et donc un impôt sur les bénéfices à hauteur de 11319 euros.
 
 
-Conclusion
+Conclusion et vue sur le long terme
 
-Si nos produits fonctionnent aussi bien que nous l’espérons, l’entreprise sera viable. Mieux encore, en remboursant à taux nul le prêt de l’Ecole des Mines sur cinq ans, nous pouvons réinjecter dès l’an prochain 55 297 euros dans le projet afin de le rendre plus compétitif encore, et donc mieux le vendre.
+En considérant un prêt à un taux de 3% sur cinq ans, et le prêt de locaux et matériels par un incubateur (l’école des Mines par exemple) l’entreprise est viable la première année à partir de 23 000 téléchargements.
+En utilisant les mêmes calculs, pour les quatre années qui suivent, sans faire de mise à jour, il faudrait en moyenne 11 000 ventes de logiciels par an, et 3 ventes de licences.

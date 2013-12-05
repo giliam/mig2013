@@ -60,6 +60,5 @@ def recorder(db,dirName="",nbRecording=-1,askForWord=True,seconds=-1,nbWords=1,f
 				n = str(i)
 				name = mot + "/" + n + ".wav"
 			db.addWave(name,CHANNELS,p.get_sample_size(FORMAT), RATE, frames,p)
-			
 			#print "Fin du mot ", i
 	return fileName

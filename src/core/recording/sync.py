@@ -22,7 +22,7 @@ def sync(amplitudes):
     #print("Seuil is {}".format(valeurSeuil))
 
     maxDiff = 300
-    maxRemove = 800
+    #maxRemove = 800
     #print("MaxDiff is {}".format(maxDiff))
 
     iMin = -1
@@ -38,9 +38,10 @@ def sync(amplitudes):
             lastHit = i
             inIt = True
         if iMin != -1:
-            if i - iMin > maxRemove: # Won't remove more than maxRemove
+            """if i - iMin > maxRemove: # Won't remove more than maxRemove
                 break
-            elif inIt == True and amplitudes[i] > seuilFor:
+            el"""
+            if inIt == True and amplitudes[i] > seuilFor:
                 lastHit = i
             elif inIt == True and amplitudes[i] < seuilFor and i - lastHit >= maxDiff:
                 inIt = False
@@ -57,9 +58,10 @@ def sync(amplitudes):
             lastHit = i
             inIt = True
         if iMax != -1:
-            if iMax - i > maxRemove: # Won't remove more than maxRemove
+            """if iMax - i > maxRemove: # Won't remove more than maxRemove
                 break
-            elif inIt == True and amplitudes[i] > seuilBack:
+            el"""
+            if inIt == True and amplitudes[i] > seuilBack:
                 lastHit = i
             elif inIt == True and amplitudes[i] < seuilBack and lastHit - i >= maxDiff:
                 inIt = False
@@ -94,8 +96,8 @@ def sync(amplitudes):
         if iMax2 == -1:
             iMax2 = iMax
 
-        if iMin2 - iMin <= maxRemove and iMax - iMax2 <= maxRemove:
-            return amplitudes_coupe
+        """if iMin2 - iMin <= maxRemove and iMax - iMax2 <= maxRemove:
+            return amplitudes_coupe"""
         amplitudes_coupe2 = [0. for i in range(iMax2-iMin2+1)]
         for i in range(iMax2-iMin2+1):
             amplitudes_coupe2[i] = amplitudes[iMin2 + i]

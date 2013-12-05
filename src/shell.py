@@ -15,11 +15,11 @@ from core.handling.triangularFilterbank import triangularFilter
 from core.handling.inverseDCT import inverseDCTII
 from core.hmm.tableauEnergyPerFrame import construitTableauEnergy
 from core.handling.fft import *
-from core.hmm.markov import buildHMMs, recognize, recognizeList
+from core.hmm.markov import buildHMMs, saveHMMs, loadHMMs, recognize, recognizeList
 
 def main(verbose=True,action=-1,verboseUltime=True):
     db = Db("../db/",verbose=verbose)
-    #HMMs = { "Deux": ["Deux.txt"], "Trois" : ["Trois.txt"], "Cinq": ["Cinq.txt"] }
+    #HMMs = {}
     #db.addFile("hmmList.txt", HMMs)
     choice = -1
     while( not choice in range(1,8) ):
@@ -91,9 +91,10 @@ def main(verbose=True,action=-1,verboseUltime=True):
     ####################################
     elif choice == 3:
         fileName = recorder(db,"tmp",1,False,2,1)
-        cutBeginning( Db.prefixPath + "waves/tmp/", fileName + ".wav", "" )
-        syncFile( Db.prefixPath + "waves/tmp/", fileName + ".wav", "" )
-        finalTest("tmp/" + fileName + ".wav")
+        cutBeginning( Db.prefixPath + "waves/tmp/", fileName + ".wav", "cut_" )
+        syncFile( Db.prefixPath + "waves/tmp/", "cut_" + fileName + ".wav", "sync_" )
+        db.addFileToList("tmp/sync_cut_" + fileName + ".wav", "waves/")
+        finalTest("tmp/sync_cut_" + fileName + ".wav")
         
     ####################################
     ###   RESULTATS INTERMEDIAIRES   ###
@@ -185,11 +186,14 @@ def main(verbose=True,action=-1,verboseUltime=True):
             print "Sauvegarde :"
             db.addFile(dirList[dirChoice] + ".txt",listVectors, "hmm/")
             hmmList = db.getFile("hmmList.txt")
-            hmmList[dirList[dirChoice]] = dirList[dirChoice] + ".txt"
+            if hmmList.get(dirList[dirChoice]):
+                hmmList[dirList[dirChoice]].append(dirList[dirChoice] + ".txt")
+            else:
+                hmmList[dirList[dirChoice]] = [dirList[dirChoice] + ".txt"]
             print "Extraction :"
             db.addFile("hmmList.txt",hmmList)
             buildHMMs(hmmList.keys(),hmmList.values(), 500, Db.prefixPath + "hmm/")
-    
+            saveHMMs(Db.prefixPath + "hmm/save.hmm")
     ####################################
     ###        LISTER LES HMMs       ###
     ####################################
@@ -201,8 +205,7 @@ def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0):
     """ Fait le traitement d'un mot pour en construire les vecteurs de Markov et tester ensuite la compatibilité avec les automates existants 
             Retourne un tuple (motLePlusCompatible,log) """
     content,log = handlingRecording(content,db,dirChoice,numeroTraitement,action)
-    hmmList = db.getFile("hmmList.txt")
-    buildHMMs(hmmList.keys(),hmmList.values(), 500)
+    loadHMMs(Db.prefixPath + "hmm/save.hmm")
     return recognize(content),log
 
 

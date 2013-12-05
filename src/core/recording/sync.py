@@ -4,7 +4,7 @@
 from numpy import int16
 import scipy.io.wavfile
 from operator import add
-
+import os
 
 def sync(amplitudes):
     tOut = 400
@@ -17,7 +17,8 @@ def sync(amplitudes):
 
     #print("Max is {}".format(max))
 
-    valeurSeuil = max/8
+    seuilFor = max/8
+    seuilBack = max/7
     #print("Seuil is {}".format(valeurSeuil))
 
     maxDiff = 300
@@ -32,18 +33,18 @@ def sync(amplitudes):
     lastHit = -1
 
     for i in range(N):
-        if iMin == -1 and amplitudes[i] > valeurSeuil:
+        if iMin == -1 and amplitudes[i] > seuilFor:
             iMin = i
             lastHit = i
             inIt = True
         if iMin != -1:
             if i - iMin > maxRemove: # Won't remove more than maxRemove
                 break
-            elif inIt == True and amplitudes[i] > valeurSeuil:
+            elif inIt == True and amplitudes[i] > seuilFor:
                 lastHit = i
-            elif inIt == True and amplitudes[i] < valeurSeuil and i - lastHit >= maxDiff:
+            elif inIt == True and amplitudes[i] < seuilFor and i - lastHit >= maxDiff:
                 inIt = False
-            elif inIt == False and amplitudes[i] > valeurSeuil:
+            elif inIt == False and amplitudes[i] > seuilFor:
                 iMin2 = i
                 break
 
@@ -51,18 +52,18 @@ def sync(amplitudes):
     lastHit = -1
 
     for i in range(N-1, -1, -1):
-        if iMax == -1 and amplitudes[i] > valeurSeuil:
+        if iMax == -1 and amplitudes[i] > seuilBack:
             iMax = i
             lastHit = i
             inIt = True
         if iMax != -1:
             if iMax - i > maxRemove: # Won't remove more than maxRemove
                 break
-            elif inIt == True and amplitudes[i] > valeurSeuil:
+            elif inIt == True and amplitudes[i] > seuilBack:
                 lastHit = i
-            elif inIt == True and amplitudes[i] < valeurSeuil and lastHit - i >= maxDiff:
+            elif inIt == True and amplitudes[i] < seuilBack and lastHit - i >= maxDiff:
                 inIt = False
-            elif inIt == False and amplitudes[i] > valeurSeuil:
+            elif inIt == False and amplitudes[i] > seuilBack:
                 iMax2 = i
                 break
 
@@ -108,11 +109,18 @@ def syncFile(path, name, prefix = "sync_"):
     ampli2 = sync(ampli[1])
     scipy.io.wavfile.write(path + prefix + name, ampli[0], int16(ampli2))
     #print("Done\n\n")
-    
+
 def cutBeginning(path,name,prefix = "cut_"):
     ampli = scipy.io.wavfile.read(path + name)
     ampli2 = ampli[1][22050:]
     scipy.io.wavfile.write(path + prefix + name, ampli[0], int16(ampli2))
+
+def sox_handling(fileName, noiseName, pathToTmp = "../db/waves/tmp/"):
+    pass
+    #os.system('sox "' + noiseName + '" -n noiseprof "' + pathToTmp + 'noise.prof"')
+    #os.system('sox "' + fileName + '" "' + fileName + '" noisered "' + pathToTmp + 'noise.prof" 0.21')
+    #os.remove(pathToTmp + "noise.prof")
+
 if __name__ == "__main__":
     syncFile("3_0")
     syncFile("3_1")

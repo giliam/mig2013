@@ -8,7 +8,7 @@ from speechserver.clientAuth import *
 
 from Tkinter import *
 from core.recording.recorder import recorder
-from core.recording.sync import syncFile, cutBeginning
+from core.recording.sync import syncFile, cutBeginning, sox_handling
 from core.utils.db import Db
 from core.utils.constantes import NB_ITERATIONS
 from shell import handlingRecording
@@ -21,6 +21,7 @@ class Gui:
         self.listeEnregistrements = []
         self.db = Db("../db/")
         self.fenetre3enabled = False
+        self.noiseOk = False
     
     def result(self, amp):             #fonction principale qui renvoie le mot reconnu
         return 'Cheval'
@@ -49,29 +50,50 @@ class Gui:
         
     def creationHmm(self):
         self.bouton_enr.config(text="Terminer l'enregistrement du HMM " + str(self.nbEnregistrement + 1), command=self.fenetre3.destroy)
+        self.noiseOk = False
         listVectors = []
         for l in self.listeEnregistrements:
             content = self.db.getWaveFile(l)
             content,log = handlingRecording(content[1],self.db,0,0,0)
             listVectors.append(content)
         hmmList = self.db.getFile("hmmList.txt")
-        hmmList[self.mot] = "client_" + self.mot + ".txt"
-        print hmmList
+        if self.mot in hmmList:
+            hmmList[self.mot].append("client_" + self.mot + ".txt")
+        else
+            hmmList[self.mot] = ["client_" + self.mot + ".txt"]
         self.db.addFile( "hmmList.txt",hmmList )
         self.db.addFile( "client_" + self.mot + ".txt", listVectors, "hmm/" )
         buildHMMs(hmmList.keys(),hmmList.values(), 500, Db.prefixPath + "hmm/")
+        saveHMMs(Db.prefixPath + "hmm/save.hmm")
 
     def enregistrer(self):
         if self.nbEnregistrement == 0:
             self.mot = self.saisirMot.get()
-        fileName = recorder(self.db,"tmp",1,False,1,confirm=False,fileName=self.mot + "_" + str( self.nbEnregistrement ) )
-        cutBeginning(Db.prefixPath + "waves/tmp/", self.mot + "_" + str(self.nbEnregistrement) + ".wav", "")
-        syncFile(Db.prefixPath + "waves/tmp/", self.mot + "_" + str(self.nbEnregistrement) + ".wav", "")
-        self.listeEnregistrements.append("tmp/" + self.mot + "_" + str(self.nbEnregistrement) + ".wav")
-        self.nbEnregistrement += 1
-        self.bouton_enr.config(text="Lancer l'enregistrement numéro " + str(self.nbEnregistrement + 1) )
-        if self.nbEnregistrement == NB_ITERATIONS:
-            self.creationHmm()
+        if not self.noiseOk:
+            self.errorMessage3.set("Vous n'avez pas encore enregistré le bruit !")
+        elif self.mot == "":
+            self.errorMessage3.set("Entrez un mot")
+        else:
+            self.errorMessage3.set("")
+            fileName = recorder(self.db,"tmp",1,False,1,confirm=False,fileName=self.mot + "_" + str( self.nbEnregistrement ) )
+            sox_handling(Db.prefixPath + "waves/tmp/" + self.mot + "_" + str(self.nbEnregistrement) + ".wav", Db.prefixPath + "waves/noise/" + self.mot + ".wav", Db.prefixPath + "waves/tmp/" )
+            cutBeginning(Db.prefixPath + "waves/tmp/", self.mot + "_" + str(self.nbEnregistrement) + ".wav", "cut_")
+            syncFile(Db.prefixPath + "waves/tmp/", self.mot + "_" + str(self.nbEnregistrement) + ".wav", "sync_")
+            self.listeEnregistrements.append("tmp/" + self.mot + "_" + str(self.nbEnregistrement) + ".wav")
+            self.nbEnregistrement += 1
+            self.bouton_enr.config(text="Lancer l'enregistrement numéro " + str(self.nbEnregistrement + 1) )
+            if self.nbEnregistrement == NB_ITERATIONS:
+                self.creationHmm()
+                
+    
+    def enregistrerNoise(self):
+        self.mot = self.saisirMot.get()
+        if self.mot == "":
+            self.errorMessage3.set("Entrez un mot")
+        else:
+            self.errorMessage3.set("")
+            fileName = recorder(self.db,"noise",1,False,1,confirm=False,fileName=self.mot )
+            self.noiseOk = True
     
     def loginAuth(self):
         loginIn = self.loginC.get()
@@ -79,10 +101,10 @@ class Gui:
         if passwordIn == "" or loginIn == "":
             self.errorMessage.set("Il manque le pseudonyme ou le mot de passe !\n")
         else:
-            print self.auth.hashPass(passwordIn)
             self.auth.logIn(loginIn, self.auth.hashPass(passwordIn) )
             self.fenetre2.destroy()
             self.bouton_loginpopup.config(text='Se déconnecter')
+            self.errorMessage.set("")
             self.displayRecorder()
             
     def registerAuth(self):
@@ -92,7 +114,7 @@ class Gui:
             self.errorMessage.set("Il manque le pseudonyme ou le mot de passe !\n")
         else:
             if self.auth.getClient(loginIn) != "":
-                self.auth.newClient(loginIn, auth.hashPass(passwordIn), [])
+                self.auth.newClient(loginIn, self.auth.hashPass(passwordIn), [])
                 self.errorMessage.set("Vous êtes bien enregistré(e)\n")
             else:
                 self.errorMessage.set("Le pseudonyme est déjà utilisé")
@@ -112,14 +134,22 @@ class Gui:
             titre.pack()
             titre_logiciel=Label(self.fenetre3, text="Reconnaissance vocale\n\n\n\n",font =("DIN", "22"),bg='#ffffff')
             titre_logiciel.pack()
+            self.errorMessage3 = StringVar(self.fenetre3)
+            
+            errorLegend=Label(self.fenetre3, textvariable=self.errorMessage3, fg='#B80002',bg='#ffffff')
+            errorLegend.pack()
+            
             demande_mot=Label(self.fenetre3, text="Entrez le mot que vous souhaitez enregistrer", font=("DIN", '14'),bg='#ffffff')
             demande_mot.pack()
             self.saisirMot=StringVar(self.fenetre3)          # variable pour recevoir le texte saisi
             saisieMot=Entry(self.fenetre3, textvariable=self.saisirMot, width=30,bg='#ffffff')
             saisieMot.pack()
-            demande_temps=Label(self.fenetre3, text="Il est nécessaire pour créer un modèle de Markov caché de procéder à une dizaine d'enregistrements du même mot\n\
-            Vous aurez deux secondes à chaque enregistrement pour prononcer votre mot une fois l'acquisition lancée\n", font=("DIN", '14'),bg='#ffffff')
-            demande_temps.pack()
+            Label(self.fenetre3, text="Avant de procéder aux enregistrements nécessaires, il convient d'enregistrer\
+ du bruit pour permettre efficacement le traitement du signal \n", font=("DIN", '14'),bg='#ffffff').pack()
+            self.bouton_bruit=Button(self.fenetre3, text='Enregistrer du bruit', command=self.enregistrerNoise, fg='#ff0000')  #bouton qui enregistre et ouvre une nouvelle fenetre
+            self.bouton_bruit.pack()
+            Label(self.fenetre3, text="Il est nécessaire pour créer un modèle de Markov caché de procéder à une dizaine d'enregistrements du même mot\n\
+ Vous aurez deux secondes à chaque enregistrement pour prononcer votre mot une fois l'acquisition lancée\n", font=("DIN", '14'),bg='#ffffff').pack()
             espace1=Label(self.fenetre3, text= ' \n ',bg='#ffffff')
             espace1.pack()
             self.bouton_enr=Button(self.fenetre3, text='Lancer l\'enregistrement numéro 1', command=self.enregistrer, fg='#ff0000')  #bouton qui enregistre et ouvre une nouvelle fenetre
@@ -131,6 +161,7 @@ class Gui:
             self.fenetre3enabled = True
 
     def displayLogIn(self):
+        
         if self.auth.connected:
             self.auth.logOut()
             self.bouton_loginpopup.config(text='Se connecter / S\'inscrire')
@@ -146,7 +177,7 @@ class Gui:
             self.passwordR = StringVar(self.fenetre2)
             self.errorMessage = StringVar(self.fenetre2)
             
-            errorLegend=Label(self.fenetre2, textvariable=self.errorMessage,bg='#ffffff')
+            errorLegend=Label(self.fenetre2, textvariable=self.errorMessage, fg='#B80002',bg='#ffffff')
             errorLegend.pack()
             Label(self.fenetre2, text="\nSe connecter \n", font=("DIN", '14'),bg='#ffffff').pack()
             
@@ -196,7 +227,6 @@ class Gui:
             self.bouton_loginpopup=Button(self.fenetre1,text="Se déconnecter", command=self.displayLogIn)
             self.bouton_loginpopup.pack()
             self.bouton_registerIn=Button(self.fenetre1,text="Enregistrer", command=self.displayRecorder)
-            
             self.displayRecorder()
 
         bouton_fermer1=Button(self.fenetre1,text='Quitter', command=self.fenetre1.destroy)
@@ -211,6 +241,5 @@ class Gui:
         labl.pack()
         self.fenetre1.mainloop()
         self.fenetre3.mainloop()
-        #print saisir.get()
 gui = Gui()
 gui.main()

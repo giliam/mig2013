@@ -122,10 +122,13 @@ def sox_handling(wavBlob,pathToTmp="../db/waves/tmp/"):
          origoggfile.write(wavBlob)
          origoggfile.flush()
          os.fsync(origoggfile)
+<<<<<<< HEAD
 
     print(fileName)
     #NOISE bof : sélectionner première seconde pour le bruit
 
+=======
+>>>>>>> ca98ec48f647f18cedf811efe6ec68734ee5e6a1
     os.system('ffmpeg -i "' + fileName + '" -vn -ss 00:00:00 -t 00:00:01 "' + pathToTmp + 'noiseaud.wav"')
     print("noise extracted")
     os.system('sox "' + pathToTmp + 'noiseaud.wav" -n noiseprof "' + pathToTmp + 'noise.prof"')

@@ -51,7 +51,7 @@ void sumMats(long double ***seqs, long double *mu, long double ****gammas, int d
 void mulVect(long double *v, long double a, int d, long double *r) {
     if (a == 0) { // Sum of sums is 0, so each sum is 0
         for (int i = 0; i < d; i++)
-            r[i] = 100; // Far far far valueso it's useless
+            r[i] = 200; // Far far far value so it's useless
         return;
     }
 
@@ -78,10 +78,10 @@ void mulMat(long double **m, long double a, int d, long double **r) {
     }
 }
 
-class ContinuousMarkov {
+class ContinuousHMM {
 public:
-    ContinuousMarkov(std::string name, int n, int m, int d, long double *PI, long double**A, long double **C, long double ***G_mu, long double ****G_sigma);
-    ~ContinuousMarkov();
+    ContinuousHMM(std::string name, int n, int m, int d, std::vector<std::string> listSequences, long double *PI, long double**A, long double **C, long double ***G_mu, long double ****G_sigma);
+    ~ContinuousHMM();
 
     void render();
 
@@ -96,6 +96,7 @@ public:
     double baumWelch(long double ***seqs, int sN, int *sS, int maxIt = 100, int epsilon = 0.0000000001); // Baum-Welch Algorithm Implementation, learning algorithm
 
     std::string name;
+    std::vector<std::string> listSequences;
 
     int n;
     int m;
@@ -107,11 +108,12 @@ public:
     long double ****G_sigma;
 };
 
-ContinuousMarkov::ContinuousMarkov(std::string name, int n, int m, int d, long double *PI, long double **A, long double **C, long double ***G_mu, long double ****G_sigma) {
+ContinuousHMM::ContinuousHMM(std::string name, int n, int m, int d, std::vector<std::string> listSequences, long double *PI, long double **A, long double **C, long double ***G_mu, long double ****G_sigma) {
     this->name = name;
     this->n = n;
     this->m = m;
     this->d = d;
+    this->listSequences = listSequences;
     this->PI = PI;
     this->A = A;
     this->C = C;
@@ -119,10 +121,10 @@ ContinuousMarkov::ContinuousMarkov(std::string name, int n, int m, int d, long d
     this->G_sigma = G_sigma;
 }
 
-ContinuousMarkov::~ContinuousMarkov() {
+ContinuousHMM::~ContinuousHMM() {
 }
 
-void ContinuousMarkov::render() {
+void ContinuousHMM::render() {
     std::cout << "Markov's Continuous Automat : " << name << std::endl;
     std::cout << "PI : [";
     for (int i = 0; i < n; i++) {
@@ -201,7 +203,7 @@ void ContinuousMarkov::render() {
     }
 }
 
-long double ContinuousMarkov::calcGaussianValue(long double **sigma, long double *mu, long double *x) {
+long double ContinuousHMM::calcGaussianValue(long double **sigma, long double *mu, long double *x) {
     long double den = sqrt(pow(2*M_PI, d) * det(sigma, d));
     long double num = exp((long double)-.5 * calcProduct(sigma, mu, x, d));
 
@@ -211,7 +213,7 @@ long double ContinuousMarkov::calcGaussianValue(long double **sigma, long double
         return num/den;
 }
 
-void ContinuousMarkov::calcProbabilitiesVector(long double *x, long double *r) {
+void ContinuousHMM::calcProbabilitiesVector(long double *x, long double *r) {
     for (int i = 0; i < n; i++) {
         r[i] = 0;
         for (int j = 0; j < m; j++)
@@ -219,12 +221,12 @@ void ContinuousMarkov::calcProbabilitiesVector(long double *x, long double *r) {
     }
 }
 
-void ContinuousMarkov::calcProbabilitiesSequence(long double **seq, int s, long double **prob) {
+void ContinuousHMM::calcProbabilitiesSequence(long double **seq, int s, long double **prob) {
     for (int i = 0; i < s; i++)
         calcProbabilitiesVector(seq[i], prob[i]);
 }
 
-long double ContinuousMarkov::forward(long double **seq, int s, long double **prob, long double **alpha) {
+long double ContinuousHMM::forward(long double **seq, int s, long double **prob, long double **alpha) {
     for (int i = 0; i < n; i++) // Setting for each state value at t=0
         alpha[0][i] = PI[i]*prob[0][i];
 
@@ -244,7 +246,7 @@ long double ContinuousMarkov::forward(long double **seq, int s, long double **pr
     return p;
 }
 
-void ContinuousMarkov::backward(long double **seq, int s, long double **prob, long double **beta) {
+void ContinuousHMM::backward(long double **seq, int s, long double **prob, long double **beta) {
     for (int i = 0; i < n; i++) // Setting for each state value at t=s-1
         beta[s-1][i] = 1;
 
@@ -259,7 +261,7 @@ void ContinuousMarkov::backward(long double **seq, int s, long double **prob, lo
 }
 
 // Uses xi and oldGamma. WARNING : xi and oldGamma must be defined !
-void ContinuousMarkov::calcXiOldGamma(long double **seq, int s, long double **alpha, long double **beta, long double p, long double **prob, long double ***xi, long double **oldGamma) {
+void ContinuousHMM::calcXiOldGamma(long double **seq, int s, long double **alpha, long double **beta, long double p, long double **prob, long double ***xi, long double **oldGamma) {
     for (int t = 0; t < s-1; t++) {
         for (int i = 0; i < n; i++) {
             oldGamma[t][i] = 0;
@@ -271,7 +273,7 @@ void ContinuousMarkov::calcXiOldGamma(long double **seq, int s, long double **al
     }
 }
 
-void ContinuousMarkov::calcGamma(long double **seq, int s, long double **alpha, long double **beta, long double **prob, long double ***gamma) {
+void ContinuousHMM::calcGamma(long double **seq, int s, long double **alpha, long double **beta, long double **prob, long double ***gamma) {
     for (int t = 0; t < s; t++) {
         long double sumAB = 0;
         for (int i = 0; i < n; i++)
@@ -290,7 +292,7 @@ void ContinuousMarkov::calcGamma(long double **seq, int s, long double **alpha, 
 }
 
 // Uses littleSums, littleVect, littleMat, fatSums. WARNING : they must be defined !
-void ContinuousMarkov::calcSums(long double ***seqs, int sN, int *sS, long double ****gammas, long double **littleSums, long double ***littleVect, long double ****littleMat, long double *fatSums) {
+void ContinuousHMM::calcSums(long double ***seqs, int sN, int *sS, long double ****gammas, long double **littleSums, long double ***littleVect, long double ****littleMat, long double *fatSums) {
     for (int i = 0; i < n; i++) {
         fatSums[i] = 0;
         for (int k = 0; k < m; k++) {
@@ -312,7 +314,7 @@ void ContinuousMarkov::calcSums(long double ***seqs, int sN, int *sS, long doubl
     }
 }
 
-double ContinuousMarkov::baumWelch(long double ***seqs, int sN, int *sS, int maxIt, int epsilon) {
+double ContinuousHMM::baumWelch(long double ***seqs, int sN, int *sS, int maxIt, int epsilon) {
     long double oldLike = -1;
     long double like = 1;
     long double mean = 0;
@@ -576,11 +578,11 @@ double ContinuousMarkov::baumWelch(long double ***seqs, int sN, int *sS, int max
     return result;
 }
 
-std::vector<ContinuousMarkov*> markovs;
+std::vector<ContinuousHMM*> HMMs;
 
-int findMarkov(std::string s) {
-    for (unsigned int i = 0; i < markovs.size(); i++) {
-        if (markovs.at(i)->name.compare(s) == 0)
+int findHMM(std::string s) {
+    for (unsigned int i = 0; i < HMMs.size(); i++) {
+        if (HMMs.at(i)->name.compare(s) == 0)
             return (int)i;
     }
 
@@ -588,13 +590,50 @@ int findMarkov(std::string s) {
     return -1;
 }
 
-void createMarkov(boost::python::str _name, int n, int m, int d, boost::python::list _PI, boost::python::list _A, boost::python::list _C, boost::python::list _G_mu, boost::python::list _G_sigma) {
+boost::python::list tabToList(long double *tab, int size) {
+    boost::python::list _list;
+    for (int i = 0; i < size; i++)
+        _list.append(tab[i]);
+
+    return _list;
+}
+
+boost::python::list tTabToLList(long double **tab, int size, int subSize) {
+    boost::python::list _list;
+    for (int i = 0; i < size; i++)
+        _list.append(tabToList(tab[i], subSize));
+
+    return _list;
+}
+
+boost::python::list tTTabToLLList(long double ***tab, int size, int subSize, int subSubSize) {
+    boost::python::list _list;
+    for (int i = 0; i < size; i++)
+        _list.append(tTabToLList(tab[i], subSize, subSubSize));
+
+    return _list;
+}
+
+boost::python::list tTTTabToLLLList(long double ****tab, int size, int subSize, int subSubSize, int subSubSubSize) {
+    boost::python::list _list;
+    for (int i = 0; i < size; i++)
+        _list.append(tTTabToLLList(tab[i], subSize, subSubSize, subSubSubSize));
+
+    return _list;
+}
+
+void createHMM(boost::python::str _name, boost::python::list _listSequences, int n, int m, int d, boost::python::list _PI, boost::python::list _A, boost::python::list _C, boost::python::list _G_mu, boost::python::list _G_sigma) {
     std::string name = boost::python::extract<std::string>(_name);
     long double *PI = (long double*)malloc(sizeof(long double)*n);
     long double **A = (long double**)malloc(sizeof(long double)*n*n);
     long double **C = (long double**)malloc(sizeof(long double)*n*m);
     long double ***G_mu = (long double***)malloc(sizeof(long double)*n*m*d);
     long double ****G_sigma = (long double****)malloc(sizeof(long double)*n*m*d*d);
+
+    std::vector<std::string> listSequences;
+    int numSeqs = boost::python::len(_listSequences);
+    for (int i = 0; i < numSeqs; i++)
+        listSequences.push_back(boost::python::extract<std::string>(_listSequences[i]));
 
     for(int i = 0; i < n; i++) {
         PI[i] = boost::python::extract<long double>(_PI[i]);
@@ -622,53 +661,110 @@ void createMarkov(boost::python::str _name, int n, int m, int d, boost::python::
         }
     }
 
-    ContinuousMarkov *M = new ContinuousMarkov(name, n, m, d, PI, A, C, G_mu, G_sigma);
-    markovs.push_back(M);
+    ContinuousHMM *M = new ContinuousHMM(name, n, m, d, listSequences, PI, A, C, G_mu, G_sigma);
+    HMMs.push_back(M);
 }
 
-void removeMarkov(boost::python::str _name) {
+void createHMMFromList(boost::python::list _HMM) {
+    boost::python::str _name = boost::python::extract<boost::python::str>(_HMM[0]);
+    boost::python::list _listSequences = boost::python::extract<boost::python::list>(_HMM[1]);
+    int n = boost::python::extract<int>(_HMM[2]);
+    int m = boost::python::extract<int>(_HMM[3]);
+    int d = boost::python::extract<int>(_HMM[4]);
+    boost::python::list _PI = boost::python::extract<boost::python::list>(_HMM[5]);
+    boost::python::list _A = boost::python::extract<boost::python::list>(_HMM[6]);
+    boost::python::list _C = boost::python::extract<boost::python::list>(_HMM[7]);
+    boost::python::list _G_mu = boost::python::extract<boost::python::list>(_HMM[8]);
+    boost::python::list _G_sigma = boost::python::extract<boost::python::list>(_HMM[9]);
+
+    createHMM(_name, _listSequences, n, m, d, _PI, _A, _C, _G_mu, _G_sigma);
+}
+
+void setHMMs(boost::python::list _HMMs) {
+    int size = boost::python::len(_HMMs);
+    for (int i = 0; i < size; i++) {
+        createHMMFromList(boost::python::extract<boost::python::list>(_HMMs[i]));
+    }
+}
+
+boost::python::list getHMMs() {
+    boost::python::list _HMMs;
+    for (unsigned int i = 0; i < HMMs.size(); i++) {
+        boost::python::list _HMM;
+        _HMM.append(boost::python::str(HMMs.at(i)->name));
+        boost::python::list _listSequences;
+        for (unsigned int j = 0; j < HMMs.at(i)->listSequences.size(); j++)
+                    _listSequences.append(HMMs.at(i)->listSequences.at(j));
+                _HMM.append(_listSequences);
+        int n = HMMs.at(i)->n;
+        int m = HMMs.at(i)->m;
+        int d = HMMs.at(i)->d;
+        _HMM.append(n);
+        _HMM.append(m);
+        _HMM.append(d);
+        _HMM.append(tabToList(HMMs.at(i)->PI, n));
+        _HMM.append(tTabToLList(HMMs.at(i)->A, n, n));
+        _HMM.append(tTabToLList(HMMs.at(i)->C, n, m));
+        _HMM.append(tTTabToLLList(HMMs.at(i)->G_mu, n, m, d));
+        _HMM.append(tTTTabToLLLList(HMMs.at(i)->G_sigma, n, m, d, d));
+
+        _HMMs.append(_HMM);
+    }
+
+    return _HMMs;
+}
+
+void clearHMMs() {
+    while (HMMs.size() != 0) {
+        ContinuousHMM *M = HMMs.at(0);
+        HMMs.erase(HMMs.begin());
+        delete M;
+    }
+}
+
+void removeHMM(boost::python::str _name) {
     std::string name = boost::python::extract<std::string>(_name);
-    int id = findMarkov(name);
+    int id = findHMM(name);
     if (id == -1)
         return;
 
-    ContinuousMarkov *M = markovs.at(id);
-    markovs.erase(markovs.begin()+id);
+    ContinuousHMM *M = HMMs.at(id);
+    HMMs.erase(HMMs.begin()+id);
     delete M;
 }
 
-void renderMarkov(boost::python::str _name) {
+void renderHMM(boost::python::str _name) {
     std::string name = boost::python::extract<std::string>(_name);
-    int id = findMarkov(name);
+    int id = findHMM(name);
     if (id != -1)
-        markovs.at(id)->render();
+        HMMs.at(id)->render();
 }
 
 long double forward(boost::python::str _name, boost::python::list _seq) {
     std::string name = boost::python::extract<std::string>(_name);
-    int id = findMarkov(name);
+    int id = findHMM(name);
     if (id == -1)
         return -1;
 
     int s = boost::python::len(_seq);
 
-    long double **seq = (long double**)malloc(sizeof(long double)*s*markovs.at(id)->d);
+    long double **seq = (long double**)malloc(sizeof(long double)*s*HMMs.at(id)->d);
     for (int t = 0; t < s; t++) {
-        seq[t] = (long double*)malloc(sizeof(long double)*markovs.at(id)->d);
-        for (int i = 0; i < markovs.at(id)->d; i++)
+        seq[t] = (long double*)malloc(sizeof(long double)*HMMs.at(id)->d);
+        for (int i = 0; i < HMMs.at(id)->d; i++)
             seq[t][i] = boost::python::extract<long double>(_seq[t][i]);
     }
 
     long double p;
-    long double **prob = (long double**)malloc(sizeof(long double)*s*markovs.at(id)->n);
-    long double **alpha = (long double**)malloc(sizeof(long double)*s*markovs.at(id)->n);
+    long double **prob = (long double**)malloc(sizeof(long double)*s*HMMs.at(id)->n);
+    long double **alpha = (long double**)malloc(sizeof(long double)*s*HMMs.at(id)->n);
     for (int t = 0; t < s; t++) {
-        prob[t] = (long double*)malloc(sizeof(long double)*markovs.at(id)->n);
-        alpha[t] = (long double*)malloc(sizeof(long double)*markovs.at(id)->n);
+        prob[t] = (long double*)malloc(sizeof(long double)*HMMs.at(id)->n);
+        alpha[t] = (long double*)malloc(sizeof(long double)*HMMs.at(id)->n);
     }
 
-    markovs.at(id)->calcProbabilitiesSequence(seq, s, prob);
-    p = markovs.at(id)->forward(seq, s, prob, alpha);
+    HMMs.at(id)->calcProbabilitiesSequence(seq, s, prob);
+    p = HMMs.at(id)->forward(seq, s, prob, alpha);
 
     for (int t = 0; t < s; t++) {
         free(seq[t]);
@@ -685,7 +781,7 @@ long double forward(boost::python::str _name, boost::python::list _seq) {
 
 double baumWelch(boost::python::str _name, boost::python::list _seqs, int it) {
     std::string name = boost::python::extract<std::string>(_name);
-    int id = findMarkov(name);
+    int id = findHMM(name);
     if (id == -1)
         return 0.8;
 
@@ -698,17 +794,17 @@ double baumWelch(boost::python::str _name, boost::python::list _seqs, int it) {
         totalSize += sS[s];
     }
 
-    long double ***seqs = (long double***)malloc(sizeof(long double)*totalSize*markovs.at(id)->d);
+    long double ***seqs = (long double***)malloc(sizeof(long double)*totalSize*HMMs.at(id)->d);
     for (int s = 0; s < sN; s++) {
-        seqs[s] = (long double**)malloc(sizeof(long double)*sS[s]*markovs.at(id)->d);
+        seqs[s] = (long double**)malloc(sizeof(long double)*sS[s]*HMMs.at(id)->d);
         for (int t = 0; t < sS[s]; t++) {
-            seqs[s][t] = (long double*)malloc(sizeof(long double)*markovs.at(id)->d);
-            for (int i = 0; i < markovs.at(id)->d; i++)
+            seqs[s][t] = (long double*)malloc(sizeof(long double)*HMMs.at(id)->d);
+            for (int i = 0; i < HMMs.at(id)->d; i++)
                 seqs[s][t][i] = boost::python::extract<long double>(_seqs[s][t][i]);
         }
     }
 
-    double d = markovs.at(id)->baumWelch(seqs, sN, sS, it);
+    double d = HMMs.at(id)->baumWelch(seqs, sN, sS, it);
 
     for (int s = 0; s < sN; s++) {
         for (int t = 0; t < sS[s]; t++) {
@@ -722,7 +818,7 @@ double baumWelch(boost::python::str _name, boost::python::list _seqs, int it) {
     return d;
 }
 
-boost::python::str recognize(boost::python::list _seq) {
+boost::python::list recognize(boost::python::list _seq) {
     int s = boost::python::len(_seq);
 
     int d = 13;
@@ -739,20 +835,20 @@ boost::python::str recognize(boost::python::list _seq) {
     long double **prob;
     long double **alpha;
 
-    for (int id = 0; id < (int)markovs.size(); id++) {
-        prob = (long double**)malloc(sizeof(long double)*s*markovs.at(id)->n);
-        alpha = (long double**)malloc(sizeof(long double)*s*markovs.at(id)->n);
+    for (int id = 0; id < (int)HMMs.size(); id++) {
+        prob = (long double**)malloc(sizeof(long double)*s*HMMs.at(id)->n);
+        alpha = (long double**)malloc(sizeof(long double)*s*HMMs.at(id)->n);
         for (int t = 0; t < s; t++) {
-            prob[t] = (long double*)malloc(sizeof(long double)*markovs.at(id)->n);
-            alpha[t] = (long double*)malloc(sizeof(long double)*markovs.at(id)->n);
+            prob[t] = (long double*)malloc(sizeof(long double)*HMMs.at(id)->n);
+            alpha[t] = (long double*)malloc(sizeof(long double)*HMMs.at(id)->n);
         }
 
-        markovs.at(id)->calcProbabilitiesSequence(seq, s, prob);
-        p = markovs.at(id)->forward(seq, s, prob, alpha);
+        HMMs.at(id)->calcProbabilitiesSequence(seq, s, prob);
+        p = HMMs.at(id)->forward(seq, s, prob, alpha);
 
         if (p > maxP) {
             maxP = p;
-            maxName = markovs.at(id)->name;
+            maxName = HMMs.at(id)->name;
         }
 
         for (int t = 0; t < s; t++) {
@@ -767,15 +863,22 @@ boost::python::str recognize(boost::python::list _seq) {
         free(seq[t]);
     free(seq);
 
-    return boost::python::str(maxName);
+    boost::python::list result;
+    result.append(maxName);
+    result.append(log10l(maxP));
+
+    return result;
 }
 
 BOOST_PYTHON_MODULE(hmm)
 {
     using namespace boost::python;
-    def("createMarkov", createMarkov);
-    def("removeMarkov", removeMarkov);
-    def("renderMarkov", renderMarkov);
+    def("createHMM", createHMM);
+    def("setHMMs", setHMMs);
+    def("getHMMs", getHMMs);
+    def("clearHMMs", clearHMMs);
+    def("removeHMM", removeHMM);
+    def("renderHMM", renderHMM);
     def("forward", forward);
     def("baumWelch", baumWelch);
     def("recognize", recognize);

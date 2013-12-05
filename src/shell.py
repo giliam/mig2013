@@ -19,6 +19,8 @@ from core.hmm.markov import buildHMMs, recognize, recognizeList
 
 def main(verbose=True,action=-1,verboseUltime=True):
     db = Db("../db/",verbose=verbose)
+    #HMMs = { "Deux": ["Deux.txt"], "Trois" : ["Trois.txt"], "Cinq": ["Cinq.txt"] }
+    #db.addFile("hmmList.txt", HMMs)
     choice = -1
     while( not choice in range(1,8) ):
         try:
@@ -89,9 +91,9 @@ def main(verbose=True,action=-1,verboseUltime=True):
     ####################################
     elif choice == 3:
         fileName = recorder(db,"tmp",1,False,2,1)
-        cutBeginning( Db.prefixPath + "waves/tmp/", fileName + ".wav" )
-        syncFile( Db.prefixPath + "waves/tmp/cut_", fileName + ".wav" )
-        finalTest("tmp/sync_" + fileName + ".wav")
+        cutBeginning( Db.prefixPath + "waves/tmp/", fileName + ".wav", "" )
+        syncFile( Db.prefixPath + "waves/tmp/", fileName + ".wav", "" )
+        finalTest("tmp/" + fileName + ".wav")
         
     ####################################
     ###   RESULTATS INTERMEDIAIRES   ###
@@ -200,7 +202,7 @@ def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0):
             Retourne un tuple (motLePlusCompatible,log) """
     content,log = handlingRecording(content,db,dirChoice,numeroTraitement,action)
     hmmList = db.getFile("hmmList.txt")
-    buildHMMs(hmmList.keys(),hmmList.values(), 500, Db.prefixPath + "hmm/")
+    buildHMMs(hmmList.keys(),hmmList.values(), 500)
     return recognize(content),log
 
 
@@ -298,14 +300,15 @@ def finalTest(fileName = ""):
             n = fileChoice
             f = filesList[fileChoice]
             d = dirList[dirChoice]
+            fileOk = False
         else:
             f = fileName
+            fileOk = True
             n = 1
             d = ""
         dirName = os.path.dirname(f)
         m = db.getWaveFile(f)
         mot,log = handlingOneWord(m[1],db,d,n)
-        fileOk = False
         print "Le mot reconnu est", mot
         print "-----------------------------"
 if __name__ == "__main__":

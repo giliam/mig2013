@@ -4,7 +4,7 @@
 from numpy import int16
 import scipy.io.wavfile
 from operator import add
-
+import os
 
 def sync(amplitudes):
     tOut = 400
@@ -113,6 +113,13 @@ def cutBeginning(path,name,prefix = "cut_"):
     ampli = scipy.io.wavfile.read(path + name)
     ampli2 = ampli[1][22050:]
     scipy.io.wavfile.write(path + prefix + name, ampli[0], int16(ampli2))
+
+def sox_handling(fileName, noiseName, pathToTmp = "../db/waves/tmp/"):
+    pass
+    #os.system('sox "' + noiseName + '" -n noiseprof "' + pathToTmp + 'noise.prof"')
+    #os.system('sox "' + fileName + '" "' + fileName + '" noisered "' + pathToTmp + 'noise.prof" 0.21')
+    #os.remove(pathToTmp + "noise.prof")
+
 if __name__ == "__main__":
     syncFile("3_0")
     syncFile("3_1")

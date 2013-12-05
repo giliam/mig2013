@@ -31,7 +31,7 @@
 \contentsline {section}{\numberline {3.3}Le compte de r\'esultat pr\'evisionnel}{17}
 \contentsline {section}{\numberline {3.4}Le bilan}{17}
 \contentsline {section}{\numberline {3.5}Les imp\^ots}{18}
-\contentsline {section}{\numberline {3.6}Conclusion}{18}
+\contentsline {section}{\numberline {3.6}Conclusion et vue sur le long terme}{18}
 \contentsline {part}{III\hspace {1em}Le Code}{19}
 \contentsline {chapter}{\numberline {1}Python}{19}
 \contentsline {chapter}{\numberline {2}C/C++}{21}

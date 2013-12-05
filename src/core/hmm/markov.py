@@ -11,6 +11,10 @@ def getData(name):
 
     return content
 
+def writeData(name, data):
+    with open(name, "w") as f:
+        pickle.Pickler(f).dump(data)
+
 def getID(d):
     l = []
     for i in range(d):
@@ -179,20 +183,28 @@ def metaCoupures(seqs):
 
     return mus
 
-def buildHMMs(HMMs, HMMsPath, maxIt, path="db/"):
+def buildHMMs(HMMs, HMMsPath, maxIt, path = "../db/hmm/"):
+    hmm.clearHMMs()
+
     G_mu = []
     seqs = []
     for i in range(len(HMMsPath)):
-        seqs.append(getData(path + HMMsPath[i]))
-        G_mu = G_mu + metaCoupures(seqs[i])
+        seqs.append([])
+        for j in range(len(HMMsPath[i])):
+            seqs[i].append(getData(path + HMMsPath[i][j]))
+            G_mu = G_mu + metaCoupures(seqs[i][j])
 
     n = len(G_mu)
-    m = 1
     d = 13
 
     for i in range(len(HMMs)):
-        hmm.createMarkov(HMMs[i], n, m, d, uniformPI(n), uniformA(n), uniformC(n, m), G_mu, uniformG_sigma(n, m, d))
-        x = hmm.baumWelch(HMMs[i], seqs[i], maxIt)
+        m = len(HMMsPath[i])
+        hmm.createHMM(HMMs[i], HMMsPath[i], n, m, d, uniformPI(n), uniformA(n), uniformC(n, m), G_mu, uniformG_sigma(n, m, d))
+
+        passSeqs = []
+        for j in range(len(seqs[i])):
+            passSeqs = passSeqs + seqs[i][j]
+        x = hmm.baumWelch(HMMs[i], passSeqs, maxIt)
         if x == 0.5:
             print("HMM '{}' final likelyhood (log) : -inf".format(HMMs[i]))
             print("WARNING : HMM yielded 0 likelyhood !")
@@ -202,21 +214,24 @@ def buildHMMs(HMMs, HMMsPath, maxIt, path="db/"):
             print("HMM '{}' final likelyhood (log) : {}".format(HMMs[i], 1-x))
             print("WARNING : Baum-Welch algorithm ended because of iterations' limit ({})".format(maxIt))
         else:
-            pass
-            #print("HMM '{}' final likelyhood (log) : {}".format(HMMs[i], x))
+            print("HMM '{}' final likelyhood (log) : {}".format(HMMs[i], x))
+        print("")
+        
+def loadHMMs(fileName):
+    l = getData(fileName)
+    hmm.setHMMs(l)
+
+def saveHMMs(fileName):
+    l = hmm.getHMMs()
+    writeData(fileName, l)
+
 def recognize(seq):
-    return(hmm.recognize(seq))
+    l = hmm.recognize(seq)
+    print("Sequence recognized as : {} (log probabilty : {})".format(l[0], l[1]))
+    return l[0]
 
 def recognizeList(name,path):
     seqs = getData(path)
     for i in range(len(seqs)):
-        print("Sequence {} of {} recognized as : {}".format(i, name, hmm.recognize(seqs[i])))
-    print("")
-    
-if __name__ == "__main__":
-    HMMs = ["Deux", "Trois", "Cinq"]
-
-    buildHMMs(HMMs, 500)
-
-    recognizeList("Julien")
-    recognizeList("Adrien")
+        m = hmm.recognize(seqs[i])
+        print("Sequence {} of {} recognized as : {}".format(i, name, m))

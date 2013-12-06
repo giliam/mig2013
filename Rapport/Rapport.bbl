@@ -1,8 +1,50 @@
 \begin{thebibliography}{1}
 
-\bibitem{ref2}
+\bibitem{ref3}
+Apple.
+\newblock Application siri.
+\newblock \url{http://www.apple.com/fr/ios/siri/}, 2013.
+
+\bibitem{github}
+Tom Preston-Werner, Chris Wanstrath, and PJ~Hyett.
+\newblock Github.
+\newblock \url{http://www.github.com/}, 2013.
+
+\bibitem{rabiner}
 Lawrence Rabiner.
 \newblock {\em Fundamentals of Speech Recognition}.
 \newblock Prentice Hall PTR, 1993.
+
+\bibitem{echantillonnage}
+Vincent Arsigny.
+\newblock Modélisation par un champ de markov du signal de parole et
+  application à la reconnaissance vocale.
+\newblock Technical report, École Nationale Supérieure des Télécom de Paris,
+  2000.
+
+\bibitem{noisereduction}
+Zohar Babin.
+\newblock How to do noise reduction using ffmpeg and sox.
+\newblock
+  \url{http://www.zoharbabin.com/how-to-do-noise-reduction-using-ffmpeg-and-sox/},
+  2011.
+
+\bibitem{sox}
+Chris Bagwell.
+\newblock Sox website.
+\newblock \url{http://sox.sourceforge.net/Docs/Documentation}, 2009.
+
+\bibitem{melbe}
+Begam, Elamvazuthi, and Muda.
+\newblock Voice recognition algorithms using mel frequency cepstral coefficient
+  (mfcc) and dynamic time warping (dtw).
+\newblock {\em Journal of Computing}, 2010.
+
+\bibitem{nyquistshannon}
+Anonyme.
+\newblock Théorème de nyquist-shannon.
+\newblock
+  \url{http://fr.wikipedia.org/wiki/Th%C3%A9or%C3%A8me_d%27%C3%A9chantillonnage_de_Nyquist-Shannon},
+  2013.
 
 \end{thebibliography}

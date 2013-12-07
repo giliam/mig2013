@@ -255,35 +255,67 @@ Il est préférable d'employer cette échelle de fréquence dans l'algorithme de rec
         	Nam eu sollicitudin massa. Duis sagittis velit mi. Nunc dictum risus ac interdum lacinia\cite{rabiner}.
     \chapter{Modèles de Markov cachés (MMC)}
         \section{Prérequis et principe}
-        	Un modèle de Markov caché est un modèle statistique qui peut modéliser des processus physiques. Il fait appel aux structures d'automates.
-Un automate représente un système physique. Il est composé d'états (les cercles sur la figure), qui correspondent aux états du système réel, et de transitions (les flèches sur la figure), pour passer d'un état à l'autre. Il existe aussi la notion de chemin: par exemple pour passer de 0 à 3 sur la figure, il faut passer par 1 puis 2: le chemin de 0 à 3 est 0,1,2,3.
+        	Un modèle de Markov caché est un modèle statistique qui peut modéliser des processus physiques. Il fait appel aux structures d'automates\cite{automate}.
+Un automate représente un système physique. Il est composé d'états (les cercles sur la figure), qui correspondent aux états du système réel, 
+et de transitions (les flèches sur la figure), pour passer d'un état à l'autre. 
+Il existe aussi la notion de chemin: par exemple pour passer de 0 à 3 sur la figure, il faut passer par 1 puis 2: le chemin de 0 à 3 est 0,1,2,3.
 
 				\begin{figure}[hb]
 						\begin{center}
 							\includegraphics[width=10cm]{Images/MMC1.png} 
 						\end{center}
-						\caption{Exemple d'automate}
+						\caption{Exemple d'automate \og classique \fg}
 				\end{figure}
 				
-Les modèles de Markov cachés sont largement répandus dans la reconnaissance vocale. Entre un modèle discret et un modèle continu, nous avons choisi le dernier car les données en entrée ne font pas partie d'un ensemble fini: il existe une infinité de sons  possibles pour un même phonème. Les modèles de Markov cachés sont particulièrement adaptés pour la reconnaissance vocale car ils permettent un apprentissage constant de la part du programme: il est capable d'apprendre de nouveaux mots de manière autonome, et de s'améliorer au fur et à mesure que la base de données de mots grandit.
+Les modèles de Markov cachés sont largement répandus dans la reconnaissance vocale(\cite{ref1}, \cite{rabiner} et \cite{calcvoc}). 
+Entre un modèle discret et un modèle continu, nous avons choisi ce dernier car les données en entrée ne font pas partie d'un ensemble fini: 
+il existe une infinité de sons possibles pour un même phonème. 
+Les modèles de Markov cachés sont particulièrement adaptés pour la reconnaissance vocale car 
+ils permettent un apprentissage constant de la part du programme : 
+celui-ci est capable d'apprendre de nouveaux mots de manière autonome, et de s'améliorer au-fur-et-à-mesure que la base de données de mots grandit.
 
-Nous avons modélisé chaque mot par un automate, dont les états sont les différents phonèmes du mot. Lorsque l'on prononce un mot, on se dirige dans l'automate grâce aux phonèmes prononcés, jusqu'à rencontrer l'état final. Ceci permet de reconnaître le mot même si une syllabe dure plusieurs secondes: dans ce cas, on se contente de tourner en rond  (en restant sur l'état 0 de la figure par exemple) dans l'automate jusqu'à rencontrer un nouveau phonème. Dans l'automate, la transition de l'état i à k représente la probabilité de passer de l'état i à k, c'est-à-dire la probabilité que le phonème n°k vienne tout de suite après le phonème n°i. \newpage %mise en page
+Nous avons modélisé chaque mot par un automate, dont les états sont les différents phonèmes du mot. 
+Lorsque l'on prononce un mot, on se dirige dans l'automate grâce aux phonèmes prononcés, 
+jusqu'à rencontrer l'état final. Ceci permet de reconnaître le mot même si une syllabe dure 
+plusieurs secondes: dans ce cas, on se contente de tourner en rond  
+(en restant sur l'état 0 de la figure par exemple) dans l'automate jusqu'à rencontrer un nouveau phonème. 
+Dans l'automate, la transition de l'état i à k représente la probabilité de passer de l'état i à k, 
+c'est-à-dire la probabilité que le phonème n°k vienne tout de suite après le phonème n°i. \newpage %mise en page
 
 				\begin{figure}[hb]
 						\begin{center}
 							\includegraphics[width=10cm]{Images/MMC2.png} 
 						\end{center}
-						\caption{exemple}
+						\caption{Exemple de deux phonèmes et de la probabilité de passer du phonème 1 au phonème 2}
 				\end{figure}
-				
-Résumons la situation lorsque l'on lance notre programme: d'un côté une base de données de mots, représentés chacun par un automate ; de l'autre, un fichier audio: le mot prononcé par l'utilisateur. Le programme se déplace dans chaque automate grâce au fichier audio, il s'oriente en fonction des phonèmes prononcés. Nous appellerons cette opération "faire passer un mot dans un automate".
+		\section{Principaux algorithmes sur les modèles de Markov}
+Lorsque l'on fait passer un mot dans un automate, ie. qu'on s'oriente dans l'automate à l'aide des phonèmes, on peut calculer la probabilité que le mot corresponde à cet automate: 
+on multiplie toutes les probabilités rencontrées pendant le parcours. Elles dépendent bien sûr du chemin parcouru 
+(i-e des transitions rencontrées). 
+C'est le principe de l'algorithme \emph{forward}.
 
-Lorsque l'on fait passer un mot dans un automate, on peut donc calculer la probabilité qu'il corresponde à cet automate: on multiplie toutes les probabilités rencontrées. Elles dépendent bien sûr du chemin parcouru (i-e des transitions rencontrées). C'est le principe de l'algorithme "Forward".
+L'algorithme de Baum-Welch permet d'optimiser un automate. En se plaçant dans l'ensemble des modèles de Markov, on cherche à faire converger une suite
+d'automates définis à l'aide de plusieurs versions d'un même mot vers un automate optimisé qui corresponde au mieux au mot.
 
-Il existe plusieurs algorithmes courants sur les modèles de Markov cachés. L'algorithme "Forward" permet de calculer la probabilité qu'un automate corresponde au mot prononcé: en comparant les probabilités dans chacun des automates, on sélectionne la plus grande et on a l'automate qui correspond le mieux.  C'est ce que fait notre application web, face au mot prononcé par le client. 
-L'algorithme de Baum-Welch permet l'apprentissage de nouveaux mots: pour chaque nouveau mot il crée un nouvel automate, et le rend le plus optimisé possible. C'est ce que fait la partie logicielle de notre programme, pour que les programmeurs puissent agrandir la base de données.
+
+		\section{Application à notre objectif}
+		Résumons la situation lorsque l'on lance notre programme: d'un côté une base de données de mots, représentés chacun par un automate ; 
+de l'autre, un fichier audio: le mot prononcé par l'utilisateur. Le programme se déplace dans chaque automate grâce au fichier audio, 
+il s'oriente en fonction des phonèmes prononcés. Nous appellerons cette opération "faire passer un mot dans un automate".
+
+L'algorithme \emph{forward} permet donc de calculer 
+la probabilité qu'un automate corresponde au mot prononcé: en comparant les probabilités dans chacun des automates, 
+on sélectionne la plus grande et on a l'automate qui correspond le mieux au mot sélectionné.  
+
+L'algorithme de Baum-Welch permet l'apprentissage de nouveaux mots: pour chaque nouveau mot il crée un nouvel automate, 
+et le rend le plus optimisé possible en s'appuyant sur la bibliothèque existante. C'est ce que fait la partie logicielle de notre programme, 
+pour que les programmeurs puissent agrandir la base de données.
         \section{Phase d'apprentissage}
-        Une fois l'algorithme de reconnaissance vocale implémenté, il nous a fallu l'améliorer. Deux aspects demandent un apprentissage de la part du programme. Il doit d'abord faire grossir l'ensemble des mots reconnus, de manière à pouvoir en reconnaître le plus possible. Mais il est aussi intéressant de lui faire apprendre un mot par des locuteurs différents. Plus le nombre de locuteurs est grand, plus l'algorithme peut être précis.
+        Une fois l'algorithme de reconnaissance vocale implémenté, il nous a fallu l'améliorer. 
+        Deux aspects demandent un apprentissage de la part du programme. 
+        Il doit d'abord faire grossir l'ensemble des mots reconnus, de manière à pouvoir en reconnaître le plus possible. 
+        Mais il est aussi intéressant de lui faire apprendre un mot par des locuteurs différents. 
+        Plus le nombre de locuteurs est grand, plus l'algorithme peut être précis.
         
 Enregistrer plusieurs personnes permet d'obtenir une diversité de spectres qui accroit la précision du programme.
 
@@ -293,7 +325,7 @@ Pour mettre en place un apprentissage, nous avions des besoins matériels (stocke
         
         \section{Phase de reconnaissance}
         
-La phase de reconnaissance constitue le c\oe{}ur du programme. Comme dit précédemment, le programme effectue l'algorithme "Forward" sur chacun des automates et renvoie le mot le plus probable, après avoir comparé toutes les probabilités.
+La phase de reconnaissance constitue le c\oe{}ur du programme. Comme dit précédemment, le programme effectue l'algorithme \emph{forward} sur chacun des automates et renvoie le mot le plus probable, après avoir comparé toutes les probabilités.
 
 A l'origine, la phase de reconnaissance a été codée en Python. Cependant le temps d'exécution était trop long, nous l'avons donc codé en C++, ce qui a permis de diviser le temps d'exécution par 50 000. Grâce à ce travail laborieux, le programme s'effectue en un temps proche de la seconde. Tout a été mis en place, notamment en amont avec le codage en C++ de la transformée de Fourier rapide, pour privilégier la rapidité de l'exécution. 
 
@@ -312,19 +344,55 @@ Au départ nous n'avions qu'un seul locuteur pour faire la base de donnée des mot
     \nonewpagechapter{Côté web}
     	  
     \chapter{Applications}
-    	 La reconnaissance vocale est une technologie promise à un futur radieux; les plus grands noms de l'informatique, dont Bill Gates, annonçaient il y a quelques années qu'elle allait remplacer les claviers d'ici peu. Il s'avère aujourd'hui que leurs prédictions ne sont pas encore réalisées, il est tout à fait possible qu'elle se réalise plus tard que prévu. Le principal obstacle à l'explosion de cette technologie étant le manque de fiabilité totale, mais avec les progrès à venir, la technologie deviendra de plus en plus sûre.
+    	 La reconnaissance vocale est une technologie promise à un futur radieux; les plus grands noms de l'informatique, 
+    	 dont Bill Gates, annonçaient il y a quelques années qu'elle allait remplacer les claviers d'ici peu. 
+    	 Il s'avère aujourd'hui que leurs prédictions ne sont pas encore réalisées, il est tout à fait possible 
+    	 qu'elle se réalise plus tard que prévu. Le principal obstacle à l'explosion de cette technologie étant 
+    	 le manque de fiabilité totale, mais avec les progrès à venir, la technologie deviendra de plus en plus sûre.
     	 
-	L'armée étatsunienne a bien compris le potentiel de cette technologie: elle investit massivement depuis des années dans la recherche pour la développer. Elle est d'ailleurs déjà utilisée sur certains avions de chasse, et pas seulement aux Etats-Unis: en France, en Angleterre et en Suède aussi notamment. Vu les investissements massifs, il y a fort à penser que les armées de ces différents pays ont des techniques bien plus avancées que celles connues du grand public, qui sont déjà plutôt performantes. Pour le moment, les commandes vocales ne servent pas encore à des fonctions critiques comme lancer un missile, et elles demandent toujours la confirmation du pilote avant d'exécuter une action. Elles libèrent néanmoins considérablement le pilote de beaucoup de tâches secondaires, ce qui lui permet de se concentrer sur les fonctions critiques. La technologie est également utilisée sur certains Hélicoptères, notamment le célèbre Puma de l'armée française. Dans les deux cas, elle demande une grande fiabilité dans des conditions de stress et de bruit ambiant énorme (en particulier pour les hélicoptères, dans lesquels les pilotes n'ont souvent pas de casque anti bruit). Dans ce domaine, les perspectives sont donc très intéressantes financièrement mais elles demandent un savoir-faire qui est totalement hors de notre portée.
+	L'armée étatsunienne a bien compris le potentiel de cette technologie: elle investit massivement depuis des 
+	années dans la recherche pour la développer\cite{usarmy}. Elle est d'ailleurs déjà utilisée sur certains avions de chasse, 
+	et pas seulement aux Etats-Unis: en France, en Angleterre et en Suède aussi notamment. Vu les investissements 
+	massifs, il y a fort à penser que les armées de ces différents pays ont des techniques bien plus avancées que 
+	celles connues du grand public, qui sont déjà plutôt performantes. Pour le moment, les commandes vocales ne 
+	servent pas encore à des fonctions critiques comme lancer un missile, et elles demandent toujours la confirmation 
+	du pilote avant d'exécuter une action. Elles libèrent néanmoins considérablement le pilote de beaucoup de tâches 
+	secondaires, ce qui lui permet de se concentrer sur les fonctions critiques. La technologie est également utilisée 
+	sur certains hélicoptères, notamment le célèbre Puma de l'armée française. Dans les deux cas, elle demande une 
+	grande fiabilité dans des conditions de stress et de bruit ambiant énorme (en particulier pour les hélicoptères, 
+	dans lesquels les pilotes n'ont souvent pas de casque anti bruit). Dans ce domaine, les perspectives sont donc 
+	très intéressantes financièrement mais elles demandent un savoir-faire qui est totalement hors de notre portée.
 	
-	La reconnaissance vocale est également utilisée dans le contrôle aérien, et pourrait à terme remplacer les contrôleurs aériens. En effet, les phrases utilisées dans ce contexte sont très typées, ce qui favorise la reconnaissance (phrases souvent identiques, syntaxe très simple, prononciation très articulée). La technologie est donc moins avancée que dans le domaine de l'armée, et elle est déjà utilisée aux Etats-Unis, en Australie, en Italie, au Brésil et au Canada. Notre produit pourrait servir à ce type dapplication, en créant une base de données spécifique au contrôle aérien.
+	La reconnaissance vocale est également utilisée dans le contrôle aérien, et pourrait à terme remplacer les 
+	contrôleurs aériens. En effet, les phrases utilisées dans ce contexte sont très typées, ce qui favorise la 
+	reconnaissance (phrases souvent identiques, syntaxe très simple, prononciation très articulée). La technologie 
+	est donc moins avancée que dans le domaine de l'armée, et elle est déjà utilisée aux Etats-Unis, en Australie, 
+	en Italie, au Brésil et au Canada. Notre produit pourrait servir à ce type dapplication, en créant une base de 
+	données spécifique au contrôle aérien.
 	
-	La reconnaissance vocale se développe dans de nombreux domaines professionnels où les tâches administratives prennent beaucoup de temps, notamment la médecine, le droit et la police. En médecine, elle permet de remplir des rapports médicaux automatiquement: une simple relecture est alors nécessaire.  Elle est notamment déjà utilisée dans 95\% des hôpitaux aux Pays-Bas. Pour le droit, elle pourrait remplacer le travail du greffier pour prendre des notes dans les tribunaux. Et pour la police, elle permet de rédiger des rapports environ trois fois plus vite qu'au clavier. Le besoin de fiabilité est bien moindre dans ces domaines que dans les domaines de l'armée ou du contrôle aérien, une relecture est souvent largement nécessaire. Dans le domaine du droit, il faut néanmoins prendre en compte les conditions particulières d'enregistrement (brouhaha ambiant,  émotions dans la voix, volume variable...). Notre produit peut tout à fait servir à ce type d'applications, à condition de créer une base de données spécifique aux domaines concernés.
+	La reconnaissance vocale se développe dans de nombreux domaines professionnels où les tâches administratives 
+	prennent beaucoup de temps, notamment la médecine, le droit et la police. En médecine, elle permet de remplir
+	 des rapports médicaux automatiquement: une simple relecture est alors nécessaire.  Elle est notamment déjà 
+	 utilisée dans 95\% des hôpitaux aux Pays-Bas. Pour le droit, elle pourrait remplacer le travail du greffier 
+	 pour prendre des notes dans les tribunaux. Et pour la police, elle permet de rédiger des rapports environ 
+	 trois fois plus vite qu'au clavier. Le besoin de fiabilité est bien moindre dans ces domaines que dans les 
+	 domaines de l'armée ou du contrôle aérien, une relecture est souvent largement nécessaire. Dans le domaine 
+	 du droit, il faut néanmoins prendre en compte les conditions particulières d'enregistrement (brouhaha ambiant,  
+	 émotions dans la voix, volume variable...). Notre produit peut tout à fait servir à ce type d'applications, 
+	 à condition de créer une base de données spécifique aux domaines concernés.
 	
-	Une autre application possible de la reconnaissance vocale est l'aide aux handicapés, par exemple des commandes vocales pour une chaise roulante. Les phrases utilisées sont très typées (avancer, reculer,...) donc la technologie n'a pas besoin d'être très avancée. De plus, avec la possibilité qu'offre notre produit d'ajouter ses propres mots à la base de données, l'utilisateur lui-même peut rentrer les commandes ce qui assure un taux de reconnaissance très élevé. Notre produit peut donc bien s'adapter à cette utilisation.
+	Une autre application possible de la reconnaissance vocale est l'aide aux handicapés, par exemple des commandes
+	 vocales pour une chaise roulante. Les phrases utilisées sont très typées (avancer, reculer,...) donc la 
+	 technologie n'a pas besoin d'être très avancée. De plus, avec la possibilité qu'offre notre produit 
+	 d'ajouter ses propres mots à la base de données, l'utilisateur lui-même peut rentrer les commandes ce 
+	 qui assure un taux de reconnaissance très élevé. Notre produit peut donc bien s'adapter à cette utilisation.
 	
-	La technologie est également très utilisée pour un usage plus ludique: fonctions de recherche dans les téléphones mobiles, les ordinateurs, robotique, jeux vidéo, traduction automatique,... Notre produit, dans sa version pour les particuliers, peut servir à ces usages même si la concurrence ne manque pas.
+	La technologie est également très utilisée pour un usage plus ludique: fonctions de recherche dans les 
+	téléphones mobiles, les ordinateurs, robotique, jeux vidéo, traduction automatique,... Notre produit, 
+	dans sa version pour les particuliers, peut servir à ces usages même si la concurrence ne manque pas.
 	
-	Enfin, la reconnaissance vocale peut servir à des fins sécuritaires, pour des vérifications d'identité. Il s'agit alors de reconnaître le locuteur, ce que notre produit ne permet pas.
+	Enfin, la reconnaissance vocale peut servir à des fins sécuritaires, pour des vérifications d'identité. 
+	Il s'agit alors de reconnaître le locuteur, ce que notre produit ne permet pas.
 	
 	Pour conclure, les applications pour notre produit sont assez nombreuses, et la demande est de plus en plus forte, ce qui montre sa pertinence.
     \chapter{Budget, modèle économique}

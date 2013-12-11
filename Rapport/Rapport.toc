@@ -5,33 +5,38 @@
 \contentsline {subsection}{\numberline {0.3.1}Acoustique-phon\'etique}{4}
 \contentsline {subsection}{\numberline {0.3.2}Reconnaissance de motifs}{5}
 \contentsline {part}{I\hspace {1em}D\'emarche Technique}{6}
-\contentsline {chapter}{\numberline {1}Analyse, formatage du signal}{6}
-\contentsline {section}{\numberline {1.1}Introduction}{6}
-\contentsline {section}{\numberline {1.2}Pr\'erequis}{6}
-\contentsline {subsection}{\numberline {1.2.1}Qu'est-ce que le son ?}{6}
-\contentsline {subsection}{\numberline {1.2.2}Comment le son est-il repr\'esent\'e dans l'ordinateur ?}{6}
-\contentsline {subsection}{\numberline {1.2.3}Pr\'e accentuation des aigus}{7}
-\contentsline {section}{\numberline {1.3}Enregistrement, recadrage, filtrage HF}{7}
-\contentsline {subsection}{\numberline {1.3.1}Synchronisation}{7}
-\contentsline {subsection}{\numberline {1.3.2}Filtrage passe-haut}{7}
-\contentsline {section}{\numberline {1.4}Echantillonnage, fen\^etrage}{8}
-\contentsline {section}{\numberline {1.5}Transform\'ee de Fourier}{9}
-\contentsline {section}{\numberline {1.6}Mel}{9}
-\contentsline {section}{\numberline {1.7}Transform\'ee inverse}{10}
-\contentsline {chapter}{\numberline {2}Mod\`eles de Markov cach\'es (MMC)}{11}
-\contentsline {section}{\numberline {2.1}Pr\'erequis et principe}{11}
-\contentsline {section}{\numberline {2.2}Phase d'apprentissage}{12}
-\contentsline {section}{\numberline {2.3}Phase de reconnaissance}{12}
-\contentsline {part}{II\hspace {1em}Approche commerciale}{14}
-\contentsline {chapter}{\numberline {1}C\^ot\'e web}{14}
-\contentsline {chapter}{\numberline {2}Applications}{15}
-\contentsline {chapter}{\numberline {3}Budget, mod\`ele \'economique}{17}
-\contentsline {section}{\numberline {3.1}Introduction}{17}
-\contentsline {section}{\numberline {3.2}Les salaires}{17}
-\contentsline {section}{\numberline {3.3}Le compte de r\'esultat pr\'evisionnel}{18}
-\contentsline {section}{\numberline {3.4}Le bilan}{18}
-\contentsline {section}{\numberline {3.5}Les imp\^ots}{19}
-\contentsline {section}{\numberline {3.6}Conclusion et vue sur le long terme}{19}
-\contentsline {part}{III\hspace {1em}Le Code}{20}
-\contentsline {chapter}{\numberline {1}Python}{20}
-\contentsline {chapter}{\numberline {2}C/C++}{22}
+\contentsline {chapter}{\numberline {1}Principe g\'en\'eral du traitement du signal}{6}
+\contentsline {section}{\numberline {1.1}Objectifs}{6}
+\contentsline {section}{\numberline {1.2}Sch\'ema global}{7}
+\contentsline {chapter}{\numberline {2}Analyse, formatage du signal}{7}
+\contentsline {section}{\numberline {2.1}Introduction}{7}
+\contentsline {section}{\numberline {2.2}Pr\'erequis}{7}
+\contentsline {subsection}{\numberline {2.2.1}Qu'est-ce que le son ?}{7}
+\contentsline {subsection}{\numberline {2.2.2}Comment le son est-il repr\'esent\'e dans l'ordinateur ?}{7}
+\contentsline {subsection}{\numberline {2.2.3}Pr\'e accentuation des aigus}{8}
+\contentsline {section}{\numberline {2.3}Enregistrement, recadrage, filtrage HF}{8}
+\contentsline {subsection}{\numberline {2.3.1}Synchronisation}{8}
+\contentsline {subsection}{\numberline {2.3.2}Filtrage passe-haut}{8}
+\contentsline {section}{\numberline {2.4}Echantillonnage, fen\^etrage}{9}
+\contentsline {section}{\numberline {2.5}Transform\'ee de Fourier}{10}
+\contentsline {section}{\numberline {2.6}Mel}{10}
+\contentsline {section}{\numberline {2.7}Transform\'ee inverse}{10}
+\contentsline {chapter}{\numberline {3}Mod\`eles de Markov cach\'es (MMC)}{12}
+\contentsline {section}{\numberline {3.1}Pr\'erequis et principe}{12}
+\contentsline {section}{\numberline {3.2}Principaux algorithmes sur les mod\`eles de Markov}{13}
+\contentsline {section}{\numberline {3.3}Application \`a notre objectif}{13}
+\contentsline {section}{\numberline {3.4}Phase d'apprentissage}{13}
+\contentsline {section}{\numberline {3.5}Phase de reconnaissance}{14}
+\contentsline {part}{II\hspace {1em}Approche commerciale}{16}
+\contentsline {chapter}{\numberline {1}C\^ot\'e web}{16}
+\contentsline {chapter}{\numberline {2}Applications}{17}
+\contentsline {chapter}{\numberline {3}Budget, mod\`ele \'economique}{19}
+\contentsline {section}{\numberline {3.1}Introduction}{19}
+\contentsline {section}{\numberline {3.2}Les salaires}{19}
+\contentsline {section}{\numberline {3.3}Le compte de r\'esultat pr\'evisionnel}{20}
+\contentsline {section}{\numberline {3.4}Le bilan}{20}
+\contentsline {section}{\numberline {3.5}Les imp\^ots}{21}
+\contentsline {section}{\numberline {3.6}Conclusion et vue sur le long terme}{21}
+\contentsline {part}{III\hspace {1em}Le Code}{22}
+\contentsline {chapter}{\numberline {1}Python}{22}
+\contentsline {chapter}{\numberline {2}C/C++}{24}

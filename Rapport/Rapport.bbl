@@ -1,6 +1,6 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
-\bibitem{ref3}
+\bibitem{apple}
 Apple.
 \newblock Application siri.
 \newblock \url{http://www.apple.com/fr/ios/siri/}, 2013.
@@ -46,5 +46,27 @@ Anonyme.
 \newblock
   \url{http://fr.wikipedia.org/wiki/Th%C3%A9or%C3%A8me_d%27%C3%A9chantillonnage_de_Nyquist-Shannon},
   2013.
+
+\bibitem{automate}
+Luc Maranget.
+\newblock {\em Introduction à la programmation}.
+\newblock École Polytechnique, 2008-2009.
+
+\bibitem{ref1}
+Maurice Charbit.
+\newblock {Reconnaissance de mots isolés (utilisation des modèles HMM)}.
+\newblock {\em Inconnu}, Oct. 2002.
+
+\bibitem{calcvoc}
+Franck Bonnet, Benjamin Devèze, Mathieu Fouquin, and Julien Jeany.
+\newblock Reconnaissance automatique de la parole.
+\newblock {\em Epita}, 2004.
+
+\bibitem{usarmy}
+Aharon Etengoff.
+\newblock Nuance clinches speech-recognition deal with us army.
+\newblock
+  \url{http://www.itexaminer.com/nuance-clinches-speech-recognition-deal-with-us-army.aspx},
+  2009.
 
 \end{thebibliography}

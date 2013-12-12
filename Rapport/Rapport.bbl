@@ -15,6 +15,22 @@ Lawrence Rabiner.
 \newblock {\em Fundamentals of Speech Recognition}.
 \newblock Prentice Hall PTR, 1993.
 
+\bibitem{pyaudio}
+MIT.
+\newblock Pyaudio.
+\newblock \url{http://people.csail.mit.edu/hubert/pyaudio/}, 2006.
+
+\bibitem{melproof}
+Stanley~Smith Stevens, John Volkman, and Edwin~B. Newman.
+\newblock A scale for the measurement of the psychological magnitude pitch.
+\newblock {\em Journal of the Acoustical Society of America}, 1937.
+
+\bibitem{melbe}
+Begam, Elamvazuthi, and Muda.
+\newblock Voice recognition algorithms using mel frequency cepstral coefficient
+  (mfcc) and dynamic time warping (dtw).
+\newblock {\em Journal of Computing}, 2010.
+
 \bibitem{echantillonnage}
 Vincent Arsigny.
 \newblock Modélisation par un champ de markov du signal de parole et
@@ -33,12 +49,6 @@ Zohar Babin.
 Chris Bagwell.
 \newblock Sox website.
 \newblock \url{http://sox.sourceforge.net/Docs/Documentation}, 2009.
-
-\bibitem{melbe}
-Begam, Elamvazuthi, and Muda.
-\newblock Voice recognition algorithms using mel frequency cepstral coefficient
-  (mfcc) and dynamic time warping (dtw).
-\newblock {\em Journal of Computing}, 2010.
 
 \bibitem{nyquistshannon}
 Anonyme.

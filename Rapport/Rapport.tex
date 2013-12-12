@@ -151,16 +151,38 @@
 	
 \part{Démarche Technique}
     \nonewpagechapter{Principe général du traitement du signal}
-%TODO : Schéma récapitulatif du traitement
     \section{Objectifs}
 Bien que la reconnaissance vocale telle qu'elle est aujourd'hui mise-en-place dans les différents matériels semble immédiate, le travail à effectuer pour reconnaître un mot est complexe.
 La première étape pour faire de la reconnaissance vocale est de parvenir à trouver un moyen de caractériser efficacement et uniformément un mot. Cela désigne un mot par un certain motif puis permet par le même procédé
 appliqué sur un enregistrement quelconque, de parvenir à identifier deux motifs proches qui correspondraient alors au même mot.
 Il s'agit donc tout d'abord de traiter le signal pour en découvrir certaines caractéristiques. En effet, une même personne ne prononce pas toujours les mots de la même façon, au même débit, avec les mêmes hauteurs de son, ce qui
 rend ardue une simple identification par comparaisons temporelles.
+\newpage
 \section{Schéma global}
 Afin de gérer ces difficultés, nous avons mis en place plusieurs étapes de traitement supplémentaires afin d'obtenir cette fameuse \og trace \fg qui caractériserait un enregistrement, c'est-à-dire un mot. Nous avons pour cela 
 utilisé plusieurs techniques de traitement du signal communément connues (échantillonnage, fenêtrage, transformée de Fourier directe et inverse).
+Cette figure explique globalement le traitement que nous avons choisi de mettre-en-place afin de reconnaître le mot prononcé. Il y a donc plusieurs étapes qui s'enchaînent pour parvenir à un 
+objet que nous pourrons manipuler en le sachant représentatif et caractéristique du son.
+\begin{figure}[!h]
+	    \begin{center}
+		    \includegraphics[width=18cm]{Images/traitement.png} 
+	    \end{center}
+	    \caption{Traitement du son pour le reconnaître}
+\end{figure}
+\paragraph{Enregistrement du son}
+La première étape consiste à simplement enregistrer le son sur le disque dur de l'ordinateur. Nous utilisons pour cela un module intégré à Python appelé PyAudio\cite{pyaudio}. Cela permet d'enregistrer
+avec une certaine fréquence (donc un certain nombre de captures par seconde) les amplitudes du son captées par le micro.
+\paragraph{Découpage en fenêtre}
+Le son est découpé ensuite en petites fenêtres de quelques dizaines de millisecondes ce qui permet d'isoler les événements sonores qui pourraient avoir une importance. Il s'agit d'un \emph{fenêtrage}.
+\paragraph{Passage en fréquence}
+Jusque là, le son étudié se trouvait représenter à peu près temporellement ce qui avait été entendu. Néanmoins, il est difficile d'étudier un son tel quel et on utilise alors le lien
+entre les fréquences et le signal temporel. Il est ensuite plus facile d'étudier et de transformer un ensemble de fréquences pour appliquer par un exemple des filtres qui
+rapprochent le programme du fonctionnement de l'oreille.
+\paragraph{Utilisation de l'échelle de Mel}
+Puisque le programme doit savoir \emph{faire la différence entre des mots}, c'est-à-dire des sons identifiés tels quels par une oreille \emph{humaine}, il faut donner au programme un comportement similaire
+à celui d'une oreille humaine. On utilise pour cela une échelle qui accentue certaines fréquences. En effet, il a été montré\cite{melproof} (et ensuite appliqué \cite{melbe}) que l'oreille
+ne perçoit pas toutes les fréquences de la même façon.
+
 \nonewpagechapter{Analyse, formatage du signal}
     		\section{Introduction}
     		Comme nous l'avons mentionné, même le plus élémentaire des systèmes de reconnaissance vocale utilise des algorithmes au carrefour d'une grande diversité de disciplines: 

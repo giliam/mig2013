@@ -394,7 +394,7 @@ Au départ nous n'avions qu'un seul locuteur pour faire la base de donnée des mot
 \part{Approche commerciale}
 		\setcounter{chapter}{0}
     \nonewpagechapter{Approche développement web}
-    	  
+ 
 Pour assurer une rentabilité à notre projet, il nous faut le penser, le structurer en vue d'une large distribution sous de multiples formes.
 
 
@@ -470,7 +470,9 @@ Au vu des nombreux avantages qu'elle présente,
 
 \subsection{Réalisation du SpeechServer}
 
-Le SpeechServer a été codé en Python. Python a une libraire standard suffisamment riche pour n'avoir a très ce problème qu'à un haut niveau (en reception de requêtes selon leurs méthodes). De plus, ce choix facilite les interactions avec le coeur algorithmique : des imports et appels de fonctions depuis le SpeechServer suffisent.
+Le SpeechServer a été codé en Python. Python a une libraire standard suffisamment riche pour n'avoir a traiter ce problème qu'à un haut niveau (en reception de requêtes selon leurs méthodes). De plus, ce choix facilite les interactions avec le coeur algorithmique : des imports et appels de fonctions depuis le SpeechServer suffisent.
+
+\medskip{}
 
 Finalement, le SpeechServer prend seulement la forme d'un programme python à lancer sur un ordinateur.
 
@@ -481,9 +483,50 @@ Finalement, le SpeechServer prend seulement la forme d'un programme python à lan
 	\caption{Le SpeechServer lancé}
 \end{figure}
 
-Il écoute alors les requêtes sur le port 8010 (par défaut) de l'ordinateur.
+Il écoute alors les requêtes sur le port 8010 (par défaut) de l'ordinateur. Lorsqu'il en reçoit, il interragit avec le coeur algorithmique et le système de gestion de bases de données mis en place.
 
-\subsection{Choix de la base de données}
+\subsection{Système de Gestion de Base de Données (SGBD)}
+
+Le SGBD doit permettre de stocker et gérer les fichiers audio associés aux mots (au moins une dizaine d'enregistrement par mot), les modèles de markov cachés qui leurs sont associés ainsi que les données d'authenfication des applications clientes.
+
+\medskip{}
+
+Le standard actuel de gestion de bases de données est le modèle relationnel basé sur le langage SQL. Néanmoins, dans le cas précis de stockage de fichiers relativement lourds (> 0.1 Mo), la lecture/écriture des données directemnt sur le disque dur s'avère plus performante.
+
+\medskip{}
+
+Nous avons donc fait le choix de stocker nos données sur le disque dur du serveur, en enregistrant les fichiers audio en format brut, et les autres données (modèles de Markov, données d'authentification) comme des objets Python, avec le module pickle de la librairie standard.
+
+\smallskip{}
+
+Un module python db.py a été developpé par nos soins pour gérer efficacement nos fichiers
+
+\bigskip{}
+
+Comme les accès en lecture/écriture à la mémoire RAM sont bien plus rapide que les accès aux disques dur,
+\emph{On pourrait obtenir un gain de vitesse significatif pour la reconnaissance vocale en chargeant l'intégralité des données en mémoire RAM au démarrage du SpeechServer}
+Néanmoins, la quantité de mémoire RAM nécessaire serait très importante, croissant exponentiellement avec le nombre de mots enregistrés. Les coûts engendrés seraient importants :
+
+\medskip{}
+
+Sur la gamme serveurs de calcul de l'hébergeur OVH,
+Le serveur doté de 256 Go de RAM est loué 300 ¤ HT / mois.
+Le même serveur (en termes de performance CPU et de disque dur : 4 To) doté de 64 Go de RAM, est loué 80 ¤ HT / mois
+
+\medskip{}
+
+Un système hybride de cache en mémoire RAM pourrait aussi être envisagé, mais nous n'avons pas le temps de le mettre en place en moins de 3 semaines.
+
+\medskip{}
+
+\emph{On conservera un stockage des données intégralement sur disque dur}
+
+\medskip{}
+Les spécifications du SpeechServer et de du SGBD ayant été définis, il devient possible de construire des applications se fondant dessus.
+
+\subsection{SpeechApp}
+
+\subsection{SpeechRecorder}
 
     \chapter{Applications}
     	 La reconnaissance vocale est une technologie promise à un futur radieux; les plus grands noms de l'informatique, 

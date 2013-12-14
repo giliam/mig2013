@@ -428,6 +428,18 @@ Au départ nous n'avions qu'un seul locuteur pour faire la base de donnée des mot
  
 Pour assurer une rentabilité à notre projet, il nous faut le penser, le structurer en vue d'une large distribution sous de multiples formes.
 
+\medskip{}
+
+Nous sommes dotés d'une identité porteuse de ce projet.
+Le groupe de travail est baptisé The SpeechApp Company.
+Visuellement, elle se constitue en premier lieu d'un logo : Un micro, élement central du projet, dont la tête est le logo de Mines ParisTech, signe de notre appartenance à l'école et de l'aide qu'elle nous a apporté dans le projet.
+
+\begin{figure}[H]
+	\begin{center}
+	\includegraphics[width=5cm]{pics/logomigSE.png} 
+	\end{center}
+	\caption{Architecture proposée pour le projet The SpeechApp Company}
+\end{figure}
 
 \subsection{Choix d'une architecture optimale pour notre projet}
 
@@ -456,7 +468,7 @@ Cette configuration permettrait aussi à une multitudes d'applications tierces d'
 
 Nous aboutirions alors à l'architecture représentée par le schéma suivant:
 
-\begin{figure}
+\begin{figure}[H]
 	\begin{center}
 	\includegraphics[width=14cm]{Images/architecture.png} 
 	\end{center}
@@ -473,7 +485,7 @@ Le client peut alors lire et interpreter la réponse donnée par le SpeechServer.
 
 Avec ses spécifications, nous obtiendrions le cycle suivant pour la reconnaissance d'un mot par SpeechApp :
 
-\begin{figure}
+\begin{figure}[H]
 	\begin{center}
 	\includegraphics[width=14cm]{Images/vieRequete.png} 
 	\end{center}
@@ -507,7 +519,7 @@ Le SpeechServer a été codé en Python. Python a une libraire standard suffisammen
 
 Finalement, le SpeechServer prend seulement la forme d'un programme python à lancer sur un ordinateur.
 
-\begin{figure}
+\begin{figure}[H]
 	\begin{center}
 	\includegraphics[width=14cm]{Images/server.png} 
 	\end{center}
@@ -536,13 +548,13 @@ Un module python db.py a été developpé par nos soins pour gérer efficacement nos
 
 Comme les accès en lecture/écriture à la mémoire RAM sont bien plus rapide que les accès aux disques dur,
 \emph{On pourrait obtenir un gain de vitesse significatif pour la reconnaissance vocale en chargeant l'intégralité des données en mémoire RAM au démarrage du SpeechServer}
-Néanmoins, la quantité de mémoire RAM nécessaire serait très importante, croissant exponentiellement avec le nombre de mots enregistrés. Les coûts engendrés seraient importants :
+Néanmoins, la quantité de mémoire RAM nécessaire serait très importante, croissant linéairement avec le nombre de mots enregistrés. Les coûts engendrés seraient importants :
 
 \medskip{}
 
 Sur la gamme serveurs de calcul de l'hébergeur OVH,
-Le serveur doté de 256 Go de RAM est loué 300 ¤ HT / mois.
-Le même serveur (en termes de performance CPU et de disque dur : 4 To) doté de 64 Go de RAM, est loué 80 ¤ HT / mois
+Le serveur doté de 256 Go de RAM est loué 300 euros HT / mois.
+Le même serveur (en termes de performance CPU et de disque dur : 4 To) doté de 64 Go de RAM, est loué 80 euros HT / mois
 
 \medskip{}
 
@@ -553,11 +565,78 @@ Un système hybride de cache en mémoire RAM pourrait aussi être envisagé, mais no
 \emph{On conservera un stockage des données intégralement sur disque dur}
 
 \medskip{}
-Les spécifications du SpeechServer et de du SGBD ayant été définis, il devient possible de construire des applications se fondant dessus.
+
+Les spécifications du SpeechServer et du SGBD ayant été définis, il devient possible de construire des applications se fondant dessus.
+
+\subsection{SpeechRecorder}
+
+Il est nécessaire de proposer aux clients une interface plus simple à appréhender que la console. C'est pourquoi nous avons developpé l'application logiciel SpeechRecorder, qui permet aux clients enregistrés dans nos bases de données d'authentification (s'acquittant d'une licence), d'ajouter des mots à leur bases de données. Elle devrait permettre à terme, de gérer l'intégralité des bases de données clients.
+
+\medskip{}
+
+Cette interface a été réalisée avec la librairie TKinter de Python, la librairie graphique Python la plus simple et la plus largement disponible : Elle est incluse dans les paquetages de base de Python.
+
+\begin{figure}[H]
+	\begin{center}
+	\includegraphics[width=14cm]{Images/speechrecorder-log.png} 
+	\end{center}
+	\caption{Authentification d'un client au SpeechRecorder}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+	\includegraphics[width=14cm]{Images/speechrecorder-record.png} 
+	\end{center}
+	\caption{L'interface du SpeechRecorder}
+\end{figure}
+
+Pour entrer un nouveau mot dans une base de données client, par défaut 10 enregistrements sonores sont pris par SpeechRecorder. La librairie additionnelle pyaudio est utilisée pour ce faire.
+
 
 \subsection{SpeechApp}
 
-\subsection{SpeechRecorder}
+SpeechApp est le démonstrateur principal de notre projet.
+Il s'agit d'une application web permettant au grand public de tester notre technologie de reconnaissance vocale de mots isolés.
+À l'aide des dernières APIs HTML5 (élaborées depuis le début d'année 2013), l'utilisateur peut s'enregistrer sans l'installation de logiciel auxiliaire. Son enregistrement audio est transmis au SpeechServer (selon le schéma spécifié plus haut) qui renvoie le mot trouvé.
+\medskip{}
+Pour ce démonstrateur, une application web a été choisié car elle fonctionne sur tout terminal doté d'un navigateur web récent sans nécessiter la moindre installation : nous l'avons conçu de façon a ce qu'elle soit adaptée aussi bien aux grands écrans d'ordinateur, qu'à ceux plus petits des tablettes et smartphones. On qualifie ce type de design de "Responsive".
+
+\bigskip{}
+
+Notre démonstrateur SpeechApp est disponible à l'adresse \url{http://speechapp.wumzi.info/}.
+
+
+\begin{figure}[H]
+	\begin{center}
+	\includegraphics[width=14cm]{Images/speechapp-desktop.png} 
+	\end{center}
+	\caption{Le démonstrateur SpeechApp sur ordinateur}
+\end{figure}
+
+
+\begin{figure}[H]
+	\begin{center}
+	\includegraphics[width=14cm]{Images/speechapp-iphone.png} 
+	\end{center}
+	\caption{Le démonstrateur SpeechApp sur IPhone}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+	\includegraphics[width=14cm]{Images/speechapp-ipad.png} 
+	\end{center}
+	\caption{Le démonstrateur SpeechApp sur IPad}
+\end{figure}
+
+Une difficulté néamoins a été de rendre l'enregistrement audio fonctionnel sur la majorité des navigateurs. Nous assurons la compatibilité pour les moteurs Gecko et WebKit récents soit les dernières versions de Firefox, Chrome et Safari ainsi que leurs éditions mobiles.
+
+\bigskip{}
+
+SpeechApp n'a en elle-même pas d'autre fonction que celle de démonstrateur, néanmoins ses modules peuvent être distribués aisément, sous forme de widgets intégrables n'importe où.
+
+\medskip{}
+
+Aussi, une application web reprenant des modules de SpeechApp pourrait être transformée aisèment en application native pour smartphone iOS, Android, Windows Phone, Firefox Mobile ou encore en application Windows 8. Des frameworks open-source font ce travail presque automatiquement (par exemple \url{http://phonegap.com/}).
 
     \chapter{Applications}
     	 La reconnaissance vocale est une technologie promise à un futur radieux; les plus grands noms de l'informatique, 

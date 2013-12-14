@@ -289,7 +289,38 @@ ne perçoit pas toutes les fréquences de la même façon.
 	au prix d'une multiplication du temps de calcul par deux.
 	
         	\section{Transformée de Fourier}
-        	Nam eu sollicitudin massa.\cite{rabiner}. Aliquam a fermentum lectus. Praesent dapibus molestie mauris sed vestibulum. Curabitur sodales egestas est a pellentesque. Quisque id vulputate erat, a sagittis turpis. 
+        	Le domaine temporel est parfait pour l'acquisition et la restitution de l'audio, car il représente fidèlement la vibration 
+        	de la membrane d'un micro ou d'une enceinte. L'oreille humaine base sa perception et sa reconnaissance sur le domaine fréquentiel. 
+        	Il faut donc passer de l'un à l'autre, et ce grâce à l'utilisation de la transformation de Fourier. L'algorithme "intuitif" 
+        	de calcul ayant, pour trouver le spectre d'un unique échantillon, une complexité en $O(N^2)$  (avec N le nombre de points par 
+        	échantillons), il est nécessaire de trouver d'autres méthodes si l'on envisage des applications proches du temps réel.  
+        	Heureusement, plusieurs approches se sont ouvertes à nous pour l'optimisation du temps de calcul.
+        	
+	Le calcul de la transformée de Fourier est incontournable en analyse du signal, et il a donné lieu à de nombreuses études. 
+	Des algorithmes optimisés pour diverses utilisations sont disponibles, et notre travail a surtout été d'identifier lequel s'adapterait 
+	à notre projet. Notre fonction se base sur l'algorithme de Cooley-Tukey, qui permet de réduire la complexité à $O(Nlog2(N))$, 
+	et qui repose sur le fonctionnement diviser pour régner.  Le principe est dans un premier temps de diviser le signal 
+	à analyser en sous-tableaux de mêmes tailles, de manière croisée (par exemple deux sous-tableaux, pour les indices 
+	pairs et impairs). On calcule ensuite les transformées de Fourier de ce sous-tableaux, en opérant récursivement, 
+	jusqu'à obtenir des sous-tableaux dont la taille est un entier. On calcule leur transformée de Fourier, et on recombine 
+	les résultats obtenus. Cette méthode a l'avantage de pouvoir être couplée à d'autres algorithmes pour calculer les 
+	spectres des sous-tableaux dont la taille n'est pas un produit d'entier. Le meilleur cas est alors instinctivement un 
+	signal initial dont la longueur est une puissance de deux. Il est même intéressant d'utiliser la technique du bourrage 
+	de zéros (zero padding), qui consiste à rajouter des zéros à la suite du signal pour atteindre la puissance de deux la 
+	plus proche. Cela ne change pas le spectre obtenu et augmente les performances. Dans notre cas, nous avons eu 
+	la possibilité d'ajuster la taille des échantillons. Nous avons ainsi choisi des échantillons de 1024 points, ce qui 
+	correspond, avec notre fréquence d'échantillonnage de 44100Hz, à une durée d'environ 23ms. Seul le dernier échantillon du signal est complété par des zéros.
+	
+De plus, comme les données sur lesquelles nous travaillons sont réelles, et que les calculs de la Transformée de Fourier Rapide (Fast Fourier Transform, ou FFT) 
+s'effectuent avec des complexes, la première idée d'optimisation que nous avons eu est de calculer le spectre de deux échantillons à la fois, en créant 
+des complexes à partir des deux signaux réels (l'un représente la partie représente la partie réelle, l'autre imaginaire). On obtient rapidement les coefficients 
+respectifs des deux échantillons par une simple opération sur le spectre résultant. Cependant, cette méthode ne divise le temps de calcul que par deux, et notre 
+FFT demeure trop lente (plusieurs secondes pour un signal d'environ une seconde), surtout au regard du temps de calcul total de la reconnaissance en elle-même. 
+La deuxième optimisation que nous avons donc appliqué est de passer le code de Python à C++, langage compilé beaucoup plus rapide. De plus, nous avons repensé les
+fonctions, de façon à éviter les appels récursifs. En effet, le travail sur des tableaux force une recopie à chaque appel de fonction, ce qui démultiplie la complexité du calcul. 
+Le résultat est un algorithme qui s'effectue en moins d'une seconde, et qui peut s'inscrire dans un contexte d'exploitation en temps réel.
+
+
         	\section{Mel}
         	Des études de psycho acoustique ont montré que l'oreille humaine ne percevait pas les fréquences selon une échelle linéaire. Il a donc été utile de définir une nouvelle échelle plus subjective : à chaque fréquence $f$, exprimée en Hertz, on fait correspondre une nouvelle fréquence selon une fonction censée représenter le comportement de l'oreille humaine. Par convention, la fréquence de $1 000$ Hz correspond à $1 000$ mel. Les autres fréquences mel sont ajustées de façon à ce qu'une augmentation de la fréquence mel corresponde à la même augmentation de la tonalité perçue. Cela conduit à la fonction $mel$ suivante: \[mel(f) = 2595*log(1+f/700)\]
         	

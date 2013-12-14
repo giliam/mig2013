@@ -23,27 +23,29 @@
 \contentsline {subsection}{\numberline {2.3.2}Filtrage passe-haut}{10}
 \contentsline {section}{\numberline {2.4}Echantillonnage, fen\^etrage}{10}
 \contentsline {section}{\numberline {2.5}Transform\'ee de Fourier}{11}
-\contentsline {section}{\numberline {2.6}Mel}{11}
+\contentsline {section}{\numberline {2.6}Mel}{12}
 \contentsline {section}{\numberline {2.7}Transform\'ee inverse}{12}
-\contentsline {chapter}{\numberline {3}Mod\`eles de Markov cach\'es (MMC)}{13}
-\contentsline {section}{\numberline {3.1}Pr\'erequis et principe}{13}
-\contentsline {section}{\numberline {3.2}Principaux algorithmes sur les mod\`eles de Markov}{14}
-\contentsline {section}{\numberline {3.3}Application \`a notre objectif}{14}
-\contentsline {section}{\numberline {3.4}Phase d'apprentissage}{14}
-\contentsline {section}{\numberline {3.5}Phase de reconnaissance}{15}
-\contentsline {part}{II\hspace {1em}Approche commerciale}{17}
-\contentsline {chapter}{\numberline {1}Approche d\'eveloppement web}{17}
-\contentsline {subsection}{\numberline {1.0.1}Choix d'une architecture optimale pour notre projet}{17}
-\contentsline {subsection}{\numberline {1.0.2}R\'ealisation du SpeechServer}{18}
-\contentsline {subsection}{\numberline {1.0.3}Choix de la base de donn\'ees}{19}
-\contentsline {chapter}{\numberline {2}Applications}{20}
-\contentsline {chapter}{\numberline {3}Budget, mod\`ele \'economique}{22}
-\contentsline {section}{\numberline {3.1}Introduction}{22}
-\contentsline {section}{\numberline {3.2}Les salaires}{22}
-\contentsline {section}{\numberline {3.3}Le compte de r\'esultat pr\'evisionnel}{23}
-\contentsline {section}{\numberline {3.4}Le bilan}{23}
-\contentsline {section}{\numberline {3.5}Les imp\^ots}{24}
-\contentsline {section}{\numberline {3.6}Conclusion et vue sur le long terme}{24}
-\contentsline {part}{III\hspace {1em}Le Code}{25}
-\contentsline {chapter}{\numberline {1}Python}{25}
-\contentsline {chapter}{\numberline {2}C/C++}{27}
+\contentsline {chapter}{\numberline {3}Mod\`eles de Markov cach\'es (MMC)}{14}
+\contentsline {section}{\numberline {3.1}Pr\'erequis et principe}{14}
+\contentsline {section}{\numberline {3.2}Principaux algorithmes sur les mod\`eles de Markov}{15}
+\contentsline {section}{\numberline {3.3}Application \`a notre objectif}{15}
+\contentsline {section}{\numberline {3.4}Phase d'apprentissage}{15}
+\contentsline {section}{\numberline {3.5}Phase de reconnaissance}{16}
+\contentsline {part}{II\hspace {1em}Approche commerciale}{18}
+\contentsline {chapter}{\numberline {1}Approche d\'eveloppement web}{18}
+\contentsline {subsection}{\numberline {1.0.1}Choix d'une architecture optimale pour notre projet}{18}
+\contentsline {subsection}{\numberline {1.0.2}R\'ealisation du SpeechServer}{19}
+\contentsline {subsection}{\numberline {1.0.3}Syst\`eme de Gestion de Base de Donn\'ees (SGBD)}{20}
+\contentsline {subsection}{\numberline {1.0.4}SpeechApp}{21}
+\contentsline {subsection}{\numberline {1.0.5}SpeechRecorder}{21}
+\contentsline {chapter}{\numberline {2}Applications}{22}
+\contentsline {chapter}{\numberline {3}Budget, mod\`ele \'economique}{24}
+\contentsline {section}{\numberline {3.1}Introduction}{24}
+\contentsline {section}{\numberline {3.2}Les salaires}{24}
+\contentsline {section}{\numberline {3.3}Le compte de r\'esultat pr\'evisionnel}{25}
+\contentsline {section}{\numberline {3.4}Le bilan}{25}
+\contentsline {section}{\numberline {3.5}Les imp\^ots}{26}
+\contentsline {section}{\numberline {3.6}Conclusion et vue sur le long terme}{26}
+\contentsline {part}{III\hspace {1em}Le Code}{27}
+\contentsline {chapter}{\numberline {1}Python}{27}
+\contentsline {chapter}{\numberline {2}C/C++}{29}

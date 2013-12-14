@@ -104,11 +104,10 @@
 \tableofcontents
 \newpage
 
-
 \chapter*{Introduction}
 	\section{Présentation des enjeux}
 			La reconnaissance vocale automatisée est l'objet d'intenses recherches depuis plus de 50 ans. 
-			Malgré son caractère tout d'abord futuriste, comme cela peut se retrouver dans de nombreuses oeuvres de science-fiction, elle a pris sa place dans nos
+			Malgré son caractère d'abord futuriste, comme cela peut se retrouver dans de nombreuses oeuvres de science-fiction, elle a pris sa place dans nos
 			quotidiens avec la prolifération de systèmes qui embarquent une telle technologie, par exemple avec le logiciel Siri dans les téléphones d'Apple\cite{apple}.
 			Les perspectives économiques s'ouvrant au détenteur d'un système de reconnaissance fiable, robuste, et portable sont innombrables et l'on ne saurait 
 			surestimer son importance, (systèmes embarqués, commandes vocales, aide aux sourds/muets, ...) et s'inscrit dans le domaine prolifique beaucoup plus 
@@ -394,8 +393,98 @@ Au départ nous n'avions qu'un seul locuteur pour faire la base de donnée des mot
         	
 \part{Approche commerciale}
 		\setcounter{chapter}{0}
-    \nonewpagechapter{Côté web}
+    \nonewpagechapter{Approche développement web}
     	  
+Pour assurer une rentabilité à notre projet, il nous faut le penser, le structurer en vue d'une large distribution sous de multiples formes.
+
+
+\subsection{Choix d'une architecture optimale pour notre projet}
+
+Distribuer notre projet tel quel présenterait à ce stade de nombreux défauts:
+- le coeur de notre technologie de reconnaissance vocale est directement accessible à tous.
+- une interface unique en ligne de commande constitue un blocage majeur pour la majorité des utilisateurs finaux et empêche une intégration large à des applications tierces.
+
+\bigskip
+
+\textbf{\emph{Étudions l'opportunité d'adopter une architecture client/serveur pour ce projet.}}
+
+\bigskip
+
+Dans ce scénario, divers clients logiciels, potentiellement indépendant de The SpeechApp Company pourraient communiquer par requêtes/réponses (spécifiées par une API) aves les serveurs de The SpeechApp Company. Ces derniers seuls auraient accès au coeur algorithmique du projet, qui resterait ainsi exclusivement entre nos mains. Par leurs requêtes, les clients demanderaient l'analyse automatique de mots, l'ajout de nouveaux mots ainsi que toute autre opération pertinentes relative à l'analyse et la gestion d'une base de données de mots. L'accès à notre API serait monétisable forfaitairement ou à l'utilisation.
+
+\medskip
+
+Les mots enregistrés par les clients seraient conservés dans des bases de données chez The SpeechApp Company. La location de ses bases de données hebergées serait monétisable.
+Alors, The SpeechApp Company pourrait prioritairement développer deux applications connectables au serveur : la première, SpeechCreator, permettrait l'enregistrement aisé de nouveaux mots dans les bases de données clients. La seconde, SpeechApp, permettrait, au travers d'une application Web riche, de tester la reconnaissance vocale en ligne.
+
+\medskip
+
+Cette configuration permettrait aussi à une multitudes d'applications tierces d'utiliser notre technologie en ne voyant de l'extérieur qu'une API définissant le format des requêtes et réponses dans la communication entre clients logiciel et serveur.
+
+\medskip
+
+Nous aboutirions alors à l'architecture représentée par le schéma suivant:
+
+\begin{figure}
+	\begin{center}
+	\includegraphics[width=14cm]{Images/architecture.png} 
+	\end{center}
+	\caption{Architecture proposée pour le projet The SpeechApp Company}
+\end{figure}
+
+Plus précisement dans le cadre des échanges entre le SpeechServer
+Les requêtes pourraient être traitées de la façon suivante :
+Le client (au sens logiciel toujours) envoie au SpeechServer une requête HTTP POST contenant un formulaire avec en particulier son identifiant, son mot de passe, la base de données qu'il veut utiliser, l'action qu'il veut faire effectuer au SpeechServer, et les données d'entrée qui lui sont associées.
+La requête analysée par le SpeechServer, les opérations adéquates ayant été réalisées par le coeur algorithmique, le SpeechServer répond au client par une réponse HTTP POST contenant des données au format XML.
+Le client peut alors lire et interpreter la réponse donnée par le SpeechServer.
+
+\bigskip
+
+Avec ses spécifications, nous obtiendrions le cycle suivant pour la reconnaissance d'un mot par SpeechApp :
+
+\begin{figure}
+	\begin{center}
+	\includegraphics[width=14cm]{Images/vieRequete.png} 
+	\end{center}
+	\caption{Reconnaissance d'un mot par SpeechApp couplée au SpeechServer}
+\end{figure}
+
+\emph{L'architecture client/serveur proposée présenterai pour nous l'avantage de}
+\begin{itemize}
+	\item{permettre la création d'un écosystème varié d'applications basées sur le coeur algorithmique de The SpeechApp Company via l'API de son SpeechServer, et générant ainsi des revenus}
+	\item{conserver le coeur de notre travail entre nos mains et même de nous donner le contrôle sur toute la chaîne}
+\end{itemize}
+
+\medskip{}
+
+\emph{L'architecture client/serveur proposée présenterai pour nos clients l'avantage de}
+\begin{itemize}
+	\item{ne pas se soucier du coeur algorithmique de la reconnaissance vocale, en n'y voyant que l'API de SpeechServer. Cette API peut offrir par ailleurs une grande liberté d'action}
+	\item{n'avoir pas ou peu d'investissement initial de développement à effectuer, nos applications propriétaires SpeechApp et SpeechRecorder pouvant être intégrées sous forme de widgets aux applications tierces}
+	\item{ne pas avoir a faire de lourds calculs eux-mêmes, ceux-ci étant réalisés par les machines de The SpeechApp Company}
+	\item{les cycles de mises à jour seraient en majorité invisibles chez les clients, l'API restant immuables sur des cycles plus long (Long Term Support)}
+\end{itemize}
+
+Au vu des nombreux avantages qu'elle présente,
+\emph{Nous avons donc opté pour une architecture modulaire client/serveur pour notre projet.}
+
+\subsection{Réalisation du SpeechServer}
+
+Le SpeechServer a été codé en Python. Python a une libraire standard suffisamment riche pour n'avoir a très ce problème qu'à un haut niveau (en reception de requêtes selon leurs méthodes). De plus, ce choix facilite les interactions avec le coeur algorithmique : des imports et appels de fonctions depuis le SpeechServer suffisent.
+
+Finalement, le SpeechServer prend seulement la forme d'un programme python à lancer sur un ordinateur.
+
+\begin{figure}
+	\begin{center}
+	\includegraphics[width=14cm]{Images/server.png} 
+	\end{center}
+	\caption{Le SpeechServer lancé}
+\end{figure}
+
+Il écoute alors les requêtes sur le port 8010 (par défaut) de l'ordinateur.
+
+\subsection{Choix de la base de données}
+
     \chapter{Applications}
     	 La reconnaissance vocale est une technologie promise à un futur radieux; les plus grands noms de l'informatique, 
     	 dont Bill Gates, annonçaient il y a quelques années qu'elle allait remplacer les claviers d'ici peu. 

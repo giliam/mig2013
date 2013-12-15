@@ -11,6 +11,7 @@
 \usepackage{textcomp}
 
 \usepackage{graphicx}
+\usepackage{float}
 \usepackage{colortbl}
 
 \usepackage[a4paper, margin=2cm]{geometry}
@@ -130,7 +131,7 @@
 			\paragraph{}
 				Avant de rentrer dans des considérations techniques, il est nécessaire de définir un principe d'étude, une stratégie de résolution qui dictera l'orientation générale du projet en plus de rendre les objectifs et  les enjeux plus clairs. Cette partie a pour but de donner un aperçu des différents angles d'attaques du problème donné pouvant être considérés, ainsi que de présenter celui que nous avons choisi, avec quelles motivations. 
 \paragraph{}
-	Dans son livre \emph{Fundamentals of speech recognition}, Lawrence Rabiner\cite{rabiner} dégage des travaux de ces prédécesseurs trois approches conceptuelles du problème. Ces approches sont les suivantes: l'approche acoustique-phonétique, l'approche par reconnaissance de motifs et l'approche par intelligence artificielle. Cette dernière n'étant, d'après Rabiner, qu'un avatar de la première ; nous ne présenterons que l'acoustique phonétique et la reconnaissance de motifs que nous avons choisi pour notre projet.
+	Dans son livre \emph{Fundamentals of speech recognition}, Lawrence Rabiner\cite{rabiner} dégage des travaux de ces prédécesseurs trois approches conceptuelles du problème. Ces approches sont les suivantes: l'approche acoustique-phonétique, l'approche par reconnaissance de motifs et l'approche par intelligence artificielle. Cette dernière n'étant, d'après Rabiner, qu'un avatar de la première ; nous ne présenterons que l'acoustique phonétique et la reconnaissance de motifs que nous avons choisi pour notre projet.
 
 		\subsection{Acoustique-phonétique}
 \paragraph{}
@@ -143,9 +144,9 @@
 	Bien qu'elle ait été vastement étudiée et soit viable on lui préférera l'approche par reconnaissance de motifs qui, pour plusieurs raisons, l'a supplantée dans les systèmes appliqués. C'est celle que nous avons choisi et que nous présentons dans le prochain paragraphe.
 		\subsection{Reconnaissance de motifs}
 		\paragraph{}
-		Elle diffère de la méthode précédente par le fait qu'elle ne cherche pas à exhiber des caractéristiques explicites. Elle se compose de deux étapes: « l'entraînement » des motifs, et la reconnaissance via la comparaison de ces motifs. 
+		Elle diffère de la méthode précédente par le fait qu'elle ne cherche pas à exhiber des caractéristiques explicites. Elle se compose de deux étapes: « l'entraînement » des motifs, et la reconnaissance via la comparaison de ces motifs. 
 		\paragraph{}
-	L'idée sous-jacente au concept d'entraînement repose sur le principe selon lequel si l'on dispose d'un ensemble suffisamment grand de version d'un motif à reconnaître, on doit être capable de caractériser pertinemment les propriétés acoustiques du motif. Notons que les motifs en question peuvent être de nature très diverses, comme des sons, des mots, des phrases ; ce qui sous-tend l'idée d'un grand nombre d'applications théoriques comme présenté en introduction. La machine apprend alors quelles propriétés acoustiques sont fiables et pertinentes. On effectue ensuite une comparaison entre le signal à reconnaître et les motifs tampons, afin de le classifier en fonction du degré de concordance.
+	L'idée sous-jacente au concept d'entraînement repose sur le principe selon lequel si l'on dispose d'un ensemble suffisamment grand de version d'un motif à reconnaître, on doit être capable de caractériser pertinemment les propriétés acoustiques du motif. Notons que les motifs en question peuvent être de nature très diverses, comme des sons, des mots, des phrases ; ce qui sous-tend l'idée d'un grand nombre d'applications théoriques comme présenté en introduction. La machine apprend alors quelles propriétés acoustiques sont fiables et pertinentes. On effectue ensuite une comparaison entre le signal à reconnaître et les motifs tampons, afin de le classifier en fonction du degré de concordance.
 	\paragraph{}
 	Sans plus entrer dans les détails, les avantages de cette approche qui nous on poussé à l'adopter sont les suivants:
 	\begin{itemize}
@@ -164,7 +165,7 @@ Il s'agit donc tout d'abord de traiter le signal pour en découvrir certaines car
 rend ardue une simple identification par comparaisons temporelles.
 \newpage
 \section{Schéma global}
-Afin de gérer ces difficultés, nous avons mis en place plusieurs étapes de traitement supplémentaires afin d'obtenir cette fameuse \og trace \fg qui caractériserait un enregistrement, c'est-à-dire un mot. Nous avons pour cela 
+Afin de gérer ces difficultés, nous avons mis en place plusieurs étapes de traitement supplémentaires afin d'obtenir cette fameuse \og trace \fg qui caractériserait un enregistrement, c'est-à-dire un mot. Nous avons pour cela 
 utilisé plusieurs techniques de traitement du signal communément connues (échantillonnage, fenêtrage, transformée de Fourier directe et inverse).
 Cette figure explique globalement le traitement que nous avons choisi de mettre-en-place afin de reconnaître le mot prononcé. Il y a donc plusieurs étapes qui s'enchaînent pour parvenir à un 
 objet que nous pourrons manipuler en le sachant représentatif et caractéristique du son.
@@ -243,7 +244,7 @@ ne perçoit pas toutes les fréquences de la même façon.
 	Les performances de tout système de reconnaissances dépendent fortement de la variabilité 
 	des données (locuteur, environnement, bruit, réverbération, ...). Plus ces données sont variables, 
 	plus le taux d'erreur sera grand et un système de reconnaissance qui se veut être utilisable dans la vie de tous les jours: 
-	voiture, endroits bruyants ; se doit d'y remédier. Ces effets se font particulièrement sentir dans les basses fréquences, 
+	voiture, endroits bruyants ; se doit d'y remédier. Ces effets se font particulièrement sentir dans les basses fréquences, 
 	c'est pourquoi le conditionnement du signal en vue de son étude comprend immanquablement un filre passe haut  
 	c'est-à-dire une accentuation de l'amplitude associée aux hautes fréquences et une diminution des basses fréquences. 
 	C'est le même principe qui est utilisé dans les égaliseurs des lecteurs de musique d'aujourd'hui qui propose d'augmenter 
@@ -254,7 +255,7 @@ ne perçoit pas toutes les fréquences de la même façon.
 \paragraph{}
 	Nous effectuons ce filtrage selon une méthode résolution basée sur les coefficients sceptraux de mel\cite{melbe}. Le signal étant caractérisé par une suite $(x_n)$ 
 	d'amplitudes, comme présenté dans les prérequis, où n représente un instant de la musique déterminé par l'échantillonnage; 
-	on opère linéairement la transformation suivante sur le signal : $y_0 = x_0$ et $y_n = x_n - 0.95*x_{(n-1)}$  pour $n > 0$, 
+	on opère linéairement la transformation suivante sur le signal : $y_0 = x_0$ et $y_n = x_n - 0.95*x_{(n-1)}$  pour $n > 0$, 
 	où $y$ représente le signal de sortie après transformation.
 \paragraph{}
 	Cette opération consiste effectivement en un filtre passe-haut, en effet un telle formule part du principe que 95\% d'un 
@@ -315,7 +316,7 @@ La taille des échantillons est un paramètre déterminant sur la qualité et la pré
         	Le domaine temporel est parfait pour l'acquisition et la restitution de l'audio, car il représente fidèlement la vibration 
         	de la membrane d'un micro ou d'une enceinte. L'oreille humaine base sa perception et sa reconnaissance sur le domaine fréquentiel. 
         	Il faut donc passer de l'un à l'autre, et ce grâce à l'utilisation de la transformation de Fourier. L'algorithme "intuitif" 
-        	de calcul ayant, pour trouver le spectre d'un unique échantillon, une complexité en $O(N^2)$  (avec N le nombre de points par 
+        	de calcul ayant, pour trouver le spectre d'un unique échantillon, une complexité en $O(N^2)$  (avec N le nombre de points par 
         	échantillons), il est nécessaire de trouver d'autres méthodes si l'on envisage des applications proches du temps réel.  
         	Heureusement, plusieurs approches se sont ouvertes à nous pour l'optimisation du temps de calcul.
         	\begin{figure}[h]
@@ -352,7 +353,7 @@ Le résultat est un algorithme qui s'effectue en moins d'une seconde, et qui peut
 
         	\section{Mel}
         	\paragraph{}
-        	Des études de psycho acoustique ont montré que l'oreille humaine ne percevait pas les fréquences selon une échelle linéaire. Il a donc été utile de définir une nouvelle échelle plus subjective : à chaque fréquence $f$, exprimée en Hertz, on fait correspondre une nouvelle fréquence selon une fonction censée représenter le comportement de l'oreille humaine. Par convention, la fréquence de $1 000$ Hz correspond à $1 000$ mel. Les autres fréquences mel sont ajustées de façon à ce qu'une augmentation de la fréquence mel corresponde à la même augmentation de la tonalité perçue. Cela conduit à la fonction $mel$ suivante: \[mel(f) = 2595*log(1+f/700)\]
+        	Des études de psycho acoustique ont montré que l'oreille humaine ne percevait pas les fréquences selon une échelle linéaire. Il a donc été utile de définir une nouvelle échelle plus subjective : à chaque fréquence $f$, exprimée en Hertz, on fait correspondre une nouvelle fréquence selon une fonction censée représenter le comportement de l'oreille humaine. Par convention, la fréquence de $1 000$ Hz correspond à $1 000$ mel. Les autres fréquences mel sont ajustées de façon à ce qu'une augmentation de la fréquence mel corresponde à la même augmentation de la tonalité perçue. Cela conduit à la fonction $mel$ suivante: \[mel(f) = 2595*log(1+f/700)\]
         	
         	\begin{figure}[ht]
 						\begin{center}
@@ -415,7 +416,7 @@ d'automates définis à l'aide de plusieurs versions d'un même mot vers un automat
 
 		\section{Application à notre objectif}
 \paragraph{}
-		Résumons la situation lorsque l'on lance notre programme: d'un côté une base de données de mots, représentés chacun par un automate ; 
+		Résumons la situation lorsque l'on lance notre programme: d'un côté une base de données de mots, représentés chacun par un automate ; 
 de l'autre, un fichier audio: le mot prononcé par l'utilisateur. Le programme se déplace dans chaque automate grâce au fichier audio, 
 il s'oriente en fonction des phonèmes prononcés. Nous appellerons cette opération "faire passer un mot dans un automate".
 \paragraph{}
@@ -446,7 +447,7 @@ La phase de reconnaissance constitue le c\oe{}ur du programme. Comme dit précéde
 \paragraph{}
 A l'origine, la phase de reconnaissance a été codée en Python. Cependant le temps d'exécution était trop long, nous l'avons donc codé en C++, ce qui a permis de diviser le temps d'exécution par 50 000. Grâce à ce travail laborieux, le programme s'effectue en un temps proche de la seconde. Tout a été mis en place, notamment en amont avec le codage en C++ de la transformée de Fourier rapide, pour privilégier la rapidité de l'exécution. 
 \paragraph{}
-Au départ nous n'avions qu'un seul locuteur pour faire la base de donnée des mots reconnus, ce qui ne permettait de faire fonctionner le programme que pour un seul utilisateur : celui qui avait enregistré les mots. Cependant nous avons réussi à enregistrer plusieurs locuteurs, ce qui a permis au programme de reconnaître plusieurs utilisateurs, même un utilisateur qui n'avait enregistré aucun mot.
+Au départ nous n'avions qu'un seul locuteur pour faire la base de donnée des mots reconnus, ce qui ne permettait de faire fonctionner le programme que pour un seul utilisateur : celui qui avait enregistré les mots. Cependant nous avons réussi à enregistrer plusieurs locuteurs, ce qui a permis au programme de reconnaître plusieurs utilisateurs, même un utilisateur qui n'avait enregistré aucun mot.
 
 		\nonewpagechapter*{Récapitulatif}
 			\begin{figure}[hb]
@@ -797,7 +798,7 @@ En utilisant les mêmes calculs, pour les quatre années qui suivent, sans faire d
 \part*{Conclusion}
 		Le marché de la reconnaissance vocale est pour le moment assez restreint, mais est appelé à grandir dans les prochaines années. Si les systèmes de reconnaissance vocale fleurissent sur les objets multimédias à usage personnel, comme les ordinateurs portables ou les téléphones mobiles, ils servent uniquement à simplifier un peu certaines tâches de l'utilisateur, et ne sont en pratique que très peu utilisés, ce qui s'explique par leurs performances moyennes. Le représentant le plus utilisé de ce type d'usage de la reconnaissance vocale est probablement Siri sur les téléphones mobiles iPhone d'Apple, mais il reste assez peu utilisé malgré la grande popularité de l'iPhone.
 		
-	Dans le domaine des logiciels payants, pour un usage plus sérieux, le marché est dominé par les logiciels Dragon NaturallySpeaking de la firme américaine Nuance. Les prix, selon les modèles, varient entre environ 100\$ pour le modèle de base et environ 1000\$ pour les versions spécialisées dans un domaine professionnel. Le principe est que plus la base de données de mots est grande, plus les erreurs sont fréquentes ; Dragon NaturallySpeaking propose donc des versions adaptées à un domaine particulier. Par exemple, il existe une version "juriste" avec une base de données contenant surtout du vocabulaire technique de droit, et une version "médicine" avec des termes techniques médicaux. Ces versions visant une cible très précise donc plus restreinte, ils sont vendus considérablement plus cher que les versions plus classiques. Cependant, la demande étant en constante augmentation - un tiers des radiologues français utilisent cette technologie, tout comme 95\% des hôpitaux aux Pays Bas -, le marché est assez prometteur. En effet, cette technologie réduit considérablement les tâches administratives de ces professions: une simple relecture au plus est nécessaire. La réussite est renforcée par des taux de réussite exceptionnels avec des bases de données adaptées, et par l'absence de concurrence très forte.
+	Dans le domaine des logiciels payants, pour un usage plus sérieux, le marché est dominé par les logiciels Dragon NaturallySpeaking de la firme américaine Nuance. Les prix, selon les modèles, varient entre environ 100\$ pour le modèle de base et environ 1000\$ pour les versions spécialisées dans un domaine professionnel. Le principe est que plus la base de données de mots est grande, plus les erreurs sont fréquentes ; Dragon NaturallySpeaking propose donc des versions adaptées à un domaine particulier. Par exemple, il existe une version "juriste" avec une base de données contenant surtout du vocabulaire technique de droit, et une version "médicine" avec des termes techniques médicaux. Ces versions visant une cible très précise donc plus restreinte, ils sont vendus considérablement plus cher que les versions plus classiques. Cependant, la demande étant en constante augmentation - un tiers des radiologues français utilisent cette technologie, tout comme 95\% des hôpitaux aux Pays Bas -, le marché est assez prometteur. En effet, cette technologie réduit considérablement les tâches administratives de ces professions: une simple relecture au plus est nécessaire. La réussite est renforcée par des taux de réussite exceptionnels avec des bases de données adaptées, et par l'absence de concurrence très forte.
 	
 	Cependant, nous avons choisi de concevoir un logiciel avec une base de données moins spécialisée pour un usage personnel: en effet, dans le temps qui nous est imparti, créer des bases de données étudiées spécialement pour un certain domaine (droit, médecine) nous paraissait très compliqué. Il aurait fallu faire une étude linguistique très poussée pour construire la base de données, alors que nous avons concentré l'essentiel de nos efforts sur l'algorithme de reconnaissance lui-même. Notre produit est donc destiné à un usage plus ludique, ou du moins personnel. Notre cible est donc légèrement différente, puisque les professionnels intéressés par notre produit doivent construire eux-mêmes leur base de données spécifique à leur domaine. L'inconvénient de cette approche est le désagrément de devoir ajouter soi-même les mots, l'avantage étant que la reconnaissance sera plus fiable puisque la voix de l'utilisateur elle-même sert de comparateur, et elle permet d'avoir une base de données réellement personnalisée (celles de Dragon, bien que dédiées à un domaine, ne sont pas totalement personnelles). Le prix envisagé de la licence pour cette utilisation de notre produit est comparable (de l'ordre de 1000\euro{}) à celui des versions personnalisées de Dragon.
 	

@@ -26,7 +26,7 @@ Visuellement, elle se constitue en premier lieu d'un logo : Un micro, élement c
 	\caption{Architecture proposée pour le projet The SpeechApp Company}
 \end{figure}
 
-\subsection{Choix d'une architecture optimale pour notre projet}
+\section{Choix d'une architecture optimale pour notre projet}
 
 Distribuer notre projet tel quel présenterait à ce stade de nombreux défauts:
 - le coeur de notre technologie de reconnaissance vocale est directement accessible à tous.
@@ -96,7 +96,7 @@ Avec ses spécifications, nous obtiendrions le cycle suivant pour la reconnaissa
 Au vu des nombreux avantages qu'elle présente,
 \emph{Nous avons donc opté pour une architecture modulaire client/serveur pour notre projet.}
 
-\subsection{Réalisation du SpeechServer}
+\section{Réalisation du SpeechServer}
 
 Le SpeechServer a été codé en Python. Python a une libraire standard suffisamment riche pour n'avoir a traiter ce problème qu'à un haut niveau (en reception de requêtes selon leurs méthodes). De plus, ce choix facilite les interactions avec le coeur algorithmique : des imports et appels de fonctions depuis le SpeechServer suffisent.
 
@@ -113,7 +113,7 @@ Finalement, le SpeechServer prend seulement la forme d'un programme python à la
 
 Il écoute alors les requêtes sur le port 8010 (par défaut) de l'ordinateur. Lorsqu'il en reçoit, il interragit avec le coeur algorithmique et le système de gestion de bases de données mis en place.
 
-\subsection{Système de Gestion de Base de Données (SGBD)}
+\section{Système de Gestion de Base de Données (SGBD)}
 
 Le SGBD doit permettre de stocker et gérer les fichiers audio associés aux mots (au moins une dizaine d'enregistrement par mot), les modèles de markov cachés qui leurs sont associés ainsi que les données d'authenfication des applications clientes.
 
@@ -132,28 +132,107 @@ Un module python db.py a été developpé par nos soins pour gérer efficacement
 \bigskip{}
 
 Comme les accès en lecture/écriture à la mémoire RAM sont bien plus rapide que les accès aux disques dur,
-\emph{On pourrait obtenir un gain de vitesse significatif pour la reconnaissance vocale en chargeant l'intégralité des données en mémoire RAM au démarrage du SpeechServer}
-Néanmoins, la quantité de mémoire RAM nécessaire serait très importante, croissant linéairement avec le nombre de mots enregistrés. Les coûts engendrés seraient importants :
+\emph{On pourrait obtenir un gain de vitesse significatif pour la reconnaissance vocale en chargeant l'intégralité des données en mémoire RAM au démarrage du SpeechServer} : la vitesse en lecture/écriture sur un disque dur est de l'ordre de 50 Mo / s. Sur la RAM, elle est de l'ordre de 1 Go / s, soit un gain d'un facteur 20 pour les opérations en mémoire.
+
+Néanmoins, la quantité de mémoire RAM nécessaire serait très importante, croissant linéairement avec le nombre de mots enregistrés. Les coûts engendrés pourraient être importants.
+
+Tâchons de dimensionner l'infrastructure serveur dont nous aurions besoin.
+
+\section{Dimensionneemnt de l'infrastructure de calcul de The Speech App Company}
+
+Il nous faut d'abord définir les variables relatives au fonctionnement commercial de The Speech App Company ainsi que leurs valeurs de référence.
+
+\subsection{Hypothèses de fonctionnement}
+
+Soit M le nombre de clients de The SpeechApp Company. La référence sera M = 1000.
+Soit N le nombre moyen de mots dans les bases de données de chaque client.
+Nous prenons pour référence N = 2000 mots : un dictionnaire comme le Petit Robert en contient 60000.
 
 \medskip{}
 
-Sur la gamme serveurs de calcul de l'hébergeur OVH,
-Le serveur doté de 256 Go de RAM est loué 300 euros HT / mois.
-Le même serveur (en termes de performance CPU et de disque dur : 4 To) doté de 64 Go de RAM, est loué 80 euros HT / mois
+Soit J le nombre de requêtes par seconde.
+Nous prendrons pour référence J = 1000 requêtes / seconde
+
+\smallskip{}
+
+On vise le traitement des requêtes en 1s.
+On gère donc J requêtes en simultané.
 
 \medskip{}
 
-Un système hybride de cache en mémoire RAM pourrait aussi être envisagé, mais nous n'avons pas le temps de le mettre en place en moins de 3 semaines.
+Les fichiers audio bruts envoyés par les clients au serveur pèsent environ 100 ko chacun.
+Les Modèles de Markov Cachés (MMC) associés aux mots pèsent environ 50 ko pour chaque mot.
+Lors des traitements sur ces fichiers audios, on estime qu'on a besoin de créer 5 fichiers audios temporaires, d'environ 100 ko chacun.
+
+\subsection{Dimensionnement en mémoire RAM et espace disque}
+
+Les fichiers audios bruts (10 par mot par défaut) et les MMC sont conservés sur le disque dur.
+Il faut donc (10 * 100 ko + 50 ko) * N * M = 2.100 To d'espace sur le disque dur.
+
+Par ailleurs, on charge les MMC en mémoire, soit un espace RAM nécessaire de 50 ko * N * M = 100 Go
+
+Lors des opérations, si les 5 * 100 ko de fichiers temporaires sont créés en RAM, et qu'on gère environ J = 1000 requêtes en parallèle, il nous faut 500 Mo de RAM en plus, ce qui est marginal.
+
+Au vu des capacités mémoire en informatique, toutes puissances de 2,
+\emph{Dans le cadre de référence, il nous faut au moins 128 Go de RAM et 4 To d'espace disque}
+
+\subsection{Dimensionnement réseau}
+
+Pour la reconnaissance de mots, tâche la plus courante,
+Le serveur reçoit J requêtes de 100 ko (fichiers audio). Il faut donc recevoir 100 Mo / s de données. Le débit descendant (vers le serveur) doit donc être supérieur strictement à 100 Mo / s.
+Le serveur répond par des fichiers ne contenant que du texte, de taille négligeable devant celle des fichiers audio. Le débit montant (depuis le serveur) n'est donc pas un facteur discriminant dans le choix d'une connexion au réseau.
+
+\emph{On veillera à avoir une connexion d'au moins 200 Mo / s)} 
+
+\subsection{Dimensionnement des élements de calculs}
+
+Sur un ordinateur d'une puissance de calcul de 1 GFlops, on observe que lors de la reconnaissance d'un mot, l'unique opération dont la complexité dépend du nombre de mots en jeu, l'exécution de l'algorithme Forward (linéaire) prenait 0.005s sur une base de 100 mots.
 
 \medskip{}
 
-\emph{On conservera un stockage des données intégralement sur disque dur}
+Ainsi pour réaliser J = 1000 reconnaissances en simultannée sur des bases de N = 1000 mots avec un temps d'exécution de l'algorithme Forward de moins de 0.5s, \emph{il nous faut une puissance de calcul d'au moins 100 Gflops.}
 
 \medskip{}
 
-Les spécifications du SpeechServer et du SGBD ayant été définis, il devient possible de construire des applications se fondant dessus.
+Les processeurs de dernière génération dédié au calcul atteigne ce niveau de performance. Le Intel Xeon E5-2670 atteint ainsi en théorie 330 Gflops
 
-\subsection{SpeechRecorder}
+\subsection{Choix de l'infrastructure et coûts liés}
+
+Connaissant les caractéristiques minimales du serveur : en termes d'espace RAM, disque dur, de connexion réseau et de puissance de calcul, nous pouvons choisir le serveur le plus adapté à nos besoins.
+
+\medskip{}
+
+L'hébergeur OVH propose une gamme de serveurs de calcul pour les entreprises:
+
+\begin{figure}[H]
+	\begin{center}
+	\includegraphics[width=14cm]{pics/server-gamme.png} 
+	\end{center}
+	\caption{Gamme de serveur de calculs d'OVH}
+\end{figure}
+
+Nous devons disposer de 128 Go de RAM, de 4 To d'espace disque, de 100 Mo/s de connexion au réseau.
+Aussi le processeur Intel Xeon E5-1650 v2 ne dépasse pas les 70 Gflops et ne valide donc pas le critère de puissance de calcul.
+Le bi-ES-2650 atteint 140 Gflops, et le bi-ES-2670 330 Gflops.
+
+\smallskip{}
+
+Afin d'avoir une certaine marge, nous préférerons prendre le processeur bi-Intel Xeon ES-2670
+\smallskip{}
+Nous sélectionons donc le serveur MG-256 de OVH pour 303 euros HT / mois qui valide nos critères de performance avec une marge conséquente.
+\smallskip{}
+À des fins de redondance, nous aurions besoin de 2 serveurs identiques, pour donc 606 euros HT / mois
+
+
+
+\emph{Nous nous sommes contentés d'un stockage des données intégralement sur disque dur et de moyens bien plus réduits lors de la phase de développement}
+
+\bigskip{}
+\bigskip{}
+
+Les spécifications du SpeechServer et du SGBD ayant été définis, il devient possible et nécessaire de construire des applications se fondant dessus.
+
+\section{SpeechRecorder}
 
 Il est nécessaire de proposer aux clients une interface plus simple à appréhender que la console. C'est pourquoi nous avons developpé l'application logiciel SpeechRecorder, qui permet aux clients enregistrés dans nos bases de données d'authentification (s'acquittant d'une licence), d'ajouter des mots à leur bases de données. Elle devrait permettre à terme, de gérer l'intégralité des bases de données clients.
 
@@ -178,7 +257,7 @@ Cette interface a été réalisée avec la librairie TKinter de Python, la libra
 Pour entrer un nouveau mot dans une base de données client, par défaut 10 enregistrements sonores sont pris par SpeechRecorder. La librairie additionnelle pyaudio est utilisée pour ce faire.
 
 
-\subsection{SpeechApp}
+\section{SpeechApp}
 
 SpeechApp est le démonstrateur principal de notre projet.
 Il s'agit d'une application web permettant au grand public de tester notre technologie de reconnaissance vocale de mots isolés.
@@ -221,7 +300,7 @@ SpeechApp n'a en elle-même pas d'autre fonction que celle de démonstrateur, n�
 
 \medskip{}
 
-Aussi, une application web reprenant des modules de SpeechApp pourrait être transformée aisèment en application native pour smartphone iOS, Android, Windows Phone, Firefox Mobile ou encore en application Windows 8. Des frameworks open-source font ce travail presque automatiquement (par exemple \url{http://phonegap.com/}).
+Aussi, une application web reprenant des modules de SpeechApp pourrait être transformée aisèment en application native pour smartphone iOS, Android, Windows Phone, Firefox Mobile ou encore en application Windows 8. Des frameworks open-source font ce travail presque automatiquement (par exemple le framework PhoneGap développé par Adobe : \url{http://phonegap.com/}).
 
 \end{document}
 

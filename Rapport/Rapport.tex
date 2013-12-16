@@ -355,18 +355,49 @@ Le résultat est un algorithme qui s'effectue en moins d'une seconde, et qui peut
         	\paragraph{}
         	Des études de psycho acoustique ont montré que l'oreille humaine ne percevait pas les fréquences selon une échelle linéaire. Il a donc été utile de définir une nouvelle échelle plus subjective : à chaque fréquence $f$, exprimée en Hertz, on fait correspondre une nouvelle fréquence selon une fonction censée représenter le comportement de l'oreille humaine. Par convention, la fréquence de $1 000$ Hz correspond à $1 000$ mel. Les autres fréquences mel sont ajustées de façon à ce qu'une augmentation de la fréquence mel corresponde à la même augmentation de la tonalité perçue. Cela conduit à la fonction $mel$ suivante: \[mel(f) = 2595*log(1+f/700)\]
         	
-        	\begin{figure}[ht]
+        	\begin{figure}[H]
 						\begin{center}
 							\includegraphics[width=10cm]{Images/Mel.png} 
 						\end{center}
 						\caption{Graphe de conversion}
-					\end{figure}
+			\end{figure}
         	\paragraph{}
         	On remarque que le poids des hautes fréquences (supérieures à $1 000$ Hz) est diminué tandis que le poids des basses fréquences (inférieur à $1 000$ Hz) est augmenté.
 \paragraph{}
 Il est préférable d'employer cette échelle de fréquence dans l'algorithme de reconnaissance: ce dernier doit en effet différencier plusieurs mots selon la perception humaine, c'est-à-dire en simulant le comportement de l'oreille humaine.
-		\section{Transformée inverse}
-        	Nam eu sollicitudin massa. Duis sagittis velit mi. Nunc dictum risus ac interdum lacinia\cite{rabiner}.
+		\section{Transformée inverse ou Décomposition en cosinus inverse}
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=10cm]{Images/DCTschema.png} 
+	\end{center}
+	\caption{Graphe de conversion}
+\end{figure}
+\paragraph{}
+	Dans les parties précédentes nous avons vu comment, à partir d'un extrait sonore échantillonné à 44100 Hz sur 16 bits, 
+	obtenir après transfrormée de Fourier et opérations sur le spectre, un tableau de 24 cases gradué en échelle Mel, 
+	représentant une fraction de l'extrait. Ce tableau exprimé ainsi en fréquences, pourrait a priori constituer une 
+	représentation satisfaisante de l'extrait sonore à l'instant considéré pour la suite de l'algorithme de reconnaissance, 
+	et servir à la comparaison avec le modèle au travers des chaînes de Markov cachées. Cependant ce n'est pas ce qui est fait, 
+	et l'on préfèrera une représentation en temporel de la fraction sonore considérée, ceci pour deux principales raisons :
+\paragraph{}
+Opérer une transformation en cosinus inverse « décorelle » les valeurs du tableau dans la mesure où dans une représentation 
+en fréquentiel, les valeurs associées aux hautes fréquences sont très fortement corellées avec ce qui se passe dans les 
+basses fréquences. En effet, un signal sonore n'est jamais pur, c'est-à-dire contitué d'une seule fréquence, mais est un 
+amalgame de signaux purs de fréquences multiples de celles d'autres signaux purs.
+Le tableau qui sera traité par la suite grâce aux chaînes de Markov n'est plus constitué de 24 cases mais de 12 dont les 
+11 premières sont les premières cases du tableau obtenu après DCT. Si l'on tronquait le tableau avant d'opérer la DCT, on 
+ne conserverait que l'information associée aux graves ce qui constituerait une perte trop importante de données. 
+\paragraph{}
+	Ce retour au temporel se fait par la transformée en cosinus inverse. Il s'agit en terme simplistes du pendant réel de 
+	la transformée de Fourier inverse,  qui elle donne lieu à des coefficients complexes, lesquels dans le cadre d'une 
+	représentation temporelle n'ont que peu de sens. En termes plus mathématiques, la projection orthogonale du signal 
+	discret en fréquentiel ne se fait plus sur une base d'exponentielles complexes, mais de cosinus. 
+\paragraph{}
+	La DCT que nous avons utilisé, aussi connue sous le nom de DCTII se base sur la formule suivante : 
+	M[k] = sum for n from 0 to B-1 (X[n]*cos(Pi*k*(n+0.5)/B))*sqrt(2/B) avec B=24, X le tableau en échelle Mel, 
+	et M le tableau de sortie échellonné en temporel. D'autres formules équivalentes de DCT existent mais la 
+	DCTII est la plus largement répandue et utilisée. 
+
     \chapter{Modèles de Markov cachés (MMC)}
         \section{Prérequis et principe}
         \paragraph{}

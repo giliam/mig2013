@@ -215,6 +215,7 @@ def handlingRecording(content,db,dirChoice,numeroTraitement,action=0):
         content = passe_haut(content)
         log += "Filtre passe-haut termine...\n"
         #db.addFile("handling/passe_haut_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
+        #db.addWaveFromAmp("tmp/bob.wav", 44100, content)
         log += "Sauvegarde effectuee...\n\n"
     if action <= 2:
         log += "Fenêtre de Hann en cours...\n"

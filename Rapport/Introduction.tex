@@ -22,7 +22,11 @@
 			généraliste, de prendre connaissance d'un sujet et d'une problématique et tâcher, en équipe, d'y apporter une solution qui soit la plus optimale possible compte 
 			tenu des exigences temporelles et matérielles. Le projet des MIG ne se réduisant pas non plus à une réalisation technique il s'agissait de garder en vue les perspectives économiques et les 
 			  composantes juridiques, indissociables d'un tel projet, comme garde fou de toute pérégrination informatique.
-			
+			\paragraph{}
+			De plus, ce système de reconnaissance vocale, qui peut sembler immédiat tel qu'on l'expérimente aujourd'hui, n'est en fait 
+			pas si évident qu'il y parait. En témoigne la faible réussite de ces applications en général puisque nous avons tous ressenti un
+			jour la frustration de ne pas être compris de la machine. Il convient donc de préciser ce qui rend la tâche si subtile face à ce
+			que nos oreilles et notre cerveau fait aussi instantanément.
 			\paragraph{}
 			Les rôles ont été attribués dès le début selon les goûts et compétences de chacun mais la pertinente répartition des tâches, 
 			la diversité intrinsèque au projet et l'angle avec lequel nous l'avons abordé a permis à chacun d'exploiter un panel très 
@@ -31,11 +35,10 @@
 			Si la coordination spontanée d'une équipe de treize personnes a été au début délicate, une indéniable rigueur et discipline adjointe 
 			à l'exploitation de ressources adaptées ont vite imposé une organisation naturelle. Par exemple l'utilisation de la plateforme 
 			github\cite{github} pour l'échange de fichiers et de mises à jour s'est révélée particulièrement efficace et permettait à chacun 
-			d'incorporer en temps réels les dernières modifications. Ceci a permis a chacun d'être en permanence en totale connaissance des 
-			rôles de chacun, et de la ligne directrice de chaque sous-fonction sans pour autant en connaître tous les détails. Une efficacité 
-			dans la coordination des tâches et dans leur réalisation en a indiscutablement découlé.
+			d'incorporer en temps réels les dernières modifications.
 			La complexité de la discipline fut un des principaux obstacles, et une phase d'appropriation des techniques requises,
-			 de part la lecture de livres dédiés, d'articles de recherches ainsi que de thèses a été le poumon du projet. Le caractère abscon de certains articles a rajouté à
+			 de part la lecture de livres dédiés, d'articles de recherches ainsi que de thèses a été le poumon du projet. 
+			 Le caractère abscon de certains articles a rajouté à
 			  la difficulté.
 			\section{Approches de la reconnaissance vocale}
 			\paragraph{}
@@ -53,13 +56,15 @@
 \paragraph{}
 	L'approche acoustique-phonétique est indubitablement celle qui paraît la plus naturelle et directe pour faire de la reconnaissance vocale et est 
 	celle qui s'impose a priori à l'esprit. Le principe est le suivant: l'ordinateur tâche de découper l'échantillon sonore de manière séquentielle 
-	en se basant sur les caractéristiques acoustiques observées et sur les relations connues entre caractéristiques acoustiques et phonème. Ceci dans 
+	en se basant sur les caractéristiques acoustiques observées et sur les relations connues entre caractéristiques acoustiques et phonèmes. Ceci dans 
 	le but d'identifier une suite de phonèmes et d'ainsi reconnaître un mot. 
-\paragraph{}
-	Définition Wikipédia d'un phonème: En phonologie, domaine de la linguistique, un phonème est la plus petite unité discrète ou distinctive 
+\paragraph{Définition Wikipédia d'un phonème} 
+\begin{quote}
+	En phonologie, domaine de la linguistique, un phonème est la plus petite unité discrète ou distinctive 
 	(c'est-à-dire permettant de distinguer des mots les uns des autres) que l'on puisse isoler par segmentation dans la chaîne parlée. Un phonème 
 	est en réalité une entité abstraite, qui peut correspondre à plusieurs sons. Il est en effet susceptible d'être prononcé de façon différente 
 	selon les locuteurs ou selon sa position et son environnement au sein du mot.
+\end{quote}
 \paragraph{}
 	Cette approche suppose qu'il existe un ensemble fini de phonèmes différentiables et que leurs propriétés sont suffisamment manifestes pour 
 	être extraites d'un signal ou de la donnée de son spectre (tableau des fréquences et de leur amplitude associée, composant un signal à un 

@@ -85,6 +85,13 @@
 \contentsline {subsection}{\numberline {1.0.4}SpeechRecorder}{26}
 \contentsline {subsection}{\numberline {1.0.5}SpeechApp}{27}
 \contentsline {chapter}{\numberline {2}Applications}{30}
+\contentsline {paragraph}{}{30}
+\contentsline {paragraph}{}{30}
+\contentsline {paragraph}{}{30}
+\contentsline {paragraph}{}{31}
+\contentsline {paragraph}{}{31}
+\contentsline {paragraph}{}{31}
+\contentsline {paragraph}{}{31}
 \contentsline {chapter}{\numberline {3}Budget, mod\`ele \'economique}{32}
 \contentsline {section}{\numberline {3.1}Introduction}{32}
 \contentsline {section}{\numberline {3.2}Les salaires}{32}
@@ -95,3 +102,6 @@
 \contentsline {part}{III\hspace {1em}Le Code}{35}
 \contentsline {chapter}{\numberline {1}Python}{35}
 \contentsline {chapter}{\numberline {2}C/C++}{37}
+\contentsline {paragraph}{}{38}
+\contentsline {paragraph}{}{38}
+\contentsline {paragraph}{}{38}

@@ -1,0 +1,81 @@
+\chapter{Modèles de Markov cachés (MMC)}
+        \section{Prérequis et principe}
+        \paragraph{}
+        	Un modèle de Markov caché est un modèle statistique qui peut modéliser des processus physiques. Il fait appel aux structures d'automates\cite{automate}.
+Un automate représente un système physique. Il est composé d'états (les cercles sur la figure), qui correspondent aux états du système réel, 
+et de transitions (les flèches sur la figure), pour passer d'un état à l'autre. 
+Il existe aussi la notion de chemin: par exemple pour passer de 0 à 3 sur la figure, il faut passer par 1 puis 2: le chemin de 0 à 3 est 0,1,2,3.
+
+				\begin{figure}[hb]
+						\begin{center}
+							\includegraphics[width=10cm]{Images/MMC1.png} 
+						\end{center}
+						\caption{Exemple d'automate \og classique \fg}
+				\end{figure}
+\paragraph{}
+Les modèles de Markov cachés sont largement répandus dans la reconnaissance vocale(\cite{ref1}, \cite{rabiner} et \cite{calcvoc}). 
+Entre un modèle discret et un modèle continu, nous avons choisi ce dernier car les données en entrée ne font pas partie d'un ensemble fini: 
+il existe une infinité de sons possibles pour un même phonème. 
+Les modèles de Markov cachés sont particulièrement adaptés pour la reconnaissance vocale car 
+ils permettent un apprentissage constant de la part du programme : 
+celui-ci est capable d'apprendre de nouveaux mots de manière autonome, et de s'améliorer au-fur-et-à-mesure que la base de données de mots grandit.
+\paragraph{}
+Nous avons modélisé chaque mot par un automate, dont les états sont les différents phonèmes du mot. 
+Lorsque l'on prononce un mot, on se dirige dans l'automate grâce aux phonèmes prononcés, 
+jusqu'à rencontrer l'état final. Ceci permet de reconnaître le mot même si une syllabe dure 
+plusieurs secondes: dans ce cas, on se contente de tourner en rond  
+(en restant sur l'état 0 de la figure par exemple) dans l'automate jusqu'à rencontrer un nouveau phonème. 
+Dans l'automate, la transition de l'état i à k représente la probabilité de passer de l'état i à k, 
+c'est-à-dire la probabilité que le phonème n°k vienne tout de suite après le phonème n°i. \newpage %mise en page
+
+				\begin{figure}[hb]
+						\begin{center}
+							\includegraphics[width=10cm]{Images/MMC2.png} 
+						\end{center}
+						\caption{Exemple de deux phonèmes et de la probabilité de passer du phonème 1 au phonème 2}
+				\end{figure}
+		\section{Principaux algorithmes sur les modèles de Markov}
+\paragraph{}
+Lorsque l'on fait passer un mot dans un automate, ie. qu'on s'oriente dans l'automate à l'aide des phonèmes, on peut calculer la probabilité que le mot corresponde à cet automate: 
+on multiplie toutes les probabilités rencontrées pendant le parcours. Elles dépendent bien sûr du chemin parcouru 
+(i-e des transitions rencontrées). 
+C'est le principe de l'algorithme \emph{forward}.
+\paragraph{}
+L'algorithme de Baum-Welch permet d'optimiser un automate. En se plaçant dans l'ensemble des modèles de Markov, on cherche à faire converger une suite
+d'automates définis à l'aide de plusieurs versions d'un même mot vers un automate optimisé qui corresponde au mieux au mot.
+
+
+		\section{Application à notre objectif}
+\paragraph{}
+		Résumons la situation lorsque l'on lance notre programme: d'un côté une base de données de mots, représentés chacun par un automate ; 
+de l'autre, un fichier audio: le mot prononcé par l'utilisateur. Le programme se déplace dans chaque automate grâce au fichier audio, 
+il s'oriente en fonction des phonèmes prononcés. Nous appellerons cette opération "faire passer un mot dans un automate".
+\paragraph{}
+L'algorithme \emph{forward} permet donc de calculer 
+la probabilité qu'un automate corresponde au mot prononcé: en comparant les probabilités dans chacun des automates, 
+on sélectionne la plus grande et on a l'automate qui correspond le mieux au mot sélectionné.  
+\paragraph{}
+L'algorithme de Baum-Welch permet l'apprentissage de nouveaux mots: pour chaque nouveau mot il crée un nouvel automate, 
+et le rend le plus optimisé possible en s'appuyant sur la bibliothèque existante. C'est ce que fait la partie logicielle de notre programme, 
+pour que les programmeurs puissent agrandir la base de données.
+        \section{Phase d'apprentissage}
+        \paragraph{}
+        Une fois l'algorithme de reconnaissance vocale implémenté, il nous a fallu l'améliorer. 
+        Deux aspects demandent un apprentissage de la part du programme. 
+        Il doit d'abord faire grossir l'ensemble des mots reconnus, de manière à pouvoir en reconnaître le plus possible. 
+        Mais il est aussi intéressant de lui faire apprendre un mot par des locuteurs différents. 
+        Plus le nombre de locuteurs est grand, plus l'algorithme peut être précis.
+        \paragraph{}
+Enregistrer plusieurs personnes permet d'obtenir une diversité de spectres qui accroit la précision du programme.
+\paragraph{}
+Une fois un mot appris, il est également très utile qu'un même locuteur enregistre de nombreuses versions du mot. Nous avons fait pour notre locuteur 10 versions de chaque mot.
+\paragraph{}
+Pour mettre en place un apprentissage, nous avions des besoins matériels (stocker l'ensemble des mots reconnus) mais aussi des besoins humains, et en l'occurrence une diversité de voix.
+        
+        \section{Phase de reconnaissance}
+        \paragraph{}
+La phase de reconnaissance constitue le c\oe{}ur du programme. Comme dit précédemment, le programme effectue l'algorithme \emph{forward} sur chacun des automates et renvoie le mot le plus probable, après avoir comparé toutes les probabilités.
+\paragraph{}
+A l'origine, la phase de reconnaissance a été codée en Python. Cependant le temps d'exécution était trop long, nous l'avons donc codé en C++, ce qui a permis de diviser le temps d'exécution par 50 000. Grâce à ce travail laborieux, le programme s'effectue en un temps proche de la seconde. Tout a été mis en place, notamment en amont avec le codage en C++ de la transformée de Fourier rapide, pour privilégier la rapidité de l'exécution. 
+\paragraph{}
+Au départ nous n'avions qu'un seul locuteur pour faire la base de donnée des mots reconnus, ce qui ne permettait de faire fonctionner le programme que pour un seul utilisateur : celui qui avait enregistré les mots. Cependant nous avons réussi à enregistrer plusieurs locuteurs, ce qui a permis au programme de reconnaître plusieurs utilisateurs, même un utilisateur qui n'avait enregistré aucun mot.

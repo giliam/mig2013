@@ -79,4 +79,31 @@ Aharon Etengoff.
   \url{http://www.itexaminer.com/nuance-clinches-speech-recognition-deal-with-us-army.aspx},
   2009.
 
+\bibitem{controleaerien}
+Thanassis Trikas.
+\newblock Automated speech recognition in air traffic control.
+\newblock {\em MIT}, 1987.
+
+\bibitem{medecine}
+G2~Speech.
+\newblock La reconnaissance vocale pour hôpitaux et autres institutions de
+  soins.
+\newblock \url{http://www.g2speech.be/reconnaissance-vocale.html}, 2000.
+
+\bibitem{police}
+Nuance Company.
+\newblock Dragon naturallyspeaking for law enforcement.
+\newblock
+  \url{http://www.nuance.com/naturallyspeaking/industries/law-enforcement/}, ?
+
+\bibitem{handicapes}
+Nancy Manasse.
+\newblock Speech recognition.
+\newblock {\em University of Nebraska-Lincoln}, 1990.
+
+\bibitem{dragon}
+Nuance Company.
+\newblock Dragon naturallyspeaking.
+\newblock \url{http://www.nuance.com/dragon/index.htm}, ?
+
 \end{thebibliography}

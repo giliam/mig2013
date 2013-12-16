@@ -76,6 +76,9 @@ Pour mettre en place un apprentissage, nous avions des besoins matériels (stocke
         \paragraph{}
 La phase de reconnaissance constitue le c\oe{}ur du programme. Comme dit précédemment, le programme effectue l'algorithme \emph{forward} sur chacun des automates et renvoie le mot le plus probable, après avoir comparé toutes les probabilités.
 \paragraph{}
-A l'origine, la phase de reconnaissance a été codée en Python. Cependant le temps d'exécution était trop long, nous l'avons donc codé en C++, ce qui a permis de diviser le temps d'exécution par 50 000. Grâce à ce travail laborieux, le programme s'effectue en un temps proche de la seconde. Tout a été mis en place, notamment en amont avec le codage en C++ de la transformée de Fourier rapide, pour privilégier la rapidité de l'exécution. 
+A l'origine, la phase de reconnaissance a été codée en Python. Cependant le temps d'exécution étant trop long, nous l'avons donc codé en C++, ce qui a permis de diviser le temps d'exécution par 50 000. Grâce à ce travail laborieux, le programme s'effectue en un temps proche de la seconde. Tout a été mis en place, notamment en amont avec le codage en C++ de la transformée de Fourier rapide, pour privilégier la rapidité de l'exécution. 
 \paragraph{}
-Au départ nous n'avions qu'un seul locuteur pour faire la base de donnée des mots reconnus, ce qui ne permettait de faire fonctionner le programme que pour un seul utilisateur : celui qui avait enregistré les mots. Cependant nous avons réussi à enregistrer plusieurs locuteurs, ce qui a permis au programme de reconnaître plusieurs utilisateurs, même un utilisateur qui n'avait enregistré aucun mot.
+Au départ nous n'avions qu'un seul locuteur pour faire la base de donnée des mots reconnus, 
+ce qui ne permettait de faire fonctionner le programme que pour un seul utilisateur : celui qui avait enregistré les mots. 
+Cependant nous avons enregistré plusieurs locuteurs, ce qui permet au programme de reconnaître plusieurs utilisateurs,
+ même un utilisateur qui n'aurait pas encore enregistré de mot.

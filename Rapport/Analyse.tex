@@ -60,6 +60,18 @@
 	témoignent les expériences de H.G. Hirsch P. Meyer et H.W. Ruehl dans leur papier.\\
 	Utiliser un filtre passe-haut présente comme avantage de ne pas nécessiter de procéder au préalable 
 	à une reconnaissance de silence contrairement aux techniques de réduction du bruit et de soustraction spectrale.
+\begin{figure}[H]
+	    \begin{center}
+		    \includegraphics[width=15cm]{Images/passehautavant.png} 
+	    \end{center}
+	    \caption{Exemple d'un fichier son (représentant \og Cinq \fg) \textbf{avant} application du filtre}
+\end{figure}
+\begin{figure}[H]
+	    \begin{center}
+		    \includegraphics[width=15cm]{Images/passehautapres.png} 
+	    \end{center}
+	    \caption{Exemple du fichier son \textbf{après} application du filtre}
+\end{figure}
 \paragraph{}
 	Nous effectuons ce filtrage selon une méthode résolution basée sur les coefficients sceptraux de mel\cite{melbe}. Le signal étant caractérisé par une suite $(x_n)$ 
 	d'amplitudes, comme présenté dans les prérequis, où n représente un instant de la musique déterminé par l'échantillonnage; 
@@ -69,7 +81,8 @@
 	Cette opération consiste effectivement en un filtre passe-haut, en effet un telle formule part du principe que 95\% d'un 
 	échantillon a pour origine l'échantillon précédent. Ce constat étant plus pertinent pour les hautes fréquences (car les 
 	pics de l'onde associée sont plus rapprochés et engendrent donc un pic d'amplitude plus régulièrement), l'influence des basses fréquences est donc discriminée. 
-        \section{Echantillonnage, fenêtrage}
+        \newpage
+	\section{Echantillonnage, fenêtrage}
         	L'analyse du signal, pour accéder au domaine fréquentiel, s'affranchit de la dépendance temporelle.  Le spectre 
 		obtenu ne correspond plus à une perception physique, mais à une moyenne temporelle du spectre perçu. Le procédé 
 		que nous avons mis en place pour pallier à ce problème est celui le plus couramment utilisé dans ce domaine: 
@@ -92,6 +105,18 @@ La taille des échantillons est un paramètre déterminant sur la qualité et la pré
 	temporelle. L'hypothèse principale a été que les évènements sonores et variations s'étalant sur une durée inférieure 
 	à 20 millisecondes n'étaient pas signifiants pour notre analyse. Le nombre de points a été par cette donnée, couplée 
 	à notre fréquence d'échantillonnage lors des enregistrements, à 44100Hz.
+\begin{figure}[H]
+	    \begin{center}
+		    \includegraphics[width=12cm]{Images/fenetrenormale.png} 
+	    \end{center}
+	    \caption{Principe normal du fenêtrage}
+\end{figure}
+\begin{figure}[H]
+	    \begin{center}
+		    \includegraphics[width=12cm]{Images/fenetrehann.png} 
+	    \end{center}
+	    \caption{Fenêtre de Hann évitant les discontinuités}
+\end{figure}
 \paragraph{}
 	L'échantillonnage introduit par ailleurs des discontinuités aux bornes des morceaux, qui ne sont pas présentes 
 	dans le signal original. Le fenêtrage permet de réduire l'effet de ces discontinuités virtuelles. 
@@ -107,18 +132,7 @@ La taille des échantillons est un paramètre déterminant sur la qualité et la pré
 	disposant d'une puissance de calcul largement suffisante pour conserver un rendu de l'ordre de 
 	la seconde, nous avons opté pour un fenêtrage important (recouvrement total d'un échantillon à l'autre), 
 	au prix d'une multiplication du temps de calcul par deux.
-\begin{figure}[hb]
-	    \begin{center}
-		    \includegraphics[width=12cm]{Images/fenetrenormale.png} 
-	    \end{center}
-	    \caption{Principe normal du fenêtrage}
-\end{figure}
-\begin{figure}[H]
-	    \begin{center}
-		    \includegraphics[width=12cm]{Images/fenetrehann.png} 
-	    \end{center}
-	    \caption{Fenêtre de Hann évitant les discontinuités}
-\end{figure}
+
         	\section{Transformée de Fourier}
         	\paragraph{}
         	Le domaine temporel est parfait pour l'acquisition et la restitution de l'audio, car il représente fidèlement la vibration 
@@ -202,6 +216,6 @@ ne conserverait que l'information associée aux graves ce qui constituerait une p
 	discret en fréquentiel ne se fait plus sur une base d'exponentielles complexes, mais de cosinus. 
 \paragraph{}
 	La DCT que nous avons utilisé, aussi connue sous le nom de DCTII se base sur la formule suivante : 
-	M[k] = sum for n from 0 to B-1 (X[n]*cos(Pi*k*(n+0.5)/B))*sqrt(2/B) avec B=24, X le tableau en échelle Mel, 
+	\[M[k] = \sum_{n=0}^{B-1}( X[n]\times cos(Pi\cdot k\cdot \frac{n+0.5}{B}) ) \times \sqrt[2]{\frac{2}{B}}\] avec B=24, X le tableau en échelle Mel, 
 	et M le tableau de sortie échellonné en temporel. D'autres formules équivalentes de DCT existent mais la 
 	DCTII est la plus largement répandue et utilisée.

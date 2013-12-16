@@ -4,7 +4,7 @@
 \contentsline {paragraph}{}{3}
 \contentsline {section}{\numberline {0.2}Objectifs du projet}{3}
 \contentsline {paragraph}{}{3}
-\contentsline {paragraph}{}{4}
+\contentsline {paragraph}{}{3}
 \contentsline {section}{\numberline {0.3}Approches de la reconnaissance vocale}{4}
 \contentsline {paragraph}{}{4}
 \contentsline {paragraph}{}{4}
@@ -89,7 +89,7 @@
 \contentsline {section}{\numberline {3.1}Introduction}{32}
 \contentsline {section}{\numberline {3.2}Les salaires}{32}
 \contentsline {section}{\numberline {3.3}Le compte de r\'esultat pr\'evisionnel}{33}
-\contentsline {section}{\numberline {3.4}Le bilan}{33}
+\contentsline {section}{\numberline {3.4}Le bilan}{34}
 \contentsline {section}{\numberline {3.5}Les imp\^ots}{34}
 \contentsline {section}{\numberline {3.6}Conclusion et vue sur le long terme}{34}
 \contentsline {part}{III\hspace {1em}Le Code}{35}

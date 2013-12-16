@@ -7,6 +7,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{amsmath}
 
 
 \begin{document}
@@ -144,19 +145,19 @@ Il nous faut d'abord définir les variables relatives au fonctionnement commerci
 
 \subsection{Hypothèses de fonctionnement}
 
-Soit M le nombre de clients de The SpeechApp Company. La référence sera M = 1000.
-Soit N le nombre moyen de mots dans les bases de données de chaque client.
-Nous prenons pour référence N = 2000 mots : un dictionnaire comme le Petit Robert en contient 60000.
+Soit $M$ le nombre de clients de The SpeechApp Company. La référence sera $M = 1000$.
+Soit $N$ le nombre moyen de mots dans les bases de données de chaque client.
+Nous prenons pour référence $N = 2000$ mots : un dictionnaire comme le Petit Robert en contient $60000$.
 
 \medskip{}
 
-Soit J le nombre de requêtes par seconde.
-Nous prendrons pour référence J = 1000 requêtes / seconde
+Soit $J$ le nombre de requêtes par seconde.
+Nous prendrons pour référence $J = 1000$ requêtes / s
 
 \smallskip{}
 
 On vise le traitement des requêtes en 1s.
-On gère donc J requêtes en simultané.
+On gère donc $J$ requêtes en simultané.
 
 \medskip{}
 
@@ -167,11 +168,11 @@ Lors des traitements sur ces fichiers audios, on estime qu'on a besoin de créer
 \subsection{Dimensionnement en mémoire RAM et espace disque}
 
 Les fichiers audios bruts (10 par mot par défaut) et les MMC sont conservés sur le disque dur.
-Il faut donc (10 * 100 ko + 50 ko) * N * M = 2.100 To d'espace sur le disque dur.
+Il faut donc $(10 * 100 ko + 50 ko) * N * M = 2.100 \text{To}$ d'espace sur le disque dur.
 
-Par ailleurs, on charge les MMC en mémoire, soit un espace RAM nécessaire de 50 ko * N * M = 100 Go
+Par ailleurs, on charge les MMC en mémoire, soit un espace RAM nécessaire de $50 \text{ko} * N * M = 100$ Go
 
-Lors des opérations, si les 5 * 100 ko de fichiers temporaires sont créés en RAM, et qu'on gère environ J = 1000 requêtes en parallèle, il nous faut 500 Mo de RAM en plus, ce qui est marginal.
+Lors des opérations, si les 5 * 100 ko de fichiers temporaires sont créés en RAM, et qu'on gère environ $J = 1000$ requêtes en parallèle, il nous faut 500 Mo de RAM en plus, ce qui est marginal.
 
 Au vu des capacités mémoire en informatique, toutes puissances de 2,
 \emph{Dans le cadre de référence, il nous faut au moins 128 Go de RAM et 4 To d'espace disque}
@@ -190,7 +191,7 @@ Sur un ordinateur d'une puissance de calcul de 1 GFlops, on observe que lors de 
 
 \medskip{}
 
-Ainsi pour réaliser J = 1000 reconnaissances en simultannée sur des bases de N = 1000 mots avec un temps d'exécution de l'algorithme Forward de moins de 0.5s, \emph{il nous faut une puissance de calcul d'au moins 100 Gflops.}
+Ainsi pour réaliser $J = 1000$ reconnaissances en simultannée sur des bases de $N = 1000 \text{mots}$ avec un temps d'exécution de l'algorithme Forward de moins de 0.5s, \emph{il nous faut une puissance de calcul d'au moins 100 Gflops.}
 
 \medskip{}
 
@@ -242,7 +243,7 @@ Cette interface a été réalisée avec la librairie TKinter de Python, la libra
 
 \begin{figure}[H]
 	\begin{center}
-	\includegraphics[width=14cm]{pics/speechrecorder-log.png} 
+	\includegraphics[height=6cm]{pics/speechrecorder-log.png} 
 	\end{center}
 	\caption{Authentification d'un client au SpeechRecorder}
 \end{figure}

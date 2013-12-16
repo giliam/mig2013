@@ -5,7 +5,7 @@
     		le dénominateur commun étant le traitement du signal qui transforme l'onde acoustique de la parole en une représentation paramétrique plus apte à l'analyse automatisée. Le principe est simple: garder les traits distinctifs du signal et s'absoudre au maximum de tout ce qui pourra en parasiter l'étude. Cette conversion ne se fait donc pas sans perte d'information, et la délicatesse de la discipline tient en la sélection judicieuse des outils les plus adaptés afin de trouver le meilleur compromis entre perte d'information et représentation fidèle du signal.
     		\section{Prérequis}
     		\subsection{Qu'est-ce que le son ?}
-\begin{figure}[!h]
+\begin{figure}[H]
 	    \begin{center}
 		    \includegraphics[width=10cm]{Images/oreille.png} 
 	    \end{center}
@@ -17,7 +17,7 @@
 				L'échantillonnage correspond au nombre de valeurs prélevées en une seconde (principe \cite{echantillonnage}). Par exemple un échantillonnage à $44 100$ Hz correspond à relever la position de la membrane $44 100$ fois par secondes. La valeur de la position de la membrane est alors enregistrée sous la forme d'un entier signé codé sur $n$ bits ($n$ valant généralement $8$,$16$,$32$ ou $64$). Plus $n$ est grand, plus la position de la membrane sera stockée de manière précise, et donc plus la qualité du son sera bonne. Grâce à l'échantillonnage et à, on définit aisément le bitrate, qui correspond au débit d'information par seconde, de la façon suivante: \( bitrate = n * $é$chantillonnage. \)
 	Ce dont nous disposons donc pour analyser un signal, est la donnée de l'amplitude en fonction du temps la caractérisant.
 	
-\begin{figure}
+\begin{figure}[H]
 	\begin{center}
 	\includegraphics[width=14cm]{Images/VICA.png} 
 	\end{center}
@@ -33,7 +33,7 @@
 	On détecte alors le moment où le signal (en valeur absolue) dépasse pour la première fois une valeur seuil et celui à partir duquel le signal ne dépasse plus celle-ci. 
 	On sait alors où couper le signal d'origine, en élargissant légèrement la coupe afin d'éviter de supprimer des consonnes peu sonores. 
 	Cela permet en plus d'afficher un message d'erreur suspectant un enregistrement ayant commencé trop tard ou fini trop tôt.
-\begin{figure}[!h]
+\begin{figure}[H]
 	    \begin{center}
 		    \includegraphics[width=18cm]{Images/synchro.png} 
 	    \end{center}
@@ -114,7 +114,7 @@ La taille des échantillons est un paramètre déterminant sur la qualité et la pré
 	    \end{center}
 	    \caption{Principe normal du fenêtrage}
 \end{figure}
-\begin{figure}[hb]
+\begin{figure}[H]
 	    \begin{center}
 		    \includegraphics[width=12cm]{Images/fenetrehann.png} 
 	    \end{center}
@@ -128,7 +128,7 @@ La taille des échantillons est un paramètre déterminant sur la qualité et la pré
         	de calcul ayant, pour trouver le spectre d'un unique échantillon, une complexité en $O(N^2)$  (avec N le nombre de points par 
         	échantillons), il est nécessaire de trouver d'autres méthodes si l'on envisage des applications proches du temps réel.  
         	Heureusement, plusieurs approches se sont ouvertes à nous pour l'optimisation du temps de calcul.
-        	\begin{figure}[h]
+        	\begin{figure}[H]
 				\begin{center}
 					\includegraphics[width=15cm]{Images/tf2.png} 
 				\end{center}

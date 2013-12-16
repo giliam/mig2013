@@ -3,44 +3,49 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: Rapport.aux
 The style file: unsrt.bst
 Database file #1: Biblio.bib
-You've used 14 entries,
+Illegal end of database file---line 134 of file Biblio.bib
+ :     year    = {?},
+ :                   
+I'm skipping whatever remains of this entry
+You've used 19 entries,
             1791 wiz_defined-function locations,
-            515 strings with 5321 characters,
-and the built_in function-call counts, 1993 in all, are:
-= -- 161
-> -- 87
+            538 strings with 5965 characters,
+and the built_in function-call counts, 2638 in all, are:
+= -- 216
+> -- 107
 < -- 0
-+ -- 37
-- -- 23
-* -- 53
-:= -- 345
-add.period$ -- 42
-call.type$ -- 14
-change.case$ -- 13
++ -- 47
+- -- 28
+* -- 62
+:= -- 453
+add.period$ -- 57
+call.type$ -- 19
+change.case$ -- 18
 chr.to.int$ -- 0
-cite$ -- 14
-duplicate$ -- 93
-empty$ -- 233
-format.name$ -- 23
-if$ -- 452
+cite$ -- 19
+duplicate$ -- 124
+empty$ -- 315
+format.name$ -- 28
+if$ -- 601
 int.to.chr$ -- 0
-int.to.str$ -- 14
-missing$ -- 8
-newline$ -- 73
-num.names$ -- 14
-pop$ -- 70
+int.to.str$ -- 19
+missing$ -- 10
+newline$ -- 98
+num.names$ -- 19
+pop$ -- 94
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 37
+skip$ -- 52
 stack$ -- 0
 substring$ -- 0
-swap$ -- 13
+swap$ -- 18
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 0
-while$ -- 14
-width$ -- 16
-write$ -- 143
+while$ -- 19
+width$ -- 21
+write$ -- 193
+(There was 1 error message)

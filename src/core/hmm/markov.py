@@ -190,16 +190,18 @@ def buildHMMs(HMMs, HMMsPath, maxIt, path = "../db/hmm/"):
     seqs = []
     for i in range(len(HMMsPath)):
         seqs.append([])
+        G_mu.append([])
         for j in range(len(HMMsPath[i])):
             seqs[i].append(getData(path + HMMsPath[i][j]))
-            G_mu = G_mu + metaCoupures(seqs[i][j]) # FAIL : this does not work for multi speaker : G_mu should contain different mus for each speaker
+            G_mu[i] = G_mu[i] + metaCoupures(seqs[i][j]) # FAIL : this does not work for multi speaker : G_mu should contain different mus for each speaker
+            # FAIL : and the cutting of mus should be coherent
 
-    n = len(G_mu)
     d = 13
 
     for i in range(len(HMMs)):
+        n = len(G_mu[i])
         m = len(HMMsPath[i])
-        hmm.createHMM(HMMs[i], HMMsPath[i], n, m, d, uniformPI(n), uniformA(n), uniformC(n, m), G_mu, uniformG_sigma(n, m, d))
+        hmm.createHMM(HMMs[i], HMMsPath[i], n, m, d, uniformPI(n), uniformA(n), uniformC(n, m), G_mu[i], uniformG_sigma(n, m, d))
 
         passSeqs = []
         for j in range(len(seqs[i])):
@@ -216,7 +218,7 @@ def buildHMMs(HMMs, HMMsPath, maxIt, path = "../db/hmm/"):
         else:
             print("HMM '{}' final likelyhood (log) : {}".format(HMMs[i], x))
         print("")
-        
+
 def loadHMMs(fileName):
     l = getData(fileName)
     hmm.setHMMs(l)

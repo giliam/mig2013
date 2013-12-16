@@ -60,7 +60,7 @@ def main(verbose=True,action=-1,verboseUltime=True):
             numeroTraitement = 0
             filesList = db.printFilesList(dirList[dirChoice])
             print filesList
-            action = int( input( "À partir de quelle action souhaitez-vous agir ?\n0-Tout\n1-Filtre passe-haut\n2-Fenêtre de Hann\n3-Transformée de Fourier Rapide\n4-Fonction Mel\n5-Création de la liste Mel\n6-Transformée de Fourier inverse\n7-Creation de vecteurs\n " ) )
+            action = int( input( "A partir de quelle action souhaitez-vous agir ?\n0-Tout\n1-Filtre passe-haut\n2-Fenetre de Hann\n3-Transformee de Fourier Rapide\n4-Fonction Mel\n5-Creation de la liste Mel\n6-Transformee de Fourier inverse\n7-Creation de vecteurs\n " ) )
             for f in filesList:
                 dirName = os.path.dirname(f)
                 m = db.getWaveFile(f)

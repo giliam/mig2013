@@ -23,7 +23,7 @@ class SpeechServerHandler( BaseHTTPServer.BaseHTTPRequestHandler ):
         self.send_response(200)
         self.send_header('Content-type', 'text/plain')
         self.end_headers()
-        self.wfile.write("Ça se passe en POST pour les requêtes !")
+        self.wfile.write("Ca se passe en POST pour les requetes !")
 
 
     def do_POST(self):

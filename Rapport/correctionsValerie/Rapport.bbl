@@ -1,0 +1,118 @@
+\begin{thebibliography}{10}
+
+\bibitem{apple}
+Apple.
+\newblock Application siri.
+\newblock \url{http://www.apple.com/fr/ios/siri/}, 2013.
+
+\bibitem{github}
+Tom Preston-Werner, Chris Wanstrath, and PJ~Hyett.
+\newblock Github.
+\newblock \url{http://www.github.com/}, 2013.
+
+\bibitem{rabiner}
+Lawrence Rabiner.
+\newblock {\em Fundamentals of Speech Recognition}.
+\newblock Prentice Hall PTR, 1993.
+
+\bibitem{melproof}
+Stanley~Smith Stevens, John Volkman, and Edwin~B. Newman.
+\newblock A scale for the measurement of the psychological magnitude pitch.
+\newblock {\em Journal of the Acoustical Society of America}, 1937.
+
+\bibitem{melbe}
+Begam, Elamvazuthi, and Muda.
+\newblock Voice recognition algorithms using mel frequency cepstral coefficient
+  (mfcc) and dynamic time warping (dtw).
+\newblock {\em Journal of Computing}, 2010.
+
+\bibitem{echantillonnage}
+Vincent Arsigny.
+\newblock Modélisation par un champ de markov du signal de parole et
+  application à la reconnaissance vocale.
+\newblock Technical report, École Nationale Supérieure des Télécom de Paris,
+  2000.
+
+\bibitem{noisereduction}
+Zohar Babin.
+\newblock How to do noise reduction using ffmpeg and sox.
+\newblock
+  \url{http://www.zoharbabin.com/how-to-do-noise-reduction-using-ffmpeg-and-sox/},
+  2011.
+
+\bibitem{sox}
+Chris Bagwell.
+\newblock Sox website.
+\newblock \url{http://sox.sourceforge.net/Docs/Documentation}, 2009.
+
+\bibitem{nyquistshannon}
+Anonyme.
+\newblock Théorème de nyquist-shannon.
+\newblock
+  \url{http://fr.wikipedia.org/wiki/Th%C3%A9or%C3%A8me_d%27%C3%A9chantillonnage_de_Nyquist-Shannon},
+  2013.
+
+\bibitem{automate}
+Luc Maranget.
+\newblock {\em Introduction à la programmation}.
+\newblock École Polytechnique, 2008-2009.
+
+\bibitem{ref1}
+Maurice Charbit.
+\newblock {Reconnaissance de mots isolés (utilisation des modèles HMM)}.
+\newblock {\em Inconnu}, Oct. 2002.
+
+\bibitem{calcvoc}
+Franck Bonnet, Benjamin Devèze, Mathieu Fouquin, and Julien Jeany.
+\newblock Reconnaissance automatique de la parole.
+\newblock {\em Epita}, 2004.
+
+\bibitem{usarmy}
+Aharon Etengoff.
+\newblock Nuance clinches speech-recognition deal with us army.
+\newblock
+  \url{http://www.itexaminer.com/nuance-clinches-speech-recognition-deal-with-us-army.aspx},
+  2009.
+
+\bibitem{controleaerien}
+Thanassis Trikas.
+\newblock Automated speech recognition in air traffic control.
+\newblock {\em MIT}, 1987.
+
+\bibitem{medecine}
+G2~Speech.
+\newblock La reconnaissance vocale pour hôpitaux et autres institutions de
+  soins.
+\newblock \url{http://www.g2speech.be/reconnaissance-vocale.html}, 2000.
+
+\bibitem{police}
+Nuance Company.
+\newblock Dragon naturallyspeaking for law enforcement.
+\newblock
+  \url{http://www.nuance.com/naturallyspeaking/industries/law-enforcement/}, ?
+
+\bibitem{handicapes}
+Nancy Manasse.
+\newblock Speech recognition.
+\newblock {\em University of Nebraska-Lincoln}, 1990.
+
+\bibitem{capital}
+PrismaMedia.
+\newblock Capital.
+\newblock \url{www.capital.fr}, ?
+
+\bibitem{michaelpage}
+Michael Page.
+\newblock Hays, officeteam, 2009-2010.
+
+\bibitem{impotfrancais}
+Gouvernement français.
+\newblock site des impôts.
+\newblock \url{www.impots.gouv.fr}, 2013.
+
+\bibitem{dragon}
+Nuance Company.
+\newblock Dragon naturallyspeaking.
+\newblock \url{http://www.nuance.com/dragon/index.htm}, ?
+
+\end{thebibliography}

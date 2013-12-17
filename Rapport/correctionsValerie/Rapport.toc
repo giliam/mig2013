@@ -1,0 +1,146 @@
+\select@language {french}
+\contentsline {section}{\numberline {0.1}Pr\'esentation des enjeux}{5}
+\contentsline {paragraph}{}{5}
+\contentsline {paragraph}{}{5}
+\contentsline {section}{\numberline {0.2}Objectifs du projet}{5}
+\contentsline {paragraph}{}{5}
+\contentsline {paragraph}{}{5}
+\contentsline {paragraph}{}{6}
+\contentsline {section}{\numberline {0.3}Approches de la reconnaissance vocale}{6}
+\contentsline {paragraph}{}{6}
+\contentsline {paragraph}{}{6}
+\contentsline {subsection}{\numberline {0.3.1}Acoustique-phon\'etique}{6}
+\contentsline {paragraph}{}{6}
+\contentsline {paragraph}{}{6}
+\contentsline {paragraph}{}{7}
+\contentsline {subsection}{\numberline {0.3.2}Reconnaissance de motifs}{7}
+\contentsline {paragraph}{}{7}
+\contentsline {paragraph}{}{7}
+\contentsline {paragraph}{}{7}
+\contentsline {part}{I\hspace {1em}D\'emarche Technique}{8}
+\contentsline {chapter}{\numberline {1}Principe g\'en\'eral du traitement de la parole}{8}
+\contentsline {section}{\numberline {1.1}Objectifs}{8}
+\contentsline {section}{\numberline {1.2}Sch\'ema global de la reconnaissance de la parole}{8}
+\contentsline {paragraph}{Enregistrement du son (de la parole au son)}{8}
+\contentsline {paragraph}{D\'ecoupage en fen\^etre (du son en parties de son)}{9}
+\contentsline {paragraph}{Passage en fr\'equences}{9}
+\contentsline {paragraph}{Fr\'equences entendues par l'oreille}{9}
+\contentsline {paragraph}{Syst\`eme de reconnaissance du mot}{9}
+\contentsline {chapter}{\numberline {2}Analyse de la parole}{10}
+\contentsline {section}{\numberline {2.1}Introduction}{10}
+\contentsline {section}{\numberline {2.2}Pr\'erequis}{10}
+\contentsline {subsection}{\numberline {2.2.1}Qu'est-ce que le son ?}{10}
+\contentsline {subsection}{\numberline {2.2.2}Comment le son est-il repr\'esent\'e dans l'ordinateur ?}{11}
+\contentsline {section}{\numberline {2.3}Enregistrement, recadrage, d\'ecoupage et filtrage des signaux}{11}
+\contentsline {subsection}{\numberline {2.3.1}Synchronisation des enregistrements}{11}
+\contentsline {paragraph}{}{12}
+\contentsline {paragraph}{}{12}
+\contentsline {subsection}{\numberline {2.3.2}Filtrage des signaux}{12}
+\contentsline {paragraph}{}{12}
+\contentsline {paragraph}{}{12}
+\contentsline {paragraph}{}{13}
+\contentsline {section}{\numberline {2.4}Echantillonnage et fen\^etrage des signaux}{13}
+\contentsline {paragraph}{}{13}
+\contentsline {paragraph}{}{13}
+\contentsline {paragraph}{}{14}
+\contentsline {section}{\numberline {2.5}Passage des signaux dans le domaine des fr\'equences}{14}
+\contentsline {paragraph}{}{14}
+\contentsline {paragraph}{}{14}
+\contentsline {paragraph}{}{15}
+\contentsline {section}{\numberline {2.6}Simulation du comportement de l'oreille humaine}{15}
+\contentsline {paragraph}{}{15}
+\contentsline {paragraph}{}{15}
+\contentsline {paragraph}{}{16}
+\contentsline {section}{\numberline {2.7}Passage inverse des signaux dans le domaine temporel}{16}
+\contentsline {paragraph}{}{16}
+\contentsline {paragraph}{}{16}
+\contentsline {paragraph}{}{16}
+\contentsline {paragraph}{}{17}
+\contentsline {chapter}{\numberline {3}Mod\'elisation des mots par mod\`eles de Markov cach\'es (MMC)}{18}
+\contentsline {section}{\numberline {3.1}Pr\'erequis et principe}{18}
+\contentsline {paragraph}{}{18}
+\contentsline {paragraph}{}{18}
+\contentsline {paragraph}{}{18}
+\contentsline {section}{\numberline {3.2}Principaux algorithmes sur les mod\`eles de Markov}{18}
+\contentsline {paragraph}{}{18}
+\contentsline {paragraph}{}{19}
+\contentsline {section}{\numberline {3.3}Application \`a notre objectif}{19}
+\contentsline {paragraph}{}{19}
+\contentsline {paragraph}{}{19}
+\contentsline {paragraph}{}{19}
+\contentsline {section}{\numberline {3.4}Phase d'apprentissage}{19}
+\contentsline {paragraph}{}{19}
+\contentsline {paragraph}{}{19}
+\contentsline {paragraph}{}{19}
+\contentsline {paragraph}{}{19}
+\contentsline {section}{\numberline {3.5}Phase de reconnaissance}{19}
+\contentsline {paragraph}{}{19}
+\contentsline {paragraph}{}{20}
+\contentsline {paragraph}{}{20}
+\contentsline {part}{II\hspace {1em}Approche commerciale}{21}
+\contentsline {chapter}{\numberline {1}Approche du d\'eveloppement du projet}{21}
+\contentsline {subsection}{\numberline {1.0.1}Choix d'une architecture optimale pour notre projet}{21}
+\contentsline {subsection}{\numberline {1.0.2}R\'ealisation du SpeechServer}{23}
+\contentsline {subsection}{\numberline {1.0.3}Syst\`eme de Gestion de Base de Donn\'ees (SGBD)}{24}
+\contentsline {section}{\numberline {1.1}Dimensionneemnt de l'infrastructure de calcul de The Speech App Company}{24}
+\contentsline {subsection}{\numberline {1.1.1}Hypoth\`eses de fonctionnement}{24}
+\contentsline {subsection}{\numberline {1.1.2}Dimensionnement en m\'emoire RAM et espace disque}{25}
+\contentsline {subsection}{\numberline {1.1.3}Dimensionnement r\'eseau}{25}
+\contentsline {subsection}{\numberline {1.1.4}Dimensionnement des \'elements de calculs}{25}
+\contentsline {subsection}{\numberline {1.1.5}Choix de l'infrastructure et co\^uts li\'es}{25}
+\contentsline {subsection}{\numberline {1.1.6}SpeechRecorder}{26}
+\contentsline {subsection}{\numberline {1.1.7}SpeechApp}{27}
+\contentsline {chapter}{\numberline {2}Applications}{30}
+\contentsline {paragraph}{}{30}
+\contentsline {paragraph}{}{30}
+\contentsline {paragraph}{}{30}
+\contentsline {paragraph}{}{30}
+\contentsline {paragraph}{}{30}
+\contentsline {paragraph}{}{31}
+\contentsline {paragraph}{}{31}
+\contentsline {paragraph}{}{31}
+\contentsline {chapter}{\numberline {3}Budget, mod\`ele \'economique}{32}
+\contentsline {section}{\numberline {3.1}Introduction}{32}
+\contentsline {section}{\numberline {3.2}Les salaires}{32}
+\contentsline {section}{\numberline {3.3}Le compte de r\'esultat pr\'evisionnel}{33}
+\contentsline {section}{\numberline {3.4}Le bilan}{33}
+\contentsline {section}{\numberline {3.5}Les imp\^ots}{33}
+\contentsline {section}{\numberline {3.6}Conclusion et vue sur le long terme}{34}
+\contentsline {paragraph}{}{35}
+\contentsline {paragraph}{}{35}
+\contentsline {paragraph}{}{35}
+\contentsline {part}{III\hspace {1em}Core}{36}
+\contentsline {chapter}{\numberline {A}Code Principal}{36}
+\contentsline {section}{\numberline {A.1}shell.py}{36}
+\contentsline {section}{\numberline {A.2}server.py}{36}
+\contentsline {section}{\numberline {A.3}gui.py}{36}
+\contentsline {chapter}{\numberline {B}handling}{37}
+\contentsline {section}{\numberline {B.1}fenetre_hann.py}{37}
+\contentsline {section}{\numberline {B.2}inverseDCT.py}{37}
+\contentsline {section}{\numberline {B.3}triangularFilterbank.py}{37}
+\contentsline {section}{\numberline {B.4}passe_haut.py}{37}
+\contentsline {section}{\numberline {B.5}fft.cpp}{37}
+\contentsline {chapter}{\numberline {C}HMM}{38}
+\contentsline {section}{\numberline {C.1}creationVecteurHMM.py}{38}
+\contentsline {section}{\numberline {C.2}markov.py}{38}
+\contentsline {section}{\numberline {C.3}tableauEnergyPerFrame.py}{38}
+\contentsline {section}{\numberline {C.4}hmm.cpp}{38}
+\contentsline {chapter}{\numberline {D}recorder}{39}
+\contentsline {section}{\numberline {D.1}recorder.py}{39}
+\contentsline {section}{\numberline {D.2}sync.py}{39}
+\contentsline {chapter}{\numberline {E}utils}{40}
+\contentsline {section}{\numberline {E.1}animate.py}{40}
+\contentsline {section}{\numberline {E.2}constantes.py}{40}
+\contentsline {section}{\numberline {E.3}db.py}{40}
+\contentsline {section}{\numberline {E.4}util.py}{40}
+\contentsline {part}{IV\hspace {1em}SpeechApp}{41}
+\contentsline {section}{\numberline {.5}main}{41}
+\contentsline {section}{\numberline {.6}holder}{41}
+\contentsline {section}{\numberline {.7}recorder}{41}
+\contentsline {section}{\numberline {.8}recorderWorker}{41}
+\contentsline {section}{\numberline {.9}index.html}{41}
+\contentsline {part}{V\hspace {1em}SpeechServer}{42}
+\contentsline {section}{\numberline {.10}main.py}{42}
+\contentsline {section}{\numberline {.11}audioConverter.py}{42}
+\contentsline {section}{\numberline {.12}clientAuth.py}{42}
+\contentsline {section}{\numberline {.13}speechActions.py}{42}

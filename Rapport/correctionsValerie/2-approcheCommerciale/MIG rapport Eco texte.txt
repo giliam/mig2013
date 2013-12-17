@@ -1,0 +1,39 @@
+Etude économique
+
+Introduction
+
+Après les études techniques et théoriques, l’étude économique est une nécessité. Elle est au coeur des problématiques de l’ingénieur, car c’est elle qui permet de dire si le projet est viable ou non.
+Dans le cas de la programmation d’un logiciel de reconnaissance vocale, divers facteurs sont à prendre en compte, comme les salaires des employés, la communication sur le produit ou les impôts à payer. Il s’agit également de trouver le meilleur moyen pour vendre le logiciel. Faut-il le vendre pour iPhone sur l’App Store ? Le réserver à un public restreint (majoritairement des entreprises) ou le proposer également à des particuliers ?
+La concurrence importante nous oblige à être à la fois ambitieux et prudent. Nous avons donc décidé d’envisager à la fois la vente sur notre site internet d’un logiciel pour les particuliers, et de proposer des licences en parallèle, permettant notamment aux entreprises d’accéder à nos bases de données, les compléter et créer leurs propres dictionnaires.
+
+Les salaires
+
+Treize employés travaillent sur le projet, pendant un temps effectif d’environ un mois. Parmi eux, un chargé des ressources humaines pour un salaire de 2750 euros brut mensuel\cite{www.capital.fr}, un chargé d’étude de marchés, pour un salaire de 2700 euros brut mensuel, les autres étant considérées comme des développeurs de moins de deux ans d’expérience, avec un salaire de 2290 euros brut mensuel \cite{Michael Page, Hays, Officeteam, 2009/2010}.
+Sur ce salaire brut, l’employé paye environ 22% de charges salariales, et l’entreprise 44% de charges patronales. 
+
+
+
+2. Le compte de résultat prévisionnel
+
+Le compte de résultat prévisionnel dresse l’ensemble des charges (fixes et variables) de l’entreprise, ainsi que ses produits (recettes).
+Pour parvenir à un équilibre budgétaire, il nous faut, pour la première année, vendre 26000 logiciels à un prix de 4,17 euros hors taxes, et une dizaine de licences permettant d’accéder à nos bases de données pour un prix de 833,33 euros. Au niveau des charges, l’ensemble des salaires cités plus haut est à prendre en compte, ainsi que le coût de notre campagne de publicité. Celle-ci peut être décrite en deux principaux pôles : des articles de journaux spécialisés, gratuits, et des annonces google. On peut estimer le prix d’une telle annonce à 10 centimes d’euros le clic. En estimant que 10% des visiteurs du site par l’intermédiaire de l’annonce vont acheter le produit, on peut évaluer le coût de la publicité à 26 000 euros. Enfin, l’entreprise aura besoin, pour parvenir à fournir ses services de deux serveurs capable de traiter 1000 requêtes par seconde sur une base d’un million de mots pour un total de 606 euros par mois.
+La différence des produits et des charges donne alors un chiffre de 62 710 euros.
+
+3. Le bilan
+
+Le bilan prend en compte l’actif et le passif de l’entreprise.
+Cette année, celle-ci n’a pas d’actif réel. Pas de trésorerie, de créances ou d’actifs immobiliers et incorporels. Son passif ne contient pas de fonds propres, et le compte de résultat prévisionnel a été explicité plus haut. On peut en revanche considérer que nous avons effectué un prêt à long terme de 100 000 euros, afin de financer les prémices du projet. 
+
+
+4. Les impôts
+
+S’agissant des impôts, nous devons dans un premier temps reverser à l’Etat la TVA sur les produits que nous vendons, à un taux de 20% à compter du 1er Janvier 2014. Le logiciel étant vendu 4,17 euros et la licence 833,33 euros, le total de la TVA à reverser sera de 27 020 euros.
+Ensuite, l’impôt sur les sociétés est à un taux de 33% sur les bénéfices. A partir du bilan et de la TVA, on peut estimer nos bénéfices à 34 690 euros, et donc un impôt sur les bénéfices à hauteur de 11 448 euros.
+\cite{www.impots.gouv.fr}
+
+
+
+Conclusion et vue sur le long terme
+
+En considérant un prêt à un taux de 3% sur cinq ans, et le prêt de locaux et ordinateurs par un incubateur (l’école des Mines par exemple) l’entreprise est viable la première année à partir de 25 000 téléchargements.
+En utilisant les mêmes calculs, pour les quatre années qui suivent, sans faire de mise à jour, il faudrait en moyenne 13 000 ventes de logiciels par an, et 3 ventes de licences.

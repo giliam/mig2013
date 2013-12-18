@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2013.11.12)  18 DEC 2013 17:39
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2013.11.12)  18 DEC 2013 17:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -523,41 +523,43 @@ Package pdftex.def Info: ./Images/eurocopter.jpg used on input line 29.
 
 
 ] [6]) [7] (./Principe.tex
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 2.
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
 Chapitre 1.
 <Images/traitement.png, id=49, 1005.7575pt x 655.44875pt>
 File: Images/traitement.png Graphic file (type png)
 
 <use Images/traitement.png>
-Package pdftex.def Info: Images/traitement.png used on input line 15.
+Package pdftex.def Info: Images/traitement.png used on input line 25.
 (pdftex.def)             Requested size: 512.1496pt x 333.76437pt.
 
-Overfull \hbox (28.45273pt too wide) in paragraph at lines 15--16
+Overfull \hbox (28.45273pt too wide) in paragraph at lines 25--26
  [] 
  []
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [8
 
 
 ] [9 <./Images/traitement.png>]) (./Analyse.tex
 Chapitre 2.
-<Images/oreille.png, id=58, 192.72pt x 133.4586pt>
+<Images/oreille.png, id=59, 192.72pt x 133.4586pt>
 File: Images/oreille.png Graphic file (type png)
  <use Images/oreille.png>
 Package pdftex.def Info: Images/oreille.png used on input line 10.
 (pdftex.def)             Requested size: 284.52756pt x 197.03503pt.
 
 [10 <./Images/oreille.png>]
-<Images/VICA.png, id=63, 838.13126pt x 257.96375pt>
+<Images/VICA.png, id=64, 838.13126pt x 257.96375pt>
 File: Images/VICA.png Graphic file (type png)
  <use Images/VICA.png>
 Package pdftex.def Info: Images/VICA.png used on input line 22.
 (pdftex.def)             Requested size: 398.33858pt x 122.60095pt.
 
 [11 <./Images/VICA.png (PNG copy)>]
-<Images/synchro.png, id=71, 894.34125pt x 175.65625pt>
+<Images/synchro.png, id=72, 894.34125pt x 175.65625pt>
 File: Images/synchro.png Graphic file (type png)
 
 <use Images/synchro.png>
@@ -568,14 +570,14 @@ Overfull \hbox (28.45273pt too wide) in paragraph at lines 40--41
  [] 
  []
 
-<Images/passehautavant.png, id=72, 814.04124pt x 178.6675pt>
+<Images/passehautavant.png, id=73, 814.04124pt x 178.6675pt>
 File: Images/passehautavant.png Graphic file (type png)
 
 <use Images/passehautavant.png>
 Package pdftex.def Info: Images/passehautavant.png used on input line 65.
 (pdftex.def)             Requested size: 426.79134pt x 93.67369pt.
 
-<Images/passehautapres.png, id=73, 813.0375pt x 176.66pt>
+<Images/passehautapres.png, id=74, 813.0375pt x 176.66pt>
 File: Images/passehautapres.png Graphic file (type png)
 
 <use Images/passehautapres.png>
@@ -583,43 +585,50 @@ Package pdftex.def Info: Images/passehautapres.png used on input line 71.
 (pdftex.def)             Requested size: 426.79134pt x 92.7344pt.
  [12 <./Images/synchro.png (PNG copy)>] [13 <./Images/passehautavant.png (PNG c
 opy)> <./Images/passehautapres.png (PNG copy)>]
-<Images/fenetrenormale.png, id=84, 499.8675pt x 162.6075pt>
+<Images/fenetrenormale.png, id=85, 499.8675pt x 162.6075pt>
 File: Images/fenetrenormale.png Graphic file (type png)
 
 <use Images/fenetrenormale.png>
 Package pdftex.def Info: Images/fenetrenormale.png used on input line 111.
 (pdftex.def)             Requested size: 341.43306pt x 111.07283pt.
 
-<Images/fenetrehann.png, id=85, 499.8675pt x 162.6075pt>
+<Images/fenetrehann.png, id=86, 499.8675pt x 162.6075pt>
 File: Images/fenetrehann.png Graphic file (type png)
 
 <use Images/fenetrehann.png>
 Package pdftex.def Info: Images/fenetrehann.png used on input line 117.
 (pdftex.def)             Requested size: 341.43306pt x 111.07283pt.
  [14 <./Images/fenetrenormale.png> <./Images/fenetrehann.png>] <Images/tf2.png,
- id=91, 774.64406pt x 316.18124pt>
+ id=92, 774.64406pt x 316.18124pt>
 File: Images/tf2.png Graphic file (type png)
 
 <use Images/tf2.png>
 Package pdftex.def Info: Images/tf2.png used on input line 147.
 (pdftex.def)             Requested size: 426.79134pt x 174.20416pt.
  [15 <./Images/tf2.png>]
-<Images/Mel.png, id=95, 588.69937pt x 442.65375pt>
+<Images/Mel.png, id=96, 588.69937pt x 442.65375pt>
 File: Images/Mel.png Graphic file (type png)
  <use Images/Mel.png>
 Package pdftex.def Info: Images/Mel.png used on input line 183.
 (pdftex.def)             Requested size: 284.52756pt x 213.94382pt.
 
 [16 <./Images/Mel.png (PNG copy)>]
-<Images/DCTschema.png, id=99, 257.96375pt x 313.17pt>
+<Images/DCTschema.png, id=100, 257.96375pt x 313.17pt>
 File: Images/DCTschema.png Graphic file (type png)
 
 <use Images/DCTschema.png>
 Package pdftex.def Info: Images/DCTschema.png used on input line 194.
 (pdftex.def)             Requested size: 284.52756pt x 345.44855pt.
- [17 <./Images/DCTschema.png>]) (./MMC.tex [18]
+ [17 <./Images/DCTschema.png>]
+<Images/diagramme.png, id=104, 469.755pt x 450.68375pt>
+File: Images/diagramme.png Graphic file (type png)
+
+<use Images/diagramme.png>
+Package pdftex.def Info: Images/diagramme.png used on input line 226.
+(pdftex.def)             Requested size: 284.52756pt x 272.9774pt.
+) (./MMC.tex [18 <./Images/diagramme.png>]
 Chapitre 3.
-<Images/MMC1.png, id=108, 330.23375pt x 163.61125pt>
+<Images/MMC1.png, id=110, 330.23375pt x 163.61125pt>
 File: Images/MMC1.png Graphic file (type png)
  <use Images/MMC1.png>
 Package pdftex.def Info: Images/MMC1.png used on input line 16.
@@ -628,29 +637,28 @@ Package pdftex.def Info: Images/MMC1.png used on input line 16.
 [19
 
  <./Images/MMC1.png>]
-<Images/mmcpresentation.png, id=113, 1051.93pt x 769.87625pt>
+<Images/mmcpresentation.png, id=115, 1051.93pt x 769.87625pt>
 File: Images/mmcpresentation.png Graphic file (type png)
 
 <use Images/mmcpresentation.png>
 Package pdftex.def Info: Images/mmcpresentation.png used on input line 29.
 (pdftex.def)             Requested size: 284.52756pt x 208.23354pt.
  [20 <./Images/mmcpresentation.png>]
-<Images/MMC2.png, id=118, 360.34625pt x 154.5775pt>
+<Images/MMC2.png, id=120, 360.34625pt x 154.5775pt>
 File: Images/MMC2.png Graphic file (type png)
  <use Images/MMC2.png>
-Package pdftex.def Info: Images/MMC2.png used on input line 58.
+Package pdftex.def Info: Images/MMC2.png used on input line 57.
 (pdftex.def)             Requested size: 284.52756pt x 122.05354pt.
 
 [21 <./Images/MMC2.png (PNG copy)>]) (./Recapitulatif.tex [22]
-<Images/diagramme.png, id=126, 469.755pt x 450.68375pt>
 File: Images/diagramme.png Graphic file (type png)
 
 <use Images/diagramme.png>
 Package pdftex.def Info: Images/diagramme.png used on input line 5.
 (pdftex.def)             Requested size: 284.52756pt x 272.9774pt.
-) [23 <./Images/diagramme.png>] (./Architecture.tex
+) [23] (./Architecture.tex
 Chapitre 1.
-<Images/logomigSE.png, id=130, 385.44pt x 385.44pt>
+<Images/logomigSE.png, id=131, 385.44pt x 385.44pt>
 File: Images/logomigSE.png Graphic file (type png)
  <use Images/logomigSE.png>
 Package pdftex.def Info: Images/logomigSE.png used on input line 13.
@@ -659,42 +667,42 @@ Package pdftex.def Info: Images/logomigSE.png used on input line 13.
 [24
 
  <./Images/logomigSE.png>]
-<Images/architecture.png, id=137, 793.96625pt x 528.97626pt>
+<Images/architecture.png, id=138, 793.96625pt x 528.97626pt>
 File: Images/architecture.png Graphic file (type png)
 
 <use Images/architecture.png>
 Package pdftex.def Info: Images/architecture.png used on input line 49.
 (pdftex.def)             Requested size: 284.52756pt x 189.56764pt.
 
-<Images/vieRequete.png, id=138, 1282.7925pt x 742.775pt>
+<Images/vieRequete.png, id=139, 1282.7925pt x 742.775pt>
 File: Images/vieRequete.png Graphic file (type png)
 
 <use Images/vieRequete.png>
 Package pdftex.def Info: Images/vieRequete.png used on input line 65.
 (pdftex.def)             Requested size: 398.33858pt x 230.64322pt.
  [25 <./Images/architecture.png>]
-<Images/server.png, id=143, 523.9575pt x 200.75pt>
+<Images/server.png, id=144, 523.9575pt x 200.75pt>
 File: Images/server.png Graphic file (type png)
  <use Images/server.png>
 Package pdftex.def Info: Images/server.png used on input line 101.
 (pdftex.def)             Requested size: 227.62204pt x 87.20914pt.
 
 [26 <./Images/vieRequete.png>] [27 <./Images/server.png>]
-<Images/server-gamme.png, id=150, 973.6375pt x 532.99126pt>
+<Images/server-gamme.png, id=151, 973.6375pt x 532.99126pt>
 File: Images/server-gamme.png Graphic file (type png)
 
 <use Images/server-gamme.png>
 Package pdftex.def Info: Images/server-gamme.png used on input line 211.
 (pdftex.def)             Requested size: 398.33858pt x 218.05612pt.
  [28]
-<Images/speechrecorder-log.png, id=154, 315.1775pt x 288.07625pt>
+<Images/speechrecorder-log.png, id=155, 315.1775pt x 288.07625pt>
 File: Images/speechrecorder-log.png Graphic file (type png)
 
 <use Images/speechrecorder-log.png>
 Package pdftex.def Info: Images/speechrecorder-log.png used on input line 249.
 (pdftex.def)             Requested size: 155.65024pt x 142.26378pt.
  [29 <./Images/server-gamme.png>]
-<Images/speechrecorder-record.png, id=158, 1340.00626pt x 589.20125pt>
+<Images/speechrecorder-record.png, id=159, 1340.00626pt x 589.20125pt>
 File: Images/speechrecorder-record.png Graphic file (type png)
 
 <use Images/speechrecorder-record.png>
@@ -702,61 +710,57 @@ Package pdftex.def Info: Images/speechrecorder-record.png used on input line 25
 6.
 (pdftex.def)             Requested size: 398.33858pt x 175.14345pt.
 
-<Images/speechapp-desktop.png, id=159, 1445.4pt x 903.375pt>
+<Images/speechapp-desktop.png, id=160, 1445.4pt x 903.375pt>
 File: Images/speechapp-desktop.png Graphic file (type png)
 
 <use Images/speechapp-desktop.png>
 Package pdftex.def Info: Images/speechapp-desktop.png used on input line 278.
 (pdftex.def)             Requested size: 398.33858pt x 248.9596pt.
  [30 <./Images/speechrecorder-log.png> <./Images/speechrecorder-record.png>]
-<Images/speechapp-iphone.png, id=164, 642.4pt x 481.8pt>
+<Images/speechapp-iphone.png, id=165, 642.4pt x 481.8pt>
 File: Images/speechapp-iphone.png Graphic file (type png)
 
 <use Images/speechapp-iphone.png>
 Package pdftex.def Info: Images/speechapp-iphone.png used on input line 286.
 (pdftex.def)             Requested size: 398.33858pt x 298.76436pt.
 
-<Images/speechapp-ipad.png, id=165, 642.4pt x 463.7325pt>
+<Images/speechapp-ipad.png, id=166, 642.4pt x 463.7325pt>
 File: Images/speechapp-ipad.png Graphic file (type png)
 
 <use Images/speechapp-ipad.png>
 Package pdftex.def Info: Images/speechapp-ipad.png used on input line 293.
 (pdftex.def)             Requested size: 398.33858pt x 287.5607pt.
- [31 <./Images/speechapp-desktop.png> <./Images/speechapp-iphone.png>]
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 306.
-
- (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
-File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-)) (./Applications.tex [32 <./Images/speechapp-ipad.png>]
+ [31 <./Images/speechapp-desktop.png> <./Images/speechapp-iphone.png>]) (./Appl
+ications.tex [32 <./Images/speechapp-ipad.png>]
 Chapitre 2.
 [33
 
 ]) (./BudgetEco.tex [34]
 Chapitre 3.
-<Images/Salaires.png, id=179, 560.69475pt x 537.80925pt>
+<Images/Salaires.png, id=180, 560.69475pt x 537.80925pt>
 File: Images/Salaires.png Graphic file (type png)
 
 <use Images/Salaires.png>
 Package pdftex.def Info: Images/Salaires.png used on input line 24.
-(pdftex.def)             Requested size: 426.79134pt x 409.37115pt.
+(pdftex.def)             Requested size: 369.88582pt x 354.79106pt.
  [35
 
 ]
-<Images/ResultatPrev.png, id=184, 564.9105pt x 218.61674pt>
+<Images/ResultatPrev.png, id=185, 564.9105pt x 218.61674pt>
 File: Images/ResultatPrev.png Graphic file (type png)
 
 <use Images/ResultatPrev.png>
 Package pdftex.def Info: Images/ResultatPrev.png used on input line 42.
 (pdftex.def)             Requested size: 426.79134pt x 165.16304pt.
  [36 <./Images/Salaires.png>]
-<Images/ActifPassif.png, id=189, 476.37975pt x 197.538pt>
+<Images/ActifPassif.png, id=190, 476.37975pt x 197.538pt>
 File: Images/ActifPassif.png Graphic file (type png)
 
 <use Images/ActifPassif.png>
 Package pdftex.def Info: Images/ActifPassif.png used on input line 50.
 (pdftex.def)             Requested size: 426.79134pt x 176.97475pt.
 
-<Images/Impots.png, id=190, 343.2825pt x 81.30376pt>
+<Images/Impots.png, id=191, 343.2825pt x 81.30376pt>
 File: Images/Impots.png Graphic file (type png)
  <use Images/Impots.png>
 Package pdftex.def Info: Images/Impots.png used on input line 70.
@@ -839,11 +843,11 @@ Annexe G.
 (./Rapport.aux (./title.aux) (./Remerciements.aux) (./Introduction.aux)
 (./Conclusion.aux) (./LeCode.aux)) ) 
 Here is how much of TeX's memory you used:
- 9486 strings out of 493307
- 126980 string characters out of 6139904
- 517212 words of memory out of 5000000
- 12587 multiletter control sequences out of 15000+600000
- 24537 words of font info for 56 fonts, out of 8000000 for 9000
+ 9503 strings out of 493307
+ 127143 string characters out of 6139904
+ 517207 words of memory out of 5000000
+ 12597 multiletter control sequences out of 15000+600000
+ 27040 words of font info for 66 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  41i,7n,63p,1325b,2049s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/cm-super/
@@ -869,11 +873,12 @@ sr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts
 /type1/public/cm-super/sfrm2488.pfb></usr/share/texmf/fonts/type1/public/cm-sup
 er/sfsl1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfsl1440.pfb></us
 r/share/texmf/fonts/type1/public/cm-super/sfti1095.pfb></usr/share/texmf/fonts/
-type1/public/cm-super/sftt1095.pfb>
-Output written on Rapport.pdf (126 pages, 3730753 bytes).
+type1/public/cm-super/sftt0900.pfb></usr/share/texmf/fonts/type1/public/cm-supe
+r/sftt1095.pfb>
+Output written on Rapport.pdf (126 pages, 3762556 bytes).
 PDF statistics:
- 568 PDF objects out of 1000 (max. 8388607)
- 369 compressed objects within 4 object streams
+ 572 PDF objects out of 1000 (max. 8388607)
+ 372 compressed objects within 4 object streams
  0 named destinations out of 1000 (max. 500000)
  161 words of extra memory for PDF output out of 10000 (max. 10000000)
 

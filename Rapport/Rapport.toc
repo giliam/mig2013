@@ -18,12 +18,13 @@
 \contentsline {paragraph}{}{7}
 \contentsline {paragraph}{}{7}
 \contentsline {part}{I\hspace {1em}D\'emarche Technique}{8}
+\contentsline {paragraph}{}{8}
 \contentsline {chapter}{\numberline {1}Principe g\'en\'eral du traitement du signal}{8}
 \contentsline {section}{\numberline {1.1}Objectifs}{8}
 \contentsline {section}{\numberline {1.2}Sch\'ema global}{8}
-\contentsline {paragraph}{Enregistrement du son}{8}
-\contentsline {paragraph}{D\'ecoupage en fen\^etre}{8}
-\contentsline {paragraph}{Passage en fr\'equence}{8}
+\contentsline {paragraph}{Enregistrement du son}{9}
+\contentsline {paragraph}{D\'ecoupage en fen\^etre}{9}
+\contentsline {paragraph}{Passage en fr\'equence}{9}
 \contentsline {paragraph}{Utilisation de l'\'echelle de Mel}{9}
 \contentsline {chapter}{\numberline {2}Analyse, formatage du signal}{10}
 \contentsline {section}{\numberline {2.1}Introduction}{10}
@@ -53,6 +54,7 @@
 \contentsline {section}{\numberline {2.7}Transform\'ee inverse ou D\'ecomposition en cosinus inverse}{17}
 \contentsline {paragraph}{}{17}
 \contentsline {paragraph}{}{18}
+\contentsline {section}{\numberline {2.8}Sch\'ema r\'ecapitulatif}{18}
 \contentsline {chapter}{\numberline {3}Mod\'elisation des mots \`a reconna\IeC {\^\i }tre par les mod\`eles de Markov cach\'es}{19}
 \contentsline {section}{\numberline {3.1}Objectifs}{19}
 \contentsline {section}{\numberline {3.2}Pr\'erequis et principe}{19}
@@ -88,7 +90,7 @@
 \contentsline {subsection}{\numberline {1.0.1}Choix d'une architecture optimale pour notre projet}{24}
 \contentsline {subsection}{\numberline {1.0.2}R\'ealisation du SpeechServer}{26}
 \contentsline {subsection}{\numberline {1.0.3}Syst\`eme de Gestion de Base de Donn\'ees (SGBD)}{27}
-\contentsline {section}{\numberline {1.1}Dimensionneemnt de l'infrastructure de calcul de The Speech App Company}{27}
+\contentsline {section}{\numberline {1.1}Dimensionnement de l'infrastructure de calcul de The Speech App Company}{27}
 \contentsline {subsection}{\numberline {1.1.1}Hypoth\`eses de fonctionnement}{27}
 \contentsline {subsection}{\numberline {1.1.2}Dimensionnement en m\'emoire RAM et espace disque}{28}
 \contentsline {subsection}{\numberline {1.1.3}Dimensionnement r\'eseau}{28}
@@ -112,6 +114,7 @@
 \contentsline {section}{\numberline {3.4}Le bilan}{37}
 \contentsline {section}{\numberline {3.5}Les imp\^ots}{37}
 \contentsline {section}{\numberline {3.6}Conclusion et vue sur le long terme}{38}
+\contentsline {paragraph}{}{39}
 \contentsline {paragraph}{}{39}
 \contentsline {paragraph}{}{39}
 \contentsline {paragraph}{}{39}

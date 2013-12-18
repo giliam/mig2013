@@ -4,15 +4,13 @@ The top-level auxiliary file: Rapport.aux
 A level-1 auxiliary file: title.aux
 A level-1 auxiliary file: Remerciements.aux
 A level-1 auxiliary file: Introduction.aux
-A level-1 auxiliary file: Technique.aux
-A level-1 auxiliary file: ApprocheCommerciale.aux
 A level-1 auxiliary file: Conclusion.aux
 A level-1 auxiliary file: LeCode.aux
 The style file: unsrt.bst
 Database file #1: Biblio.bib
 You've used 23 entries,
             1791 wiz_defined-function locations,
-            562 strings with 6371 characters,
+            560 strings with 6335 characters,
 and the built_in function-call counts, 3174 in all, are:
 = -- 258
 > -- 130

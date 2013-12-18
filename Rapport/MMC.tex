@@ -1,4 +1,8 @@
-\chapter{Modèles de Markov cachés (MMC)}
+\chapter{Modélisation des mots à reconnaître par les modèles de Markov cachés}
+	\section{Objectifs}
+	    Le traitement effectué sur le son permet d'obtenir un tableau fréquentiel caractéristique du mot. Nous pouvons alors rentrer dans le vif du sujet et travailler sur la reconnaissance même des mots : il faut parvenir à comparer entre eux les
+	    empreintes ainsi obtenues. Pour cela, nous utilisons un système appelé les \emph{modèles de Markov cachés}. Nous créons en fait un \og graphe de sons \fg qui peut être parcouru à partir d'un mot. En appliquant un certain algorithme à un mot et à un graphe, on obtient une probabilité qui témoigne de l'adéquation du mot au graphe. 
+	    Il nous suffit alors de déterminer quel graphe représente la plus grand probabilité ce qui nous donne la solution comme étant le \emph{meilleur candidat}.
         \section{Prérequis et principe}
         \paragraph{}
         	Un modèle de Markov caché est un modèle statistique qui peut modéliser des processus physiques. Il fait appel aux structures d'automates\cite{automate}.

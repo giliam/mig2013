@@ -18,8 +18,10 @@ Visuellement, elle se constitue en premier lieu d'un logo : Un micro, élement ce
 \subsection{Choix d'une architecture optimale pour notre projet}
 
 Distribuer notre projet tel quel présenterait à ce stade de nombreux défauts:
-- le coeur de notre technologie de reconnaissance vocale est directement accessible à tous.
-- une interface unique en ligne de commande constitue un blocage majeur pour la majorité des utilisateurs finaux et empêche une intégration large à des applications tierces.
+\begin{itemize}
+\item le coeur de notre technologie de reconnaissance vocale est directement accessible à tous.
+\item une interface unique en ligne de commande constitue un blocage majeur pour la majorité des utilisateurs finaux et empêche une intégration large à des applications tierces.
+\end{itemize}
 
 \bigskip
 
@@ -27,7 +29,7 @@ Distribuer notre projet tel quel présenterait à ce stade de nombreux défauts:
 
 \bigskip
 
-Dans ce scénario, divers clients logiciels, potentiellement indépendants de The SpeechApp Company pourraient communiquer par requêtes/réponses (spécifiées par une API) aves les serveurs de The SpeechApp Company. Ces derniers seuls auraient accès au coeur algorithmique du projet, qui resterait ainsi exclusivement entre nos mains. Par leurs requêtes, les clients demanderaient l'analyse automatique de mots, l'ajout de nouveaux mots ainsi que toute autre opération pertinente relative à l'analyse et la gestion d'une base de données de mots. L'accès à notre API serait monétisable forfaitairement ou à l'utilisation.
+Dans ce scénario, divers clients logiciels, potentiellement indépendants de The SpeechApp Company pourraient communiquer par requêtes/réponses (spécifiées par une API\footnote{API: interface de programmation permettant d'utiliser les fonctions proposés par le serveur}) avec les serveurs de The SpeechApp Company. Ces derniers seuls auraient accès au coeur algorithmique du projet, qui resterait ainsi exclusivement entre nos mains. Par leurs requêtes, les clients demanderaient l'analyse automatique de mots, l'ajout de nouveaux mots ainsi que toute autre opération pertinente relative à l'analyse et la gestion d'une base de données de mots. L'accès à notre API serait monétisable forfaitairement ou à l'utilisation.
 
 \medskip
 
@@ -44,19 +46,19 @@ Nous aboutirions alors à l'architecture représentée par le schéma suivant:
 
 \begin{figure}[H]
 	\begin{center}
-	\includegraphics[width=14cm]{Images/architecture.png} 
+	\includegraphics[width=10cm]{Images/architecture.png} 
 	\end{center}
 	\caption{Architecture proposée pour le projet The SpeechApp Company}
 \end{figure}
 
 Plus précisement dans le cadre des échanges entre le SpeechServer, les requêtes pourraient être traitées de la façon suivante :
-Le client (au sens logiciel toujours) envoie au SpeechServer une requête HTTP POST contenant un formulaire avec en particulier son identifiant, son mot de passe, la base de données qu'il veut utiliser, l'action qu'il veut faire effectuer au SpeechServer, et les données d'entrée qui lui sont associées.
-La requête analysée par le SpeechServer, les opérations adéquates ayant été réalisées par le coeur algorithmique, le SpeechServer répond au client par une réponse HTTP POST contenant des données au format XML.
-Le client peut alors lire et interpreter la réponse donnée par le SpeechServer.
+le client (au sens logiciel toujours) envoie au SpeechServer une requête HTTP POST contenant un formulaire avec en particulier son identifiant, son mot de passe, la base de données qu'il veut utiliser, l'action qu'il veut faire effectuer au SpeechServer, et les données d'entrée qui lui sont associées.
+La requête analysée par le SpeechServer, les opérations adéquates ayant été réalisées par le coeur algorithmique, le SpeechServer répond au client par une réponse HTTP POST\footnote{HTTP est un protocole de communication client-serveur développé pour web (Wikipédia)} contenant des données au format XML\footnote{XML est un langage informatique de balisage facilitant l'échange automatisé de contenus complexes (Wikipédia)}.
+Le client peut alors lire et interpréter la réponse donnée par le SpeechServer.
 
 \bigskip
 
-Avec ses spécifications, nous obtiendrions le cycle suivant pour la reconnaissance d'un mot par SpeechApp :
+Avec ces spécifications, nous obtiendrions le cycle suivant pour la reconnaissance d'un mot par SpeechApp :
 
 \begin{figure}[H]
 	\begin{center}
@@ -87,10 +89,8 @@ Au vu des nombreux avantages qu'elle présente,
 \subsection{Réalisation du SpeechServer}
 
 Le SpeechServer a été codé en Python. Python a une librairie standard suffisamment riche 
-pour n'avoir à traiter ce problème qu'à un haut niveau 
-(en réception de requêtes selon leurs méthodes). 
-De plus, ce choix facilite les interactions avec le coeur algorithmique : 
-des imports et appels de fonctions depuis le SpeechServer suffisent.
+pour n'avoir à traiter ce problème qu'à un haut niveau (en réception de requêtes selon leurs méthodes). 
+De plus, ce choix facilite les interactions avec le coeur algorithmique : des imports et appels de fonctions depuis le SpeechServer suffisent.
 
 \medskip{}
 
@@ -98,13 +98,13 @@ Finalement, le SpeechServer prend seulement la forme d'un programme Python à lan
 
 \begin{figure}[H]
 	\begin{center}
-	\includegraphics[width=14cm]{Images/server.png} 
+	\includegraphics[width=8cm]{Images/server.png} 
 	\end{center}
 	\caption{Le SpeechServer lancé}
 \end{figure}
 
 Il écoute alors les requêtes sur le port 8010 (par défaut) de l'ordinateur. Lorsqu'il en reçoit, 
-il interragit avec le coeur algorithmique et le système de gestion de bases de données mis en place.
+il interagit avec le coeur algorithmique et le système de gestion de bases de données mis en place.
 
 \subsection{Système de Gestion de Base de Données (SGBD)}
 
@@ -130,7 +130,7 @@ Un module python db.py a été developpé par nos soins pour gérer efficacement nos
 
 \bigskip{}
 
-Comme les accès en lecture/écriture à la mémoire RAM sont bien plus rapides que les accès aux disques dur,
+Comme les accès en lecture/écriture à la mémoire RAM sont bien plus rapides que les accès aux disques durs,
 \emph{on pourrait obtenir un gain de vitesse significatif pour la reconnaissance vocale en chargeant 
 l'intégralité des données en mémoire RAM au démarrage du SpeechServer}. 
 La vitesse en lecture/écriture sur un disque dur est de l'ordre de 50 Mo / s. 
@@ -232,7 +232,7 @@ Nous sélectionons donc le serveur MG-256 de OVH pour 303 euros HT / mois qui val
 \bigskip{}
 \bigskip{}
 
-Les spécifications du SpeechServer et du SGBD ayant été définis, il devient possible et nécessaire de construire des applications se fondant dessus.
+Les spécifications du SpeechServer et du SGBD ayant été définies, il devient possible et nécessaire de construire des applications se fondant dessus.
 
 
 
@@ -242,7 +242,7 @@ Il est nécessaire de proposer aux clients une interface plus simple à appréhende
 
 \medskip{}
 
-Cette interface a été réalisée avec la librairie TKinter de Python, la librairie graphique Python la plus simple et la plus largement disponible : Elle est incluse dans les paquetages de base de Python.
+Cette interface a été réalisée avec la librairie TKinter de Python, la librairie graphique Python la plus simple et la plus largement disponible : elle est incluse dans les paquetages de base de Python.
 
 \begin{figure}[H]
 	\begin{center}
@@ -266,9 +266,9 @@ Pour entrer un nouveau mot dans une base de données client, par défaut 10 enregi
 SpeechApp est le démonstrateur principal de notre projet.
 Il s'agit d'une application web permettant au grand public de tester notre technologie de reconnaissance vocale de mots isolés.
 À l'aide des dernières APIs HTML5 (élaborées depuis le début d'année 2013), l'utilisateur peut s'enregistrer sans l'installation de logiciel auxiliaire. Son enregistrement audio est transmis au SpeechServer (selon le schéma spécifié plus haut) qui renvoie le mot trouvé.
-\medskip{}
+
 Pour ce démonstrateur, une application web a été choisie car elle fonctionne sur tout terminal doté d'un navigateur web 
-récent sans nécessiter la moindre installation : nous l'avons conçu de façon à ce qu'elle soit adaptée aussi bien aux 
+récent sans nécessiter la moindre installation : nous l'avons conçue de façon à ce qu'elle soit adaptée aussi bien aux 
 grands écrans d'ordinateurs, qu'à ceux plus petits des tablettes et smartphones. 
 On qualifie ce type de design de "Responsive".
 
@@ -296,7 +296,7 @@ On qualifie ce type de design de "Responsive".
 \end{figure}
 
 Une difficulté néanmoins a été de rendre l'enregistrement audio fonctionnel sur la majorité des navigateurs. Nous assurons la compatibilité pour les moteurs Gecko et WebKit récents soit les dernières versions de Firefox, Chrome et Safari ainsi que leurs éditions mobiles.
-
+s
 \bigskip{}
 
 SpeechApp n'a en elle-même pas d'autre fonction que celle de démonstrateur, néanmoins ses modules peuvent être distribués aisément, sous forme de widgets intégrables n'importe où.

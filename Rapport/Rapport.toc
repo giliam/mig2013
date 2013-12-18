@@ -58,7 +58,12 @@
 \contentsline {section}{\numberline {3.1}Objectifs}{20}
 \contentsline {section}{\numberline {3.2}Pr\'erequis et principe}{20}
 \contentsline {paragraph}{}{20}
+\contentsline {subsection}{\numberline {3.2.1}Les automates}{20}
+\contentsline {subsection}{\numberline {3.2.2}Les mod\`eles de Markov cach\'es}{20}
 \contentsline {paragraph}{}{20}
+\contentsline {paragraph}{}{21}
+\contentsline {paragraph}{}{21}
+\contentsline {paragraph}{}{21}
 \contentsline {paragraph}{}{21}
 \contentsline {section}{\numberline {3.3}Principaux algorithmes sur les mod\`eles de Markov}{22}
 \contentsline {paragraph}{}{22}

@@ -14,7 +14,7 @@
 	Le son est une onde mécanique se traduisant par une variation de la pression au cours du temps. Cette onde est caractérisée par différents facteurs comme son amplitude à chaque instant, qui est en d'autres termes la valeur de la dépression à cet instant, et par les fréquences qui la composent et qui changent au cours du temps.
 				\subsection{Comment le son est-il représenté dans l'ordinateur ?}
 				En se propageant, l'onde mécanique qu'est le son fait vibrer la membrane du micro. L'amplitude de la vibration dépend directement de l'amplitude du son. La position de la membrane est enregistrée à intervalles de temps réguliers définis par l'échantillonnage.
-				L'échantillonnage correspond au nombre de valeurs prélevées en une seconde (principe \cite{echantillonnage}). Par exemple un échantillonnage à $44 100$ Hz correspond à relever la position de la membrane $44 100$ fois par secondes. La valeur de la position de la membrane est alors enregistrée sous la forme d'un entier signé codé sur $n$ bits ($n$ valant généralement $8$,$16$,$32$ ou $64$). Plus $n$ est grand, plus la position de la membrane sera représentée de manière précise, et donc plus la qualité du son sera bonne. Grâce à l'échantillonnage et à, on définit aisément le bitrate, qui correspond au débit d'information par seconde, de la façon suivante: \( bitrate = n * $é$chantillonnage. \)
+				L'échantillonnage correspond au nombre de valeurs prélevées en une seconde (principe \cite{echantillonnage}). Par exemple un échantillonnage à $44 100$ Hz correspond à relever la position de la membrane $44 100$ fois par secondes. La valeur de la position de la membrane est alors enregistrée sous la forme d'un entier signé codé sur $n$ bits ($n$ valant généralement $8$,$16$,$32$ ou $64$). Plus $n$ est grand, plus la position de la membrane sera représentée de manière précise, et donc plus la qualité du son sera bonne. Grâce à l'échantillonnage et à la position de la membrane ($n$), on définit aisément le \textsl{bitrate}, qui correspond au débit d'information par seconde, de la façon suivante: \( bitrate = n * $é$chantillonnage. \)
 	Ce dont nous disposons donc pour analyser un signal, est la donnée de l'amplitude en fonction du temps la caractérisant.
 	
 \begin{figure}[H]
@@ -27,14 +27,14 @@
 \newpage	
 \section{Enregistrement, recadrage, filtrage HF}
     \subsection{Synchronisation}
-	Afin de synchroniser le début des enregistrements d'un mot, et de leur donner la même durée, il a été nécessaire de détecter les silences avant et après le mot pour les couper. 
+	Afin de synchroniser le début des enregistrements d'un mot, et de leur donner la même durée, nous avons eu l'idée de détecter les silences avant et après le mot pour les couper. 
 	Le signal est lissé à l'aide d'une moyenne sur plusieurs échantillons pour que les fluctuations inhérentes à l'enregistrement ne gênent pas notre fonction. 
 	On détecte alors le moment où le signal (en valeur absolue) dépasse pour la première fois une valeur seuil et celui à partir duquel le signal ne dépasse plus celle-ci. 
 	On sait alors où couper le signal d'origine, en élargissant légèrement la coupe afin d'éviter de supprimer des consonnes peu sonores. 
 	Cela permet en plus d'afficher un message d'erreur suspectant un enregistrement ayant commencé trop tard ou fini trop tôt.
 	Deux problèmes se posent : en pratique, un bruit trop important perturbe le signal et le mot n'est plus détectable par l'amplitude des oscillations. 
 	Toutefois, pour l'enregistrement de notre base de données, une pièce calme et un micro de bonne qualité nous ont permis un découpage satisfaisant, 
-	ce qui ne résout pas définitevement le problème, l'utilisateur ne pouvant pas toujours se placer dans ces conditions, le signal est traité par un filtre anti-bruit.
+	ce qui ne résout pas définitivement le problème, l'utilisateur ne pouvant pas toujours se placer dans ces conditions, le signal est traité par un filtre anti-bruit.
 \begin{figure}[H]
     \begin{center}
 	    \includegraphics[width=18cm]{Images/synchro.png} 
@@ -43,7 +43,7 @@
 \end{figure}
 \paragraph{}
 	Ce filtre consiste en l'utilisation de bibliothèques, SoX et ffmpeg(\cite{noisereduction} et \cite{sox}), qui permettent par l'étude d'un court laps de temps de bruit de soustraire le bruit de l'enregistrement. 
-	Nous n'avons pas cherché à traiter nous-même le bruit car il s'agit d'un problème complétement à part et qui ne demande pas les mêmes compétences que le traitement du signal effectué jusque là.
+	Nous n'avons pas cherché à traiter nous-même le bruit car il s'agit d'un problème complètement à part et qui ne demande pas les mêmes compétences que le traitement du signal effectué jusque là.
 \paragraph{}
 	De plus, il a fallu déterminer la valeur de nos constantes de découpe (coefficient de lissage, coefficient de coupe, intervalle de temps de sécurité), 
 	qui dépendent bien sûr les unes des autres. Ceci a été fait de manière empirique sur plusieurs enregistrements de mots différents, permettant une découpe automatique la plus satisfaisante possible pour l'ensemble des mots.
@@ -53,11 +53,11 @@
 	des données (locuteur, environnement, bruit, réverbération, ...). Plus ces données sont variables, 
 	plus le taux d'erreur sera grand et un système de reconnaissance qui se veut être utilisable dans la vie de tous les jours: 
 	(voiture, endroits bruyants) ; se doit d'y remédier. Ces effets se font particulièrement sentir dans les basses fréquences, 
-	c'est pourquoi le conditionnement du signal en vue de son étude comprend immanquablement un filre passe haut  
+	c'est pourquoi le conditionnement du signal en vue de son étude comprend immanquablement un filtre passe haut  
 	c'est-à-dire une accentuation de l'amplitude associée aux hautes fréquences et une diminution des basses fréquences. 
-	C'est le même principe qui est utilisé dans les égaliseurs des lecteurs de musique d'aujourd'hui qui propose d'augmenter 
+	C'est le même principe qui est utilisé dans les égaliseurs des lecteurs de musique d'aujourd'hui qui proposent d'augmenter 
 	les basses ou les aigus. Les filtres passe-haut améliorent significativement les résultats de reconnaissance comme en 
-	témoignent les expériences de H.G. Hirsch P. Meyer et H.W. Ruehl dans leur papier.\\
+	témoignent les expériences de H.G. Hirsch P. Meyer et H.W. Ruehl dans leur papier\cite{highpass}.\\
 	Utiliser un filtre passe-haut présente comme avantage de ne pas nécessiter de procéder au préalable 
 	à une reconnaissance de silence contrairement aux techniques de réduction du bruit et de soustraction spectrale.
 \begin{figure}[H]
@@ -73,9 +73,9 @@
 	    \caption{Exemple du fichier son \textbf{après} application du filtre}
 \end{figure}
 \paragraph{}
-	%Nous effectuons ce filtrage selon une méthode résolution basée sur les coefficients sceptraux de mel\cite{melbe}.
+	%Nous effectuons ce filtrage selon une méthode de résolution basée sur les coefficients sceptraux de mel\cite{melbe}.
 	Le signal étant caractérisé par une suite $(x_n)$ 
-	d'amplitudes, comme présenté dans les prérequis, où n représente un instant de la musique déterminé par l'échantillonnage; 
+	d'amplitudes, comme présenté dans les prérequis, où $n$ représente un instant de la musique déterminé par l'échantillonnage; 
 	on opère linéairement la transformation suivante sur le signal : $y_0 = x_0$ et $y_n = x_n - 0.95*x_{(n-1)}$  pour $n > 0$, 
 	où $y$ représente le signal de sortie après transformation.
 \paragraph{}
@@ -93,15 +93,15 @@ La taille des échantillons est un paramètre déterminant sur la qualité et la pré
 	Une fois calculé, le spectre ne reflète plus du tout de dépendance temporelle. La durée d'un échantillon correspond 
 	ainsi à la durée minimale d'un événement sonore détectable. Il faut donc réduire cette durée autant que possible, 
 	pour obtenir une discrétisation temporelle le plus proche possible de la continuité. Il est en revanche nécessaire 
-	de conserver un certain nombre de points par échantillons. En effet, le spectre obtenu par l'analyse sera plus précis 
-	et proche de la réalité fréquentielle si le nombre de point du signal analysé est important. La meilleure technique 
+	de conserver un certain nombre de points par échantillon. En effet, le spectre obtenu par l'analyse sera plus précis 
+	et proche de la réalité fréquentielle si le nombre de points du signal analysé est important. La meilleure technique 
 	pour contourner ce compromis est d'augmenter la fréquence d'échantillonnage. 
 	On obtient alors un nombre important de points qui s'étirent peu dans le temps.
 \paragraph{}
   Le théorème de Nyquist-Shannon\cite{nyquistshannon} assure qu'un signal reproduit fidèlement toutes les fréquences inférieures à la moitié 
 	de sa fréquence d'échantillonnage. Une fréquence d'échantillonnage de 44100Hz (parfois 48000Hz) est donc suffisante 
 	pour couvrir la totalité d'une oreille humaine en bonne santé. L'utilisation la plus courante de l'enregistrement 
-	audio étant (à notre niveau) la restitution, le matériel et logiciel à notre disposition se cantonnait à ces 
+	audio étant (à notre niveau) la restitution, le matériel et le logiciel à notre disposition se cantonnaient à ces 
 	fréquences d'échantillonnage. Nous avons ainsi dû trouver un compromis entre résolution fréquentielle et précision 
 	temporelle. L'hypothèse principale a été que les évènements sonores et variations s'étalant sur une durée inférieure 
 	à 20 millisecondes n'étaient pas signifiants pour notre analyse. Le nombre de points a été par cette donnée, couplée 
@@ -131,7 +131,7 @@ La taille des échantillons est un paramètre déterminant sur la qualité et la pré
 	Certaines applications (notamment pour les téléphones portables) devant réduire la complexité au 
 	maximum en font donc abstraction. Notre reconnaissance privilégiant plutôt la précision, et 
 	disposant d'une puissance de calcul largement suffisante pour conserver un rendu de l'ordre de 
-	la seconde, nous avons opté pour un fenêtrage important (recouvrement total d'un échantillon à l'autre), 
+	la seconde, nous avons opté pour un fenêtrage important (recouvrement total d'un échantillon par ses voisins), 
 	au prix d'une multiplication du temps de calcul par deux.
 
         	\section{Transformée de Fourier}
@@ -151,7 +151,7 @@ La taille des échantillons est un paramètre déterminant sur la qualité et la pré
 		\paragraph{}
 	Le calcul de la transformée de Fourier est incontournable en analyse du signal, et il a donné lieu à de nombreuses études. 
 	Des algorithmes optimisés pour diverses utilisations sont disponibles, et notre travail a surtout été d'identifier lequel s'adapterait 
-	à notre projet. Notre fonction se base sur l'algorithme de Cooley-Tukey, qui permet de réduire la complexité à $O(Nlog2(N))$, 
+	à notre projet. La fonction que nous avons implémentée est l'algorithme de Cooley-Tukey, qui permet de réduire la complexité à $O(Nlog2(N))$, 
 	et qui repose sur le fonctionnement diviser pour régner.  Le principe est dans un premier temps de diviser le signal 
 	à analyser en sous-tableaux de mêmes tailles, de manière croisée (par exemple deux sous-tableaux, pour les indices 
 	pairs et impairs). On calcule ensuite les transformées de Fourier de ce sous-tableaux, en opérant récursivement, 

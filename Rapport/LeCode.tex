@@ -51,7 +51,7 @@
 %	}
 %}
 
-\part{Core}
+\part{Code}
 	\setcounter{chapter}{0}
 	\input{Principal}
 	\input{handling}
@@ -59,12 +59,9 @@
 	\input{recording}
 	\input{utils}
 	
-\part{SpeechApp}
-	\setcounter{chapter}{0}
+\nonewpagechapter{SpeechApp}
 	\input{js}
 	\section{index.html}
 	\lstinputlisting[language=HTML, firstline=1, lastline=147, breaklines=true, frame=single]{../src/speechapp/index.html}
 	
-\part{SpeechServer}
-	\setcounter{chapter}{0}
 	\input{speechserver}

@@ -6,6 +6,7 @@
         \section{Prérequis et principe}
         \paragraph{}
         	Un modèle de Markov caché est un modèle statistique qui peut modéliser des processus physiques. Il fait appel aux structures d'automates\cite{automate}.
+		\subsection{Les automates}
 Un automate représente un système physique. Il est composé d'états (les cercles sur la figure), qui correspondent aux états du système réel, 
 et de transitions (les flèches sur la figure), pour passer d'un état à l'autre. 
 Il existe aussi la notion de chemin: par exemple pour passer de 0 à 3 sur la figure, il faut passer par 1 puis 2: le chemin de 0 à 3 est 0,1,2,3.
@@ -16,6 +17,20 @@ Il existe aussi la notion de chemin: par exemple pour passer de 0 à 3 sur la fig
 						\end{center}
 						\caption{Exemple d'automate \og classique \fg}
 				\end{figure}
+\subsection{Les modèles de Markov cachés}
+\paragraph{}
+Un modèle de Markov est un automate présentant \emph{deux caractéristiques} en plus du principe de base d'un automate. 
+\paragraph{}
+Tout d'abord, les transitions ne sont plus déterministes comme elles le sont dans le cas d'un automate mais sont \textbf{probabilistes}. Ainsi, il y a une certaine probabilité pour passer à chacun des autres état, une fois arrivé dans un état lors d'un parcours. C'est pourquoi le déplacement dans un automate ne dépend plus du passé du parcours mais uniquement de la position actuelle. 
+\paragraph{}
+La seconde différence est que les données renvoyées lors du parcours d'un chemin de l'automate n'est plus la liste des états par lesquels passe le chemin : chaque état a maintenant des probabilités d'émettre certains signaux. On obtient donc une liste de signaux pour un chemin. Or, un état peut émettre plusieurs signaux différents et l'émission n'est que probabiliste ce qui rajoute au caractère non déterministe de l'automate.
+\begin{figure}[hb]
+    \begin{center}
+	    \includegraphics[width=10cm]{Images/mmcpresentation.png} 
+    \end{center}
+    \caption{Exemple d'un modèle de Markov caché}
+\end{figure}
+\subsection{Application à la reconnaissance vocale}
 \paragraph{}
 Les modèles de Markov cachés sont largement répandus dans la reconnaissance vocale(\cite{ref1}, \cite{rabiner} et \cite{calcvoc}). 
 Entre un modèle discret et un modèle continu, nous avons choisi ce dernier car les données en entrée ne font pas partie d'un ensemble fini: 

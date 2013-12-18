@@ -33,10 +33,10 @@ def recorder(db,dirName="",nbRecording=-1,askForWord=True,seconds=-1,nbWords=1,f
 			p = pyaudio.PyAudio()
 
 			stream = p.open(format=FORMAT,
-							channels=CHANNELS,
-							rate=RATE,
-							input=True,
-							frames_per_buffer=CHUNK)
+				channels=CHANNELS,
+				rate=RATE,
+				input=True,
+				frames_per_buffer=CHUNK)
 
 			#print "Enregistrement[", i, "]:"
 

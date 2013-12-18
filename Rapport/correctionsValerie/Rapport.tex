@@ -1,0 +1,66 @@
+\documentclass[a4paper,11pt, titlepage]{report} % Rapport de MIG SE 2013
+
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage[francais]{babel}
+\usepackage{eurosym}
+
+\usepackage{amsmath} %Packages mathématiques
+\usepackage{amsfonts}
+\usepackage{textcomp}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{colortbl}
+
+\usepackage[a4paper, margin=2cm]{geometry}
+
+\usepackage{listings} %Pour le code
+\usepackage{ifthen}
+\usepackage{color}
+
+\usepackage{url}
+
+\usepackage{etoolbox}
+
+\makeatletter
+\def\@makechapterhead#1{%
+  \vspace*{50\p@}%
+  {\parindent \z@ \raggedright \normalfont
+    \interlinepenalty\@M
+    \Huge\bfseries  \thechapter.\quad #1\par\nobreak
+    \vskip 40\p@
+  }}
+
+\def\@endpart{}
+	
+\let\nonewpagechapter\chapter
+	
+\patchcmd\nonewpagechapter{\if@openright\cleardoublepage\else\clearpage\fi}{}{}{}
+	
+\patchcmd{\part}{\null\vfil}{}{}{}
+\makeatother
+
+\begin{document}
+
+\include{title}
+\newpage
+
+\include{remerciements}
+\newpage
+
+\tableofcontents
+\newpage
+
+\include{Introduction}
+\include{Technique}
+\include{ApprocheCommerciale}
+\include{Conclusion}
+
+\appendix
+\include{LeCode}
+
+\bibliographystyle{unsrt} % Pour la biblio
+\bibliography{Biblio}
+
+\end{document}

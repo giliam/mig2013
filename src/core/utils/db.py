@@ -26,7 +26,7 @@ class Db:
                 self.filesList = pickle.Unpickler(f).load()
         except IOError:
             Db.reset(True)
-            raise Exception("L'instanciation a été annulée car le fichier de gestion de la base de données n'existe pas")
+            raise Exception("L'instanciation a ete annulee car le fichier de gestion de la base de donnees n'existe pas")
 
 
 
@@ -48,9 +48,9 @@ class Db:
                         content = pickle.Unpickler(f).load()
                     return content
             except IOError:
-                raise Exception("La lecture de fichier a échoué")
+                raise Exception("La lecture de fichier a echoue")
         else:
-            self.addLog("le fichier n'est pas géré pas la base de données")
+            self.addLog("le fichier n'est pas gere pas la base de donnees")
             return ""
 
 
@@ -100,9 +100,9 @@ class Db:
             if not fileName in self.filesList:
                 self.filesList.append(fileName)
                 self.syncToFile()
-                self.addLog("L'insertion du fichier a bien été effectuée")
+                self.addLog("L'insertion du fichier a bien ete effectuee")
             else:
-                self.addLog("Le fichier est déjà dans la bibliothèque")
+                self.addLog("Le fichier est dejà dans la bibliothèque")
         else:
             self.addLog("Le fichier n'existe pas")
             
@@ -136,20 +136,20 @@ class Db:
                 dirName = os.path.dirname(fileName)
                 if os.access(Db.prefixPath + dirFile + "/" + fileName,os.F_OK):
                     os.remove(Db.prefixPath + dirFile + "/" + fileName)
-                    self.addLog("Le fichier a bien été supprimé")
+                    self.addLog("Le fichier a bien ete supprime")
                 else:
                     self.addLog("Le fichier n'existe pas")
             except OSError:
-                self.addLog("La suppression a échoué")
+                self.addLog("La suppression a echoue")
             try:
                 os.rmdir(Db.prefixPath + dirFile + "/" + dirName)
-                self.addLog("Le dossier a bien été supprimé")
+                self.addLog("Le dossier a bien ete supprime")
             except OSError:
                 pass
             self.syncToFile()
-            self.addLog("La suppression du fichier a bien été effectuée")
+            self.addLog("La suppression du fichier a bien ete effectuee")
         else:
-            self.addLog("Le fichier n'existe pas ou n'est pas géré par la base de données")
+            self.addLog("Le fichier n'existe pas ou n'est pas gere par la base de donnees")
     
     
     
@@ -181,12 +181,12 @@ class Db:
     
     def reset(force=False):
         """ Reset the files list """
-        msg = "Êtes-vous sûr de vouloir réinitialiser la liste des fichiers ? (Oui = 0/Non = 1)"
+        msg = "etes-vous sur de vouloir reinitialiser la liste des fichiers ? (Oui = 0/Non = 1)"
         if force or int(input(msg)) == 0:
             with open(Db.prefixPath + Db.filesListName + ".txt","w") as f:
                 c = pickle.Pickler(f)
                 c.dump([])
-            print "Réinitialisation réussie pour les fichiers"
+            print "Reinitialisation reussie pour les fichiers"
     reset = staticmethod(reset)
     
     
@@ -205,7 +205,7 @@ class Db:
         filesListExt = []
         n = 0
         for k,f in enumerate(self.filesList):
-            #On récupère l'extension du fichier parcouru
+            #On recupère l'extension du fichier parcouru
             a,ext = os.path.splitext(f)
             d = os.path.dirname(f)
             if (dirName == "" or d == dirName ) and (len(extRequired) == 0 or ext in extRequired):
@@ -223,7 +223,7 @@ class Db:
         dirListExt = []
         l = os.listdir(Db.prefixPath + dirName)
         for k,f in enumerate(l):
-            #On récupère l'extension du fichier parcouru
+            #On recupère l'extension du fichier parcouru
             print k, " - ", f
         return l
     

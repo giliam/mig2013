@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt]{report} % Rapport de MIG SE 2013
+\documentclass[a4paper,11pt]{report} % Rapport de MIG SE 2013
 
 \usepackage[T1]{fontenc}
 \usepackage[latin1]{inputenc}
@@ -41,19 +41,28 @@
 \patchcmd{\part}{\null\vfil}{}{}{}
 \makeatother
 
-\title{[MIG] Systèmes Embarqués}
-\author{Julien \bsc{Caillard}, Adrien \bsc{De La Vaissière}, Thomas \bsc{Debarre},\\ Matthieu \bsc{Denoux}, Maxime \bsc{Ernoult}, Axel \bsc{Goering},\\ Clément \bsc{Joudet}, Nathanaël \bsc{Kasriel}, Anis \bsc{Khlif},\\ Sofiane \bsc{Mahiou}, Paul \bsc{Mustière}, Clément \bsc{Roig}, David \bsc{Vitoux}}
-\date{18/11/13 - 6/12/13}
-
 \begin{document}
 
-\maketitle
+\include{title}
+\newpage
+
+\include{Remerciements}
+\newpage
+
 \tableofcontents
 \newpage
 
 \include{Introduction}
-\include{Technique}
-\include{ApprocheCommerciale}
+\part{Démarche Technique}
+    \input{Principe}
+    \input{Analyse}
+    \input{MMC}
+    \input{Recapitulatif}
+\part{Approche commerciale}
+    \setcounter{chapter}{0}
+    \input{Architecture}
+    \input{Applications}
+    \input{BudgetEco}
 \include{Conclusion}
 
 \appendix

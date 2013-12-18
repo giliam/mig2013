@@ -1,0 +1,51 @@
+\nonewpagechapter{Principe général du traitement de la parole}
+    \section{Objectifs}
+Bien que la reconnaissance vocale telle qu'elle est aujourd'hui mise-en-place dans les différents matériels semble immédiate, le travail à effectuer pour reconnaître un mot prononcé par un locuteur est complexe.
+La première étape pour faire de la reconnaissance vocale est de parvenir à trouver un moyen de caractériser efficacement et uniformément un mot. L'idée est de désigner un mot par un certain motif puis de permettre par le même procédé
+appliqué sur un enregistrement quelconque, de parvenir à identifier deux motifs proches qui correspondraient vraissemblablement au même mot.
+Il s'agit donc tout d'abord de traiter le signal représentant le son pour en découvrir certaines caractéristiques. En effet, une même personne ne prononce pas toujours les mots de la même façon, au même débit, avec les mêmes hauteurs de son, ce qui
+rend pratiquement impossible une simple identification par comparaisons temporelles.
+
+\section{Schéma global de la reconnaissance de la parole}
+Afin de gérer les difficultés inhérentes à la caractérisation des sons, nous avons mis en place plusieurs étapes de traitement de manière à obtenir cette fameuse \og trace \fg \ qui caractériserait un enregistrement, c'est-à-dire un mot. Nous avons pour cela 
+eu recours à plusieurs techniques de traitement du signal\footnote{D'après Wikipédia, le traitement du signal est la discipline qui développe et étudie les techniques de traitement, d'analyse et d'interprétation des signaux.} classiquement utilisées, comme \textsl{l'échantillonnage} (capture des valeurs d'un signal à des intervalles de temps réguliers, afin, par exemple, d'en avoir une représentation en un format digital compréhensible par un ordinateur), le \textsl{fenêtrage} (découpage temporel d'un signal en petits intervalles de temps), la \textsl{transformée de Fourier directe et inverse} (permet le passage et le passage inverse~: de la représentation d'un son par des amplitudes des signaux en fonction du temps à la représentation d'un son par des amplitudes des signaux en fonction des fréquences\footnote{La fréquence peut être assimilée à la hauteur d'un son.} qui le composent).
+Cette figure explique globalement le traitement que nous avons choisi de mettre-en-place afin de reconnaître le mot prononcé. Il y a donc plusieurs étapes qui s'enchaînent pour parvenir à un 
+objet que nous pourrons manipuler en le sachant représentatif et caractéristique du son.
+\begin{figure}[!h]
+	    \begin{center}
+		    \includegraphics[width=10cm]{Images/traitement.png} 
+	    \end{center}
+	    \caption{Traitement du son pour le reconnaître}
+\end{figure}
+\paragraph{Enregistrement du son (de la parole au son)}
+La première étape consiste simplement à enregistrer le son sur le disque dur de l'ordinateur. Cela permet d'enregistrer
+avec une certaine fréquence d'échantillonnage, donc un certain nombre de captures de son par seconde, les amplitudes du son captées par le microphone.
+\paragraph{Découpage en fenêtre (du son en parties de son)}
+Le son est découpé ensuite en petites fenêtres de quelques dizaines de millisecondes ce qui permet d'isoler les événements sonores qui pourraient avoir une importance. Il s'agit d'un \emph{fenêtrage}.
+\paragraph{Passage en fréquences}
+Jusque là, le son étudié se représentait temporellement ce qui avait été entendu. Néanmoins, il est difficile d'étudier un son tel quel et on utilise alors le lien
+entre les fréquences et le signal temporel. Il est ensuite plus facile d'étudier et de transformer un ensemble de fréquences pour appliquer par un exemple des filtres qui
+rapprochent le programme du fonctionnement de l'oreille.
+\paragraph{Fréquences entendues par l'oreille}
+Puisque le programme doit savoir \emph{faire la différence entre des mots}, c'est-à-dire des sons identifiés tels quels par une oreille \emph{humaine}, il faut donner au programme un comportement similaire
+à celui d'une oreille humaine. On utilise pour cela une échelle (appelée échelle de Mel) qui accentue certaines fréquences. En effet, il a été montré\cite{melproof} (et ensuite appliqué \cite{melbe}) que l'oreille
+ne perçoit pas toutes les fréquences de la même façon.
+\paragraph{Système de reconnaissance du mot}
+Les traitements précédents (enregistrement, fenêtrage, passage en
+fréquences, filtrage par une échelle de Mel) permettent d'extraire un
+ensemble des valeurs qui vont caractériser un son.
+
+L'idée sous-jacente au système informatique de reconnaissance de la
+parole est de construire pour chacun des mots que l'on veut
+reconnaître un modèle de ce mot fondé sur ces valeurs, ce modèle sera
+constitué des suites des sons.
+
+Comme ces caractéristiques varient quand un même locuteur prononce le
+même mot plusieurs fois, il est important que le modèle de chacun des
+mots prenne en compte ces variations. 
+
+Ces raisons nous ont conduit à retenir pour la modélisation
+des \textsl{suites temporelles des caractéristiques des sons qui
+constituent un mot} les modèles probabilistes de Markov cachés qui,
+comme nous le verrons par la suite, sont tout particulièrement adaptés
+à ce problème.

@@ -1,0 +1,39 @@
+shell.py
+server.py
+gui.py
+core/
+    hmm/
+        creationVecteurHMM.py
+        hmm.cpp
+        markov.py
+        tableauEnergyPerFrame.py
+    handling/
+        fenetre_hann.py
+        fft.cpp
+        inverseDCT.py
+        triangularFilterbank.py
+        passe_haut.py
+    recording/
+        recorder.py
+        sync.py
+    utils/
+        animate.py
+        constantes.py
+        db.py
+        util.py
+speechapp/
+    css/
+        theme.css
+    fonts/
+    img/
+    js/
+        holder.js
+        main.js
+        recorder.js
+        recorderWorker.js
+    index.html
+speechserver/
+    audioConverter.py
+    clientAuth.py
+    main.py
+    speechActions.py

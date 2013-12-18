@@ -51,17 +51,25 @@
 %	}
 %}
 
+\lstset
+{
+	numberstyle=\footnotesize,
+	basicstyle=\ttfamily\footnotesize,
+	numbers=left,
+	stepnumber=1
+}
+
 \part{Code}
 	\setcounter{chapter}{0}
-	\input{Principal}
-	\input{handling}
-	\input{hmm}
-	\input{recording}
-	\input{utils}
+	\input{code/Principal}
+	\input{code/handling}
+	\input{code/hmm}
+	\input{code/recording}
+	\input{code/utils}
 	
 \nonewpagechapter{SpeechApp}
-	\input{js}
+	\input{code/js}
 	\section{index.html}
 	\lstinputlisting[language=HTML, firstline=1, lastline=147, breaklines=true, frame=single]{../src/speechapp/index.html}
 	
-	\input{speechserver}
+	\input{code/speechserver}

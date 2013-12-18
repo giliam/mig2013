@@ -50,6 +50,12 @@ Chris Bagwell.
 \newblock Sox website.
 \newblock \url{http://sox.sourceforge.net/Docs/Documentation}, 2009.
 
+\bibitem{highpass}
+H.G. Hirsch, P~Meyer, and H.W. Ruehl.
+\newblock Improved speech recognition using high-pass filtering of subband
+  envelopes.
+\newblock {\em Eurospeech}, 1991.
+
 \bibitem{nyquistshannon}
 Anonyme.
 \newblock Théorème de nyquist-shannon.

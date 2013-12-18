@@ -154,7 +154,7 @@ La taille des échantillons est un paramètre déterminant sur la qualité et la pré
 	à notre projet. La fonction que nous avons implémentée est l'algorithme de Cooley-Tukey, qui permet de réduire la complexité à $O(Nlog2(N))$, 
 	et qui repose sur le fonctionnement diviser pour régner.  Le principe est dans un premier temps de diviser le signal 
 	à analyser en sous-tableaux de mêmes tailles, de manière croisée (par exemple deux sous-tableaux, pour les indices 
-	pairs et impairs). On calcule ensuite les transformées de Fourier de ce sous-tableaux, en opérant récursivement, 
+	pairs et impairs). On calcule ensuite les transformées de Fourier de ces sous-tableaux, en opérant récursivement, 
 	jusqu'à obtenir des sous-tableaux dont la taille est un entier. On calcule leur transformée de Fourier, et on recombine 
 	les résultats obtenus. Cette méthode a l'avantage de pouvoir être couplée à d'autres algorithmes pour calculer les 
 	spectres des sous-tableaux dont la taille n'est pas un produit d'entier. Le meilleur cas est alors instinctivement un 
@@ -165,18 +165,18 @@ La taille des échantillons est un paramètre déterminant sur la qualité et la pré
 	correspond, avec notre fréquence d'échantillonnage de 44100Hz, à une durée d'environ 23ms. Seul le dernier échantillon du signal est complété par des zéros.
 \paragraph{}
 De plus, comme les données sur lesquelles nous travaillons sont réelles, et que les calculs de la Transformée de Fourier Rapide (Fast Fourier Transform, ou FFT) 
-s'effectuent avec des complexes, la première idée d'optimisation que nous avons eu est de calculer le spectre de deux échantillons à la fois, en créant 
-des complexes à partir des deux signaux réels (l'un représente la partie représente la partie réelle, l'autre imaginaire). On obtient rapidement les coefficients 
+s'effectuent avec des complexes, la première idée d'optimisation que nous avons eue est de calculer le spectre de deux échantillons à la fois, en créant 
+des complexes à partir des deux signaux réels (l'un représente la partie réelle, l'autre imaginaire). On obtient rapidement les coefficients 
 respectifs des deux échantillons par une simple opération sur le spectre résultant. Cependant, cette méthode ne divise le temps de calcul que par deux, et notre 
 FFT demeure trop lente (plusieurs secondes pour un signal d'environ une seconde), surtout au regard du temps de calcul total de la reconnaissance en elle-même. 
-La deuxième optimisation que nous avons donc appliqué est de passer le code de Python à C++, langage compilé beaucoup plus rapide. De plus, nous avons repensé les
+La deuxième optimisation que nous avons donc appliquée est de passer le code de Python à C++, langage compilé beaucoup plus rapide. De plus, nous avons repensé les
 fonctions, de façon à éviter les appels récursifs. En effet, le travail sur des tableaux force une recopie à chaque appel de fonction, ce qui démultiplie la complexité du calcul. 
 Le résultat est un algorithme qui s'effectue en moins d'une seconde, et qui peut s'inscrire dans un contexte d'exploitation en temps réel.
 
 
         	\section{Simulation du comportement de l'oreille humaine}
         	\paragraph{}
-        	Des études de psycho acoustique ont montré que l'oreille humaine ne percevait pas les fréquences selon une échelle linéaire. Il a donc été utile de définir une nouvelle échelle plus subjective : à chaque fréquence $f$, exprimée en Hertz, on fait correspondre une nouvelle fréquence selon une fonction censée représenter le comportement de l'oreille humaine. Par convention, la fréquence de $1 000$ Hz correspond à $1 000$ mel. Les autres fréquences mel sont ajustées de façon à ce qu'une augmentation de la fréquence mel corresponde à la même augmentation de la tonalité perçue. Cela conduit à la fonction $mel$ suivante: \[mel(f) = 2595*log(1+f/700)\]
+        	Des études de psycho acoustique ont montré que l'oreille humaine ne percevait pas les fréquences selon une échelle linéaire\cite{melproof}. Il a donc été utile de définir une nouvelle échelle plus subjective : à chaque fréquence $f$, exprimée en Hertz, on fait correspondre une nouvelle fréquence selon une fonction censée représenter le comportement de l'oreille humaine. Par convention, la fréquence de $1 000$ Hz correspond à $1 000$ mel. Les autres fréquences mel sont ajustées de façon à ce qu'une augmentation de la fréquence mel corresponde à la même augmentation de la tonalité perçue. Cela conduit à la fonction $mel$ suivante: \[mel(f) = 2595*log(1+f/700)\]
         	
         	\begin{figure}[H]
 						\begin{center}
@@ -197,26 +197,26 @@ Il est préférable d'employer cette échelle de fréquence dans l'algorithme de rec
 \end{figure}
 \paragraph{}
 	Dans les parties précédentes nous avons vu comment, à partir d'un extrait sonore échantillonné à 44100 Hz sur 16 bits, 
-	obtenir après transfrormée de Fourier et opérations sur le spectre, un tableau de 24 cases gradué en échelle Mel, 
+	obtenir après transformée de Fourier et opérations sur le spectre, un tableau de 24 cases gradué en échelle Mel, 
 	représentant une fraction de l'extrait. Ce tableau exprimé ainsi en fréquences, pourrait a priori constituer une 
 	représentation satisfaisante de l'extrait sonore à l'instant considéré pour la suite de l'algorithme de reconnaissance, 
 	et servir à la comparaison avec le modèle au travers des chaînes de Markov cachées. Cependant ce n'est pas ce qui est fait, 
-	et l'on préfèrera une représentation en temporel de la fraction sonore considérée, ceci pour deux principales raisons :
-\paragraph{}
-Opérer une transformation en cosinus inverse « décorelle » les valeurs du tableau dans la mesure où dans une représentation 
-en fréquentiel, les valeurs associées aux hautes fréquences sont très fortement corellées avec ce qui se passe dans les 
+	et l'on préfèrera une représentation en temporel de la fraction sonore considérée, ceci pour deux principales raisons.
+\begin{itemize}
+\item Opérer une transformation en cosinus inverse « décorrèle » les valeurs du tableau dans la mesure où dans une représentation 
+en fréquentiel, les valeurs associées aux hautes fréquences sont très fortement corrélées avec ce qui se passe dans les 
 basses fréquences. En effet, un signal sonore n'est jamais pur, c'est-à-dire contitué d'une seule fréquence, mais est un 
-amalgame de signaux purs de fréquences multiples de celles d'autres signaux purs.
+amalgame de signaux purs de fréquences multiples de celles d'autres signaux purs.\\
 Le tableau qui sera traité par la suite grâce aux chaînes de Markov n'est plus constitué de 24 cases mais de 12 dont les 
 11 premières sont les premières cases du tableau obtenu après DCT. Si l'on tronquait le tableau avant d'opérer la DCT, on 
 ne conserverait que l'information associée aux graves ce qui constituerait une perte trop importante de données. 
-\paragraph{}
-	Ce retour au temporel se fait par la transformée en cosinus inverse. Il s'agit en terme simplistes du pendant réel de 
+\item Ce retour au temporel se fait par la transformée en cosinus inverse. Il s'agit en terme simplistes du pendant réel de 
 	la transformée de Fourier inverse,  qui elle donne lieu à des coefficients complexes, lesquels dans le cadre d'une 
 	représentation temporelle n'ont que peu de sens. En termes plus mathématiques, la projection orthogonale du signal 
 	discret en fréquentiel ne se fait plus sur une base d'exponentielles complexes, mais de cosinus. 
+\end{itemize}
 \paragraph{}
 	La DCT que nous avons utilisé, aussi connue sous le nom de DCTII se base sur la formule suivante : 
-	\[M[k] = \sum_{n=0}^{B-1}( X[n]\times cos(Pi\cdot k\cdot \frac{n+0.5}{B}) ) \times \sqrt[2]{\frac{2}{B}}\] avec B=24, X le tableau en échelle Mel, 
+	\[M[k] = \sum_{n=0}^{B-1}( X[n]\times cos(Pi\cdot k\cdot \frac{n+0.5}{B}) ) \times \sqrt[]{\frac{2}{B}}\] avec B=24, X le tableau en échelle Mel, 
 	et M le tableau de sortie échellonné en temporel. D'autres formules équivalentes de DCT existent mais la 
 	DCTII est la plus largement répandue et utilisée.

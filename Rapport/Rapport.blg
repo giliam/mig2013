@@ -1,4 +1,6 @@
-This is BibTeX, Version 0.99dThe top-level auxiliary file: C:\Users\David\Desktop\MIG\mig2013\Rapport\Rapport.aux
+This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: Rapport.aux
 A level-1 auxiliary file: title.aux
 A level-1 auxiliary file: Remerciements.aux
 A level-1 auxiliary file: Introduction.aux
@@ -8,3 +10,44 @@ A level-1 auxiliary file: Conclusion.aux
 A level-1 auxiliary file: LeCode.aux
 The style file: unsrt.bst
 Database file #1: Biblio.bib
+You've used 23 entries,
+            1791 wiz_defined-function locations,
+            562 strings with 6371 characters,
+and the built_in function-call counts, 3174 in all, are:
+= -- 258
+> -- 130
+< -- 0
++ -- 57
+- -- 34
+* -- 73
+:= -- 540
+add.period$ -- 68
+call.type$ -- 23
+change.case$ -- 22
+chr.to.int$ -- 0
+cite$ -- 23
+duplicate$ -- 147
+empty$ -- 383
+format.name$ -- 34
+if$ -- 725
+int.to.chr$ -- 0
+int.to.str$ -- 23
+missing$ -- 11
+newline$ -- 117
+num.names$ -- 23
+pop$ -- 116
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 65
+stack$ -- 0
+substring$ -- 0
+swap$ -- 22
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 0
+while$ -- 23
+width$ -- 25
+write$ -- 231

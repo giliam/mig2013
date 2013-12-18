@@ -15,6 +15,8 @@ Visuellement, elle se constitue en premier lieu d'un logo : Un micro, élement ce
 	\caption{Logo de l'application}
 \end{figure}
 
+Les produits de The SpeechApp seront identifiables par un préfixe commun : Speech. Ils s'appeleront ainsi par exemple SpeechApp, SpeechServer ou SpeechRecorder.
+
 \subsection{Choix d'une architecture optimale pour notre projet}
 
 Distribuer notre projet tel quel présenterait à ce stade de nombreux défauts:
@@ -34,11 +36,11 @@ Dans ce scénario, divers clients logiciels, potentiellement indépendants de The 
 \medskip
 
 Les mots enregistrés par les clients seraient conservés dans des bases de données chez The SpeechApp Company. La location de ces bases de données hebergées serait monétisable.
-Alors, The SpeechApp Company pourrait prioritairement développer deux applications connectables au serveur : la première, SpeechCreator, permettrait l'enregistrement aisé de nouveaux mots dans les bases de données clients. La seconde, SpeechApp, permettrait, au travers d'une application Web riche, de tester la reconnaissance vocale en ligne.
+Alors, The SpeechApp Company pourrait prioritairement développer deux applications connectables au serveur : la première, SpeechRecorder, permettrait l'enregistrement aisé de nouveaux mots dans les bases de données clients. La seconde, SpeechApp, permettrait, au travers d'une application Web riche, de tester la reconnaissance vocale en ligne.
 
 \medskip
 
-Cette configuration permettrait aussi à une multitudes d'applications tierces d'utiliser notre technologie en ne voyant de l'extérieur qu'une API définissant le format des requêtes et réponses dans la communication entre clients logiciel et serveur.
+Cette configuration permettrait aussi à une multitude d'applications tierces d'utiliser notre technologie en ne voyant de l'extérieur qu'une API définissant le format des requêtes et réponses dans la communication entre clients logiciel et serveur.
 
 \medskip
 
@@ -51,9 +53,9 @@ Nous aboutirions alors à l'architecture représentée par le schéma suivant:
 	\caption{Architecture proposée pour le projet The SpeechApp Company}
 \end{figure}
 
-Plus précisement dans le cadre des échanges entre le SpeechServer, les requêtes pourraient être traitées de la façon suivante :
-le client (au sens logiciel toujours) envoie au SpeechServer une requête HTTP POST contenant un formulaire avec en particulier son identifiant, son mot de passe, la base de données qu'il veut utiliser, l'action qu'il veut faire effectuer au SpeechServer, et les données d'entrée qui lui sont associées.
-La requête analysée par le SpeechServer, les opérations adéquates ayant été réalisées par le coeur algorithmique, le SpeechServer répond au client par une réponse HTTP POST\footnote{HTTP est un protocole de communication client-serveur développé pour web (Wikipédia)} contenant des données au format XML\footnote{XML est un langage informatique de balisage facilitant l'échange automatisé de contenus complexes (Wikipédia)}.
+Plus précisement dans le cadre des échanges entre le SpeechServer et les applications externes, les requêtes pourraient être traitées de la façon suivante :
+le client (au sens logiciel toujours) envoie au SpeechServer une requête HTTP\footnote{HTTP est un protocole de communication client-serveur développé pour le web. (Wikipédia)} POST\footnote{POST est une méthode spécifique de requêtes HTTP} contenant un formulaire avec en particulier son identifiant, son mot de passe, la base de données qu'il veut utiliser, l'action qu'il veut faire effectuer au SpeechServer, et les données d'entrée qui lui sont associées.
+La requête analysée par le SpeechServer, les opérations adéquates ayant été réalisées par le coeur algorithmique, le SpeechServer répond au client par une réponse HTTP POST contenant des données au format XML\footnote{XML est un langage informatique de balisage facilitant l'échange automatisé de contenus complexes (Wikipédia)}.
 Le client peut alors lire et interpréter la réponse donnée par le SpeechServer.
 
 \bigskip
@@ -196,9 +198,9 @@ Ainsi pour réaliser $J = 1000$ reconnaissances en simultannée sur des bases de $
 
 \medskip{}
 
-Les processeurs de dernière génération dédié au calcul atteigne ce niveau de performance. Le Intel Xeon E5-2670 atteint ainsi en théorie 330 Gflops
+Les processeurs de dernière génération dédiés au calcul atteigne ce niveau de performance. Le Intel Xeon E5-2670 atteint ainsi en théorie 330 Gflops
 
-\subsection{Choix de l'infrastructure et coûts liés}
+\subsection{Choix de l'infrastructure et coûts induits}
 
 Connaissant les caractéristiques minimales du serveur : en termes d'espace RAM, disque dur, de connexion réseau et de puissance de calcul, nous pouvons choisir le serveur le plus adapté à nos besoins.
 
@@ -221,7 +223,7 @@ Le bi-ES-2650 atteint 140 Gflops, et le bi-ES-2670 330 Gflops.
 
 Afin d'avoir une certaine marge, nous préférerons prendre le processeur bi-Intel Xeon ES-2670
 \smallskip{}
-Nous sélectionons donc le serveur MG-256 de OVH pour 303 euros HT / mois qui valide nos critères de performance avec une marge conséquente.
+Nous sélectionnons donc le serveur MG-256 de OVH pour 303 euros HT / mois qui valide nos critères de performance avec une marge conséquente.
 \smallskip{}
 À des fins de redondance, nous aurions besoin de 2 serveurs identiques, pour donc 606 euros HT / mois
 
@@ -295,8 +297,8 @@ On qualifie ce type de design de "Responsive".
 	\caption{Le démonstrateur SpeechApp sur IPad}
 \end{figure}
 
-Une difficulté néanmoins a été de rendre l'enregistrement audio fonctionnel sur la majorité des navigateurs. Nous assurons la compatibilité pour les moteurs Gecko et WebKit récents soit les dernières versions de Firefox, Chrome et Safari ainsi que leurs éditions mobiles.
-s
+Une difficulté néanmoins a été de rendre l'enregistrement audio fonctionnel sur la majorité des navigateurs. Nous assurons la compatibilité pour les versions récentes des moteurs de rendu Gecko et WebKit soit les dernières versions de Firefox, Chrome et Safari ainsi que leurs éditions mobiles.
+
 \bigskip{}
 
 SpeechApp n'a en elle-même pas d'autre fonction que celle de démonstrateur, néanmoins ses modules peuvent être distribués aisément, sous forme de widgets intégrables n'importe où.

@@ -8,44 +8,44 @@ A level-1 auxiliary file: Conclusion.aux
 A level-1 auxiliary file: LeCode.aux
 The style file: unsrt.bst
 Database file #1: Biblio.bib
-You've used 23 entries,
+You've used 24 entries,
             1791 wiz_defined-function locations,
-            560 strings with 6335 characters,
-and the built_in function-call counts, 3174 in all, are:
-= -- 258
-> -- 130
+            564 strings with 6507 characters,
+and the built_in function-call counts, 3270 in all, are:
+= -- 264
+> -- 131
 < -- 0
-+ -- 57
++ -- 58
 - -- 34
-* -- 73
-:= -- 540
-add.period$ -- 68
-call.type$ -- 23
+* -- 76
+:= -- 549
+add.period$ -- 69
+call.type$ -- 24
 change.case$ -- 22
 chr.to.int$ -- 0
-cite$ -- 23
-duplicate$ -- 147
-empty$ -- 383
+cite$ -- 24
+duplicate$ -- 156
+empty$ -- 401
 format.name$ -- 34
-if$ -- 725
+if$ -- 750
 int.to.chr$ -- 0
-int.to.str$ -- 23
+int.to.str$ -- 24
 missing$ -- 11
-newline$ -- 117
+newline$ -- 120
 num.names$ -- 23
-pop$ -- 116
+pop$ -- 122
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 65
+skip$ -- 68
 stack$ -- 0
 substring$ -- 0
-swap$ -- 22
+swap$ -- 23
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 0
 while$ -- 23
-width$ -- 25
-write$ -- 231
+width$ -- 26
+write$ -- 237

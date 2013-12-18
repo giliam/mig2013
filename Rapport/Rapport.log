@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2013.11.12)  18 DEC 2013 17:10
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2013.11.12)  18 DEC 2013 17:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -634,15 +634,14 @@ File: Images/mmcpresentation.png Graphic file (type png)
 <use Images/mmcpresentation.png>
 Package pdftex.def Info: Images/mmcpresentation.png used on input line 29.
 (pdftex.def)             Requested size: 284.52756pt x 208.23354pt.
-
-<Images/MMC2.png, id=114, 360.34625pt x 154.5775pt>
+ [20 <./Images/mmcpresentation.png>]
+<Images/MMC2.png, id=118, 360.34625pt x 154.5775pt>
 File: Images/MMC2.png Graphic file (type png)
  <use Images/MMC2.png>
-Package pdftex.def Info: Images/MMC2.png used on input line 52.
+Package pdftex.def Info: Images/MMC2.png used on input line 58.
 (pdftex.def)             Requested size: 284.52756pt x 122.05354pt.
 
-[20 <./Images/mmcpresentation.png>] [21 <./Images/MMC2.png (PNG copy)>])
-(./Recapitulatif.tex [22]
+[21 <./Images/MMC2.png (PNG copy)>]) (./Recapitulatif.tex [22]
 <Images/diagramme.png, id=126, 469.755pt x 450.68375pt>
 File: Images/diagramme.png Graphic file (type png)
 
@@ -840,10 +839,10 @@ Annexe G.
 (./Rapport.aux (./title.aux) (./Remerciements.aux) (./Introduction.aux)
 (./Conclusion.aux) (./LeCode.aux)) ) 
 Here is how much of TeX's memory you used:
- 9485 strings out of 493307
- 126974 string characters out of 6139904
- 517207 words of memory out of 5000000
- 12586 multiletter control sequences out of 15000+600000
+ 9486 strings out of 493307
+ 126980 string characters out of 6139904
+ 517212 words of memory out of 5000000
+ 12587 multiletter control sequences out of 15000+600000
  24537 words of font info for 56 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  41i,7n,63p,1325b,2049s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -871,7 +870,7 @@ sr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts
 er/sfsl1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfsl1440.pfb></us
 r/share/texmf/fonts/type1/public/cm-super/sfti1095.pfb></usr/share/texmf/fonts/
 type1/public/cm-super/sftt1095.pfb>
-Output written on Rapport.pdf (126 pages, 3729372 bytes).
+Output written on Rapport.pdf (126 pages, 3730753 bytes).
 PDF statistics:
  568 PDF objects out of 1000 (max. 8388607)
  369 compressed objects within 4 object streams

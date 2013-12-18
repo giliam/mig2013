@@ -62,21 +62,23 @@
 \contentsline {paragraph}{}{19}
 \contentsline {paragraph}{}{20}
 \contentsline {paragraph}{}{20}
-\contentsline {subsection}{\numberline {3.2.3}Application \`a la reconnaissance vocale}{20}
 \contentsline {paragraph}{}{20}
+\contentsline {subsection}{\numberline {3.2.3}Mod\`eles discrets et mod\`eles continus}{20}
+\contentsline {subsection}{\numberline {3.2.4}Application \`a la reconnaissance vocale}{20}
 \contentsline {paragraph}{}{20}
-\contentsline {section}{\numberline {3.3}Principaux algorithmes sur les mod\`eles de Markov}{20}
-\contentsline {paragraph}{}{20}
+\contentsline {paragraph}{}{21}
+\contentsline {section}{\numberline {3.3}Principaux algorithmes sur les mod\`eles de Markov}{21}
+\contentsline {paragraph}{}{21}
 \contentsline {paragraph}{}{21}
 \contentsline {section}{\numberline {3.4}Application \`a notre objectif}{21}
 \contentsline {paragraph}{}{21}
 \contentsline {paragraph}{}{21}
 \contentsline {paragraph}{}{21}
-\contentsline {section}{\numberline {3.5}Phase d'apprentissage}{21}
-\contentsline {paragraph}{}{21}
-\contentsline {paragraph}{}{21}
-\contentsline {paragraph}{}{21}
-\contentsline {paragraph}{}{21}
+\contentsline {section}{\numberline {3.5}Phase d'apprentissage}{22}
+\contentsline {paragraph}{}{22}
+\contentsline {paragraph}{}{22}
+\contentsline {paragraph}{}{22}
+\contentsline {paragraph}{}{22}
 \contentsline {section}{\numberline {3.6}Phase de reconnaissance}{22}
 \contentsline {paragraph}{}{22}
 \contentsline {paragraph}{}{22}

@@ -68,6 +68,11 @@ Luc Maranget.
 \newblock {\em Introduction à la programmation}.
 \newblock École Polytechnique, 2008-2009.
 
+\bibitem{baum}
+{\em An inequality with applications to statistical estimation for
+  probabilistic functions of markov processes and to a model for ecology},
+  1966.
+
 \bibitem{ref1}
 Maurice Charbit.
 \newblock {Reconnaissance de mots isolés (utilisation des modèles HMM)}.

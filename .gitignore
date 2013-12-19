@@ -38,3 +38,9 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+# Tex
+.aux
+.tox
+.log
+.blg

@@ -200,7 +200,17 @@ Le r�sultat est un algorithme qui s'effectue en moins d'une seconde, et qui pe
         	\paragraph{}
         	On remarque que le poids des hautes fr�quences (sup�rieures � $1 000$ Hz) est diminu� tandis que le poids des basses fr�quences (inf�rieur � $1 000$ Hz) est augment�.
 \paragraph{}
-Il est pr�f�rable d'employer cette �chelle de fr�quence dans l'algorithme de reconnaissance: ce dernier doit en effet diff�rencier plusieurs mots selon la perception humaine, c'est-�-dire en simulant le comportement de l'oreille humaine.
+	Il est pr�f�rable d'employer cette �chelle de fr�quence dans l'algorithme de reconnaissance: ce dernier doit en effet diff�rencier plusieurs mots selon la perception humaine, c'est-�-dire en simulant le comportement de l'oreille humaine.
+
+\paragraph{}
+	Le ré-étallonnage en échelle Mel est réalisé en appliquant au signal des filtres triangulaires comme présentés
+	dans la figure ci-dessous. On remarque qu'en effet, plus la fréquence est grande, plus le filtre est large ce qui 
+	signifie que l'on considère un plus grand intervalle de fréquence comme une seule et même information. Ceci 
+	illustre ce qui était précédemment dit sur la discrimination des hautes fréquences. Cette largeur de filtre est 
+	dictée par l'échelle Mel. Ceci conduit à l'obtention d'un tableau de 24 cases dont chaque case contient l'amplitude 
+	associée à l'intervalle de fréquence représenté par l'indice du tableau (et qui est comme on l'a dit, déterminé
+	par l'échelle Mel).
+	
 		\section{Transform�e inverse ou D�composition en cosinus inverse}
 \begin{figure}[H]
 	\begin{center}

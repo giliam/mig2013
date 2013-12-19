@@ -19,6 +19,7 @@ lib64
 __pycache__
 
 db/logs/
+db/hmm/
 db/output/
 db/storage/
 db/waves/
@@ -41,7 +42,7 @@ nosetests.xml
 
 # Tex
 *.aux
-*.tox
+*.toc
 *.log
 *.blg
 *.bbl

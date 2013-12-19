@@ -40,7 +40,7 @@ nosetests.xml
 .pydevproject
 
 # Tex
-Rapport/*.aux
-Rapport/*.tox
-Rapport/*.log
-Rapport/*.blg
+*.aux
+*.tox
+*.log
+*.blg

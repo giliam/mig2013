@@ -1,5 +1,6 @@
 \chapter{Analyse, formatage du signal}
     		\section{Introduction}
+    		\paragraph{}
     		Comme nous l'avons mentionné, même le plus élémentaire des systèmes de reconnaissance vocale utilise des algorithmes au carrefour d'une grande diversité de disciplines: reconnaissance de motifs statistiques, théorie de l'information, traitement du signal, analyse combinatoire, linguistique entre autres, le dénominateur commun étant le traitement du signal qui transforme l'onde acoustique de la parole en une représentation paramétrique plus adaptée à l'analyse automatisée. Le principe est simple: garder les traits distinctifs du signal et éviter au maximum de tout ce qui pourra en parasiter l'étude. Cette conversion ne se fait donc pas sans perte d'information, et la délicatesse de la discipline tient en la sélection judicieuse des outils les plus adaptés afin de trouver le meilleur compromis entre perte d'information et représentation fidèle du signal.
     		\section{Prérequis}
     		\subsection{Qu'est-ce que le son ?}
@@ -9,10 +10,14 @@
 	    \end{center}
 	    \caption{Oreille humaine}
 \end{figure}
+\paragraph{}
 	Le son est une onde mécanique se traduisant par une variation de la pression au cours du temps. Cette onde est caractérisée par différents facteurs comme son amplitude à chaque instant, qui est en d'autres termes la valeur de la dépression à cet instant, et par les fréquences qui la composent et qui changent au cours du temps.
 				\subsection{Comment le son est-il représenté dans l'ordinateur ?}
+				\paragraph{}
 				En se propageant, l'onde mécanique qu'est le son fait vibrer la membrane du micro. L'amplitude de la vibration dépend directement de l'amplitude du son. La position de la membrane est enregistrée à intervalles de temps réguliers définis par l'échantillonnage.
+				\paragraph{}
 				L'échantillonnage correspond au nombre de valeurs prélevées en une seconde (principe \cite{echantillonnage}). Par exemple un échantillonnage à $44 100$ Hz correspond à relever la position de la membrane $44 100$ fois par secondes. La valeur de la position de la membrane est alors enregistrée sous la forme d'un entier signé codé sur $n$ bits ($n$ valant généralement $8$,$16$,$32$ ou $64$). Plus $n$ est grand, plus la position de la membrane sera représentée de manière précise, et donc plus la qualité du son sera bonne. Grâce à l'échantillonnage et à la position de la membrane ($n$), on définit aisément le \textsl{bitrate}, qui correspond au débit d'information par seconde, de la façon suivante: \( bitrate = n * $é$chantillonnage. \)
+				\paragraph{}
 	Ce dont nous disposons donc pour analyser un signal, est la donnée de l'amplitude en fonction du temps la caractérisant.
 	
 \begin{figure}[H]
@@ -25,11 +30,15 @@
 \newpage	
 \section{Préparation du signal en vue du traitement}
     \subsection{Synchronisation}
+    \paragraph{}
 	Afin de synchroniser le début des enregistrements d'un mot, et de leur donner la même durée, nous avons eu l'idée de détecter les silences avant et après le mot pour les couper. 
+	\paragraph{}
 	Le signal est lissé à l'aide d'une moyenne sur plusieurs échantillons pour que les fluctuations inhérentes à l'enregistrement ne gênent pas notre fonction. On détecte alors le moment où le signal (en valeur absolue) dépasse pour la première fois une valeur seuil et celui à partir duquel le signal ne dépasse plus celle-ci. 
+	\paragraph{}
 	On sait alors où couper le signal d'origine, en élargissant légèrement la coupe afin d'éviter de supprimer des consonnes peu sonores. 
 	Cela permet en plus d'afficher un message d'erreur suspectant un enregistrement ayant commencé trop tard ou fini trop tôt.
 	Deux problémes se posent : en pratique, un bruit trop important perturbe le signal et le mot n'est plus détectable par l'amplitude des oscillations. 
+	\paragraph{}
 	Toutefois, pour l'enregistrement de notre base de données, une pièce calme et un micro de bonne qualité nous ont permis un découpage satisfaisant, ce qui ne résout pas définitivement le problème, l'utilisateur ne pouvant pas toujours se placer dans ces conditions, le signal est traité par un filtre anti-bruit.
 \begin{figure}[H]
     \begin{center}
@@ -45,6 +54,7 @@
     \subsection{Accentuation des hautes fréquences}
 \paragraph{}
 	Les performances de tout système de reconnaissances dépendent fortement de la variabilité des données (locuteur, environnement, bruit, réverbération, ...). Plus ces données sont variables, plus le taux d'erreur sera grand et un système de reconnaissance qui se veut étre utilisable dans la vie de tous les jours: (voiture, endroits bruyants) ; se doit d'y remédier. Ces effets se font particulièrement sentir dans les basses fréquences, c'est pourquoi le conditionnement du signal en vue de son étude comprend immanquablement un filtre passe haut  c'est-à-dire une accentuation de l'amplitude associée aux hautes fréquences et une diminution des basses fréquences. C'est le même principe qui est utilisé dans les égaliseurs des lecteurs de musique d'aujourd'hui qui proposent d'augmenter les basses ou les aigus. Les filtres passe-haut améliorent significativement les résultats de reconnaissance comme en témoignent les expériences de H.G. Hirsch P. Meyer et H.W. Ruehl dans leur papier\cite{highpass}.
+	\paragraph{}
 	
 	Utiliser un filtre passe-haut présente comme avantage de ne pas nécessiter de procéder au préalable 
 	à une reconnaissance de silence contrairement aux techniques de réduction du bruit et de soustraction spectrale.
@@ -192,7 +202,8 @@ fonctions, de façon à éviter les appels récursifs. En effet, le travail sur des 
 \item Opérer une transformation en cosinus inverse "décorrèle" les valeurs du tableau dans la mesure où dans une représentation 
 en fréquentiel, les valeurs associées aux hautes fréquences sont trés fortement corrélées avec ce qui se passe dans les 
 basses fréquences. En effet, un signal sonore n'est jamais pur, c'est-à-dire constitué d'une seule fréquence, mais est un 
-amalgame de signaux purs de fréquences multiples de celles d'autres signaux purs.\\
+amalgame de signaux purs de fréquences multiples de celles d'autres signaux purs.
+\paragraph{}
 Le tableau qui sera traité par la suite grâce aux chaînes de Markov n'est plus constitué de 24 cases mais de 12 dont les 
 11 premiéres sont les premières cases du tableau obtenu aprés DCT. Si l'on tronquait le tableau avant d'opérer la DCT, on 
 ne conserverait que l'information associée aux graves ce qui constituerait une perte trop importante de données. 

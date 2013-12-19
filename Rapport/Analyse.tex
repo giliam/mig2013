@@ -25,7 +25,7 @@
 \end{figure}
 
 \newpage	
-\section{Enregistrement, recadrage, filtrage HF}
+\section{Préparation du signal en vue du traitement}
     \subsection{Synchronisation}
 	Afin de synchroniser le d�but des enregistrements d'un mot, et de leur donner la m�me dur�e, nous avons eu l'id�e de d�tecter les silences avant et apr�s le mot pour les couper. 
 	Le signal est liss� � l'aide d'une moyenne sur plusieurs �chantillons pour que les fluctuations inh�rentes � l'enregistrement ne g�nent pas notre fonction. 
@@ -47,7 +47,7 @@
 \paragraph{}
 	De plus, il a fallu d�terminer la valeur de nos constantes de d�coupe (coefficient de lissage, coefficient de coupe, intervalle de temps de s�curit�), 
 	qui d�pendent bien s�r les unes des autres. Ceci a �t� fait de mani�re empirique sur plusieurs enregistrements de mots diff�rents, permettant une d�coupe automatique la plus satisfaisante possible pour l'ensemble des mots.
-    \subsection{Filtrage passe-haut}
+    \subsection{Atténuation des hautes fréquences}
 \paragraph{}
 	Les performances de tout syst�me de reconnaissances d�pendent fortement de la variabilit� 
 	des donn�es (locuteur, environnement, bruit, r�verb�ration, ...). Plus ces donn�es sont variables, 
@@ -90,7 +90,7 @@
         \newpage
         
         
-	\section{Echantillonnage, fen�trage}
+	\section{Découpage du signal}
         	L'analyse du signal repose sur l'étude des fréquences présentes à un instant donné ce qui ne peut se faire
         	si l'on considère le signal dans sa totalité car l'on aurait alors une moyenne sur toute la piste des frèquences présentes
         	et non un ensemble de données ponctuelles. Le proc�d� 
@@ -147,7 +147,7 @@ La taille des �chantillons est un param�tre d�terminant sur la qualit� e
 	considérer que les fréquences obtenues ne sont plus une moyenne sur une longue période mais bien des fréquences 
 	présentes à un instant précis.
 
-        	\section{Transform�e de Fourier}
+        	\section{Du temporel au fréquentiel}
         	\paragraph{}
         	Le domaine temporel est parfait pour l'acquisition et la restitution de l'audio, car il repr�sente fid�lement la vibration 
         	de la membrane d'un micro ou d'une enceinte. L'oreille humaine base sa perception et sa reconnaissance sur le domaine fr�quentiel. 

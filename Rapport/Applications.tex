@@ -1,20 +1,10 @@
 \chapter{Applications}
 \section{Le marché actuel}
 \paragraph{}
-		Le marché de la reconnaissance vocale est pour le moment assez restreint, mais est appelé à grandir dans les prochaines années. Si les systèmes de reconnaissance vocale fleurissent sur les objets multimédias à usage personnel, comme les ordinateurs portables ou les téléphones mobiles, ils servent uniquement à simplifier un peu certaines tâches de l'utilisateur, et ne sont en pratique que très peu utilisés, ce qui s'explique par leurs performances moyennes. Le représentant le plus utilisé de ce type d'usage de la reconnaissance vocale est probablement \textbf{Siri} sur les téléphones mobiles iPhone d'Apple, mais il reste assez peu utilisé malgré la grande popularité de l'iPhone.
+		Bien qu'aujourd'hui restreint, le marché de la reconnaissance vocale est appelé à grandir dans les prochaines années. Si les systèmes de reconnaissance vocale sont fréquents pour les objets multimédias à usage personnel (comme les ordinateurs portables ou les téléphones mobiles), ils ne servent qu'à simplifier certaines tâches de l'utilisateur, et leurs performances moyennes n'incitent pas à s'en servir davantage. Pour les téléphones mobiles, le leader est \textbf{Siri}, mais il reste peu utilisé pour les raisons ci-dessus.
 		\paragraph{}
-		
-	Dans le domaine des logiciels payants, pour un usage plus sérieux, le marché est dominé par les logiciels \textbf{Dragon NaturallySpeaking\cite{dragon}}
-	 de la firme américaine Nuance. Les prix, selon les modèles, varient entre environ 100\$ pour le modèle de base et environ 
-	 1000\$ pour les versions spécialisées dans un domaine professionnel. Le principe est que plus la base de données de mots 
-	 est grande, plus les erreurs sont fréquentes ; Dragon NaturallySpeaking\cite{dragon} propose donc des versions adaptées à un domaine 
-	 particulier. Par exemple, il existe une version "juriste" avec une base de données contenant surtout du vocabulaire 
-	 technique de droit, et une version "médicine" avec des termes techniques médicaux. Ces versions visant une cible très 
-	 précise donc plus restreinte, ils sont vendus considérablement plus cher que les versions plus classiques. Cependant, 
-	 la demande étant en constante augmentation - un tiers des radiologues français utilisent cette technologie, tout comme
-	 95\% des hôpitaux aux Pays Bas -, le marché est assez prometteur. En effet, cette technologie réduit considérablement 
-	 les tâches administratives de ces professions: une simple relecture au plus est nécessaire. La réussite est renforcée 
-	 par des taux de réussite exceptionnels avec des bases de données adaptées, et par l'absence de concurrence très forte.
+		Dans le domaine des logiciels payants, pour un usage plus sérieux, le marché est dominé par les logiciels \textbf{Dragon NaturallySpeaking\cite{dragon}} de la firme américaine Nuance. Les prix varient entre 100\$ pour le modèle de base et 1000\$ pour les versions professionnelles. Plus la base de données de mots est grande, plus les erreurs sont fréquentes. C'est pourquoi Dragon NaturallySpeaking\cite{dragon} propose des versions adaptées à un domaine particulier. Il en existe par exemple une dédiée aux métiers juridiques, avec une base de données composée d'un vocabulaire technique de droit, et une autre dédiée au domaine de la santé et contenant des termes médicaux. Ces versions visant un marché plus restreint, leurs prix est plus élevé. Cependant, la demande étant en constante augmentation (un tiers des radiologues français utilisent cette technologie, tout comme 95\% des hôpitaux aux Pays Bas), le marché est assez prometteur. En effet, cette technologie réduit considérablement les tâches administratives de ces professions : une simple relecture est suffisante. Cette compétitivité est renforcée par des taux de réussite exceptionnels grâce à des bases de données adaptées, et par l'absence de concurrence forte.
+
 	 \begin{figure}[H]
 	    \begin{center}
 		    \includegraphics[width=8cm]{Images/dragon.png} 
@@ -24,64 +14,45 @@
 \end{figure}
 	 \paragraph{}
 	
-	Cependant, nous avons choisi de concevoir un logiciel avec une base de données moins spécialisée pour un usage personnel: en effet, dans le temps qui nous est imparti, créer des bases de données étudiées spécialement pour un certain domaine (droit, médecine) nous paraissait très compliqué. Il aurait fallu faire une étude linguistique très poussée pour construire la base de données, alors que nous avons concentré l'essentiel de nos efforts sur l'algorithme de reconnaissance lui-même. Notre produit est donc destiné à un usage plus ludique, ou du moins personnel. Notre cible est donc légèrement différente, puisque les professionnels intéressés par notre produit doivent construire eux-mêmes leur base de données spécifique à leur domaine. L'inconvénient de cette approche est le désagrément de devoir ajouter soi-même les mots, l'avantage étant que la reconnaissance sera plus fiable puisque la voix de l'utilisateur elle-même sert de comparateur, et elle permet d'avoir une base de données réellement personnalisée (celles de Dragon, bien que dédiées à un domaine, ne sont pas totalement personnelles). Le prix envisagé de la licence pour cette utilisation de notre produit est comparable (de l'ordre de 1000\euro{}) à celui des versions personnalisées de Dragon.
-	\paragraph{}
+Dans notre cas, nous avons choisi de concevoir un logiciel avec une base de données dédiée essentiellement à un usage personnel. En effet, dans le temps qui nous était imparti, créer des bases de données spécialisées nous paraissait très compliqué. Il aurait fallu faire une étude linguistique très poussée pour construire la base de données, alors que nous avons concentré l'essentiel de nos efforts sur l'algorithme de reconnaissance lui-même. Notre produit est donc destiné à un usage plus ludique, ou du moins personnel. Notre cible est donc légèrement différente, puisque les professionnels intéressés par notre produit doivent construire leurs propres base de données. Cette approche a le désavantage d'être parfois fastidieuse pour l'utilisateur, celui-ci devant ajouter soi-même les mots. Néanmoins, la reconnaissance sera plus fiable puisque la voix de l'utilisateur servant elle même de comparateur, elle permet d'avoir une base de données réellement personnalisée (celles de Dragon, bien que spécialisées, ne sont pas personnelles). Le prix envisagé de la licence pour cette utilisation du logiciel est comparable à celui des versions personnalisées de Dragon (de l'ordre de 1000 \euro{}). La version à usage personnel, sans possibilité d'ajouts de mots, sera elle au prix de 5\euro{}, bien qu'il soit difficile de prévoir son potentiel, les concurrents étant très nombreux, et les rapports qualité-prix très variables.
 	
-	Nous prévoyons également de mettre en vente une version à usage personnel, sans possibilité d'ajouts de mots, au prix de 5\euro{}. Il est difficile de prévoir le potentiel de cette version, puisque les concurrents sont très nombreux, de qualité et de prix très variables.
 	\section{Principaux domaines d'application}
 \paragraph{}
-    	 La reconnaissance vocale est une technologie promise à un futur radieux; les plus grands noms de l'informatique, 
-    	 dont Bill Gates, annonçaient il y a quelques années qu'elle allait remplacer les claviers d'ici peu. 
-    	 Il s'avère aujourd'hui que leurs prédictions ne sont pas encore réalisées, il est tout à fait possible 
-    	 qu'elles se réalisent plus tard que prévu. Le principal obstacle à l'explosion de cette technologie étant 
-    	 le manque de fiabilité total, mais avec les progrès à venir, la technologie deviendra de plus en plus sûre.
+    La reconnaissance vocale est une technologie promise à un futur radieux. Les plus grands noms de l'informatique, dont Bill Gates\footnote{\url{http://www.clubic.com/article-161030-3-clubic-test-solutions-reconnaissance-vocale.html}}, annonçaient ainsi il y a quelques années qu'elle allait remplacer les claviers d'ici peu. Et bien qu'il s'avère aujourd'hui que leurs prédictions ne se soient pas encore réalisées, il paraît probable qu'elles se concrétisent plus tard. En effet, le principal obstacle à l'explosion de cette technologie étant le manque de fiabilité total, le temps et les progrès qui l'accompagnent devraient rendre la technologie de plus en plus sûre.
+
     	 \paragraph{}
-    	 
-	L'armée étatsunienne a bien compris le potentiel de cette technologie: elle investit massivement depuis des 
-	années dans la recherche pour la développer\cite{usarmy}. Elle est d'ailleurs déjà utilisée sur certains avions de chasse, 
-	et pas seulement aux Etats-Unis: en France, en Angleterre et en Suède aussi notamment. Vu les investissements 
-	massifs, il y a fort à penser que les armées de ces différents pays ont des techniques bien plus avancées que 
-	celles connues du grand public, qui sont déjà plutôt performantes. Pour le moment, les commandes vocales ne 
-	servent pas encore à des fonctions critiques comme lancer un missile, et elles demandent toujours la confirmation 
-	du pilote avant d'exécuter une action. Elles libèrent néanmoins considérablement le pilote de beaucoup de tâches 
-	secondaires, ce qui lui permet de se concentrer sur les fonctions critiques. La technologie est également utilisée 
-	sur certains hélicoptères. Dans les deux cas, elle demande une grande fiabilité dans des conditions de stress et de bruit ambiant énorme (en particulier pour les hélicoptères, dans lesquels les pilotes n'ont souvent pas de casque anti bruit). Dans ce domaine, les perspectives sont donc très intéressantes financièrement mais elles demandent un savoir-faire qui est totalement hors de notre portée.
+    	 L'armée états-unienne a bien compris le potentiel de cette technologie et investit massivement depuis des années pour la développer\cite{usarmy}\cite{usarmy2}. Elle est d'ailleurs déjà utilisée sur certains avions de chasse et hélicoptères aux Etats-Unis, mais également en France, au Royaume-Uni et en Suède. Vu les investissements massifs, il y a matière à penser que les armées de ces différents pays ont des techniques bien plus avancées que celles connues du grand public, déjà plutôt performantes. Pour le moment, les commandes vocales ne servent pas encore à des fonctions critiques comme lancer un missile, et demandent toujours la confirmation du pilote avant d'exécuter une action. Elles libèrent néanmoins considérablement le pilote de beaucoup de tâches secondaires, ce qui lui permet de se concentrer sur les fonctions critiques. Elles demandent néanmoins une grande fiabilité dans des conditions de stress et de bruit ambiant énorme (en particulier pour les hélicoptères, dans lesquels les pilotes n'ont souvent pas de casque anti bruit). Dans ce domaine, les perspectives sont donc très intéressantes financièrement mais requièrent un savoir-faire qui semble hors de notre portée.
+
 	\paragraph{}
-	
-	La reconnaissance vocale est également utilisée dans le contrôle aérien\cite{controleaerien}, et pourrait à terme remplacer les 
-	contrôleurs aériens. En effet, les phrases utilisées dans ce contexte sont très typées, ce qui favorise la 
-	reconnaissance (phrases souvent identiques, syntaxe très simple, prononciation très articulée). La technologie 
-	est donc moins avancée que dans le domaine de l'armée, et elle est déjà utilisée aux Etats-Unis, en Australie, 
-	en Italie, au Brésil et au Canada. Notre produit pourrait servir à ce type d'application, en créant une base de 
-	données spécifique au contrôle aérien.
+	La reconnaissance vocale est également utilisée dans le contrôle aérien\cite{controleaerien}, et pourrait à terme remplacer les contrôleurs aériens. En effet, les phrases utilisées dans ce contexte sont très typées, ce qui favorise la reconnaissance (phrases souvent identiques, syntaxe très simple, prononciation très articulée). La technologie est donc moins avancée que dans le domaine de l'armée mais est déjà utilisée aux Etats-Unis, en Australie, en Italie, au Brésil et au Canada. Notre produit pourrait servir à ce type d'application, en créant une base de données spécifique au contrôle aérien.
+
 	\paragraph{}
-	
-	La reconnaissance vocale se développe dans de nombreux domaines professionnels où les tâches administratives 
-	prennent beaucoup de temps, notamment la médecine, le droit et la police. En médecine\cite{medecine}, elle permet de remplir
-	 des rapports médicaux automatiquement: une simple relecture est alors nécessaire.  Elle est notamment déjà 
-	 utilisée dans 95\% des hôpitaux aux Pays-Bas. Pour le droit, elle pourrait remplacer le travail du greffier 
-	 pour prendre des notes dans les tribunaux. Et pour la police\cite{police}, elle permet de rédiger des rapports environ 
-	 trois fois plus vite qu'au clavier. Le besoin de fiabilité est bien moindre dans ces domaines que dans les 
-	 domaines de l'armée ou du contrôle aérien, une relecture est souvent largement nécessaire. Dans le domaine 
-	 du droit, il faut néanmoins prendre en compte les conditions particulières d'enregistrement (brouhaha ambiant,  
-	 émotions dans la voix, volume variable...). Notre produit peut tout à fait servir à ce type d'applications, 
-	 à condition de créer une base de données spécifique aux domaines concernés.
+	Comme vu précédemment, la reconnaissance vocale se développe dans de nombreux domaines professionnels où les tâches administratives prennent beaucoup de temps, notamment la médecine\cite{medecine}\cite{medecine2}, le droit et la police. Elle est notamment déjà utilisée dans 95\% des hôpitaux aux Pays-Bas pour faciliter la rédaction de compte-rendus. Pour le droit, elle pourrait remplacer le travail du greffier pour prendre des notes dans les tribunaux. Et pour la police\cite{police}, elle permet de rédiger des rapports environ trois fois plus vite qu'au clavier. Le besoin de fiabilité est bien moindre dans ces domaines que dans les domaines de l'armée ou du contrôle aérien, une relecture étant souvent largement suffisante. Dans le domaine du droit, il faut néanmoins prendre en compte les conditions particulières d'enregistrement (brouhaha ambiant, émotions dans la voix, volume variable...).
+
+	 \paragraph{}
+	Une autre application possible de la reconnaissance vocale est l'aide aux handicapés\cite{handicapes}, par exemple pour contrôler une chaise roulante. Les phrases utilisées étant très typées (avancer, reculer,...), la technologie n'a pas besoin d'être très avancée. De plus, avec la possibilité qu'offre notre produit d'ajouter ses propres mots à la base de données, l'utilisateur lui-même pourrait rentrer les commandes et donc avoir un taux de reconnaissance très élevé.
+\begin{figure}[H]
+	    \begin{center}
+		    \includegraphics[width=8cm]{Images/quad.jpg} 
+	    \end{center}
+	    \caption{Micro QuadMouse qui peut être utilisé exclusivement avec le menton, les lèvres et la langue. Il possède un logiciel de reconnaissance vocale intégré}
+\end{figure}
 	 \paragraph{}
 	
-	Une autre application possible de la reconnaissance vocale est l'aide aux handicapés\cite{handicapes}, par exemple des commandes
-	 vocales pour une chaise roulante. Les phrases utilisées sont très typées (avancer, reculer,...) donc la 
-	 technologie n'a pas besoin d'être très avancée. De plus, avec la possibilité qu'offre notre produit 
-	 d'ajouter ses propres mots à la base de données, l'utilisateur lui-même peut rentrer les commandes ce 
-	 qui assure un taux de reconnaissance très élevé. Notre produit peut donc bien s'adapter à cette utilisation.
-	 \paragraph{}
-	
-	La technologie est également très utilisée pour un usage plus ludique: fonctions de recherche dans les 
-	téléphones mobiles, les ordinateurs, robotique, jeux vidéo, traduction automatique,... Notre produit, 
-	dans sa version pour les particuliers, peut servir à ces usages même si la concurrence ne manque pas.
+	Cette technologie est également très utilisée pour un usage plus ludique : fonctions de recherche sur les téléphones mobiles ou ordinateurs, robotique, jeux vidéo, traduction automatique,... 
+
+\begin{figure}[H]
+	    \begin{center}
+		    \includegraphics[width=8cm]{Images/naorobot.png}
+	    \end{center}
+	    \caption{Nao, un robot possédant un logiciel de reconnaissance vocale.}
+\end{figure}
+
+Notre produit, dans sa version pour particuliers, peut servir à ces usages, mais comme nous le verrons plus loin, la concurrence dans ces domaines est nettement plus forte que dans les domaines professionnels.
 	\paragraph{}
 	
-	Enfin, la reconnaissance vocale peut servir à des fins sécuritaires, pour des vérifications d'identité. 
-	Il s'agit alors de reconnaître le locuteur, ce que notre produit ne permet pas.
+Enfin, la reconnaissance vocale peut servir à des fins sécuritaires, pour des vérifications d'identité. Il s'agit alors de reconnaître le locuteur, ce que notre produit ne permet pas.
+
 	\paragraph{}
 	
-	Pour conclure, les applications pour notre produit sont assez nombreuses, et la demande est de plus en plus forte, ce qui montre sa pertinence.
+Pour conclure, les applications de notre produit sont très nombreuses, et la demande est de plus en plus forte, ce qui montre sa pertinence économiquement parlant ; la qualité du produit est bien sûr néanmoins une condition indispensable à son succès.

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*-coding:utf-8 -*
-""" Main du programme, permet le choix entre enregistrer un élément ou réaliser l'analyse d'un enregistrement déjà effectué """
+""" Main du programme, permet le choix entre enregistrer un element ou realiser l'analyse d'un enregistrement deja effectue """
 import scipy.io.wavfile
 import os
 from core.utils.constantes import *
@@ -26,7 +26,7 @@ def main(verbose=True,action=-1,verboseUltime=True):
         try:
             if verboseUltime:
                 choice = int(input("Que voulez-vous faire ?\n1-Enregistrer un element\n\
-2-Realiser l'analyse d'un mot\n3-Tester\n4-Afficher résultats intermédiaires\n5-Gestion des fichiers de la base de donnees\n\
+2-Realiser l'analyse d'un mot\n3-Tester\n4-Afficher resultats intermediaires\n5-Gestion des fichiers de la base de donnees\n\
 6-Creation d'un HMM\n7-Gerer les HMM\n----------------------------\n"))
             else:
                 choice = 2
@@ -36,7 +36,7 @@ def main(verbose=True,action=-1,verboseUltime=True):
     ###        ENREGISTREMENT        ###
     ####################################
     if choice == 1:
-        #Réaliser un enregistrement
+        #Realiser un enregistrement
         recorder(db)
         
         
@@ -46,7 +46,7 @@ def main(verbose=True,action=-1,verboseUltime=True):
     elif choice == 2:
         fileOk = False
         while not fileOk:
-            #On choisit le dossier à afficher
+            #On choisit le dossier a afficher
             print "Voici la liste des mots a etudier : "
             dirList = db.printDirFiles("waves/")
             dirChoice = -1
@@ -158,7 +158,7 @@ def main(verbose=True,action=-1,verboseUltime=True):
     elif choice == 6:
         fileOk = False
         while not fileOk:
-            #On choisit le dossier à afficher
+            #On choisit le dossier a afficher
             print "Voici la liste des mots a etudier : "
             dirList = db.printDirFiles("waves/")
             dirChoice = -1
@@ -201,7 +201,7 @@ def main(verbose=True,action=-1,verboseUltime=True):
         print hmmList
 
 def handlingOneWord(content,db,dirChoice,numeroTraitement,action=0):
-    """ Fait le traitement d'un mot pour en construire les vecteurs de Markov et tester ensuite la compatibilité avec les automates existants 
+    """ Fait le traitement d'un mot pour en construire les vecteurs de Markov et tester ensuite la compatibilite avec les automates existants 
             Retourne un tuple (motLePlusCompatible,log) """
     content,log = handlingRecording(content,db,dirChoice,numeroTraitement,action)
     loadHMMs(Db.prefixPath + "hmm/save.hmm")
@@ -218,9 +218,9 @@ def handlingRecording(content,db,dirChoice,numeroTraitement,action=0):
         #db.addWaveFromAmp("tmp/bob.wav", 44100, content)
         log += "Sauvegarde effectuee...\n\n"
     if action <= 2:
-        log += "Fenêtre de Hann en cours...\n"
+        log += "Fenetre de Hann en cours...\n"
         content = hann_window(content)
-        log += "Fenêtre de Hann terminee...\n"
+        log += "Fenetre de Hann terminee...\n"
         #db.addFile("handling/hann_" + str(dirChoice) + "_" + str(numeroTraitement) + ".txt",content)
         log += "Sauvegarde effectuee...\n\n"
     if action <= 3:
@@ -278,7 +278,7 @@ def finalTest(fileName = ""):
     db = Db("../db/",verbose=False)
     fileOk = False
     while not fileOk:
-        #On choisit le dossier à afficher
+        #On choisit le dossier a afficher
         if fileName == "":
             print "Voici la liste des mots a etudier : "
             dirList = db.printDirFiles("waves/")

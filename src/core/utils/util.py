@@ -26,7 +26,7 @@ def reduc(M,N):
     return M/d, N/d
     
 def pgcd(a,b):
-    # une fonction fractions.gcd(a, b) est déjà implémentée dans Python
+    # une fonction fractions.gcd(a, b) est deja implementee dans Python
     return gcd(a, b)
     
 def W(k,N):

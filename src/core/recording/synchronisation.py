@@ -8,9 +8,9 @@ from core.utils.constantes import *
 from operator import add
 import math as m
 
-""" coeff_lissage est un entier paramétrant l'intensité du lissage indispensable pour éviter de commencer trop tôt à cause du bruit (à déterminer)
-    t_min est l'intervalle de temps de sécurité (à déterminer)
-    coeff_coupe est l'intensité de la coupe (à déterminer expérimentalement)
+""" coeff_lissage est un entier parametrant l'intensite du lissage indispensable pour eviter de commencer trop tôt a cause du bruit (a determiner)
+    t_min est l'intervalle de temps de securite (a determiner)
+    coeff_coupe est l'intensite de la coupe (a determiner experimentalement)
 """
  
 def synchro(amplitudes,coeff_lissage,t_min,coeff_coupe):

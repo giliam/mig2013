@@ -8,7 +8,7 @@ def mel(f):
 	return 2595*math.log(1+f/700.)/math.log(10)
 
 def triangularFilter(tab,FE):
-	""" Prend en paramètre une fenêtre de Hamming et la fréquence d'échantillonage et retourne la fenêtre de Mel """
+	""" Prend en parametre une fenetre de Hamming et la frequence d'echantillonage et retourne la fenetre de Mel """
 	pasOutput = mel(FE/2.)/12.
 	pasFFT = FE/(2.*len(tab))
 	outputTab = [0 for i in range(24)]

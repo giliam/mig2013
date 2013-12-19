@@ -61,7 +61,7 @@ def tab_capture(listMel,pas,melbas,melhaut):
 	for i in range(indbas,indhaut):
 		amp=listMel[i]+amp
 	########################################################################
-	##			DÉBOGAGE DÉGUEULASSE
+	##			DeBOGAGE DeGUEULASSE
 	##			ATTENTION
 	########################################################################
 	return(log10(amp))

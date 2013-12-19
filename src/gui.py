@@ -24,11 +24,11 @@ class Gui:
         self.fenetre3enabled = False
         self.noiseOk = False
     
-    def ouverture(self):         #fonction qui ouvre une deuxième fenêtre graphique, et qui affiche le résultat
+    def ouverture(self):         #fonction qui ouvre une deuxieme fenetre graphique, et qui affiche le resultat
         self.fenetre4=Tk()
-        self.fenetre4.attributes('-alpha', 1) #plein écran
+        self.fenetre4.attributes('-alpha', 1) #plein ecran
         self.fenetre4.configure(background='white')
-        self.fenetre4.title("MIG SE 2013 - Liste des mots enregistrés")
+        self.fenetre4.title("MIG SE 2013 - Liste des mots enregistres")
         titre=Label(self.fenetre4, text='\nMIG SE 2013',font=("DIN", "34","bold"), fg='#006eb8', bg="#ffffff")
         titre.pack()
         titre_logiciel=Label(self.fenetre4, text="Reconnaissance vocale\n\n\n\n",font =("DIN", "22"), bg="#ffffff")
@@ -70,7 +70,7 @@ class Gui:
         if self.nbEnregistrement == 0:
             self.mot = self.saisirMot.get()
         if not self.noiseOk:
-            self.errorMessage3.set("Vous n'avez pas encore enregistré le bruit !")
+            self.errorMessage3.set("Vous n'avez pas encore enregistre le bruit !")
         elif self.mot == "":
             self.errorMessage3.set("Entrez un mot")
         else:
@@ -81,7 +81,7 @@ class Gui:
             syncFile(Db.prefixPath + "waves/tmp/", self.mot + "_" + str(self.nbEnregistrement) + ".wav", "sync_")
             self.listeEnregistrements.append("tmp/" + self.mot + "_" + str(self.nbEnregistrement) + ".wav")
             self.nbEnregistrement += 1
-            self.bouton_enr.config(text="Lancer l'enregistrement numéro " + str(self.nbEnregistrement + 1) )
+            self.bouton_enr.config(text="Lancer l'enregistrement numero " + str(self.nbEnregistrement + 1) )
             if self.nbEnregistrement == NB_ITERATIONS:
                 self.creationHmm()
                 
@@ -103,9 +103,9 @@ class Gui:
         else:
             self.auth.logIn(loginIn, self.auth.hashPass(passwordIn) )
             self.fenetre2.destroy()
-            self.bouton_loginpopup.config(text='Se déconnecter')
+            self.bouton_loginpopup.config(text='Se deconnecter')
             self.errorMessage.set("")
-            Button(self.fenetre1,text='Liste des mots enregistrés', command=self.ouverture).pack()
+            Button(self.fenetre1,text='Liste des mots enregistres', command=self.ouverture).pack()
             self.displayRecorder()
             
     def registerAuth(self):
@@ -116,9 +116,9 @@ class Gui:
         else:
             if self.auth.getClient(loginIn) != "":
                 self.auth.newClient(loginIn, self.auth.hashPass(passwordIn), [])
-                self.errorMessage.set("Vous êtes bien enregistré(e)\n")
+                self.errorMessage.set("Vous etes bien enregistre(e)\n")
             else:
-                self.errorMessage.set("Le pseudonyme est déjà utilisé")
+                self.errorMessage.set("Le pseudonyme est deja utilise")
     
     def fenetre3destroy(self):
         self.fenetre3enabled = False
@@ -128,7 +128,7 @@ class Gui:
         self.bouton_registerIn.pack()
         if not self.fenetre3enabled:
             self.fenetre3=Tk()
-            self.fenetre3.attributes('-alpha', 1) #plein écran
+            self.fenetre3.attributes('-alpha', 1) #plein ecran
             self.fenetre3.configure(background='white')
             self.fenetre3.title("MIG SE 2013 - Enregistrement")
             titre=Label(self.fenetre3, text='\nMIG SE 2013',font =("DIN", "34","bold"), fg='#006eb8',bg='#ffffff')
@@ -145,15 +145,15 @@ class Gui:
             self.saisirMot=StringVar(self.fenetre3)          # variable pour recevoir le texte saisi
             saisieMot=Entry(self.fenetre3, textvariable=self.saisirMot, width=30,bg='#ffffff')
             saisieMot.pack()
-            Label(self.fenetre3, text="Avant de procéder aux enregistrements nécessaires, il convient d'enregistrer\
+            Label(self.fenetre3, text="Avant de proceder aux enregistrements necessaires, il convient d'enregistrer\
  du bruit pour permettre efficacement le traitement du signal \n", font=("DIN", '14'),bg='#ffffff').pack()
             self.bouton_bruit=Button(self.fenetre3, text='Enregistrer du bruit', command=self.enregistrerNoise, fg='#ff0000')  #bouton qui enregistre et ouvre une nouvelle fenetre
             self.bouton_bruit.pack()
-            Label(self.fenetre3, text="Il est nécessaire pour créer un modèle de Markov caché de procéder à une dizaine d'enregistrements du même mot\n\
- Vous aurez deux secondes à chaque enregistrement pour prononcer votre mot une fois l'acquisition lancée\n", font=("DIN", '14'),bg='#ffffff').pack()
+            Label(self.fenetre3, text="Il est necessaire pour creer un modele de Markov cache de proceder a une dizaine d'enregistrements du meme mot\n\
+ Vous aurez deux secondes a chaque enregistrement pour prononcer votre mot une fois l'acquisition lancee\n", font=("DIN", '14'),bg='#ffffff').pack()
             espace1=Label(self.fenetre3, text= ' \n ',bg='#ffffff')
             espace1.pack()
-            self.bouton_enr=Button(self.fenetre3, text='Lancer l\'enregistrement numéro 1', command=self.enregistrer, fg='#ff0000')  #bouton qui enregistre et ouvre une nouvelle fenetre
+            self.bouton_enr=Button(self.fenetre3, text='Lancer l\'enregistrement numero 1', command=self.enregistrer, fg='#ff0000')  #bouton qui enregistre et ouvre une nouvelle fenetre
             self.bouton_enr.pack()
             bouton_fermer=Button(self.fenetre3,text='Quitter', command=self.fenetre3destroy)
             bouton_fermer.pack()
@@ -225,11 +225,11 @@ class Gui:
             self.bouton_loginpopup.pack()
             self.bouton_registerIn=Button(self.fenetre1,text="Enregistrer", command=self.displayRecorder)
         else:
-            self.bouton_loginpopup=Button(self.fenetre1,text="Se déconnecter", command=self.displayLogIn)
+            self.bouton_loginpopup=Button(self.fenetre1,text="Se deconnecter", command=self.displayLogIn)
             self.bouton_loginpopup.pack()
             self.bouton_registerIn=Button(self.fenetre1,text="Enregistrer", command=self.displayRecorder)
             self.displayRecorder()
-            Button(self.fenetre1,text='Liste des mots enregistrés', command=self.ouverture).pack()
+            Button(self.fenetre1,text='Liste des mots enregistres', command=self.ouverture).pack()
 
         bouton_fermer1=Button(self.fenetre1,text='Quitter', command=self.fenetre1.destroy)
         bouton_fermer1.pack()

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-""" Réalise l'enregistrement d'un certain nombre d'échantillons audio déterminé par l'utilisateur.
-		Nécessite PYAUDIO pour fonctionner : http://www.lfd.uci.edu/~gohlke/pythonlibs/ """
+""" Realise l'enregistrement d'un certain nombre d'echantillons audio determine par l'utilisateur.
+		Necessite PYAUDIO pour fonctionner : http://www.lfd.uci.edu/~gohlke/pythonlibs/ """
 import os
 import pyaudio
 import wave
@@ -11,7 +11,7 @@ import hashlib
 
 
 def recorder(db,dirName="",nbRecording=-1,askForWord=True,seconds=-1,nbWords=1,fileName="",confirm=True):
-	""" Procède à l'enregistrement """ 
+	""" Procede a l'enregistrement """ 
 
 	if nbRecording < 0:
 		nbRecording = raw_input("Combien d'enregistrement par mots ? ")

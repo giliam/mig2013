@@ -1,20 +1,31 @@
 \part*{Conclusion}
-
-
-En seulement trois semaines de travail, nous avons réussi à construire les briques logicielles nécessaires au traitement du signal, aux calculs relatifs aux modèles de Markov cachés, à les rassembler. L'infrastructure du SpeechServer a été assise sur le coeur algorithmique, et ses applications clientes, SpeechRecorder et le démonstrateur SpeechApp ont été bâtie avec succès.
-Au travers du démonstrateur SpeechApp, il est d'ores et déjà possible de tester facilement la reconnaissance vocale de mots isolés tandis que le SpeechRecorder nous permet d'ajouter aisèment de nouveaux mots à nos bases de données.
-
-\bigskip{}
-
-Tous nos objectifs initiaux relatifs à la conduite du projet lui-même ont donc été remplis.
-
-\bigskip{}
-
-De sucroît, au delà du succès technique, il s'avère que de notre technologie de reconnaissance vocale pourraît naître un succès commercial. Il serait possible au prix d'un investissement supplémentaire dans la réalisation d'applications mobiles par The SpeechApp Company, de widgets réutilisables par des tiers, du perfectionnement de notre API SpeechServer à destination de développeurs tiers et bien sûr de la mise en place d'une structure entrepreunariale adaptée, The SpeechApp Company.
-Tout nos développements ont été structurés de façon a faciliter notre développement commercial.
-\smallskip{}
-Plus largement, nous espérons que le travail effectué pour le développement du projet SpeechApp aura une utilité plus large que celle du MIG, c'est pourquoi en l'absence de lancement commercial de notre part, nous laisserons les sources du projet, que nous estimons être de qualité et ce rapport libremment accessibles afin qu'ils puissent plus tard servir à autrui.
-
-\bigskip{}
-
+\paragraph{}
+Notre équipe de 13 étudiants en première année au sein de MINES Paristech s'est attachée pendant trois semaines à la conception complète 
+d'un logiciel de reconnaissance automatisée de la parole. La reconnaissance vocale est l'un des domaines d'avenir de l'informatique et ses 
+applications actuelles sont déjà nombreuses et variées (elles concernent entre autres domotique, défense ou encore dictionnaires en lignes).
+\paragraph{}
+Bien que la conception elle-même des algorithmes en Python et C++ (reconnaissance même des mots mais aussi traitement du signal en amont) fut le pilier de notre projet, 
+une attention particulière a été portée aux perspectives économiques, le but étant de produire un produit pleinement 
+commercialisable. Ce fut l'occasion de mettre à l'épreuve notre capacité à travailler en équipe : en effet, il a été nécessaire à la fois d'identifier et de
+répartir les tâches à effecuer, tout en s'assurant de la cohérence de tous nos pans de codes. Nous n'aurions pu y parvenir sans une bonne coordination,
+ni sans utiliser la plateforme Github, qui a permis un travail simultané et constructif de plusieurs codeurs sur un même sous-programme.
+\paragraph{}
+Notre produit final, nommé \emph{SpeechApp}, est une plateforme logicielle et web complète offrant deux services distincts : la création d'une base de données de mots à partir
+d'enregistrements audios successifs et l'identification d'un enregistrement par rapport à une base de données de mots. L'accent a été mis sur l'ergonomie : 
+l'utilisateur peut en seulement quelques clics reconnaître ou enregistrer un mot. De plus, notre interface est transportable sur la grande majorité des 
+supports informatiques (ordinateurs, smartphones, tablettes) et est peu consommatrice en ressources. En effet, nos algorithmes étant opérés sur un serveur physique 
+dédié, l'utilisateur n'a besoin que d'une faible capacité de calcul.
+\paragraph{}
+Derrière cette interface très facile d'accès se cachent cependant à la fois une théorie mathématique complexe (la théorie des modèles de Markov cachés) et une importante
+réflexion sur le traitement du signal sonore, de façon à se rapprocher du comportement de l'oreille humain. Le résultat est très encourageant : nous avons pu 
+créer notre propre \og dictionnaire \fg audio, dont chacun des mots est bien reconnu par le logiciel. Nous envisageons cependant une optimisation de nos algorithmes de 
+façon à identifier entre autres le sexe de l'auteur, son niveau de stress et la langue parlée.
+En seulement trois semaines de travail, nous sommes parvenus à construire les briques logicielles nécessaires au traitement du signal, aux calculs relatifs aux modèles de Markov cachés et à les rassembler. L'infrastructure du SpeechServer a été assise sur le c\oe ur algorithmique, et ses applications clientes, SpeechRecorder et le démonstrateur SpeechApp ont été bâties avec succès.
+\paragraph{}
+L'étude économique que nous avons réalisée montre que notre projet est viable : cette affirmation, certes hardie, s'appuie sur l'analyse de notre valeur ajoutée 
+comparée aux autres versions gratuites (par exemple Siri) ou payantes (Dragon) : nous offrons à l'utilisateur la possibilité de créer sa propre base de donnée
+spécialisée (ce qui implique qu'il pourra lui même la mettre en vente). De plus, tous nos développements ont été structurés de façon à faciliter notre développement commercial. Par conséquent, nous estimons que si notre produit venait à être commercialisé, 
+il serait à même de concurrencer les produits déjà existants, ou du moins de susciter l'intérêt de leurs concepteurs en vue d'un éventuel rachat. 
+\paragraph{}
+Plus largement, nous espérons que le travail effectué pour le développement du projet SpeechApp aura une utilité plus large que celle du MIG, c'est pourquoi en l'absence de lancement commercial de notre part, nous laisserons les sources du projet, que nous estimons être de qualité et ce rapport librement accessibles afin qu'ils puissent plus tard servir à autrui.
 N'oublions surtout pas que l'aventure de la réalisation d'une ébauche de The SpeechApp Company nous a permis a tous d'acquérir une culture minimale sur le développement d'un projet informatique, la gestion d'un groupe de travail de 13 personnes sans hiérarchie ainsi que sur la mise au point d'un modèle de développement commercial.

@@ -85,13 +85,15 @@
 	
 \paragraph{}
 	Cependant, contrairement au filtre passe-haut, le traitement du son enregistré ne se fait jamais sur la totalité du signal. Le signal est en fait découpé en
-	petits bouts appelés échantillons sur lesquels les transformations seront appliquées. Il sera ainsi représenté par une suite de données caractérisant chaque 
-	petit morceau du signal découpé. C'est ce découpage que la partie suivante présente.
+	petits bouts appelés échantillons sur lesquels les transformations seront appliquées. On obtient alors en guise de représentation du signal une suite de vecteurs 
+	caractérisant chacun un morceau de signal. C'est ce découpage que la partie suivante présente.
         \newpage
         
+        
 	\section{Echantillonnage, fen�trage}
-        	L'analyse du signal, pour acc�der au domaine fr�quentiel, s'affranchit de la d�pendance temporelle.  Le spectre 
-		obtenu ne correspond plus � une perception physique, mais � une moyenne temporelle du spectre per�u. Le proc�d� 
+        	L'analyse du signal repose sur l'étude des fréquences présentes à un instant donné ce qui ne peut se faire
+        	si l'on considère le signal dans sa totalité car l'on aurait alors une moyenne sur toute la piste des frèquences présentes
+        	et non un ensemble de données ponctuelles. Le proc�d� 
 		que nous avons mis en place pour pallier � ce probl�me est celui le plus couramment utilis� dans ce domaine: 
 		l'�chantillonnage. Nous avons d�coup� le signal � traiter en petites s�quences, qui, juxtapos�es, approximent une �chelle temporelle continue.
 \paragraph{}

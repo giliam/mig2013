@@ -1,9 +1,9 @@
 \chapter{Analyse, formatage du signal}
     		\section{Introduction}
-    		Comme nous l'avons mentionné, même le plus élémentaire des systèmes de reconnaissance vocale utilise des algorithmes au carrefour d'une grande diversité de disciplines: 
-    		reconnaissance de motifs statistiques, théorie de l'information, traitement du signal, analyse combinatoire, linguistique entre autres, 
-    		le dénominateur commun étant le traitement du signal qui transforme l'onde acoustique de la parole en une représentation paramétrique plus apte à l'analyse automatisée. Le principe est simple: garder les traits distinctifs du signal et éviter au maximum de tout ce qui pourra en parasiter l'étude. Cette conversion ne se fait donc pas sans perte d'information, et la délicatesse de la discipline tient en la sélection judicieuse des outils les plus adaptés afin de trouver le meilleur compromis entre perte d'information et représentation fidèle du signal.
-    		\section{Prérequis}
+    		Comme nous l'avons mentionnï¿½, mï¿½me le plus ï¿½lï¿½mentaire des systï¿½mes de reconnaissance vocale utilise des algorithmes au carrefour d'une grande diversitï¿½ de disciplines: 
+    		reconnaissance de motifs statistiques, thï¿½orie de l'information, traitement du signal, analyse combinatoire, linguistique entre autres, 
+    		le dï¿½nominateur commun ï¿½tant le traitement du signal qui transforme l'onde acoustique de la parole en une reprï¿½sentation paramï¿½trique plus apte ï¿½ l'analyse automatisï¿½e. Le principe est simple: garder les traits distinctifs du signal et ï¿½viter au maximum de tout ce qui pourra en parasiter l'ï¿½tude. Cette conversion ne se fait donc pas sans perte d'information, et la dï¿½licatesse de la discipline tient en la sï¿½lection judicieuse des outils les plus adaptï¿½s afin de trouver le meilleur compromis entre perte d'information et reprï¿½sentation fidï¿½le du signal.
+    		\section{Prï¿½requis}
     		\subsection{Qu'est-ce que le son ?}
 \begin{figure}[H]
 	    \begin{center}
@@ -11,11 +11,11 @@
 	    \end{center}
 	    \caption{Oreille humaine}
 \end{figure}
-	Le son est une onde mécanique se traduisant par une variation de la pression au cours du temps. Cette onde est caractérisée par différents facteurs comme son amplitude à chaque instant, qui est en d'autres termes la valeur de la dépression à cet instant, et par les fréquences qui la composent et qui changent au cours du temps.
-				\subsection{Comment le son est-il représenté dans l'ordinateur ?}
-				En se propageant, l'onde mécanique qu'est le son fait vibrer la membrane du micro. L'amplitude de la vibration dépend directement de l'amplitude du son. La position de la membrane est enregistrée à intervalles de temps réguliers définis par l'échantillonnage.
-				L'échantillonnage correspond au nombre de valeurs prélevées en une seconde (principe \cite{echantillonnage}). Par exemple un échantillonnage à $44 100$ Hz correspond à relever la position de la membrane $44 100$ fois par secondes. La valeur de la position de la membrane est alors enregistrée sous la forme d'un entier signé codé sur $n$ bits ($n$ valant généralement $8$,$16$,$32$ ou $64$). Plus $n$ est grand, plus la position de la membrane sera représentée de manière précise, et donc plus la qualité du son sera bonne. Grâce à l'échantillonnage et à la position de la membrane ($n$), on définit aisément le \textsl{bitrate}, qui correspond au débit d'information par seconde, de la façon suivante: \( bitrate = n * $é$chantillonnage. \)
-	Ce dont nous disposons donc pour analyser un signal, est la donnée de l'amplitude en fonction du temps la caractérisant.
+	Le son est une onde mï¿½canique se traduisant par une variation de la pression au cours du temps. Cette onde est caractï¿½risï¿½e par diffï¿½rents facteurs comme son amplitude ï¿½ chaque instant, qui est en d'autres termes la valeur de la dï¿½pression ï¿½ cet instant, et par les frï¿½quences qui la composent et qui changent au cours du temps.
+				\subsection{Comment le son est-il reprï¿½sentï¿½ dans l'ordinateur ?}
+				En se propageant, l'onde mï¿½canique qu'est le son fait vibrer la membrane du micro. L'amplitude de la vibration dï¿½pend directement de l'amplitude du son. La position de la membrane est enregistrï¿½e ï¿½ intervalles de temps rï¿½guliers dï¿½finis par l'ï¿½chantillonnage.
+				L'ï¿½chantillonnage correspond au nombre de valeurs prï¿½levï¿½es en une seconde (principe \cite{echantillonnage}). Par exemple un ï¿½chantillonnage ï¿½ $44 100$ Hz correspond ï¿½ relever la position de la membrane $44 100$ fois par secondes. La valeur de la position de la membrane est alors enregistrï¿½e sous la forme d'un entier signï¿½ codï¿½ sur $n$ bits ($n$ valant gï¿½nï¿½ralement $8$,$16$,$32$ ou $64$). Plus $n$ est grand, plus la position de la membrane sera reprï¿½sentï¿½e de maniï¿½re prï¿½cise, et donc plus la qualitï¿½ du son sera bonne. Grï¿½ce ï¿½ l'ï¿½chantillonnage et ï¿½ la position de la membrane ($n$), on dï¿½finit aisï¿½ment le \textsl{bitrate}, qui correspond au dï¿½bit d'information par seconde, de la faï¿½on suivante: \( bitrate = n * $ï¿½$chantillonnage. \)
+	Ce dont nous disposons donc pour analyser un signal, est la donnï¿½e de l'amplitude en fonction du temps la caractï¿½risant.
 	
 \begin{figure}[H]
 	\begin{center}
@@ -27,156 +27,164 @@
 \newpage	
 \section{Enregistrement, recadrage, filtrage HF}
     \subsection{Synchronisation}
-	Afin de synchroniser le début des enregistrements d'un mot, et de leur donner la même durée, nous avons eu l'idée de détecter les silences avant et après le mot pour les couper. 
-	Le signal est lissé à l'aide d'une moyenne sur plusieurs échantillons pour que les fluctuations inhérentes à l'enregistrement ne gênent pas notre fonction. 
-	On détecte alors le moment où le signal (en valeur absolue) dépasse pour la première fois une valeur seuil et celui à partir duquel le signal ne dépasse plus celle-ci. 
-	On sait alors où couper le signal d'origine, en élargissant légèrement la coupe afin d'éviter de supprimer des consonnes peu sonores. 
-	Cela permet en plus d'afficher un message d'erreur suspectant un enregistrement ayant commencé trop tard ou fini trop tôt.
-	Deux problèmes se posent : en pratique, un bruit trop important perturbe le signal et le mot n'est plus détectable par l'amplitude des oscillations. 
-	Toutefois, pour l'enregistrement de notre base de données, une pièce calme et un micro de bonne qualité nous ont permis un découpage satisfaisant, 
-	ce qui ne résout pas définitivement le problème, l'utilisateur ne pouvant pas toujours se placer dans ces conditions, le signal est traité par un filtre anti-bruit.
+	Afin de synchroniser le dï¿½but des enregistrements d'un mot, et de leur donner la mï¿½me durï¿½e, nous avons eu l'idï¿½e de dï¿½tecter les silences avant et aprï¿½s le mot pour les couper. 
+	Le signal est lissï¿½ ï¿½ l'aide d'une moyenne sur plusieurs ï¿½chantillons pour que les fluctuations inhï¿½rentes ï¿½ l'enregistrement ne gï¿½nent pas notre fonction. 
+	On dï¿½tecte alors le moment oï¿½ le signal (en valeur absolue) dï¿½passe pour la premiï¿½re fois une valeur seuil et celui ï¿½ partir duquel le signal ne dï¿½passe plus celle-ci. 
+	On sait alors oï¿½ couper le signal d'origine, en ï¿½largissant lï¿½gï¿½rement la coupe afin d'ï¿½viter de supprimer des consonnes peu sonores. 
+	Cela permet en plus d'afficher un message d'erreur suspectant un enregistrement ayant commencï¿½ trop tard ou fini trop tï¿½t.
+	Deux problï¿½mes se posent : en pratique, un bruit trop important perturbe le signal et le mot n'est plus dï¿½tectable par l'amplitude des oscillations. 
+	Toutefois, pour l'enregistrement de notre base de donnï¿½es, une piï¿½ce calme et un micro de bonne qualitï¿½ nous ont permis un dï¿½coupage satisfaisant, 
+	ce qui ne rï¿½sout pas dï¿½finitivement le problï¿½me, l'utilisateur ne pouvant pas toujours se placer dans ces conditions, le signal est traitï¿½ par un filtre anti-bruit.
 \begin{figure}[H]
     \begin{center}
 	    \includegraphics[width=17cm]{Images/synchro.png} 
     \end{center}
-    \caption{Ensemble du son enregistré, la partie nous intéressant (le mot) est encadrée en rouge}
+    \caption{Ensemble du son enregistrï¿½, la partie nous intï¿½ressant (le mot) est encadrï¿½e en rouge}
 \end{figure}
 \paragraph{}
-	Ce filtre consiste en l'utilisation de bibliothèques, SoX et ffmpeg(\cite{noisereduction} et \cite{sox}), qui permettent par l'étude d'un court laps de temps de bruit de soustraire le bruit de l'enregistrement. 
-	Nous n'avons pas cherché à traiter nous-même le bruit car il s'agit d'un problème complètement à part et qui ne demande pas les mêmes compétences que le traitement du signal effectué jusque là.
+	Ce filtre consiste en l'utilisation de bibliothï¿½ques, SoX et ffmpeg(\cite{noisereduction} et \cite{sox}), qui permettent par l'ï¿½tude d'un court laps de temps de bruit de soustraire le bruit de l'enregistrement. 
+	Nous n'avons pas cherchï¿½ ï¿½ traiter nous-mï¿½me le bruit car il s'agit d'un problï¿½me complï¿½tement ï¿½ part et qui ne demande pas les mï¿½mes compï¿½tences que le traitement du signal effectuï¿½ jusque lï¿½.
 \paragraph{}
-	De plus, il a fallu déterminer la valeur de nos constantes de découpe (coefficient de lissage, coefficient de coupe, intervalle de temps de sécurité), 
-	qui dépendent bien sûr les unes des autres. Ceci a été fait de manière empirique sur plusieurs enregistrements de mots différents, permettant une découpe automatique la plus satisfaisante possible pour l'ensemble des mots.
+	De plus, il a fallu dï¿½terminer la valeur de nos constantes de dï¿½coupe (coefficient de lissage, coefficient de coupe, intervalle de temps de sï¿½curitï¿½), 
+	qui dï¿½pendent bien sï¿½r les unes des autres. Ceci a ï¿½tï¿½ fait de maniï¿½re empirique sur plusieurs enregistrements de mots diffï¿½rents, permettant une dï¿½coupe automatique la plus satisfaisante possible pour l'ensemble des mots.
     \subsection{Filtrage passe-haut}
 \paragraph{}
-	Les performances de tout système de reconnaissances dépendent fortement de la variabilité 
-	des données (locuteur, environnement, bruit, réverbération, ...). Plus ces données sont variables, 
-	plus le taux d'erreur sera grand et un système de reconnaissance qui se veut être utilisable dans la vie de tous les jours: 
-	(voiture, endroits bruyants) ; se doit d'y remédier. Ces effets se font particulièrement sentir dans les basses fréquences, 
-	c'est pourquoi le conditionnement du signal en vue de son étude comprend immanquablement un filtre passe haut  
-	c'est-à-dire une accentuation de l'amplitude associée aux hautes fréquences et une diminution des basses fréquences. 
-	C'est le même principe qui est utilisé dans les égaliseurs des lecteurs de musique d'aujourd'hui qui proposent d'augmenter 
-	les basses ou les aigus. Les filtres passe-haut améliorent significativement les résultats de reconnaissance comme en 
-	témoignent les expériences de H.G. Hirsch P. Meyer et H.W. Ruehl dans leur papier\cite{highpass}.\\
-	Utiliser un filtre passe-haut présente comme avantage de ne pas nécessiter de procéder au préalable 
-	à une reconnaissance de silence contrairement aux techniques de réduction du bruit et de soustraction spectrale.
+	Les performances de tout systï¿½me de reconnaissances dï¿½pendent fortement de la variabilitï¿½ 
+	des donnï¿½es (locuteur, environnement, bruit, rï¿½verbï¿½ration, ...). Plus ces donnï¿½es sont variables, 
+	plus le taux d'erreur sera grand et un systï¿½me de reconnaissance qui se veut ï¿½tre utilisable dans la vie de tous les jours: 
+	(voiture, endroits bruyants) ; se doit d'y remï¿½dier. Ces effets se font particuliï¿½rement sentir dans les basses frï¿½quences, 
+	c'est pourquoi le conditionnement du signal en vue de son ï¿½tude comprend immanquablement un filtre passe haut  
+	c'est-ï¿½-dire une accentuation de l'amplitude associï¿½e aux hautes frï¿½quences et une diminution des basses frï¿½quences. 
+	C'est le mï¿½me principe qui est utilisï¿½ dans les ï¿½galiseurs des lecteurs de musique d'aujourd'hui qui proposent d'augmenter 
+	les basses ou les aigus. Les filtres passe-haut amï¿½liorent significativement les rï¿½sultats de reconnaissance comme en 
+	tï¿½moignent les expï¿½riences de H.G. Hirsch P. Meyer et H.W. Ruehl dans leur papier\cite{highpass}.\\
+	Utiliser un filtre passe-haut prï¿½sente comme avantage de ne pas nï¿½cessiter de procï¿½der au prï¿½alable 
+	ï¿½ une reconnaissance de silence contrairement aux techniques de rï¿½duction du bruit et de soustraction spectrale.
 \begin{figure}[H]
 	    \begin{center}
 		    \includegraphics[width=15cm]{Images/passehautavant.png} 
 	    \end{center}
-	    \caption{Exemple d'un fichier son (représentant \og Cinq \fg) \textbf{avant} application du filtre}
+	    \caption{Exemple d'un fichier son (reprï¿½sentant \og Cinq \fg) \textbf{avant} application du filtre}
 \end{figure}
 \begin{figure}[H]
 	    \begin{center}
 		    \includegraphics[width=15cm]{Images/passehautapres.png} 
 	    \end{center}
-	    \caption{Exemple du fichier son \textbf{après} application du filtre}
+	    \caption{Exemple du fichier son \textbf{aprï¿½s} application du filtre}
 \end{figure}
 \paragraph{}
-	%Nous effectuons ce filtrage selon une méthode de résolution basée sur les coefficients sceptraux de mel\cite{melbe}.
-	Le signal étant caractérisé par une suite $(x_n)$ 
-	d'amplitudes, comme présenté dans les prérequis, où $n$ représente un instant de la musique déterminé par l'échantillonnage; 
-	on opère linéairement la transformation suivante sur le signal : $y_0 = x_0$ et $y_n = x_n - 0.95*x_{(n-1)}$  pour $n > 0$, 
-	où $y$ représente le signal de sortie après transformation.
+	%Nous effectuons ce filtrage selon une mï¿½thode de rï¿½solution basï¿½e sur les coefficients sceptraux de mel\cite{melbe}.
+	Le signal ï¿½tant caractï¿½risï¿½ par une suite $(x_n)$ 
+	d'amplitudes, comme prï¿½sentï¿½ dans les prï¿½requis, oï¿½ $n$ reprï¿½sente un instant de la musique dï¿½terminï¿½ par l'ï¿½chantillonnage; 
+	on opï¿½re linï¿½airement la transformation suivante sur le signal : $y_0 = x_0$ et $y_n = x_n - 0.95*x_{(n-1)}$  pour $n > 0$, 
+	oï¿½ $y$ reprï¿½sente le signal de sortie aprï¿½s transformation.
 \paragraph{}
-	Cette opération consiste effectivement en un filtre passe-haut, en effet une telle formule part du principe que 95\% d'un 
-	échantillon a pour origine l'échantillon précédent. Ce constat étant plus pertinent pour les hautes fréquences (car les 
-	pics de l'onde associée sont plus rapprochés et engendrent donc un pic d'amplitude plus régulièrement), l'influence des basses fréquences est donc discriminée. 
+	Cette opï¿½ration consiste effectivement en un filtre passe-haut, en effet une telle formule part du principe que 95\% d'un 
+	ï¿½chantillon a pour origine l'ï¿½chantillon prï¿½cï¿½dent. Ce constat ï¿½tant plus pertinent pour les hautes frï¿½quences (car les 
+	pics de l'onde associï¿½e sont plus rapprochï¿½s et engendrent donc un pic d'amplitude plus rï¿½guliï¿½rement), l'influence des basses frï¿½quences est donc discriminï¿½e. 
+	
+\paragraph{}
+	Cependant, contrairement au filtre passe-haut, le traitement du son enregistrÃ© ne se fait jamais sur la totalitÃ© du signal. Le signal est en fait dÃ©coupÃ© en
+	petits bouts appelÃ©s Ã©chantillons sur lesquels les transformations seront appliquÃ©es. On obtient alors en guise de reprÃ©sentation du signal une suite de vecteurs 
+	caractÃ©risant chacun un morceau de signal. C'est ce dÃ©coupage que la partie suivante prÃ©sente.
         \newpage
-	\section{Echantillonnage, fenêtrage}
-        	L'analyse du signal, pour accéder au domaine fréquentiel, s'affranchit de la dépendance temporelle.  Le spectre 
-		obtenu ne correspond plus à une perception physique, mais à une moyenne temporelle du spectre perçu. Le procédé 
-		que nous avons mis en place pour pallier à ce problème est celui le plus couramment utilisé dans ce domaine: 
-		l'échantillonnage. Nous avons découpé le signal à traiter en petites séquences, qui, juxtaposées, approximent une échelle temporelle continue.
+        
+        
+	\section{Echantillonnage, fenï¿½trage}
+        	L'analyse du signal repose sur l'Ã©tude des frÃ©quences prÃ©sentes Ã  un instant donnÃ© ce qui ne peut se faire
+        	si l'on considÃ¨re le signal dans sa totalitÃ© car l'on aurait alors une moyenne sur toute la piste des frÃ¨quences prÃ©sentes
+        	et non un ensemble de donnÃ©es ponctuelles. Le procï¿½dï¿½ 
+		que nous avons mis en place pour pallier ï¿½ ce problï¿½me est celui le plus couramment utilisï¿½ dans ce domaine: 
+		l'ï¿½chantillonnage. Nous avons dï¿½coupï¿½ le signal ï¿½ traiter en petites sï¿½quences, qui, juxtaposï¿½es, approximent une ï¿½chelle temporelle continue.
 \paragraph{}
-La taille des échantillons est un paramètre déterminant sur la qualité et la précision de l'analyse combinée finale. 
-	Une fois calculé, le spectre ne reflète plus du tout de dépendance temporelle. La durée d'un échantillon correspond 
-	ainsi à la durée minimale d'un événement sonore détectable. Il faut donc réduire cette durée autant que possible, 
-	pour obtenir une discrétisation temporelle le plus proche possible de la continuité. Il est en revanche nécessaire 
-	de conserver un certain nombre de points par échantillon. En effet, le spectre obtenu par l'analyse sera plus précis 
-	et proche de la réalité fréquentielle si le nombre de points du signal analysé est important. La meilleure technique 
-	pour contourner ce compromis est d'augmenter la fréquence d'échantillonnage. 
-	On obtient alors un nombre important de points qui s'étirent peu dans le temps.
+La taille des ï¿½chantillons est un paramï¿½tre dï¿½terminant sur la qualitï¿½ et la prï¿½cision de l'analyse combinï¿½e finale. 
+	Une fois calculï¿½, le spectre ne reflï¿½te plus du tout de dï¿½pendance temporelle. La durï¿½e d'un ï¿½chantillon correspond 
+	ainsi ï¿½ la durï¿½e minimale d'un ï¿½vï¿½nement sonore dï¿½tectable. Il faut donc rï¿½duire cette durï¿½e autant que possible, 
+	pour obtenir une discrï¿½tisation temporelle le plus proche possible de la continuitï¿½. Il est en revanche nï¿½cessaire 
+	de conserver un certain nombre de points par ï¿½chantillon. En effet, le spectre obtenu par l'analyse sera plus prï¿½cis 
+	et proche de la rï¿½alitï¿½ frï¿½quentielle si le nombre de points du signal analysï¿½ est important. La meilleure technique 
+	pour contourner ce compromis est d'augmenter la frï¿½quence d'ï¿½chantillonnage. 
+	On obtient alors un nombre important de points qui s'ï¿½tirent peu dans le temps.
 \paragraph{}
-  Le théorème de Nyquist-Shannon\cite{nyquistshannon} assure qu'un signal reproduit fidèlement toutes les fréquences inférieures à la moitié 
-	de sa fréquence d'échantillonnage. Une fréquence d'échantillonnage de 44100Hz (parfois 48000Hz) est donc suffisante 
-	pour couvrir la totalité d'une oreille humaine en bonne santé. L'utilisation la plus courante de l'enregistrement 
-	audio étant (à notre niveau) la restitution, le matériel et le logiciel à notre disposition se cantonnaient à ces 
-	fréquences d'échantillonnage. Nous avons ainsi dû trouver un compromis entre résolution fréquentielle et précision 
-	temporelle. L'hypothèse principale a été que les évènements sonores et variations s'étalant sur une durée inférieure 
-	à 20 millisecondes n'étaient pas signifiants pour notre analyse. Le nombre de points a été par cette donnée, couplée 
-	à notre fréquence d'échantillonnage lors des enregistrements, à 44100Hz.
+  Le thï¿½orï¿½me de Nyquist-Shannon\cite{nyquistshannon} assure qu'un signal reproduit fidï¿½lement toutes les frï¿½quences infï¿½rieures ï¿½ la moitiï¿½ 
+	de sa frï¿½quence d'ï¿½chantillonnage. Une frï¿½quence d'ï¿½chantillonnage de 44100Hz (parfois 48000Hz) est donc suffisante 
+	pour couvrir la totalitï¿½ d'une oreille humaine en bonne santï¿½. L'utilisation la plus courante de l'enregistrement 
+	audio ï¿½tant (ï¿½ notre niveau) la restitution, le matï¿½riel et le logiciel ï¿½ notre disposition se cantonnaient ï¿½ ces 
+	frï¿½quences d'ï¿½chantillonnage. Nous avons ainsi dï¿½ trouver un compromis entre rï¿½solution frï¿½quentielle et prï¿½cision 
+	temporelle. L'hypothï¿½se principale a ï¿½tï¿½ que les ï¿½vï¿½nements sonores et variations s'ï¿½talant sur une durï¿½e infï¿½rieure 
+	ï¿½ 20 millisecondes n'ï¿½taient pas signifiants pour notre analyse. Le nombre de points a ï¿½tï¿½ par cette donnï¿½e, couplï¿½e 
+	ï¿½ notre frï¿½quence d'ï¿½chantillonnage lors des enregistrements, ï¿½ 44100Hz.
 \begin{figure}[H]
 	    \begin{center}
 		    \includegraphics[width=12cm]{Images/fenetrenormale.png} 
 	    \end{center}
-	    \caption{Principe normal du fenêtrage}
+	    \caption{Principe normal du fenï¿½trage}
 \end{figure}
 \begin{figure}[H]
 	    \begin{center}
 		    \includegraphics[width=12cm]{Images/fenetrehann.png} 
 	    \end{center}
-	    \caption{Fenêtre de Hann évitant les discontinuités}
+	    \caption{Fenï¿½tre de Hann ï¿½vitant les discontinuitï¿½s}
 \end{figure}
 \paragraph{}
-	L'échantillonnage introduit par ailleurs des discontinuités aux bornes des morceaux, qui ne sont pas présentes 
-	dans le signal original. Le fenêtrage permet de réduire l'effet de ces discontinuités virtuelles. 
-	On découpe le signal en plus de morceaux, tout en conservant la même durée pour chaque échantillon. 
-	On obtient des "fenêtres", qui se recoupent les unes les autres. 
-	Pour que la même partie du signal ne soit pas retraitée à l'identique, 
-	on applique une fonction - dite fonction de fenêtrage, ou dans notre cas, fonction de Hann - 
-	qui diminue l'importance des valeurs situées aux extrémités de la fenêtre. 
-	Ce procédé a le désavantage de démultiplier le temps de calcul des étapes suivantes de 
-	l'algorithme (le nombre d'échantillons est bien plus important pour un signal de même longueur). 
-	Certaines applications (notamment pour les téléphones portables) devant réduire la complexité au 
-	maximum en font donc abstraction. Notre reconnaissance privilégiant plutôt la précision, et 
+	L'ï¿½chantillonnage introduit par ailleurs des discontinuitï¿½s aux bornes des morceaux, qui ne sont pas prï¿½sentes 
+	dans le signal original. Le fenï¿½trage permet de rï¿½duire l'effet de ces discontinuitï¿½s virtuelles. 
+	On dï¿½coupe le signal en plus de morceaux, tout en conservant la mï¿½me durï¿½e pour chaque ï¿½chantillon. 
+	On obtient des "fenï¿½tres", qui se recoupent les unes les autres. 
+	Pour que la mï¿½me partie du signal ne soit pas retraitï¿½e ï¿½ l'identique, 
+	on applique une fonction - dite fonction de fenï¿½trage, ou dans notre cas, fonction de Hann - 
+	qui diminue l'importance des valeurs situï¿½es aux extrï¿½mitï¿½s de la fenï¿½tre. 
+	Ce procï¿½dï¿½ a le dï¿½savantage de dï¿½multiplier le temps de calcul des ï¿½tapes suivantes de 
+	l'algorithme (le nombre d'ï¿½chantillons est bien plus important pour un signal de mï¿½me longueur). 
+	Certaines applications (notamment pour les tï¿½lï¿½phones portables) devant rï¿½duire la complexitï¿½ au 
+	maximum en font donc abstraction. Notre reconnaissance privilï¿½giant plutï¿½t la prï¿½cision, et 
 	disposant d'une puissance de calcul largement suffisante pour conserver un rendu de l'ordre de 
-	la seconde, nous avons opté pour un fenêtrage important (recouvrement total d'un échantillon par ses voisins), 
+	la seconde, nous avons optï¿½ pour un fenï¿½trage important (recouvrement total d'un ï¿½chantillon par ses voisins), 
 	au prix d'une multiplication du temps de calcul par deux.
 
-        	\section{Transformée de Fourier}
+        	\section{Transformï¿½e de Fourier}
         	\paragraph{}
-        	Le domaine temporel est parfait pour l'acquisition et la restitution de l'audio, car il représente fidèlement la vibration 
-        	de la membrane d'un micro ou d'une enceinte. L'oreille humaine base sa perception et sa reconnaissance sur le domaine fréquentiel. 
-        	Il faut donc passer de l'un à l'autre, et ce grâce à l'utilisation de la transformation de Fourier. L'algorithme "intuitif" 
-        	de calcul ayant, pour trouver le spectre d'un unique échantillon, une complexité en $O(N^2)$  (avec N le nombre de points par 
-        	échantillons), il est nécessaire de trouver d'autres méthodes si l'on envisage des applications proches du temps réel.  
-        	Heureusement, plusieurs approches se sont ouvertes à nous pour l'optimisation du temps de calcul.
+        	Le domaine temporel est parfait pour l'acquisition et la restitution de l'audio, car il reprï¿½sente fidï¿½lement la vibration 
+        	de la membrane d'un micro ou d'une enceinte. L'oreille humaine base sa perception et sa reconnaissance sur le domaine frï¿½quentiel. 
+        	Il faut donc passer de l'un ï¿½ l'autre, et ce grï¿½ce ï¿½ l'utilisation de la transformation de Fourier. L'algorithme "intuitif" 
+        	de calcul ayant, pour trouver le spectre d'un unique ï¿½chantillon, une complexitï¿½ en $O(N^2)$  (avec N le nombre de points par 
+        	ï¿½chantillons), il est nï¿½cessaire de trouver d'autres mï¿½thodes si l'on envisage des applications proches du temps rï¿½el.  
+        	Heureusement, plusieurs approches se sont ouvertes ï¿½ nous pour l'optimisation du temps de calcul.
         	\begin{figure}[H]
 				\begin{center}
 					\includegraphics[width=15cm]{Images/tf2.png} 
 				\end{center}
-				\caption{Exemple de passage du domaine temporel (somme de cosinus) au domaine fréquentiel (pics pour les fréquences fondamentales)}
+				\caption{Exemple de passage du domaine temporel (somme de cosinus) au domaine frï¿½quentiel (pics pour les frï¿½quences fondamentales)}
 		\end{figure}
 		\paragraph{}
-	Le calcul de la transformée de Fourier est incontournable en analyse du signal, et il a donné lieu à de nombreuses études. 
-	Des algorithmes optimisés pour diverses utilisations sont disponibles, et notre travail a surtout été d'identifier lequel s'adapterait 
-	à notre projet. La fonction que nous avons implémentée est l'algorithme de Cooley-Tukey, qui permet de réduire la complexité à $O(Nlog2(N))$, 
-	et qui repose sur le fonctionnement diviser pour régner.  Le principe est dans un premier temps de diviser le signal 
-	à analyser en sous-tableaux de mêmes tailles, de manière croisée (par exemple deux sous-tableaux, pour les indices 
-	pairs et impairs). On calcule ensuite les transformées de Fourier de ces sous-tableaux, en opérant récursivement, 
-	jusqu'à obtenir des sous-tableaux dont la taille est un entier. On calcule leur transformée de Fourier, et on recombine 
-	les résultats obtenus. Cette méthode a l'avantage de pouvoir être couplée à d'autres algorithmes pour calculer les 
+	Le calcul de la transformï¿½e de Fourier est incontournable en analyse du signal, et il a donnï¿½ lieu ï¿½ de nombreuses ï¿½tudes. 
+	Des algorithmes optimisï¿½s pour diverses utilisations sont disponibles, et notre travail a surtout ï¿½tï¿½ d'identifier lequel s'adapterait 
+	ï¿½ notre projet. La fonction que nous avons implï¿½mentï¿½e est l'algorithme de Cooley-Tukey, qui permet de rï¿½duire la complexitï¿½ ï¿½ $O(Nlog2(N))$, 
+	et qui repose sur le fonctionnement diviser pour rï¿½gner.  Le principe est dans un premier temps de diviser le signal 
+	ï¿½ analyser en sous-tableaux de mï¿½mes tailles, de maniï¿½re croisï¿½e (par exemple deux sous-tableaux, pour les indices 
+	pairs et impairs). On calcule ensuite les transformï¿½es de Fourier de ces sous-tableaux, en opï¿½rant rï¿½cursivement, 
+	jusqu'ï¿½ obtenir des sous-tableaux dont la taille est un entier. On calcule leur transformï¿½e de Fourier, et on recombine 
+	les rï¿½sultats obtenus. Cette mï¿½thode a l'avantage de pouvoir ï¿½tre couplï¿½e ï¿½ d'autres algorithmes pour calculer les 
 	spectres des sous-tableaux dont la taille n'est pas un produit d'entier. Le meilleur cas est alors instinctivement un 
-	signal initial dont la longueur est une puissance de deux. Il est même intéressant d'utiliser la technique du bourrage 
-	de zéros (zero padding), qui consiste à rajouter des zéros à la suite du signal pour atteindre la puissance de deux la 
+	signal initial dont la longueur est une puissance de deux. Il est mï¿½me intï¿½ressant d'utiliser la technique du bourrage 
+	de zï¿½ros (zero padding), qui consiste ï¿½ rajouter des zï¿½ros ï¿½ la suite du signal pour atteindre la puissance de deux la 
 	plus proche. Cela ne change pas le spectre obtenu et augmente les performances. Dans notre cas, nous avons eu 
-	la possibilité d'ajuster la taille des échantillons. Nous avons ainsi choisi des échantillons de 1024 points, ce qui 
-	correspond, avec notre fréquence d'échantillonnage de 44100Hz, à une durée d'environ 23ms. Seul le dernier échantillon du signal est complété par des zéros.
+	la possibilitï¿½ d'ajuster la taille des ï¿½chantillons. Nous avons ainsi choisi des ï¿½chantillons de 1024 points, ce qui 
+	correspond, avec notre frï¿½quence d'ï¿½chantillonnage de 44100Hz, ï¿½ une durï¿½e d'environ 23ms. Seul le dernier ï¿½chantillon du signal est complï¿½tï¿½ par des zï¿½ros.
 \paragraph{}
-De plus, comme les données sur lesquelles nous travaillons sont réelles, et que les calculs de la Transformée de Fourier Rapide (Fast Fourier Transform, ou FFT) 
-s'effectuent avec des complexes, la première idée d'optimisation que nous avons eue est de calculer le spectre de deux échantillons à la fois, en créant 
-des complexes à partir des deux signaux réels (l'un représente la partie réelle, l'autre imaginaire). On obtient rapidement les coefficients 
-respectifs des deux échantillons par une simple opération sur le spectre résultant. Cependant, cette méthode ne divise le temps de calcul que par deux, et notre 
-FFT demeure trop lente (plusieurs secondes pour un signal d'environ une seconde), surtout au regard du temps de calcul total de la reconnaissance en elle-même. 
-La deuxième optimisation que nous avons donc appliquée est de passer le code de Python à C++, langage compilé beaucoup plus rapide. De plus, nous avons repensé les
-fonctions, de façon à éviter les appels récursifs. En effet, le travail sur des tableaux force une recopie à chaque appel de fonction, ce qui démultiplie la complexité du calcul. 
-Le résultat est un algorithme qui s'effectue en moins d'une seconde, et qui peut s'inscrire dans un contexte d'exploitation en temps réel.
+De plus, comme les donnï¿½es sur lesquelles nous travaillons sont rï¿½elles, et que les calculs de la Transformï¿½e de Fourier Rapide (Fast Fourier Transform, ou FFT) 
+s'effectuent avec des complexes, la premiï¿½re idï¿½e d'optimisation que nous avons eue est de calculer le spectre de deux ï¿½chantillons ï¿½ la fois, en crï¿½ant 
+des complexes ï¿½ partir des deux signaux rï¿½els (l'un reprï¿½sente la partie rï¿½elle, l'autre imaginaire). On obtient rapidement les coefficients 
+respectifs des deux ï¿½chantillons par une simple opï¿½ration sur le spectre rï¿½sultant. Cependant, cette mï¿½thode ne divise le temps de calcul que par deux, et notre 
+FFT demeure trop lente (plusieurs secondes pour un signal d'environ une seconde), surtout au regard du temps de calcul total de la reconnaissance en elle-mï¿½me. 
+La deuxiï¿½me optimisation que nous avons donc appliquï¿½e est de passer le code de Python ï¿½ C++, langage compilï¿½ beaucoup plus rapide. De plus, nous avons repensï¿½ les
+fonctions, de faï¿½on ï¿½ ï¿½viter les appels rï¿½cursifs. En effet, le travail sur des tableaux force une recopie ï¿½ chaque appel de fonction, ce qui dï¿½multiplie la complexitï¿½ du calcul. 
+Le rï¿½sultat est un algorithme qui s'effectue en moins d'une seconde, et qui peut s'inscrire dans un contexte d'exploitation en temps rï¿½el.
 
 
         	\section{Simulation du comportement de l'oreille humaine}
         	\paragraph{}
-        	Des études de psycho acoustique ont montré que l'oreille humaine ne percevait pas les fréquences selon une échelle linéaire\cite{melproof}. Il a donc été utile de définir une nouvelle échelle plus subjective : à chaque fréquence $f$, exprimée en Hertz, on fait correspondre une nouvelle fréquence selon une fonction censée représenter le comportement de l'oreille humaine. Par convention, la fréquence de $1 000$ Hz correspond à $1 000$ mel. Les autres fréquences mel sont ajustées de façon à ce qu'une augmentation de la fréquence mel corresponde à la même augmentation de la tonalité perçue. Cela conduit à la fonction $mel$ suivante: \[mel(f) = 2595*log(1+f/700)\]
+        	Des ï¿½tudes de psycho acoustique ont montrï¿½ que l'oreille humaine ne percevait pas les frï¿½quences selon une ï¿½chelle linï¿½aire\cite{melproof}. Il a donc ï¿½tï¿½ utile de dï¿½finir une nouvelle ï¿½chelle plus subjective : ï¿½ chaque frï¿½quence $f$, exprimï¿½e en Hertz, on fait correspondre une nouvelle frï¿½quence selon une fonction censï¿½e reprï¿½senter le comportement de l'oreille humaine. Par convention, la frï¿½quence de $1 000$ Hz correspond ï¿½ $1 000$ mel. Les autres frï¿½quences mel sont ajustï¿½es de faï¿½on ï¿½ ce qu'une augmentation de la frï¿½quence mel corresponde ï¿½ la mï¿½me augmentation de la tonalitï¿½ perï¿½ue. Cela conduit ï¿½ la fonction $mel$ suivante: \[mel(f) = 2595*log(1+f/700)\]
         	
         	\begin{figure}[H]
 						\begin{center}
@@ -185,10 +193,10 @@ Le résultat est un algorithme qui s'effectue en moins d'une seconde, et qui peut
 						\caption{Graphe de conversion}
 			\end{figure}
         	\paragraph{}
-        	On remarque que le poids des hautes fréquences (supérieures à $1 000$ Hz) est diminué tandis que le poids des basses fréquences (inférieur à $1 000$ Hz) est augmenté.
+        	On remarque que le poids des hautes frï¿½quences (supï¿½rieures ï¿½ $1 000$ Hz) est diminuï¿½ tandis que le poids des basses frï¿½quences (infï¿½rieur ï¿½ $1 000$ Hz) est augmentï¿½.
 \paragraph{}
-Il est préférable d'employer cette échelle de fréquence dans l'algorithme de reconnaissance: ce dernier doit en effet différencier plusieurs mots selon la perception humaine, c'est-à-dire en simulant le comportement de l'oreille humaine.
-		\section{Transformée inverse ou Décomposition en cosinus inverse}
+Il est prï¿½fï¿½rable d'employer cette ï¿½chelle de frï¿½quence dans l'algorithme de reconnaissance: ce dernier doit en effet diffï¿½rencier plusieurs mots selon la perception humaine, c'est-ï¿½-dire en simulant le comportement de l'oreille humaine.
+		\section{Transformï¿½e inverse ou Dï¿½composition en cosinus inverse}
 \begin{figure}[H]
 	\begin{center}
 		\includegraphics[width=10cm]{Images/DCTschema.png} 
@@ -196,31 +204,31 @@ Il est préférable d'employer cette échelle de fréquence dans l'algorithme de rec
 	\caption{Graphe de conversion}
 \end{figure}
 \paragraph{}
-	Dans les parties précédentes nous avons vu comment, à partir d'un extrait sonore échantillonné à 44100 Hz sur 16 bits, 
-	obtenir après transformée de Fourier et opérations sur le spectre, un tableau de 24 cases gradué en échelle Mel, 
-	représentant une fraction de l'extrait. Ce tableau exprimé ainsi en fréquences, pourrait a priori constituer une 
-	représentation satisfaisante de l'extrait sonore à l'instant considéré pour la suite de l'algorithme de reconnaissance, 
-	et servir à la comparaison avec le modèle au travers des chaînes de Markov cachées. Cependant ce n'est pas ce qui est fait, 
-	et l'on préfèrera une représentation en temporel de la fraction sonore considérée, ceci pour deux principales raisons.
+	Dans les parties prï¿½cï¿½dentes nous avons vu comment, ï¿½ partir d'un extrait sonore ï¿½chantillonnï¿½ ï¿½ 44100 Hz sur 16 bits, 
+	obtenir aprï¿½s transformï¿½e de Fourier et opï¿½rations sur le spectre, un tableau de 24 cases graduï¿½ en ï¿½chelle Mel, 
+	reprï¿½sentant une fraction de l'extrait. Ce tableau exprimï¿½ ainsi en frï¿½quences, pourrait a priori constituer une 
+	reprï¿½sentation satisfaisante de l'extrait sonore ï¿½ l'instant considï¿½rï¿½ pour la suite de l'algorithme de reconnaissance, 
+	et servir ï¿½ la comparaison avec le modï¿½le au travers des chaï¿½nes de Markov cachï¿½es. Cependant ce n'est pas ce qui est fait, 
+	et l'on prï¿½fï¿½rera une reprï¿½sentation en temporel de la fraction sonore considï¿½rï¿½e, ceci pour deux principales raisons.
 \begin{itemize}
-\item Opérer une transformation en cosinus inverse « décorrèle » les valeurs du tableau dans la mesure où dans une représentation 
-en fréquentiel, les valeurs associées aux hautes fréquences sont très fortement corrélées avec ce qui se passe dans les 
-basses fréquences. En effet, un signal sonore n'est jamais pur, c'est-à-dire contitué d'une seule fréquence, mais est un 
-amalgame de signaux purs de fréquences multiples de celles d'autres signaux purs.\\
-Le tableau qui sera traité par la suite grâce aux chaînes de Markov n'est plus constitué de 24 cases mais de 12 dont les 
-11 premières sont les premières cases du tableau obtenu après DCT. Si l'on tronquait le tableau avant d'opérer la DCT, on 
-ne conserverait que l'information associée aux graves ce qui constituerait une perte trop importante de données. 
-\item Ce retour au temporel se fait par la transformée en cosinus inverse. Il s'agit en terme simplistes du pendant réel de 
-	la transformée de Fourier inverse,  qui elle donne lieu à des coefficients complexes, lesquels dans le cadre d'une 
-	représentation temporelle n'ont que peu de sens. En termes plus mathématiques, la projection orthogonale du signal 
-	discret en fréquentiel ne se fait plus sur une base d'exponentielles complexes, mais de cosinus. 
+\item Opï¿½rer une transformation en cosinus inverse ï¿½ï¿½dï¿½corrï¿½leï¿½ï¿½ les valeurs du tableau dans la mesure oï¿½ dans une reprï¿½sentation 
+en frï¿½quentiel, les valeurs associï¿½es aux hautes frï¿½quences sont trï¿½s fortement corrï¿½lï¿½es avec ce qui se passe dans les 
+basses frï¿½quences. En effet, un signal sonore n'est jamais pur, c'est-ï¿½-dire contituï¿½ d'une seule frï¿½quence, mais est un 
+amalgame de signaux purs de frï¿½quences multiples de celles d'autres signaux purs.\\
+Le tableau qui sera traitï¿½ par la suite grï¿½ce aux chaï¿½nes de Markov n'est plus constituï¿½ de 24 cases mais de 12 dont les 
+11 premiï¿½res sont les premiï¿½res cases du tableau obtenu aprï¿½s DCT. Si l'on tronquait le tableau avant d'opï¿½rer la DCT, on 
+ne conserverait que l'information associï¿½e aux graves ce qui constituerait une perte trop importante de donnï¿½es. 
+\item Ce retour au temporel se fait par la transformï¿½e en cosinus inverse. Il s'agit en terme simplistes du pendant rï¿½el de 
+	la transformï¿½e de Fourier inverse,  qui elle donne lieu ï¿½ des coefficients complexes, lesquels dans le cadre d'une 
+	reprï¿½sentation temporelle n'ont que peu de sens. En termes plus mathï¿½matiques, la projection orthogonale du signal 
+	discret en frï¿½quentiel ne se fait plus sur une base d'exponentielles complexes, mais de cosinus. 
 \end{itemize}
 \paragraph{}
-	La DCT que nous avons utilisé, aussi connue sous le nom de DCTII se base sur la formule suivante : 
-	\[M[k] = \sum_{n=0}^{B-1}( X[n]\times cos(Pi\cdot k\cdot \frac{n+0.5}{B}) ) \times \sqrt[]{\frac{2}{B}}\] avec B=24, X le tableau en échelle Mel, 
-	et M le tableau de sortie échellonné en temporel. D'autres formules équivalentes de DCT existent mais la 
-	DCTII est la plus largement répandue et utilisée.
-\section{Schéma récapitulatif}
+	La DCT que nous avons utilisï¿½, aussi connue sous le nom de DCTII se base sur la formule suivanteï¿½: 
+	\[M[k] = \sum_{n=0}^{B-1}( X[n]\times cos(Pi\cdot k\cdot \frac{n+0.5}{B}) ) \times \sqrt[]{\frac{2}{B}}\] avec B=24, X le tableau en ï¿½chelle Mel, 
+	et M le tableau de sortie ï¿½chellonnï¿½ en temporel. D'autres formules ï¿½quivalentes de DCT existent mais la 
+	DCTII est la plus largement rï¿½pandue et utilisï¿½e.
+\section{Schï¿½ma rï¿½capitulatif}
 \begin{figure}[hb]
     \begin{center}
 	    \includegraphics[width=10cm]{Images/diagramme.png} 

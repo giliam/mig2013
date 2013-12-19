@@ -52,7 +52,7 @@ plusieurs secondes: dans ce cas, on se contente de tourner en rond
 Dans l'automate, la transition de l'état $i$ à $k$ représente la probabilité de passer de l'état $i$ à $k$, 
 c'est-à-dire la probabilité que le phonème n°$k$ vienne tout de suite après le phonème n°$i$.
 
-				\begin{figure}[hb]
+				\begin{figure}[H]
 						\begin{center}
 							\includegraphics[width=10cm]{Images/MMC2.png} 
 						\end{center}
@@ -106,3 +106,10 @@ Au départ nous n'avions qu'un seul locuteur pour faire la base de donnée des mot
 ce qui ne permettait de faire fonctionner le programme que pour un seul utilisateur : celui qui avait enregistré les mots. 
 Cependant nous avons enregistré plusieurs locuteurs, ce qui permet au programme de reconnaître plusieurs utilisateurs,
  même un utilisateur qui n'aurait pas encore enregistré de mot.
+ \section{Récapitulatif du principe de création du modèle de Markov caché}
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=10cm]{Images/mmcrecap.png} 
+	\end{center}
+	\caption{Exemple de deux phonèmes et de la probabilité de passer du phonème 1 au phonème 2}
+\end{figure}

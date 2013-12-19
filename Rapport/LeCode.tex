@@ -1,62 +1,31 @@
-%\definecolor{Rose}{rgb}{0.94,0,0.94}
-%\definecolor{Gris}{rgb}{0.63,0.63,0.63}
-%\definecolor{Bleu}{rgb}{0,0,0.63}
-%\definecolor{BleuDeux}{rgb}{0,0,1}
-%\definecolor{Vert}{rgb}{0,0.5,0}
-%
-%\newcommand{\SetCodeStyle}[1]{
-%	\ifthenelse{\equal{#1}{C++}}
-%	{
-%		\lstset{ %
-%		  language=C++,
-%		  keywordstyle=\color{Bleu},       % keyword style
-%		  commentstyle=\color{Gris},    % comment style
-%		  numberstyle=\tiny\color{Rose}, % the style that is used for the line-numbers
-%		  stringstyle=\color{BleuDeux},     % string literal style
-%		  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
-%		  breakatwhitespace=true,          % sets if automatic breaks should only happen at whitespace
-%		  breaklines=true,                 % sets automatic line breaking
-%		  frame=single,                    % adds a frame around the code
-%		  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
-%		  morekeywords={malloc, cDouble},           % if you want to add more keywords to the set
-%		  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
-%		  numbersep=5pt,                   % how far the line-numbers are from the code
-%		  tabsize=4,                       % sets default tabsize to 2 spaces
-%		}
-%	}
-%	{
-%		\lstset{ %
-%		  language=Python,
-%		  %literate={\{}{{\color{Rouge}{\{}}}1
-%       %                                   {\}}{{\color{Rouge}{\}}}}1
-%        %                                  {(}{{\color{Rouge}{(}}}1
-%         %                                 {)}{{\color{Rouge}{)}}}1
-%          %                                {>}{{\color{Rouge}{$>$}}}1
-%           %                               {=}{{\color{Rouge}{$=$}}}1
-%            %                              {;}{{\color{Rouge}{$;$}}}1, % Operateurs C++
-%		  keywordstyle=\color{Bleu},       % keyword style
-%		  commentstyle=\color{Vert},    % comment style
-%		  numberstyle=\tiny\color{Vert}, % the style that is used for the line-numbers
-%		  stringstyle=\color{Gris},     % string literal style
-%		  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
-%		  breakatwhitespace=true,          % sets if automatic breaks should only happen at whitespace
-%		  breaklines=true,                 % sets automatic line breaking
-%		  frame=single,                    % adds a frame around the code
-%		  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
-%		  morekeywords={as},           % if you want to add more keywords to the set
-%		  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
-%		  numbersep=5pt,                   % how far the line-numbers are from the code
-%		  tabsize=4,                       % sets default tabsize to 2 spaces
-%		}
-%	}
-%}
-
 \lstset
 {
 	numberstyle=\footnotesize,
 	basicstyle=\ttfamily\footnotesize,
 	numbers=left,
-	stepnumber=1
+	stepnumber=1,
+	showstringspaces=false,
+	showspaces=false,
+	breaklines=true,
+	frame=single,
+	framexleftmargin=1mm,
+	framextopmargin=1mm
+}
+
+\definecolor{gray}{gray}{0.5}
+\definecolor{green}{rgb}{0,0.5,0}
+
+\lstset
+{
+	language=python,
+	basicstyle=\ttfamily\footnotesize,
+	stringstyle=\color{red},
+	alsoletter={1234567890},
+	otherkeywords={\ , \}, \{},
+	keywordstyle=\color{blue},
+	upquote=true,
+	morecomment=[s]{"""}{"""},
+	commentstyle=\color{gray}\slshape
 }
 
 \part{Code}
@@ -70,6 +39,6 @@
 \nonewpagechapter{SpeechApp}
 	\input{code/js}
 	\section{index.html}
-	\lstinputlisting[language=HTML, firstline=1, lastline=147, breaklines=true, frame=single]{../src/speechapp/index.html}
+	\lstinputlisting[language=HTML, firstline=1, lastline=147]{../src/speechapp/index.html}
 	
 	\input{code/speechserver}

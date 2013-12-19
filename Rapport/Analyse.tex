@@ -210,8 +210,13 @@ Le r�sultat est un algorithme qui s'effectue en moins d'une seconde, et qui pe
 	dictée par l'échelle Mel. Ceci conduit à l'obtention d'un tableau de 24 cases dont chaque case contient l'amplitude 
 	associée à l'intervalle de fréquence représenté par l'indice du tableau (et qui est comme on l'a dit, déterminé
 	par l'échelle Mel).
+\paragraph{}
+	Ce tableau qui caractérise donc un échantillon du signal, n'est pas utilisé tel quel dans la suite. En effet, il
+	est utile pour des raisons qui seront précisées plus tard, de ne plus considérer un tableau de 24 cases échellonné
+	en fréquences, mais en temporel ! La transformée en cosinus inverse opère cette transformation et elle est présentée
+	dans la section précédente.
 	
-		\section{Transform�e inverse ou D�composition en cosinus inverse}
+		\section{Fini les fréquences, on repasse en temporel !}
 \begin{figure}[H]
 	\begin{center}
 		\includegraphics[width=10cm]{Images/DCTschema.png} 

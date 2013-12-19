@@ -44,3 +44,4 @@ nosetests.xml
 *.tox
 *.log
 *.blg
+*.bbl

@@ -1,0 +1,16 @@
+Ajouter paragraphe 2.8 et changer 2.8 en 2.9
+paragraphe 2.8 : obtention des Mel Frequency Cepstral Coefficients
+
+A ce stade nous disposons donc d'une séquence de tableaux de 24 cases, échelonné en fréquences. La construction des MFCC 
+à partir de ces tableaux est un jeu d'enfant. Il suffit comme expliqué dans {mettre ici référence au papier Voice
+recognition Algorithms using Mel Frequency Cepstral Coefficient (MFCC) and Dynamic Time Warping (DTW)} pour chaque
+tableau de former un nouveau tableau composé de ses 11 premières valeurs et de rajouter comme 12ème valeur, la donnée de
+l'énergie du signal à l'instant considéré. 
+
+Cette recette s'appuie sur les deux constats suivants. Premièrement, en ne gardant que les 11 premières valeurs on ne se
+concentre que sur les fréquences graves ce qui rejoint ce qui était expliqué précédemment sur l'intérêt réduit des aigus. 
+Deuxièmement, la donnée de l'énergie du signal est d'un intérêt majeur, au même titre que les fréquences présentes, car 
+c'est un trait caractéristique d'un instant du signal qu'il ne faut pas négliger dans l'étude et il est important d'en
+garder la trace. 
+
+Nous disposons désormais de notre caractérisation adéquat du signal, il est temps de passer à la reconnaissance...

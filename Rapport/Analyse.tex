@@ -220,6 +220,20 @@ ne conserverait que l'information associée aux graves ce qui constituerait une p
 \paragraph{}
 	La DCT que nous avons utilisé, aussi connue sous le nom de DCTII se base sur la formule suivante: 
 	\[M[k] = \sum_{n=0}^{B-1}( X[n]\times cos(Pi\cdot k\cdot \frac{n+0.5}{B}) ) \times \sqrt[]{\frac{2}{B}}\] avec B=24, X le tableau en échelle Mel, et M le tableau de sortie échellonné en temporel. D'autres formules équivalentes de DCT existent mais la DCTII est la plus largement répandue et utilisée.
+\section{Obtention des coefficients caractéristiques du son}
+ \paragraph{}
+À ce stade nous disposons donc d'une séquence de tableaux de 24 cases, échelonnée en fréquences. La construction des \textbf{Mel Frequency Cepstral Coefficients} (aussi appelé \textbf{MFCC}) 
+à partir de ces tableaux est un jeu d'enfant\cite{melbe}. Il suffit pour chaque
+tableau de former un nouveau tableau composé de ses 11 premières valeurs et de rajouter comme 12ème valeur, la donnée de
+l'énergie du signal à l'instant considéré. 
+\paragraph{}
+Cette recette s'appuie sur les deux constats suivants. Premièrement, en ne gardant que les 11 premières valeurs on ne se
+concentre que sur les fréquences graves ce qui rejoint ce qui était expliqué précédemment sur l'intérêt réduit des aigus. 
+Deuxièmement, la donnée de l'énergie du signal est d'un intérêt majeur, au même titre que les fréquences présentes, car 
+c'est un trait caractéristique d'un instant du signal qu'il ne faut pas négliger dans l'étude et il est important d'en
+garder la trace. 
+\paragraph{}
+Nous disposons désormais de notre caractérisation adéquate du signal, il est temps de passer à la reconnaissance.
 \section{Schéma récapitulatif}
 \begin{figure}[H]
     \begin{center}

@@ -1,25 +1,25 @@
 \paragraph{}
-Avant de commencer un projet informatique d'une telle envergure, il faut faire des choix techniques. Dans un premier temps, afin de coordonner nos efforts et permettre une meilleure répartition des tâches, nous avons fait le choix d'utiliser les services du site GitHub\cite{github} basé sur git\footnote{Git est un logiciel de gestion des versions décentralisé}. Ensuite, nous avons décidé de programmer le projet en Python\footnote{\url{www.python.org}}. En effet, ce dernier est facile à prendre en main, permet une programmation rapide et efficace et dispose d'un grand panel de bibliothèques bien documentées. En ce qui concerne ces dernières, nous avons utilisé :
+Avant de commencer un projet informatique d'une telle envergure, il faut faire des choix techniques. Dans un premier temps, nous avons décidé de programmer le projet en \textbf{Python}\footnote{\url{www.python.org}}. En effet, ce dernier est facile à prendre en main, permet une programmation rapide et efficace et dispose d'un grand panel de bibliothèques bien documentées. En ce qui concerne ces dernières, nous avons utilisé :
 \begin{itemize}
 \item pyaudio\footnote{\url{http://people.csail.mit.edu/hubert/pyaudio/}} 
 pour l'écriture et la lecture des fichiers audio .wav\footnote{WAV (ou WAVE), une contraction de WAVEform audio file format, est un standard pour stocker l'audio numérique de Microsoft et IBM. (Wikipédia)}
 \item numpy\footnote{\url{www.numpy.org}} et scipy\footnote{\url{www.scipy.org}} pour faire des mathématiques avancées non incluses dans la bibliothèque standard tels que du calcul numérique de haute précision et du calcul matriciel
  \end{itemize}
-Néanmoins, nous nous sommes vite rendu compte que le langage Python était lent. Or, notre programme s'est montré être gourmand en ressource processeur. Nous avons donc fait le choix d'implémenter certaines fonctions en C++, langage nettement plus rapide.
+ 
+Néanmoins, nous nous sommes vite rendu compte que le langage Python était lent. Or, notre programme s'est montré être gourmand en ressource processeur. Nous avons donc fait le choix d'implémenter certaines fonctions en C++, langage nettement plus rapide. Enfin, afin de coordonner nos efforts et de permettre une meilleure répartition des tâches, nous avons fait le choix d'utiliser les services du site GitHub\cite{github} basé sur git\footnote{Git est un logiciel de gestion des versions décentralisé}.
 
 
 \nonewpagechapter{Principe général du traitement du signal}
     \section{Objectifs}
 Bien que la reconnaissance vocale telle qu'elle est aujourd'hui mise-en-place dans les différents matériels semble immédiate, le travail à effectuer pour reconnaître un mot est complexe.
 La première étape pour faire de la reconnaissance vocale est de parvenir à trouver un moyen de caractériser efficacement et uniformément un mot. Cela signifie désigner un mot par un certain motif puis permet par le même procédé
-appliqué sur un enregistrement quelconque, de parvenir à identifier deux motifs proches qui correspondraient alors au même mot.
+appliqué sur un enregistrement quelconque, de parvenir à identifier le motif le plus vraisemblable qui correspondrait alors au même mot.
 Il s'agit donc tout d'abord de traiter le signal pour en découvrir certaines caractéristiques. En effet, une même personne ne prononce pas toujours les mots de la même façon, au même débit, avec les mêmes hauteurs de son, ce qui
 rend ardue une simple identification par comparaisons temporelles.
 \section{Schéma global}
-Afin de gérer ces difficultés, nous avons mis en place plusieurs étapes de traitement supplémentaires afin d'obtenir cette fameuse \og trace \fg qui caractériserait un enregistrement, c'est-à-dire un mot. Nous avons pour cela 
-utilisé plusieurs techniques de traitement du signal communément connues (échantillonnage, fenêtrage, transformée de Fourier directe et inverse).
-Cette figure explique globalement le traitement que nous avons choisi de mettre-en-place afin de reconnaître le mot prononcé. Il y a donc plusieurs étapes qui s'enchaînent pour parvenir à un 
-objet que nous pourrons manipuler en le sachant représentatif et caractéristique du son.
+Afin de gérer ces difficultés, nous avons mis en place plusieurs étapes successives de traitement supplémentaire afin d'obtenir cette fameuse \og trace \fg qui caractériserait un enregistrement, c'est-à-dire un mot. Nous avons pour cela 
+utilisé plusieurs techniques de traitement du signal communément reconnues (échantillonnage, fenêtrage, transformée de Fourier directe et inverse).
+Cette figure explique globalement le traitement que nous avons choisi de mettre-en-place afin de reconnaître le mot prononcé. Il y a donc plusieurs étapes qui s'enchaînent pour parvenir à un objet que nous pourrons manipuler en le sachant représentatif et caractéristique du son.
 \begin{figure}[!h]
 	    \begin{center}
 		    \includegraphics[width=17cm]{Images/traitement.png} 
@@ -27,8 +27,8 @@ objet que nous pourrons manipuler en le sachant représentatif et caractéristique
 	    \caption{Traitement du son pour le reconnaître}
 \end{figure}
 \paragraph{Enregistrement du son}
-La première étape consiste simplement à enregistrer le son sur le disque dur de l'ordinateur. Nous utilisons pour cela un module intégré à Python appelé PyAudio\cite{pyaudio}. Cela permet d'enregistrer
-avec une certaine fréquence d'échantillonnage (donc un certain nombre de captures de son par seconde) les amplitudes du son captées par le micro.
+La première étape consiste simplement à enregistrer le son sur le disque dur de l'ordinateur. Nous utilisons pour cela le module intégré à Python appelé PyAudio\cite{pyaudio}. Cela permet d'enregistrer
+avec une certaine \emph{fréquence d'échantillonnage} (donc un certain nombre de captures de son par seconde) les amplitudes du son captées par le micro.
 \paragraph{Découpage en fenêtre}
 Le son est découpé ensuite en petites fenêtres de quelques dizaines de millisecondes ce qui permet d'isoler les événements sonores qui pourraient avoir une importance. Il s'agit d'un \emph{fenêtrage}.
 \paragraph{Passage en fréquence}

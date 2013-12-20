@@ -21,9 +21,10 @@ Il existe aussi la notion de chemin: par exemple pour passer de 0 à 3 sur la fig
 \paragraph{}
 Un modèle de Markov est un automate présentant \emph{deux caractéristiques} en plus du principe de base d'un automate. 
 \paragraph{}
-Tout d'abord, les transitions ne sont plus déterministes comme elles le sont dans le cas d'un automate mais sont \textbf{probabilistes}. Ainsi, il y a une certaine probabilité pour passer à chacun des autres état, une fois arrivé dans un état lors d'un parcours. C'est pourquoi le déplacement dans un automate ne dépend plus du passé du parcours mais uniquement de la position actuelle. 
+Tout d'abord, les transitions ne sont plus déterministes comme elles le sont dans le cas d'un automate
+mais sont \textbf{probabilistes}. Ainsi, une fois dans un état, on se dirige vers un autre état selon un arc avec une certaine probabilité : la probabilité de transition.
 \paragraph{}
-La seconde différence est que les données renvoyées lors du parcours d'un chemin de l'automate n'est plus la liste des états par lesquels passe le chemin : chaque état a maintenant des probabilités d'émettre certains signaux. On obtient donc une liste de signaux pour un chemin. Or, un état peut émettre plusieurs signaux différents et l'émission n'est que probabiliste ce qui rajoute au caractère non déterministe de l'automate.
+La seconde différence est que les données renvoyées lors du parcours d'un chemin de l'automate ne sont plus la liste des états par lesquels passe le chemin : chaque état a maintenant des probabilités d'émettre certains signaux. On obtient donc une liste de signaux pour un chemin. Or, un état peut émettre plusieurs signaux différents et l'émission n'est que probabiliste ce qui rajoute au caractère non déterministe de l'automate.
 \begin{figure}[hb]
     \begin{center}
 	    \includegraphics[width=10cm]{Images/mmcpresentation.png} 
@@ -31,10 +32,19 @@ La seconde différence est que les données renvoyées lors du parcours d'un chemin
     \caption{Exemple d'un modèle de Markov caché}
 \end{figure}
 \paragraph{}
-La spécificité des modèles de Markov cachés qui les rend si utiles en reconnaissance vocale est le fait qu'ils puissent apprendre et se perfectionner. En effet, il est possible de démontrer qu'en appliquant certaines formules sur l'automate à partir d'un mot (données par l'algorithme de Baum-Welch\cite{rabiner}\cite{baum}), on parvient à l'améliorer et à le faire converger dans le domaine des automates vers un automate reconnaissant plus fidèlement le mot qu'on lui applique.
+La spécificité des modèles de Markov cachés qui les rend si utiles en reconnaissance vocale est le fait
+qu'ils puissent apprendre et se perfectionner. En effet, il est possible de démontrer qu'en appliquant
+certaines formules sur l'automate à partir d'un mot (données par l'algorithme de Baum-Welch\cite{rabiner}\cite{baum}),
+on parvient à l'améliorer et à le faire converger dans le domaine des automates vers un automate
+reconnaissant plus fidèlement le mot qu'on lui applique. Intuitivement, cela repose sur l'idée selon laquelle plus on "
+\og entraîne \fg l'automate à reconnaître un mot, plus il le reconnaîtra par la suite de manière fiable.
 \subsection{Modèles discrets et modèles continus}
-La figure qui vous a été présentée ci-dessus a un nombre fini de signaux, il s'agit de ce qu'on appelle un modèle de Markov caché \emph{discret}. Il existe une version \emph{continue} de ces automates où l'on remplace les signaux par des fonctions continues d'un espace de dimension supérieure ou égale à 1.
-Lorsqu'un état émet un signal, au lieu de chercher entre les différents signaux possibles, il effectue un calcul sur une combinaison linéaires de fonctions gaussiennes dans l'espace à plusieurs dimensions. Les pics des gaussiennes représenteraient les signaux discrets. La nature des gaussiennes regroupe donc les probabilités autour de ces pics en conservant le caractère continu des fonctions.
+La figure qui vous a été présentée ci-dessus a un nombre fini de signaux, il s'agit de ce qu'on
+appelle un modèle de Markov caché \emph{discret}. Il existe une version \emph{continue} de ces automates où les signaux observés ne sont plus pris parmi un ensemble fini, mais forment en fait un continu d'observations. Un exemple pour illustrer ceci est le cas des couleurs. On peut soit considérer que l'ensemble des couleurs observées dans la vie de tous les jours forment un ensemble discret {noir, rouge, vert, bleu, jaune, blanc etc...}, ou envisager que cet ensemble est continu et qu'on le parcourt en balayant le spectre lumineux en passant par tous les dégradés. Les modèles de Markov cachés discrets et continus opposent deux conceptions similaires des observations effectuées. On comprend avec la métaphore des couleurs que considérer l'ensemble des observations comme discret alors qu'il est en réalité continu ne peut se faire sans perte drastique d'information. On serait en effet amené à assimiler les différents nuances de rouge bien qu'elles soient perçues différemment. C'est pourquoi, si l'on souhaite garder un maximum de fiabilité, il est nécessaire d'utiliser la version continue des modèles de Markov.
+Lorsqu'un état émet un signal, au lieu de chercher entre les différents signaux possibles, il effectue un
+calcul sur une combinaison linéaires de fonctions gaussiennes dans l'espace à 12 dimensions, qui est la taille des MFCC. Les
+pics des gaussiennes représenteraient les signaux discrets. La nature des gaussiennes regroupe donc les
+probabilités autour de ces pics en conservant le caractère continu des fonctions
 \subsection{Application à la reconnaissance vocale}
 \paragraph{}
 Les modèles de Markov cachés sont largement répandus dans la reconnaissance vocale\cite{rabiner}\cite{ref1}\cite{calcvoc}. 

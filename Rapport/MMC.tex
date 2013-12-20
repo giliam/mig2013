@@ -1,8 +1,8 @@
 \chapter{Modélisation des mots à reconnaître par les modèles de Markov cachés}
 	\section{Objectifs}
 	    Le traitement effectué sur le son permet d'obtenir un tableau fréquentiel caractéristique du mot. Nous pouvons alors rentrer dans le vif du sujet et travailler sur la reconnaissance même des mots : il faut parvenir à comparer entre eux les
-	    empreintes ainsi obtenues. Pour cela, nous utilisons un système appelé les \emph{modèles de Markov cachés}. Nous créons en fait un \og graphe de sons \fg qui peut être parcouru à partir d'un mot. En appliquant un certain algorithme à un mot et à un graphe, on obtient une probabilité qui témoigne de l'adéquation du mot au graphe. 
-	    Il nous suffit alors de déterminer quel graphe représente la plus grand probabilité ce qui nous donne la solution comme étant le \emph{meilleur candidat}. On parle alors de \textbf{maximum de vraisemblance}.
+	    empreintes ainsi obtenues. Pour cela, nous utilisons un système appelé les \emph{modèles de Markov cachés}. Nous créons en fait un \og graphe de sons \fg qui peut être parcouru à partir des coefficients de Mel (MFCC) d'un mot traité au préalable par notre programme. En appliquant un certain algorithme à un mot et à un graphe, on obtient une probabilité qui témoigne de l'adéquation du mot au graphe. 
+	    Il nous suffit alors de déterminer quel graphe donne la plus grande probabilité au parcours du mot, ce qui nous donne la solution comme étant le \emph{meilleur candidat}. On parle alors de \textbf{maximum de vraisemblance}.
         \section{Prérequis et principe}
         \paragraph{}
         	Un modèle de Markov caché est un modèle statistique qui peut modéliser des processus physiques. Il fait appel aux structures d'automates\cite{automate}.
@@ -19,7 +19,7 @@ Il existe aussi la notion de chemin: par exemple pour passer de 0 à 3 sur la fig
 				\end{figure}
 \subsection{Les modèles de Markov cachés}
 \paragraph{}
-Un modèle de Markov est un automate présentant \emph{deux caractéristiques} en plus du principe de base d'un automate. 
+Un modèle de Markov est un automate présentant \emph{deux caractéristiques} différentes du principe de base d'un automate. 
 \paragraph{}
 Tout d'abord, les transitions ne sont plus déterministes comme elles le sont dans le cas d'un automate
 mais sont \textbf{probabilistes}. Ainsi, une fois dans un état, on se dirige vers un autre état selon un arc avec une certaine probabilité : la probabilité de transition.
@@ -32,15 +32,15 @@ La seconde différence est que les données renvoyées lors du parcours d'un chemin
     \caption{Exemple d'un modèle de Markov caché}
 \end{figure}
 \paragraph{}
-La spécificité des modèles de Markov cachés qui les rend si utiles en reconnaissance vocale est le fait
+La spécificité des modèles de Markov cachés, qui les rend si utiles en reconnaissance vocale, est le fait
 qu'ils puissent apprendre et se perfectionner. En effet, il est possible de démontrer qu'en appliquant
 certaines formules sur l'automate à partir d'un mot (données par l'algorithme de Baum-Welch\cite{rabiner}\cite{baum}),
 on parvient à l'améliorer et à le faire converger dans le domaine des automates vers un automate
-reconnaissant plus fidèlement le mot qu'on lui applique. Intuitivement, cela repose sur l'idée selon laquelle plus on "
-\og entraîne \fg l'automate à reconnaître un mot, plus il le reconnaîtra par la suite de manière fiable.
+reconnaissant plus fidèlement le mot qu'on lui applique. Intuitivement, cela repose sur l'idée selon laquelle plus on 
+\og entraîne \fg l'automate à reconnaître un mot, plus il le reconnaîtra de manière fiable par la suite.
 \subsection{Modèles discrets et modèles continus}
 La figure qui vous a été présentée ci-dessus a un nombre fini de signaux, il s'agit de ce qu'on
-appelle un modèle de Markov caché \emph{discret}. Il existe une version \emph{continue} de ces automates où les signaux observés ne sont plus pris parmi un ensemble fini, mais forment en fait un continu d'observations. Un exemple pour illustrer ceci est le cas des couleurs. On peut soit considérer que l'ensemble des couleurs observées dans la vie de tous les jours forment un ensemble discret {noir, rouge, vert, bleu, jaune, blanc etc...}, ou envisager que cet ensemble est continu et qu'on le parcourt en balayant le spectre lumineux en passant par tous les dégradés. Les modèles de Markov cachés discrets et continus opposent deux conceptions similaires des observations effectuées. On comprend avec la métaphore des couleurs que considérer l'ensemble des observations comme discret alors qu'il est en réalité continu ne peut se faire sans perte drastique d'information. On serait en effet amené à assimiler les différents nuances de rouge bien qu'elles soient perçues différemment. C'est pourquoi, si l'on souhaite garder un maximum de fiabilité, il est nécessaire d'utiliser la version continue des modèles de Markov.
+appelle un modèle de Markov caché \emph{discret}. Il existe une version \emph{continue} de ces automates où les signaux observés ne sont plus pris parmi un ensemble fini, mais forment en fait un continu d'observations. Un exemple pour illustrer ceci est le cas des couleurs. On peut soit considérer que l'ensemble des couleurs observées dans la vie de tous les jours forment un ensemble discret {noir, rouge, vert, bleu, jaune, blanc etc.}, ou envisager que cet ensemble est continu et qu'on le parcourt en balayant le spectre lumineux en passant par tous les dégradés. Les modèles de Markov cachés discrets et continus opposent deux conceptions similaires des observations effectuées. On comprend avec la métaphore des couleurs que considérer l'ensemble des observations comme discret alors qu'il est en réalité continu ne peut se faire sans perte drastique d'information. On serait en effet amené à assimiler les différents nuances de rouge bien qu'elles soient perçues différemment. C'est pourquoi, si l'on souhaite garder un maximum de fiabilité, il est nécessaire d'utiliser la version continue des modèles de Markov.
 Lorsqu'un état émet un signal, au lieu de chercher entre les différents signaux possibles, il effectue un
 calcul sur une combinaison linéaires de fonctions gaussiennes dans l'espace à 12 dimensions, qui est la taille des MFCC\footnote{Mel Frequency Cepstral Coefficients, cf. partie précédente}. Les
 pics des gaussiennes représenteraient les signaux discrets. La nature des gaussiennes regroupe donc les
@@ -51,13 +51,13 @@ Les modèles de Markov cachés sont largement répandus dans la reconnaissance voca
 Entre un modèle discret et un modèle continu, nous avons choisi ce dernier car les données en entrée ne font pas partie d'un ensemble fini : 
 il existe une infinité de sons possibles pour un même phonème. 
 Les modèles de Markov cachés sont particulièrement adaptés pour la reconnaissance vocale car 
-ils permettent un apprentissage constant de la part du programme : 
-celui-ci est capable d'apprendre de nouveaux mots de manière autonome, et de s'améliorer au-fur-et-à-mesure que la base de données de mots grandit.
+ils permettent un apprentissage constant de la part du programme. 
+Celui-ci est capable d'apprendre de nouveaux mots de manière autonome et de s'améliorer au-fur-et-à-mesure que la base de données de mots grandit.
 \paragraph{}
 Nous avons modélisé chaque mot par un automate, dont les états sont les différents phonèmes du mot. 
 Lorsque l'on prononce un mot, on se dirige dans l'automate grâce aux phonèmes prononcés, 
 jusqu'à rencontrer l'état final. Ceci permet de reconnaître le mot même si une syllabe dure 
-plusieurs secondes: dans ce cas, on se contente de tourner en rond  
+plusieurs secondes : dans ce cas, on se contente de tourner en rond  
 (en restant sur l'état 0 de la figure par exemple) dans l'automate jusqu'à rencontrer un nouveau phonème. 
 Dans l'automate, la transition de l'état $i$ à $k$ représente la probabilité de passer de l'état $i$ à $k$, 
 c'est-à-dire la probabilité que le phonème n°$k$ vienne tout de suite après le phonème n°$i$.
@@ -98,19 +98,14 @@ pour que les programmeurs puissent agrandir la base de données.
         Deux aspects demandent un apprentissage de la part du programme. 
         Il doit d'abord faire grossir l'ensemble des mots reconnus, de manière à pouvoir en reconnaître le plus possible. 
         Mais il est aussi intéressant de lui faire apprendre un mot par des locuteurs différents. 
-        Plus le nombre de locuteurs est grand, plus l'algorithme peut être précis.
-        \paragraph{}
-Enregistrer plusieurs personnes permet d'obtenir une diversité de spectres qui accroît la précision du programme.
+        Plus le nombre de locuteurs est grand, plus l'algorithme peut être précis. Enregistrer plusieurs personnes permet d'obtenir une diversité de spectres qui accroît la précision du programme.
 \paragraph{}
-Une fois un mot appris, il est également très utile qu'un même locuteur enregistre de nombreuses versions du mot. Nous avons fait pour notre locuteur 10 versions de chaque mot.
-\paragraph{}
-Pour mettre en place un apprentissage, nous avions des besoins matériels (stocker l'ensemble des mots reconnus) mais aussi des besoins humains, et en l'occurrence une diversité de voix.
-        
+Une fois un mot appris, il est également très utile qu'un même locuteur enregistre de nombreuses versions du mot. Nous avons fait pour notre locuteur 10 versions de chaque mot. Pour mettre en place un apprentissage, nous avions des besoins matériels (stocker l'ensemble des mots reconnus) mais aussi des besoins humains et, en l'occurrence, une diversité de voix.
         \section{Phase de reconnaissance}
         \paragraph{}
 La phase de reconnaissance constitue le c\oe{}ur du programme. Comme dit précédemment, le programme effectue l'algorithme \emph{forward} sur chacun des automates et renvoie le mot le plus probable, après avoir comparé toutes les probabilités.
 \paragraph{}
-A l'origine, la phase de reconnaissance a été codée en Python. Cependant le temps d'exécution étant trop long, nous l'avons donc codé en C++, ce qui a permis de diviser le temps d'exécution par 400. Grâce à ce travail laborieux, le programme s'effectue en un temps proche de la seconde. Tout a été mis en place, notamment en amont avec le codage en C++ de la transformée de Fourier rapide, pour privilégier la rapidité de l'exécution. 
+A l'origine, la phase de reconnaissance a été codée en Python. Cependant le temps d'exécution étant trop long, nous l'avons donc codé en C++, ce qui a permis de diviser le temps d'exécution par \textbf{400}. Grâce à ce travail laborieux, le programme s'effectue en un temps proche de la seconde. Tout a été mis en place, notamment en amont avec le codage en C++ de la transformée de Fourier rapide, pour privilégier la rapidité de l'exécution. 
 \paragraph{}
 Au départ nous n'avions qu'un seul locuteur pour faire la base de donnée des mots reconnus, 
 ce qui ne permettait de faire fonctionner le programme que pour un seul utilisateur : celui qui avait enregistré les mots. 
@@ -122,5 +117,5 @@ Cependant nous avons enregistré plusieurs locuteurs, ce qui permet au programme 
 	\begin{center}
 		\includegraphics[width=14cm]{Images/mmcrecap.png} 
 	\end{center}
-	\caption{Schéma récapitulatif du principe des modèles de Markov cachés}
+	\caption{Schéma récapitulatif de l'utilisation des MMC dans le cadre de notre reconnaissance vocale}
 \end{figure}

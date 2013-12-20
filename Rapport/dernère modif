@@ -1,0 +1,12 @@
+dans 3.1 Objectifs : remplacer le paragraphe par :
+
+"Le traitement effectué sur le son permet d’obtenir une séquence de tableaux (les MFCC) caractéristiques du mot.
+Nous pouvons alors rentrer dans le vif du sujet et travailler sur la reconnaissance même des mots : il
+faut parvenir à comparer entre elles les empreintes ainsi obtenues. Pour cela, nous utilisons un outil mathématique
+appelé les modèles de Markov cachés qui est présenté dans cette partie ainsi que son utilisation pour la reconnaissance vocale.
+Grossièrement, la reconnaissance d'un mot se déroule de la façon suivante. Nous disposons comme base de donnée 
+d'un ensemble d'automates (ensemble d'état entre lesquels on peut transiter) représentant chacun un mot. Les états
+de ces automates correspondent à la donnée de fonctions d'évaluation de la probabilité d'une certaine observation
+relative au mot évalué, à un certain instant. Ces fonctions sont évaluées sur la caractéristique extraite du signal
+que sont les MFCC, obtenus grâce à la partie traitement du signal. Bien sûr, la probabilité de faire une observation à un instant donné dépend très largement de l'observation précédente. C'est pourquoi à chaque transition d'un état vers un autre est associée une probabilité.  On peut ainsi, en évaluant le mot à trouver et caractérisé par sa séquence de MFCC sur chaque automate, retenir celui donnant lieu à la plus grande probabilité comme maximum de vraisemblance. Le mot qu'il incarne sera donc considéré comme étant le mot à reconnaître.
+Les chaînes de Markov cachées sont en quelque sorte un outil mathématique exploitant ces idées d'observation et de transition via une structure d'automate sur lesquels on peut appliquer des algorithmes [12]"

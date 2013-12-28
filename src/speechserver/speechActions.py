@@ -45,5 +45,4 @@ class requestHandling:
         #wav_content = sox_handling(audioBlob)
         #print wav_content
         respWord, log = handlingOneWord(audioBlob[1], self.dbWaves, 1, 1, 0)
-        print respWord
         return {'respWord': respWord}

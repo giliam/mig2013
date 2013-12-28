@@ -20,19 +20,24 @@ def path_orig_ogg(id):
 def path_mid_wave(id):
     return TMP_DIR + "orig_" + str(id) + ".wav"
 
+
 def path_mid_wave_splitted(id):
     return TMP_DIR, "orig_" + str(id) + ".wav"
+
 
 def path_final_wave(id):
     return TMP_DIR + "wave_final_" + str(id) + ".wav"
 
+
 def path_final_wave_splitted(id):
     return TMP_DIR, "wave_final_" + str(id) + ".wav"
+
 
 def rm_multi(*files):
     """Remove multiple files"""
     for path in files:
         os.remove(path)
+
 
 def handleOGGBlob(oggBlob):
     """Converti le blob ogg en blob wav"""
@@ -44,41 +49,32 @@ def handleOGGBlob(oggBlob):
 
     #Now convert the file
 
-    print(path_orig_ogg(id))
     os.system('soundconverter -b -m audio/x-wav -s .wav "%s"' %  path_orig_ogg(id))
     #Resample to 44.1kHz
+
+    os.system('sox -e signed -c 1 -b 16 %s %s' % (path_mid_wave(id), path_final_wave(id)))
+    print('soxed')
+    #And read the oggBlob
+
+    rm_multi(path_mid_wave(id), path_orig_ogg(id))
 
     return finalHandling(id)
 
 
 def finalHandling(id):
-    print('final handling started')
-    #os.system('sox -r 44.1k -e signed -c 1 -b 16 %s %s' % (path_mid_wave(id), path_final_wave(id)))
-    os.system('cp %s %s' % (path_mid_wave(id), path_final_wave(id)))
-    print('soxed')
-    #And read the oggBlob
-
-    '''with open(path_final_wave(id), 'r') as finalwavefile:
-        waveBlob =  finalwavefile.read()'''
-
-
     dir, file = path_final_wave_splitted(id)
     print(dir, file)
     waveBlob = cutsyncaudio(dir, file)
     
-    #Remove the files
-    rm_multi(path_mid_wave(id), )#path_final_wave(id))
-    print("success")
     return waveBlob
+
 
 def handleWAVBlob(audioBlob):
     id = randint(1, 1000)
-    while os.access(path_mid_wave(id), os.W_OK):
+    while os.access(path_final_wave(id), os.W_OK):
         id = randint(1, 1000)
 
-    writeBlobToDisk(audioBlob, path_mid_wave(id))
-    print path_mid_wave(id)
-    print "bringing id to finalHandling"
+    writeBlobToDisk(audioBlob, path_final_wave(id))
     return finalHandling(id)
 
     
@@ -116,6 +112,7 @@ def convert_ogg_to_wav(ogg_path, out_wav_path):
 
     return waveBlob
     
+
 def sox_handling(wavBlob,pathToTmp="../db/waves/tmp/"):
     tempFileName = hashlib.sha224(str(randint(0,1e10))).hexdigest()
     fileName = pathToTmp + str(tempFileName) + ".wav"

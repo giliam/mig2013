@@ -126,9 +126,7 @@ function navSwitch(mozaction, webkitaction){
 
 function preInteract(audioBlob, blobType){
     var url = window.URL.createObjectURL(audioBlob);
-    showDlLink(url);
-
-
+    //document.getElementById("recording").innerHTML += '<audio controls src="' + url + '">Sound</audio>'; 
 
     //Envoie à la console une adresse de téléchargement de l'échantillon
     console.log(url);
@@ -136,10 +134,6 @@ function preInteract(audioBlob, blobType){
     //Communique les data au serveur
     servInteract(audioBlob, blobType);
 
-}
-
-function showDlLink(url){
-    console.log(url);
 }
 
 /////////////////////////
@@ -182,7 +176,7 @@ function mozmediaOnDataAvailable(blob){
 /////////////////////////
 
 function webkitinitRecording(localMediaStream){
-    var input = toMono(webkitaudio_context.createMediaStreamSource(localMediaStream));
+    var input = webkitaudio_context.createMediaStreamSource(localMediaStream);
     //input.connect(webkitaudio_context.destination);
     webkitrecorder = new Recorder(input);
 
@@ -203,15 +197,6 @@ function webkitstopRecorder(){
 
     webkitrecorder.clear();
 }
-
-function toMono (input) {
-    var split = webkitaudio_context.createChannelSplitter(2);
-    var merge = webkitaudio_context.createChannelMerger(2);
-    input.connect(split);
-    split.connect(merge, 0, 0);
-    split.connect(merge, 0, 1);
-    return merge;
-  }
 
 /////////////////////////
 /////////////////////////

@@ -53,7 +53,8 @@ def handleOGGBlob(oggBlob):
 
 def finalHandling(id):
     print('final handling started')
-    os.system('sox -r 44.1k -e signed -c 1 -b 16 %s %s' % (path_mid_wave(id), path_final_wave(id)))
+    #os.system('sox -r 44.1k -e signed -c 1 -b 16 %s %s' % (path_mid_wave(id), path_final_wave(id)))
+    os.system('cp %s %s' % (path_mid_wave(id), path_final_wave(id)))
     print('soxed')
     #And read the oggBlob
 

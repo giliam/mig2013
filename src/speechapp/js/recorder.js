@@ -48,11 +48,6 @@
       worker.postMessage({ command: 'clear' });
     }
 
-    this.getBuffer = function(cb) {
-      currCallback = cb || config.callback;
-      worker.postMessage({ command: 'getBuffer' })
-    }
-
     this.exportWAV = function(cb, type){
       currCallback = cb || config.callback;
       type = type || config.type || 'audio/wav';
@@ -69,7 +64,7 @@
     }
 
     source.connect(this.node);
-    //this.node.connect(this.context.destination);    //this should not be necessary
+    this.node.connect(this.context.destination);    //this should not be necessary
   };
 
   Recorder.forceDownload = function(blob, filename){

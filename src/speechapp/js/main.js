@@ -105,7 +105,6 @@ function main(){
 function startRecord(){
     /* Lance un enregistrement */
     navSwitch(mozstartRecorder, webkitstartRecorder);
-    console.log('recording');
 }
 
 function stopRecord(){
@@ -126,24 +125,16 @@ function navSwitch(mozaction, webkitaction){
 
 
 function preInteract(audioBlob, blobType){
-    if (nav == 'webkit'){
-        var url = URL.createObjectURL(audioBlob);
-    }
-    else if (nav == 'moz'){
-        var url = window.URL.createObjectURL(audioBlob.data);
-    }
+    var url = window.URL.createObjectURL(audioBlob);
     showDlLink(url);
 
 
-    //Log dans la console
-    console.log("Data available !!!");
-    console.log(audioBlob);
 
     //Envoie à la console une adresse de téléchargement de l'échantillon
     console.log(url);
 
     //Communique les data au serveur
-    servInteract(audioBlob.data, blobType);
+    servInteract(audioBlob, blobType);
 
 }
 
@@ -161,7 +152,6 @@ function mozinitRecording(localMediaStream){
     mediaRecorder.ondataavailable = mozmediaOnDataAvailable;
     mediaStream = localMediaStream;
 
-    console.log('getUserMedia initialised');  
 }  
 
 
@@ -175,7 +165,6 @@ function mozstartRecorder(){
 
 function mozstopRecorder(){
     if (mediaStream){
-		console.log('stopRecord');
         mediaRecorder.stop();
         //var audioElement = document.getElementById('audio');
         //audioElement.src = '';
@@ -186,15 +175,14 @@ function mozstopRecorder(){
 function mozmediaOnDataAvailable(blob){
     /* A la fin de l'enregistrement, récupère le blob dans data 
        et lance le traitement                                       */
-    console.log("moz data available");
-    preInteract(blob, 'ogg');
+    preInteract(blob.data, 'ogg');
 }
 
 /////////////////////////
 /////////////////////////
 
 function webkitinitRecording(localMediaStream){
-    var input = webkitaudio_context.createMediaStreamSource(localMediaStream);
+    var input = toMono(webkitaudio_context.createMediaStreamSource(localMediaStream));
     //input.connect(webkitaudio_context.destination);
     webkitrecorder = new Recorder(input);
 
@@ -215,6 +203,15 @@ function webkitstopRecorder(){
 
     webkitrecorder.clear();
 }
+
+function toMono (input) {
+    var split = webkitaudio_context.createChannelSplitter(2);
+    var merge = webkitaudio_context.createChannelMerger(2);
+    input.connect(split);
+    split.connect(merge, 0, 0);
+    split.connect(merge, 0, 1);
+    return merge;
+  }
 
 /////////////////////////
 /////////////////////////
@@ -247,9 +244,7 @@ function servInteract(audioBlob, blobType){
     }*/
     //req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     req.send(formData);
-    console.log(req);
     resp = req.responseXML;
-    console.log(resp);
     wordResponse(resp);
 
 }
@@ -257,8 +252,7 @@ function servInteract(audioBlob, blobType){
 
 function wordResponse(respXML){
     if (respXML.getElementsByTagName('respWord')){
-        var responseWord = respXML.getElementsByTagName('respWord')[0].textContent;;
-        console.log(responseWord.name);
+        var responseWord = respXML.getElementsByTagName('respWord')[0].textContent;
     }
     else{
         var responseWord = "Error :'(";

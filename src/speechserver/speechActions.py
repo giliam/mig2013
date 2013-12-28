@@ -39,7 +39,6 @@ class requestHandling:
         
         if audioType == 'ogg':
             audioBlob = handleOGGBlob(audioBlob)
-            print(audioBlob)
         elif audioType == 'wav':
             audioBlob = handleWAVBlob(audioBlob)
         

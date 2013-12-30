@@ -9,7 +9,6 @@ actions possibles : add_word_record, list_word_records, rm_word_record,
 
 from shell import *
 from core.utils.db import Db
-from core.recording import sync #import syncFile, cutBeginning
 
 from speechserver.audioConverter import *
 

@@ -3,13 +3,12 @@
 
 """Module de conversion de fichiers ogg en wav
 Il faut avoir sox et soundrecorder sur le serveur"""
-import pysox
+
 import os
-import hashlib
 import scipy.io.wavfile
 from core.recording import sync
 from random import randint
-from time import sleep
+
 
 TMP_DIR = "tmp/"
 
@@ -113,27 +112,5 @@ def convert_ogg_to_wav(ogg_path, out_wav_path):
     return waveBlob
     
 
-def sox_handling(wavBlob,pathToTmp="../db/waves/tmp/"):
-    tempFileName = hashlib.sha224(str(randint(0,1e10))).hexdigest()
-    fileName = pathToTmp + str(tempFileName) + ".wav"
-    with open(fileName, 'w') as origoggfile:
-         origoggfile.write(wavBlob)
-         origoggfile.flush()
-         os.fsync(origoggfile)
-
-    os.system('ffmpeg -i "' + fileName + '" -vn -ss 00:00:00 -t 00:00:01 "' + pathToTmp + 'noiseaud.wav"')
-    print("noise extracted")
-    os.system('sox "' + pathToTmp + 'noiseaud.wav" -n noiseprof "' + pathToTmp + 'noise.prof"')
-    print("noise selected")
-    sleep(1)
-    os.system('sox "' + fileName + '" "' + fileName + '" noisered "' + pathToTmp + 'noise.prof" 0.21')
-    print("noise trashed")
-    #os.remove(pathToTmp + "noise.prof")
-    #os.remove(pathToTmp + "noiseaud.wav")
-
-    wav_content = scipy.io.wavfile.read(fileName)
-    return wav_content
-
-
 if __name__ == '__main__':
-    print(sox_handling(convert_ogg_to_wav('test.oga', 'test.wav')))
+    print(convert_ogg_to_wav('test.oga', 'test.wav'))

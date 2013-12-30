@@ -27,7 +27,7 @@ bool is2Power(int N) { return N==1 || (N%2==0 && is2Power(N/2)); }
 
 int get2Power(int N) { return pow(2, ceil(log(N)/log(2))); }
 
-cDouble e(int k, int N) { return exp((cDouble)(-2j*M_PI*k/N)); }
+cDouble e(int k, int N) { return exp((cDouble)(std::complex<double>(0,-2 * M_PI * k / N))); }
 
 boost::python::list tabToList(cDouble *t, int N)
 {

@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-import scipy as sc
 import math
 from operator import add
 

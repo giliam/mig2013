@@ -49,6 +49,11 @@ Actions to be supported:
 
     == "listen_recording" ==
 
+=== Requirements ===
+
+ - SpeechApp core module, obviously ...
+ - Gstreamer1.0, gstreamer1.0-tools, gstreamer1.0-plugins-base, gstreamer1.0-plugins-good
+
     
 
 

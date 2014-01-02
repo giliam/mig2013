@@ -9,74 +9,38 @@ import scipy.io.wavfile
 from core.recording import sync
 from random import randint
 
-
 TMP_DIR = "tmp/"
 
-def path_orig_ogg(id):
-    return TMP_DIR + "orig_" + str(id) + ".ogg"
+def pathAudio(id, audioType="wav"):
+    return TMP_DIR + "sample_%s.%s" % (id, audioType)
 
 
-def path_mid_wave(id):
-    return TMP_DIR + "orig_" + str(id) + ".wav"
 
 
-def path_mid_wave_splitted(id):
-    return TMP_DIR, "orig_" + str(id) + ".wav"
-
-
-def path_final_wave(id):
-    return TMP_DIR + "wave_final_" + str(id) + ".wav"
-
-
-def path_final_wave_splitted(id):
-    return TMP_DIR, "wave_final_" + str(id) + ".wav"
-
-
-def rm_multi(*files):
-    """Remove multiple files"""
-    for path in files:
-        os.remove(path)
-
-
-def handleOGGBlob(oggBlob):
+def handleBlob(audioBlob, audioType):
     """Converti le blob ogg en blob wav"""
+
     id = randint(1, 1000)
-    while os.access(path_orig_ogg(id), os.W_OK):
+    while os.access(pathAudio(id), os.W_OK):
         id = randint(1, 1000)
 
-    writeBlobToDisk(oggBlob, path_orig_ogg(id))
-
-    #Now convert the file
-
-    os.system('soundconverter -b -m audio/x-wav -s .wav "%s"' %  path_orig_ogg(id))
-    #Resample to 44.1kHz
-
-    os.system('sox -e signed -c 1 -b 16 %s %s' % (path_mid_wave(id), path_final_wave(id)))
-    print('soxed')
-    #And read the oggBlob
-
-    rm_multi(path_mid_wave(id), path_orig_ogg(id))
-
-    return finalHandling(id)
+    writeBlobToDisk(audioBlob, pathAudio(id, audioType))
 
 
-def finalHandling(id):
-    dir, file = path_final_wave_splitted(id)
+    if audioType != "wav":
+        cmd = "gst-launch-1.0 filesrc location=%s ! decodebin ! audioconvert ! audioresample ! audio/x-raw, rate=44100, channels=1 ! wavenc ! filesink location=%s"  % (pathAudio(id, audioType), pathAudio(id))
+        os.system(cmd)
+        os.remove(pathAudio(id, audioType))
+
+    dir, file = TMP_DIR, "sample_%s.wav" % id
     print(dir, file)
     waveBlob = cutsyncaudio(dir, file)
     
+    os.remove(pathAudio(id))
+
     return waveBlob
 
-
-def handleWAVBlob(audioBlob):
-    id = randint(1, 1000)
-    while os.access(path_final_wave(id), os.W_OK):
-        id = randint(1, 1000)
-
-    writeBlobToDisk(audioBlob, path_final_wave(id))
-    return finalHandling(id)
-
-    
+   
 
 def writeBlobToDisk(audioBlob, path):
     with open(path, 'w') as origfile:
@@ -92,25 +56,3 @@ def cutsyncaudio(dir, file):
     waveBlob = scipy.io.wavfile.read(dir + file)
 
     return waveBlob
- 
-
-def convert_ogg_to_wav(ogg_path, out_wav_path):
-    try:
-        with open(ogg_path, 'r') as origoggfile:
-            waveBlob = handleOGGBlob(origoggfile.read())
-    except:
-        return "Impossible to open ogg file"      
-
-    try:
-        with open(out_wav_path, 'w') as out_wav:
-             out_wav.write(waveBlob)
-             out_wav.flush()
-             os.fsync(out_wav)
-    except:
-        return "Impossible to write wav blob to dest file"
-
-    return waveBlob
-    
-
-if __name__ == '__main__':
-    print(convert_ogg_to_wav('test.oga', 'test.wav'))
